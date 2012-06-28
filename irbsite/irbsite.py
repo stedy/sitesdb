@@ -80,25 +80,25 @@ def id_results(id_number):
 		True)
 	if idnum is None:
 		abort(404)
-	entries = query_db('select base.Protocol, base.IR_file, base.Title,\
-			docs.aprvd_date, docs.doc_name,\
-			docs.doc_date from base, docs where docs.Protocol = base.Protocol \
-			and base.Protocol = ?', [ids])
+	entries = query_db("""select base.Protocol, base.IR_file, base.Title,
+			docs.aprvd_date, docs.doc_name,
+			docs.doc_date from base, docs where docs.Protocol = base.Protocol 
+			and base.Protocol = ?""", [ids])
 	return render_template('study.html', entries = entries)	
 
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
 	ids = str(id_number)
-	idnum = query_db("""select FH_Protocol_1 from thirdparty_pending where
+	idnum = query_db("""select FH_Protocol_1 from ae where
 						FH_Protocol_1 = ?""", [ids], one = True)
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						thirdparty_pending.PI, thirdparty_pending.FH_Protocol_1, 
-						thirdparty_pending.Report_ID, thirdparty_pending.Reported_RXN,
-						thirdparty_pending.Date_report from base,
-						thirdparty_pending where
-						thirdparty_pending.FH_Protocol_1 = base.Protocol and base.Protocol
+						ae.PI, ae.FH_Protocol_1, 
+						ae.Report_ID, ae.Reported_RXN,
+						ae.Date_report from base,
+						ae where
+						ae.FH_Protocol_1 = base.Protocol and base.Protocol
 						= ?""", [ids])
 	return render_template('ae.html', entries = entries)
 
@@ -130,13 +130,14 @@ def date_query():
 def results():
 	error = None
 	if request.form['id']:
-		entries = query_db('select Title, PI, Comments, IR_file, rn_coord, IRB_expires, \
-						IRB_approved, Funding_source, Type, CTE, Accrual_status from base where Protocol = ?',
+		entries = query_db("""select Title, PI, Comments, IR_file, rn_coord, IRB_expires, 
+						IRB_approved, Funding_source, Type, CTE, Accrual_status
+						from base where Protocol = ?""",
 						[request.form['id']], one = False ) 
 	if request.form['ir']:
-		entries = query_db('select Title, PI, IR_file, Comments, rn_coord, IRB_expires, \
-						IRB_approved, Funding_source, Type, CTE, Accrual_status \
-						from base where IR_file = ?',
+		entries = query_db("""select Title, PI, IR_file, Comments, rn_coord, IRB_expires, 
+						IRB_approved, Funding_source, Type, CTE, Accrual_status 
+						from base where IR_file = ?""",
 						[request.form['ir']], one = False )
 	return render_template('get_results.html', id = request.form['id'], entries
 							= entries)
@@ -146,9 +147,9 @@ def results():
 def pi_results():
 	error = None
 	if request.form['PI']:
-		entries = query_db('select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, \
-						IRB_approved, Funding_source, Type, CTE, Accrual_status \
- 						from base where PI = ?',
+		entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
+						IRB_approved, Funding_source, Type, CTE, Accrual_status 
+ 						from base where PI = ?""",
 						[request.form['PI']], one = False ) 
 	return render_template('pi_results.html', PI = request.form['PI'], entries
 							= entries)
@@ -157,10 +158,10 @@ def pi_results():
 def title_results():
 	if request.form['title']:
 		titlestr = "%" + request.form['title'] + "%"
-		entries = query_db('select PI, Protocol, rn_coord, IRB_expires,\
-						IRB_approved, Funding_source, Type, CTE, Accrual_status,\
-						Title, IR_file, Comments from base where Title\
-						LIKE ?', [titlestr], one = False)
+		entries = query_db("""select PI, Protocol, rn_coord, IRB_expires,
+						IRB_approved, Funding_source, Type, CTE, Accrual_status,
+						Title, IR_file, Comments from base where Title
+						LIKE ?""", [titlestr], one = False)
 	return render_template('title_results.html', entries
 							= entries)
 
@@ -173,9 +174,9 @@ def date_results():
 		mindval = "%s-%s-%s" % (mind.tm_year, mind.tm_mon, mind.tm_mday)
 		maxd = time.strptime(maxd, "%m/%d/%y")
 		maxdval = "%s-%s-%s" % (maxd.tm_year, maxd.tm_mon, maxd.tm_mday)
-		entries = query_db('select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, \
-						IRB_approved, Funding_source, Type, CTE, Accrual_status \
- 						from base where IRB_expires > ? AND IRB_expires < ?',
+		entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
+						IRB_approved, Funding_source, Type, CTE, Accrual_status 
+ 						from base where IRB_expires > ? AND IRB_expires < ?""",
 						[mindval, maxdval], one = False ) 
 	return render_template('date_results.html', entries = entries)
 		
@@ -185,9 +186,9 @@ def funding_results():
 	error = None
 	if request.form['funding']:
 		fundingstr = "%" + request.form['funding'] + "%"
-		entries = query_db('select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, \
-						IRB_approved, Funding_source, Type, CTE, Accrual_status \
- 						from base where Funding_source LIKE ?',
+		entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
+						IRB_approved, Funding_source, Type, CTE, Accrual_status 
+ 						from base where Funding_source LIKE ?""",
 						[fundingstr], one = False ) 
 	return render_template('funding_results.html', Funding = request.form['funding'], entries
 							= entries)
