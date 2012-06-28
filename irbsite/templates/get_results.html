@@ -4,7 +4,7 @@
     <ul class=metanav>
     </ul>    
     {% endif %}   
-    <ul class=entries>
+    <ul class=results>
         {% for entry in entries %}
 	<h2>Protocol Number:<a href="{{ url_for('id_results', id_number=id)}}">{{ id }}</a></h2>
 	<h2>IR Number: {{ entry.IR_file }}</h2>

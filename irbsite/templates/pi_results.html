@@ -7,14 +7,13 @@
     </ul>    
     {% endif %}
 	<h3>Current Studies for {{ PI }} </h3>
-    <ul class=entries>
+    <ul class=results>
         {% for entry in entries %}
-	<h2>Study Number: {{ entry.Protocol }}</h2>
-	<h2>IR Number: {{ entry.IR_file }}</h2>
-	<li><b>{{ entry.Title }}</b> 
-	<br></br>
-	<b>RN/Coord:</b> {{entry.rn_coord}}
-        <br>
+	<b>{{ entry.Title }}</b><br> 
+	<b>Study Number: {{ entry.Protocol }}<br>
+	<b>IR Number: {{ entry.IR_file }}<br>
+	<br>
+	<b>RN/Coord:</b> {{entry.rn_coord}}<br>
 	<b>Review Type:</b> {{ entry.Type }}<br>
 	<b>Accrual Status:</b> {{ entry.Accrual_status }}<br>
 	<b>IRB Approved:</b> {{ entry.IRB_approved }}<br>
@@ -22,7 +21,8 @@
 	<b>Funding Source:</b> {{ entry.Funding_source }}<br>
 	<b>Committee: {{ entry.CTE }}
 	<br></br>
-	<b>Comments:</b> {{entry.COMMENTS }} 
+	<b>Comments:</b> {{entry.COMMENTS }}<br>
+	<br> 
 	{% else %}
 	<h2>This otter is disappointed because {{ PI }} does not have any studies</h2>
 	<br>
