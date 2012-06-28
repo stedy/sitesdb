@@ -2,4 +2,5 @@
 *.db
 *.pyc
 original/
+mksql/
 irbsite/irb_db.db

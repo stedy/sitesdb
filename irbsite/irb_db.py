@@ -85,8 +85,18 @@ def id_results(id_number):
 			docs.doc_date from base, docs where docs.Protocol = base.Protocol \
 			and base.Protocol = ?', [ids])
 	return render_template('study.html', entries = entries)	
-#	return render_template('study.html', entries = query_db('select * from base\
-#		where Protocol = ?', [ids])) 
+
+@app.route('/<id_number>/ae')
+def id_results_ae(id_number):
+	ids = str(id_number)
+	idnum = query_db('select Protocol from thirdparty_pending where Protocol = ?', [ids], one =
+		True)
+	if idnum is None:
+		abort(404)
+	entries = query_db("""select PI, FH_Protocol_1, Report_ID, Reported_RXN,
+						Date_report from thirdparty_pending where FH_Protocol_1
+						= ?""", [ids])
+	return render_template('ae.html', entries = entries)
 
 @app.route('/add_study')
 def add_study():
