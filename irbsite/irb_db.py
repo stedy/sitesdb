@@ -90,8 +90,7 @@ def id_results(id_number):
 def id_results_ae(id_number):
 	ids = str(id_number)
 	idnum = query_db("""select FH_Protocol_1 from thirdparty_pending where
-						FH_Protocol_1 = ?""", [ids], one =
-		True)
+						FH_Protocol_1 = ?""", [ids], one = True)
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 

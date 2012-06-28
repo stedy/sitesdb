@@ -4,6 +4,7 @@
     <ul class=metanav>
     </ul>    
     {% endif %}   
+	{{ entries[0].Protocol }}
     <ul class=entries>
 	<h2>Title: {{ entries[0].Title }}</h2>
 	<h2>Protocol: {{ entries[0].Protocol }} </h2>
@@ -22,4 +23,6 @@
 	<img src="/static/sad_panda.jpg" >
         {% endfor %}
     </ul>
+	Test {{ id }}
+	Test <a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">test</a>
     {% endblock %}
