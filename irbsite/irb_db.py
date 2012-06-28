@@ -89,12 +89,17 @@ def id_results(id_number):
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
 	ids = str(id_number)
-	idnum = query_db('select Protocol from thirdparty_pending where Protocol = ?', [ids], one =
+	idnum = query_db("""select FH_Protocol_1 from thirdparty_pending where
+						FH_Protocol_1 = ?""", [ids], one =
 		True)
 	if idnum is None:
 		abort(404)
-	entries = query_db("""select PI, FH_Protocol_1, Report_ID, Reported_RXN,
-						Date_report from thirdparty_pending where FH_Protocol_1
+	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						thirdparty_pending.PI, thirdparty_pending.FH_Protocol_1, 
+						thirdparty_pending.Report_ID, thirdparty_pending.Reported_RXN,
+						thirdparty_pending.Date_report from base,
+						thirdparty_pending where
+						thirdparty_pending.FH_Protocol_1 = base.Protocol and base.Protocol
 						= ?""", [ids])
 	return render_template('ae.html', entries = entries)
 
