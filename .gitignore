@@ -2,3 +2,4 @@
 *.db
 *.pyc
 original/
+irb_db.db
