@@ -1,2 +1,4 @@
 *.jpg
 *.db
+*.pyc
+original/
