@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}   
+    <ul class=entries>
+	<h2>Title: {{ entries[0].Title }}</h2>
+	<h2>Protocol:{{ entries[0].Protocol }} </h2>
+	<h2>IR File: {{ entries[0].IR_file }}</h2>
+        {% for entry in entries %}
+	<br>
+	<li>{{ entry.doc_name }}</li>
+	
+	<li>{{entry.doc_date}}</li>
+        
+	<li>{{ entry.aprvd_date }}</li>
+
+	{% else %}
+	<h2>Sad Panda is sad because protocol {{ entry.id }} does not exist</h2>
+	<br>
+	<img src="/static/sad_panda.jpg" >
+        {% endfor %}
+    </ul>
+    {% endblock %}

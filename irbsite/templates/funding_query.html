@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+	{{ error }}
+  {% if session.logged_in %}
+    <form action="{{ url_for('funding_results') }}" method=post class=test>
+	<dl>
+	    <dt>Name:
+	    <input type=text size=15 name=funding>
+	    </textarea>
+	    <input type=submit value="Search">
+	</dl>
+    </form>
+    {% endif %}   
+    <ul class=entries>
+        <li><em>Search based on Funding Source</em>
+    </ul>
+<div class=footer>
+<a href="{{ url_for('add_study') }}">Add New Study</a>
+</div>
+    {% endblock %}

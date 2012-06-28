@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}   
+    <ul class=entries>
+        {% for entry in entries %}
+	<h2>Protocol Number:<a href="{{ url_for('id_results', id_number=id)}}">{{ id }}</a></h2>
+	<h2>IR Number: {{ entry.IR_file }}</h2>
+	<li><b>{{ entry.Title }}</b> 
+	<br></br>
+	<b>PI:</b> {{ entry.PI }}
+	<br>
+	<b>RN/Coord:</b> {{entry.rn_coord}}
+        <br>
+	<b>Review Type:</b> {{ entry.Type }}<br>
+	<b>Accrual Status:</b> {{ entry.Accrual_status }}<br>
+	<b>IRB Approved:</b> {{ entry.IRB_approved }}<br>
+	<b>IRB Expires:</b> {{ entry.IRB_expires }}<br>
+	<b>Funding Source:</b> {{ entry.Funding_source }}<br>
+	<b>Committee:</b> {{ entry.CTE }}
+	<br></br>
+	<b>Comments:</b> {{entry.COMMENTS }} 
+	<br></br>
+	{% else %}
+	<h2>Sad Panda is sad because protocol {{id}} does not exist</h2>
+	<br>
+	<img src="/static/sad_panda.jpg" >
+        {% endfor %}
+    </ul>
+    {% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+	{{ error }}
+  {% if session.logged_in %}
+    <form action="{{ url_for('results') }}" method=post class=test>
+	<dl>
+	    <dt>Protocol:
+	    <input type=text size=10 name=id>
+	    </textarea>
+	    <input type=submit value="Search by protocol">
+	    <dt>IR number:
+	    <input type=text size=10 name=ir>
+	    <input type=submit value="Search by IR number">
+	</dl>
+    </form>
+    {% endif %}   
+    <ul class=entries>
+        <li><em>Search based on either study number</em>
+    </ul>
+<div class=footer>
+<a href="{{ url_for('add_study') }}">Add New Study</a>
+</div>
+    {% endblock %}

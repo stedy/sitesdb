@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+	{{ error }}
+  {% if session.logged_in %}
+    <form action="{{ url_for('date_results') }}" method=post class=test>
+	<dl>
+	    <dt>Starting date:
+	    <input type=text size=10 name=datemin>
+	    </textarea>
+	    <dt>Ending date:
+	    <input type=text size=10 name=datemax>
+	    <input type=submit value="Search">
+	</dl>
+    </form>
+    {% endif %}   
+    <ul class=entries>
+        <li><em>Search based on date range of IRB approval.  Enter dates in the form MM/DD/YY</em>
+    </ul>
+<div class=footer>
+<a href="{{ url_for('add_study') }}">Add New Study</a>
+</div>
+    {% endblock %}

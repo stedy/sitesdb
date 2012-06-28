@@ -1,0 +1,24 @@
+<!doctype html>
+<title>VIDD rulz</title>
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+    <h1>VIDD IRB DB</h1>
+    <div class=metanav>
+    {% if not session.logged_in %}
+	<a href="{{ url_for('login') }}">log in</a>
+    {% else %}
+	<a href="{{ url_for('title_query') }}">Title query</a> |
+	<a href="{{ url_for('date_query') }}">Date query</a> |
+	<a href="{{ url_for('pi_query') }}">PI query</a> |
+	<a href="{{ url_for('funding_query') }}">Funding query</a> |
+	<a href="{{ url_for('query') }}">ID query</a> |
+	<a href="{{ url_for('logout') }}">log out</a> 
+    {% endif %}
+    </div>
+    {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+    
+    {% endfor %}
+    {% block body %}{% endblock %}
+</div>

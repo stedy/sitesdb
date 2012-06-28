@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+<div class=metanav>
+</div>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('add_form') }}" method=post class=test>
+	<dl>
+	    <dt>Protocol:
+	    <input type=text size=10 name=Protocol>
+	    <dt> Title:    
+	    <input type=text size=10 name=TITLE>
+	    <dt>Study PI:
+	    <input type=text size=10 name=PI>
+	    </textarea>
+	    <br></br>
+	    <input type=submit value=Submit>
+	</dl>
+    </form>
+    {% endif %}   
+    <ul class=entries>
+        <li><em>Submit new study</em>
+    </ul>
+    {% endblock %}

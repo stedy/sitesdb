@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+	{{ error }}
+  {% if session.logged_in %}
+    <form action="{{ url_for('title_results') }}" method=post class=test>
+	<dl>
+	    <dt>Title keywords:
+	    <input type=text size=15 name=title>
+	    </textarea>
+	    <input type=submit value="Search">
+	</dl>
+    </form>
+    {% endif %}   
+    <ul class=entries>
+        <li><em>Enter one or more keywords to search by title</em>
+    </ul>
+<div class=footer>
+<a href="{{ url_for('add_study') }}">Add New Study</a>
+</div>
+    {% endblock %}
