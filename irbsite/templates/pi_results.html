@@ -10,7 +10,7 @@
     <ul class=results>
         {% for entry in entries %}
 	<h2>{{ entry.Title }}</h2><br> 
-	<b>Study Number:</b> {{ entry.Protocol }}<br>
+	<b>Protocol Number:</b> <a href="{{ url_for('id_results', id_number= entry.Protocol)}}">{{ entry.Protocol }}</a><br>
 	<b>IR Number:</b> {{ entry.IR_file }}<br>
 	<br>
 	<b>RN/Coord:</b> {{entry.rn_coord}}<br>
