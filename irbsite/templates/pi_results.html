@@ -9,9 +9,9 @@
 	<h3>Current Studies for {{ PI }} </h3>
     <ul class=results>
         {% for entry in entries %}
-	<b>{{ entry.Title }}</b><br> 
-	<b>Study Number: {{ entry.Protocol }}<br>
-	<b>IR Number: {{ entry.IR_file }}<br>
+	<h2>{{ entry.Title }}</h2><br> 
+	<b>Study Number:</b> {{ entry.Protocol }}<br>
+	<b>IR Number:</b> {{ entry.IR_file }}<br>
 	<br>
 	<b>RN/Coord:</b> {{entry.rn_coord}}<br>
 	<b>Review Type:</b> {{ entry.Type }}<br>
@@ -19,7 +19,7 @@
 	<b>IRB Approved:</b> {{ entry.IRB_approved }}<br>
 	<b>IRB Expires:</b> {{ entry.IRB_expires }}<br>
 	<b>Funding Source:</b> {{ entry.Funding_source }}<br>
-	<b>Committee: {{ entry.CTE }}
+	<b>Committee:</b> {{ entry.CTE }}
 	<br></br>
 	<b>Comments:</b> {{entry.COMMENTS }}<br>
 	<br> 
