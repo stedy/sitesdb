@@ -7,12 +7,12 @@
     </ul>    
     {% endif %}
    
-    <ul class=entries>
-	<h3>Funded Studies for {{ Funding }} </h3>
+    <ul class=results>
+	<h3>Studies funded by {{ Funding }} </h3>
         {% for entry in entries %}
+	<h2>{{ entry.Title }}</h2> 
 	<h2>Study Number: {{ entry.Protocol }}</h2>
 	<h2>IR Number: {{ entry.IR_file }}</h2>
-	<li><b>{{ entry.Title }}</b> 
 	<br></br>
 	<b>RN/Coord:</b> {{entry.rn_coord}}
         <br>
@@ -23,7 +23,8 @@
 	<b>Funding Source:</b> {{ entry.Funding_source }}<br>
 	<b>Committee: {{ entry.CTE }}
 	<br></br>
-	<b>Comments:</b> {{entry.COMMENTS }} 
+	<b>Comments:</b> {{entry.COMMENTS }}<b> 
+	<br>
 	{% else %}
 	<h2>This otter is disappointed because {{ PI }} does not have any studies</h2>
 	<br>

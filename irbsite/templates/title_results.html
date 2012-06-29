@@ -5,11 +5,11 @@
     </ul>    
     {% endif %}
    
-    <ul class=entries>
+    <ul class=results>
         {% for entry in entries %}
+	<h2>{{ entry.Title }}</h2> 
 	<h2>Study Number: {{ entry.Protocol }}</h2>
 	<h2>IR Number: {{ entry.IR_file }}</h2>
-	<li><b>{{ entry.Title }}</b> 
 	<br></br>
 	<b>RN/Coord:</b> {{entry.rn_coord}}
         <br>
@@ -20,7 +20,8 @@
 	<b>Funding Source:</b> {{ entry.Funding_source }}<br>
 	<b>Committee:</b> {{ entry.CTE }}
 	<br></br>
-	<b>Comments:</b> {{entry.COMMENTS }} 
+	<b>Comments:</b> {{entry.COMMENTS }}<br> 
+	<br>
 	{% else %}
 	<h2>Whoa calm down, looks like there are no results for that keyword</h2>
 	<br>
