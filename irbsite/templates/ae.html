@@ -8,7 +8,10 @@
 	<h2>{{ entries[0].Title }}</h2>
 	<br>
 	<h2>Protocol: {{ entries[0].Protocol }}	IR File: {{ entries[0].IR_file }}</h2>
-        {% for entry in entries %}
+        <li><b>Report ID</li>
+	<li>Reported Reaction</li>
+	<li>Report Date</b></li>
+	{% for entry in entries %}
 	<br>
 	<li>{{ entry.Report_ID }}</li>
 	

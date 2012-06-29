@@ -1,5 +1,6 @@
 *.jpg
 *.db
+*.swp
 *.pyc
 original/
 mksql/

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}   
+    <ul class=entries>
+	<h2>Title: {{ entries[0].Title }}</h2>
+	<br>
+	<h2>PI: {{ entries[0].PI }}</h2>
+	<h2>Protocol: {{ entries[0].Protocol }} </h2>
+	<h2>IR File: {{ entries[0].IR_file }}</h2>
+        <li><b>Source</li>
+	<li>Source ID</li>
+	<li>Start Date</li>
+	<li>End Date</li>
+	<li>Notes</li></b>
+	{% for entry in entries %}
+	<br>
+	<li>{{ entry.Source }}</li>
+	
+	<li>{{ entry.Source_ID }}</li>
+        
+	<li>{{ entry.start }}</li>
+	
+	<li>{{ entry.end }}</li>
+		
+	<li>{{ entry.notes }}</li>
+
+	{% else %}
+	<h2>Sad Panda is sad because protocol {{ entry.id }} does not exist</h2>
+	<br>
+	<img src="/static/sad_panda.jpg" >
+        {% endfor %}
+    </ul>
+	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a>
+    {% endblock %}
