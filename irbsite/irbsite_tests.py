@@ -1,18 +1,18 @@
 import os
-import irb_db
+import irbsite
 import unittest
 import tempfile
 
 class IRBDBTestCase(unittest.TestCase):
-	def setUp(self):
-		self.db_fd, irb_db.app.config['DATABASE'] = tempfile.mkstemp()
-		irb_db.app.config['TESTING'] = True
-		self.app = irb_db.app.test_client()
-		irb_db.init_db()
-
-	def tearDown(self):
-		os.close(self.db_fd)
-		os.unlink(irb_db.app.config['DATABASE'])
+#	def setUp(self):
+#		self.db_fd, irbsite.app.config['DATABASE'] = tempfile.mkstemp()
+#		irbsite.app.config['TESTING'] = True
+#		self.app = irbsite.app.test_client()
+#		irbsite.init_db()
+#
+#	def tearDown(self):
+#		os.close(self.db_fd)
+#		os.unlink(irbsite.app.config['DATABASE'])
 
 	def login(self, username, password):
 		return self.app.post('/', data = dict(
