@@ -106,6 +106,21 @@ def id_results_ae(id_number):
 def add_study():
 	        return render_template('add_study.html')
 
+@app.route('/<id_number>/study_funding')
+def id_results_sn(id_number):
+	ids = str(id_number)
+	idnum = query_db("""select Protocol from funding where
+						Protocol = ? """, [ids], one = True)
+	if idnum is None:
+		abort(404)
+	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						funding.PI, funding.Title, 
+						funding.source, funding.Source_ID,
+						funding.start, funding.end, funding.notes from base,
+						funding where
+						funding.Protocol = base.Protocol and base.Protocol
+						= ?""", [ids])
+	return render_template('study_funding.html', entries = entries)
 @app.route('/query') 
 def query():
 			return render_template('subj_query.html') 

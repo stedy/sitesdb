@@ -4,19 +4,23 @@
     <ul class=metanav>
     </ul>    
     {% endif %}   
-    <ul class=entries>
+    <ul class=funding_entries>
 	<h2>Title: {{ entries[0].Title }}</h2>
 	<br>
-	<h2>PI: {{ entries[0].PI }}</h2>
 	<h2>Protocol: {{ entries[0].Protocol }} </h2>
 	<h2>IR File: {{ entries[0].IR_file }}</h2>
-        <li><b>Source</li>
+	<br>
+        <li><b>PI</li>
+	<li>Source</li>
 	<li>Source ID</li>
 	<li>Start Date</li>
 	<li>End Date</li>
-	<li>Notes</li></b>
+	<li>Notes</b></li>
+	
 	{% for entry in entries %}
 	<br>
+	<li>{{ entry.PI }}</li>
+
 	<li>{{ entry.Source }}</li>
 	
 	<li>{{ entry.Source_ID }}</li>
