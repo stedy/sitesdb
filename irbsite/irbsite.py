@@ -89,16 +89,16 @@ def id_results(id_number):
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
 	ids = str(id_number)
-	idnum = query_db("""select FH_Protocol_1 from ae where
-						FH_Protocol_1 = ?""", [ids], one = True)
+	idnum = query_db("""select Protocol from ae where
+						Protocol = ?""", [ids], one = True)
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						ae.PI, ae.FH_Protocol_1, 
+						ae.PI, ae.Protocol, 
 						ae.Report_ID, ae.Reported_RXN,
 						ae.Date_report from base,
 						ae where
-						ae.FH_Protocol_1 = base.Protocol and base.Protocol
+						ae.Protocol = base.Protocol and base.Protocol
 						= ?""", [ids])
 	return render_template('ae.html', entries = entries)
 
