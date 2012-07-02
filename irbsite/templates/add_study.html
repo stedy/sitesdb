@@ -4,14 +4,20 @@
 <div class=metanav>
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-    <form action="{{ url_for('add_form') }}" method=post class=test>
+    <form action="{{ url_for('add_form') }}" method=post class=addstudy>
 	<dl>
+	    <dt> Title:    
+	    <input type=text size=110 name=TITLE>
 	    <dt>Protocol:
 	    <input type=text size=10 name=Protocol>
-	    <dt> Title:    
-	    <input type=text size=10 name=TITLE>
+	    <dt>IR File:
+	    <input type=text size=10 name=IR_file>
 	    <dt>Study PI:
-	    <input type=text size=10 name=PI>
+	    <input type=text size=20 name=PI>
+	    <dt>RN/Coord:
+	    <input type=text size=20 name=rn_coord>
+	    <dt>Review Type:
+	    <input type=text size=20 name=Type>
 	    </textarea>
 	    <br></br>
 	    <input type=submit value=Submit>
