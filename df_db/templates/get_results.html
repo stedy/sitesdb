@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+<a href="{{ url_for('query') }}">New query</a> <a href="{{ url_for('add_indiv') }}">Add entry</a>
+</ul>
+    {% endif %}   
+    <ul class=entries>
+	<h2>Patient ID: {{ id }}</h2>
+        {% for entry in entries %}
+	<li><h2>{{ entry.visitdt }}</h2> <b>visit:</b> {{entry.visit}}
+        <br>
+	<b>dxnotes:</b> {{ entry.dxnotes }}<br>
+	<br>
+	<b>stddx:</b> {{ entry.stddx }} <br>
+	<b>cvexam:</b> {{ entry.cvexam }}<br>
+	<b>cvnotes:</b> {{ entry.cvnotes }}<br> 
+	{% else %}
+	<br></br>
+	<h2>Sad panda is sad because that file could not be found</h2>
+	<img src="/static/sad_panda.jpg" >
+        {% endfor %}
+    </ul>
+    {% endblock %}

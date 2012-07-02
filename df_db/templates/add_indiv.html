@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+<div class=metanav>
+<a href="{{ url_for('query') }}">New Query</a>
+</div>
+<style>
+form label{
+display: block;
+float: left;
+width: 100 px;
+}
+</style>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('add_form') }}" method=post class=test>
+	<dl>
+	    <label for="id">Individual:</label> <input type=text name=id /><br/>
+	    <label for "visitdt">Visit Date:</label> <input type=text name=visitdt>
+	    <dt>Visit Number:
+	    <input type=text size=10 name=visit>
+	    <dt>Diagnoses Notes:
+	    <input type=text size=10 name=dxnotes>
+	    <dt>STD diagnosis:
+	    <input type=text size=10 name=stddx>
+	    <dt>CV exam:
+	    <input type=text size=10 name=cvexam>
+	    <dt>CV notes:
+	    <input type=text size=10 name=cvnotes>
+	    </textarea>
+	    <br></br>
+	    <input type=submit value=Submit>
+	</dl>
+    </form>
+    {% endif %}   
+    <ul class=entries>
+        <li><em>Submit new study</em>
+    </ul>
+    {% endblock %}
