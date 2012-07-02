@@ -4,11 +4,11 @@
   {% if session.logged_in %}
     <form action="{{ url_for('results') }}" method=post class=test>
 	<dl>
-	    <dt>Protocol:
+	    <dt><b>Protocol:
 	    <input type=text size=10 name=id>
 	    </textarea>
 	    <input type=submit value="Search by protocol">
-	    <dt>IR number:
+	    <dt>IR number:</b>
 	    <input type=text size=10 name=ir>
 	    <input type=submit value="Search by IR number">
 	</dl>
