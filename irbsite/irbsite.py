@@ -1,7 +1,7 @@
 import sqlite3
 import time
 from flask import Flask, request, session, g, redirect, url_for \
-        , abort, render_template, flash
+        , abort, render_template, flash, jsonify
 
 from contextlib import closing
 
@@ -207,6 +207,13 @@ def funding_results():
 						[fundingstr], one = False ) 
 	return render_template('funding_results.html', Funding = request.form['funding'], entries
 							= entries)
+
+@app.route('/binder_template')
+def binder_template():
+	"""Format binder label for printing"""
+	a = request.args.get('a', 0, type=int)
+	b = request.args.get('b', 0, type=int)
+	return jsonify(result=a+b)
 
 @app.route('/logout')
 def logout():
