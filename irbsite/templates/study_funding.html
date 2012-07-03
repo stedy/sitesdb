@@ -5,7 +5,7 @@
     </ul>    
     {% endif %}   
     <ul class=funding_entries>
-	<h2>Title: {{ entries[0].Title }}</h2>
+	<h2>{{ entries[0].Title }}</h2>
 	<br>
 	<h2>Protocol: {{ entries[0].Protocol }} </h2>
 	<h2>IR File: {{ entries[0].IR_file }}</h2>
@@ -32,7 +32,7 @@
 	<li>{{ entry.notes }}</li>
 
 	{% else %}
-	<h2>Sad Panda is sad because protocol {{ entry.id }} does not exist</h2>
+	<h2>Sad Panda is sad because protocol {{ entry.Source }} does not exist</h2>
 	<br>
 	<img src="/static/sad_panda.jpg" >
         {% endfor %}

@@ -2,8 +2,6 @@
 {% block body %}
   {% if session.logged_in %}
     <ul class=metanav>
-<a href="{{ url_for('query') }}">New Query</a> |
-<a href="{{ url_for('pi_query') }}">PI Query</a>
     </ul>    
     {% endif %}
 	<h3>Current Studies for {{ PI }} </h3>
