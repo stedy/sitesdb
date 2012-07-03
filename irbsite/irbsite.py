@@ -99,7 +99,7 @@ def id_results_ae(id_number):
 						ae.Date_report from base,
 						ae where
 						ae.Protocol = base.Protocol and base.Protocol
-						= ?""", [ids])
+						= ? order by ae.Date_report ASC""", [ids])
 	return render_template('ae.html', entries = entries)
 
 @app.route('/add_study')
