@@ -83,7 +83,7 @@ def id_results(id_number):
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title,
 			docs.aprvd_date, docs.doc_name, base.PI,
 			docs.doc_date from base, docs where docs.Protocol = base.Protocol 
-			and base.Protocol = ?""", [ids])
+			and base.Protocol = ? order by docs.doc_date ASC""", [ids])
 	return render_template('study.html', entries = entries)	
 
 @app.route('/<id_number>/ae')
