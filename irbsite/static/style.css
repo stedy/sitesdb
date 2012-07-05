@@ -6,7 +6,7 @@ h2          { font-size: 1.2em; }
 
 .page       { margin: 2em auto; width: 70em; border: 5px solid #0191C8; 
                 padding: 0.8em; background: white; }
-.entries    { list-style: none; margin: 0; padding: 0; }
+.entries    { list-style: none; margin: 0; padding: 0; font: 'Elena'; }
 .addstudy dt { margin: 0.8em 1.2em; width: 100px; display: block }
 .test dt { margin: 0.8em 1.2em; width: 120px; display: inline-block }
 .entries li { margin: 0.8em 1.2em; width: 250px; display: inline-block; }
