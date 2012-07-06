@@ -177,7 +177,7 @@ def results():
 def pi_results():
 	error = None
 	if request.form['PI']:
-		entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
+		entries = query_db("""select Title, Protocol, UW, Comments, IR_file, rn_coord, IRB_expires, 
 						IRB_approved, Funding_source, Type, CTE, Accrual_status 
  						from base where PI = ?""",
 						[request.form['PI']], one = False ) 
