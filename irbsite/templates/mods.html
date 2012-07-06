@@ -25,5 +25,6 @@
 	<img src="/static/sad_panda.jpg" >
         {% endfor %}
     </ul>
-	<a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a>
+	<a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a> |
+	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> |
     {% endblock %}
