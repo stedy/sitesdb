@@ -31,11 +31,16 @@
 		
 	<li>{{ entry.notes }}</li>
 
-	{% else %}
-	<h2>Sad Panda is sad because protocol {{ entry.Source }} does not exist</h2>
-	<br>
-	<img src="/static/sad_panda.jpg" >
         {% endfor %}
+        <br>
+	<li><input type=text size=10 name=PI></li>
+	<li><input type=text size=10 name=Source></li>
+	<li><input type=text size=10 name=Source_ID></li>
+	<li><input type=text size=10 name=start></li>
+	<li><input type=text size=10 name=end></li>
+	<li><input type=text size=30 name=notes></li>
+	<br>
+	<li><input type=submit value="Add Funding">
     </ul>
 	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> |
 	<a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
