@@ -72,6 +72,21 @@ def add_form():
 		error = 'Must have Protocol number to add entry'
     return render_template('add_study.html', error = error)
 
+@app.route('/add_funding', methods=['GET', 'POST'])
+def add_funding():
+    error = None
+    if request.form['PI']:
+		g.db.execute("""insert into funding (Protocol, PI, Source, Source_ID, start, end,
+					notes) values (?,?,?,?,?,?,?)""",
+			    [request.form['Protocol'], request.form['PI'], request.form['Source'],
+				request.form['Source_ID'], request.form['start'],
+				request.form['end'], request.form['notes']])
+		g.db.commit()
+		flash('New funding was successfully added')
+    else:
+		error = 'Must have Protocol number to add entry'
+    return render_template('funding_query.html', error = error)
+
 @app.route('/<id_number>')
 def id_results(id_number):
 	ids = str(id_number)
