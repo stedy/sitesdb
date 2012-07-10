@@ -11,6 +11,7 @@ h2          { font-size: 1.2em; }
 .test dt { margin: 0.8em 1.2em; width: 120px; display: inline-block }
 .entries li { margin: 0.8em 1.2em; width: 250px; display: inline-block; }
 .funding_entries li { margin: 0.8em 1.2em; width: 100px; display: inline-block; }
+.mod_entries li { margin: 0.8em 1.2em; width: 200px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }
 .results li { margin: 0.8em 1.2em; }
 .add-entry  { font-size: 0.9em; border-bottom: 1px solid #ccc; }

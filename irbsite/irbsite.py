@@ -87,6 +87,22 @@ def add_funding():
 		error = 'Must have Protocol number to add entry'
     return render_template('funding_query.html', error = error)
 
+@app.route('/add_mod', methods=['GET', 'POST'])
+def add_mod():
+    error = None
+    if request.form['Protocol']:
+		g.db.execute("""insert into mods (Protocol, Date_to_IRB, Description,
+						Comments) values (?,?,?,?)""",
+			    [request.form['Protocol'], request.form['Date_to_IRB'], 
+				request.form['Description'], request.form['Comments']])
+		g.db.commit()
+		flash('New funding was successfully added')
+    else:
+		error = 'Must have Protocol number to add entry'
+    return render_template('subj_query.html', error = error)
+
+#search based on ID number
+
 @app.route('/<id_number>')
 def id_results(id_number):
 	ids = str(id_number)
@@ -132,6 +148,8 @@ def id_results_mods(id_number):
 						mods.Protocol = base.Protocol and base.Protocol
 						= ? order by mods.Date_to_IRB ASC""", [ids])
 	return render_template('mods.html', entries = entries)
+
+#add entries
 @app.route('/add_study')
 def add_study():
 	        return render_template('add_study.html')
@@ -151,6 +169,7 @@ def id_results_sn(id_number):
 						funding.Protocol = base.Protocol and base.Protocol
 						= ?""", [ids])
 	return render_template('study_funding.html', entries = entries)
+
 @app.route('/query') 
 def query():
 			return render_template('subj_query.html') 
@@ -238,12 +257,12 @@ def funding_results():
 	return render_template('funding_results.html', Funding = request.form['funding'], entries
 							= entries)
 
-@app.route('/binder_template')
-def binder_template():
-	"""Format binder label for printing"""
-	a = request.args.get('a', 0, type=int)
-	b = request.args.get('b', 0, type=int)
-	return jsonify(result=a+b)
+#@app.route('/binder_template')
+#def binder_template():
+#	"""Format binder label for printing"""
+#	a = request.args.get('a', 0, type=int)
+#	b = request.args.get('b', 0, type=int)
+#	return jsonify(result=a+b)
 
 @app.route('/logout')
 def logout():
