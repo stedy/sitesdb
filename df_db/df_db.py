@@ -33,7 +33,7 @@ def query_db(query, args=(), one = False):
 		for idx, value in enumerate(row)) for row in cur.fetchall()]
 	return (rv[0] if rv else None) if one else rv
 
-#then add om decorators
+#then add some decorators
 
 @app.before_request
 def before_request():
@@ -85,16 +85,30 @@ def add_indiv():
 def query():
 			return render_template('subj_query.html') 
 
+@app.route('/isolate_query') 
+def isolate_query():
+			return render_template('isolate_query.html') 
+
 @app.route('/results', methods = ['GET', 'POST'])
+
 def results():
 	if request.form['visit']:
-         entries = query_db('select visit, stddx, visitdt, dxnotes, cvexam, cvnotes from exam\
-						    where id = ? and visit = ?',
+         entries = query_db("""select visit, stddx, visitdt, dxnotes, cvexam, cvnotes from exam
+						    where id = ? and visit = ?""",
 						    [request.form['id'], request.form['visit']], one = False )
 	else:
 		entries = query_db('select visit, visitdt, stddx, dxnotes, cvexam, cvnotes from exam where id = ?',
 							[request.form['id']], one = False )
         return render_template('get_results.html', id = request.form['id'], entries = entries)
+
+@app.route('/isolate_results', methods = ['GET', 'POST'])
+def isolate_results():
+	if request.form['Isolate']:
+		entries = query_db("""select Isolate, Colony_Morphology, PCR_primers,
+							Sequence from isolate where Isolate = ?""",
+							[request.form['Isolate']], one = False)
+	return render_template('isolate_results.html', entries = entries) 
+
 
 @app.route('/logout')
 def logout():

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+<a href="{{ url_for('query') }}">New query</a> <a href="{{ url_for('add_indiv') }}">Add entry</a>
+</ul>
+    {% endif %}   
+    <ul class=isolate_results>
+        {% for entry in entries %}
+	<b>Isolate:</b> {{ entry.Isolate }}<br>
+	<br>
+	<b>Colony Morphology:</b> {{ entry.Colony_Morphology }} <br>
+	<b>PCR Primers:</b> {{ entry.PCR_primers }}<br>
+	<li><b>Sequence:</b> {{ entry.Sequence }}<br></li> 
+        {% endfor %}
+    </ul>
+    {% endblock %}
