@@ -104,8 +104,13 @@ def results():
 @app.route('/isolate_results', methods = ['GET', 'POST'])
 def isolate_results():
 	if request.form['Isolate']:
-		entries = query_db("""select Isolate, Colony_Morphology, PCR_primers,
+		entries = query_db("""select Site, Amsels, Isolate, Colony_Morphology,
+							Medium_Isolated, PCR_primers,
 							Accession_number, Gram_stain, Extraction_date,
+							Extraction_notes, PCR, PCR_Notes, PCR_Clean_up_date,
+							PCR_Clean_up_Kit, Sequence_length_bp,
+							GenBank_BLAST_bm, BLAST_bm, BLAST_date, 
+							Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
 							Sequence from isolate where Isolate = ?""",
 							[request.form['Isolate']], one = False)
 	return render_template('isolate_results.html', entries = entries) 

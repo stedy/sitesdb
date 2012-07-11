@@ -6,16 +6,34 @@
 </ul>
     {% endif %}   
     <ul class=isolate_results>
-        {% for entry in entries %}
-	<b>Isolate:</b> {{ entry.Isolate }}<br>
+        <h1> {{ entries[0].Isolate }} </h1>
+	{% for entry in entries %}
 	<br>
+	<b>Site:</b> {{ entry.Site }}</br>
+	<b>Amsels:</b> {{ entry.Amsels }}<br>
 	<b>Colony Morphology:</b> {{ entry.Colony_Morphology }} <br>
-	<b>PCR Primers:</b> {{ entry.PCR_primers }}<br>
-	<br>
-	<b>Accession number:</b> {{ entry.Accession_number }}<br>
+	<b>Medium Isolated:</b> {{ entry.Medium_Isolated }} <br>
 	<b>Gram Stain:</b> {{ entry.Gram_stain }}<br>
+	<br>
 	<b>Extraction Date:</b> {{entry.Extraction_date }}<br>
-	<li><b>Sequence:</b> {{ entry.Sequence }}<br></li> 
+	<b>Extraction Notes:</b> {{entry.Extraction_notes }}<br>
+	<b>PCR:</b> {{entry.PCR }}<br>
+	<b>PCR Primers:</b> {{ entry.PCR_primers }}<br>
+	<b>PCR Notes:</b> {{ entry.PCR_Notes }}<br>
+	<b>PCR Clean-up Date:</b> {{entry.PCR_Clean_up_date }}<br>
+	<b>PCR Clean-up Kit:</b> {{entry.PCR_Clean_up_Kit }}<br>
+	<br>
+	<b>Sequence Length (bp):</b> {{ entry.Sequence_length_bp }}<br> 
+	<b>Genbank BLAST bm: </b> {{ entry.GenBank_BLAST_bm }}<br>
+	<b>BLAST: </b> {{ entry.BLAST }}<br>
+	<b>Blast Date:</b> {{ entry.BLAST_Date }} <br>
+	<b>Sequencing Notes:</b> {{ entry.Sequencing_notes }} <br>
+	<b>Phyla:</b> {{ entry.Phyla }} <br>
+	<b>Gaps:</b> {{ entry.Gaps }}<br> 
+	<b>Genbank BLAST bm Accession number:</b> {{ entry.Accession_number }}<br>
+	<b>Fredricks DB Blast:</b> {{ entry.FredricksDB_BLAST }}<br> 
+	<br>
+	<b>Sequence:</b> {{ entry.Sequence }}<br> 
         {% endfor %}
     </ul>
     {% endblock %}
