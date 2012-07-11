@@ -105,6 +105,7 @@ def results():
 def isolate_results():
 	if request.form['Isolate']:
 		entries = query_db("""select Isolate, Colony_Morphology, PCR_primers,
+							Accession_number, Gram_stain, Extraction_date,
 							Sequence from isolate where Isolate = ?""",
 							[request.form['Isolate']], one = False)
 	return render_template('isolate_results.html', entries = entries) 
