@@ -198,14 +198,18 @@ def results():
 						IRB_approved, Funding_source, Type, CTE, Accrual_status
 						from base where Protocol = ?""",
 						[request.form['id']], one = False ) 
+		return render_template('get_results.html', id = request.form['id'], entries
+							= entries)
 	if request.form['ir']:
 		entries = query_db("""select Title, PI, IR_file, Comments, rn_coord, IRB_expires, 
 						IRB_approved, Funding_source, Type, CTE, Accrual_status 
 						from base where IR_file = ?""",
 						[request.form['ir']], one = False )
-	return render_template('get_results.html', id = request.form['id'], entries
+		return render_template('get_results.html', id = request.form['id'], entries
 							= entries)
-
+	else:
+		error = "Must have either ID number to search"
+		return render_template('subj_query.html', error=error)
 
 @app.route('/pi_results', methods = ['GET', 'POST'])
 def pi_results():
