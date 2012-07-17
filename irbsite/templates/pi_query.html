@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-	{{ error }}
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }} {% endif %}
   {% if session.logged_in %}
     <form action="{{ url_for('pi_results') }}" method=post class=test>
 	<dl>

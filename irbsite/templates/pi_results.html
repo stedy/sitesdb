@@ -2,7 +2,7 @@
 {% block body %}
   {% if session.logged_in %}
     <ul class=metanav>
-    </ul>    
+    </ul>
     {% endif %}
 	<h3>Current Studies for {{ PI }} </h3>
     <ul class=results>
@@ -28,4 +28,4 @@
 	<img src="/static/dissapointed_otter.jpg" >
         {% endfor %}
     </ul>
-    {% endblock %}
+	{% endblock %}

@@ -219,8 +219,11 @@ def pi_results():
 						IRB_approved, Funding_source, Type, CTE, Accrual_status 
  						from base where PI = ?""",
 						[request.form['PI']], one = False ) 
-	return render_template('pi_results.html', PI = request.form['PI'], entries
+		return render_template('pi_results.html', PI = request.form['PI'], entries
 							= entries)
+	else:
+		error = "Must have PI name to search"
+		return render_template('pi_query.html', error=error)
 
 @app.route('/title_results', methods = ['GET', 'POST'])
 def title_results():
@@ -246,7 +249,10 @@ def date_results():
 						IRB_approved, Funding_source, Type, CTE, Accrual_status 
  						from base where IRB_expires > ? AND IRB_expires < ?""",
 						[mindval, maxdval], one = False ) 
-	return render_template('date_results.html', entries = entries)
+		return render_template('date_results.html', entries = entries)
+	else:
+		error = "Must have date range to search"
+		return render_template('date_query.html', error=error)
 		
 
 @app.route('/funding_results', methods = ['GET', 'POST'])
@@ -258,15 +264,12 @@ def funding_results():
 						IRB_approved, Funding_source, Type, CTE, Accrual_status 
  						from base where Funding_source LIKE ?""",
 						[fundingstr], one = False ) 
-	return render_template('funding_results.html', Funding = request.form['funding'], entries
+		return render_template('funding_results.html', Funding = request.form['funding'], entries
 							= entries)
+	else:
+		error = "Must enter funding info to search"
+		return render_template('funding_query.html', error=error)
 
-#@app.route('/binder_template')
-#def binder_template():
-#	"""Format binder label for printing"""
-#	a = request.args.get('a', 0, type=int)
-#	b = request.args.get('b', 0, type=int)
-#	return jsonify(result=a+b)
 
 @app.route('/logout')
 def logout():
