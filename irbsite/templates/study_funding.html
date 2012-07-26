@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
+    {% block script %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+    <script type="text/javascript" src="/static/datefun.js"></script>
+    {% endblock %}
     <ul class=metanav>
     </ul>    
     {% endif %}   
@@ -31,7 +35,7 @@
         
 	<li>{{ entry.start }}</li>
 	
-	<li>{{ entry.end }}</li>
+	<li class="date">{{ entry.end }}</li>
 		
 	<li>{{ entry.notes }}</li>
 
