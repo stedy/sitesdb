@@ -270,6 +270,10 @@ def funding_results():
 		error = "Must enter funding info to search"
 		return render_template('funding_query.html', error=error)
 
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('404.html'), 404
+
 
 @app.route('/logout')
 def logout():
