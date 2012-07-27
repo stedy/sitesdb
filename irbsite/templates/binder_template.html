@@ -1,20 +1,35 @@
 {% block body %}
-<script type=text/javascript>
-  $(function() {
-    $('a#calculate').bind('click', function() {
-      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
-        a: $('input[name="a"]').val(),
-        b: $('input[name="b"]').val()
-      }, function(data) {
-        $("#result").text(data.result);
-      });
-      return false;
-    });
-  });
-</script>
-<h1>jQuery Example</h1>
-<p><input type=text size=5 name=a> +
-   <input type=text size=5 name=b> =
-   <span id=result>?</span>
-<p><a href=# id=calculate>calculate server side</a>
-{% endblock %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}
+    <style>
+	#table1 {width: 150px; height: 75px; text-align: center; cellspacing=10;}
+    </style>
+    <table id="table1">
+    <tr>   
+        {% for entry in entries %}
+	<td id="td1"><h1>{{ entry.Protocol }}</h1></td>
+    </tr>
+    <tr>
+	<td id="td2"><h2>{{ entry.IR_file }}</h2></td>
+    </tr>
+    <tr>
+	<td id="PI"><h3>{{ entry.PI }}<h3></td>
+    </tr>
+    <tr>
+	<td id="td3"><b>RN/Coord:</b> {{entry.rn_coord}}</td>
+    </tr>
+    <tr>
+	<td id="td4"><h2>{{ entry.Title }}</h2></td>
+    </tr>
+    <tr>
+        <td id="td5"><h1>7</td>
+    </tr>
+    <tr>
+	<td id="td6"><b>Committee</b> {{ entry.CTE }}</td>
+    </tr>
+	
+        {% endfor %}
+    </ul>
+    {% endblock %}

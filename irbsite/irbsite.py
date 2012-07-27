@@ -170,6 +170,18 @@ def id_results_sn(id_number):
 						= ?""", [ids])
 	return render_template('study_funding.html', entries = entries)
 
+@app.route('/<id_number>/binder_template')
+def binder_template(id_number):
+	ids = str(id_number)
+	bnum = query_db("""select Protocol from funding where
+						Protocol = ? """, [ids], one = True)
+	if bnum is None:
+		abort(404)
+	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						base.PI, base.CTE from base
+						where base.Protocol = ?""", [ids])
+	return render_template('binder_template.html', entries=entries)
+
 @app.route('/query') 
 def query():
 			return render_template('subj_query.html') 
