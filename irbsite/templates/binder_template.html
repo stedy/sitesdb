@@ -1,24 +1,21 @@
 {% block body %}
   {% if session.logged_in %}
     <ul class=metanav>
-    </ul>    
+    </ul>
     {% endif %}
+        {% for entry in entries %}
     <style>
 	#table1 {width: 150px; height: 75px; text-align: center; cellspacing=10;}
     </style>
     <table id="table1">
     <tr>   
-        {% for entry in entries %}
 	<td id="td1"><h1>{{ entry.Protocol }}</h1></td>
     </tr>
     <tr>
 	<td id="td2"><h2>{{ entry.IR_file }}</h2></td>
     </tr>
     <tr>
-	<td id="PI"><h3>{{ entry.PI }}<h3></td>
-    </tr>
-    <tr>
-	<td id="td3"><b>RN/Coord:</b> {{entry.rn_coord}}</td>
+	<td id="td3"><h3>{{ entry.PI }}<h3></td>
     </tr>
     <tr>
 	<td id="td4"><h2>{{ entry.Title }}</h2></td>
