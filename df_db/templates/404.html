@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }} {% endif %}
+  {% if session.logged_in %}
+    I'm sorry but that page is not found
+  {% endif %}
+{% endblock %}

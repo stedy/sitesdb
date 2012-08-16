@@ -108,7 +108,7 @@ def results():
 @app.route('/isolate_results', methods = ['GET', 'POST'])
 def isolate_results():
 	if request.form['Isolate']:
-		entries = query_db("""select Site, Amsels, Isolate, Colony_Morphology,
+		entries = query_db("""select Subject_ID, Visit, Site, Amsels, Isolate, Colony_Morphology,
 							Medium_Isolated, PCR_primers,
 							Accession_number, Gram_stain, Extraction_date,
 							Extraction_notes, PCR, PCR_Notes, PCR_Clean_up_date,
@@ -127,6 +127,11 @@ def bv_results():
 							from exam where bv = ?""",
 							[request.form['option']], one = False)
 	return render_template('bv_results.html', entries = entries) 
+
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('404.html'), 404
+
 
 @app.route('/logout')
 def logout():
