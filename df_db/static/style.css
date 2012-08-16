@@ -9,6 +9,7 @@ h2          { font-size: 1.2em; }
                 padding: 0.8em; background: white; }
 .entries    { list-style: none; margin: 0; padding: 0; }
 .entries li { margin: 0.8em 1.2em; }
+.bventries li { margin: 0.8em 1.2em; width: 200px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }
 .isolate_results { margin: 0.8em 1.2em; width:1000px; word-wrap:break-word; display: inline-block; }
 .add-entry  { font-size: 0.9em; border-bottom: 1px solid #ccc; }

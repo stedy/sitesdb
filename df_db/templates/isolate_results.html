@@ -2,7 +2,6 @@
 {% block body %}
   {% if session.logged_in %}
     <ul class=metanav>
-<a href="{{ url_for('query') }}">New query</a> <a href="{{ url_for('add_indiv') }}">Add entry</a>
 </ul>
     {% endif %}   
     <ul class=isolate_results>
@@ -30,7 +29,7 @@
 	<b>Sequencing Notes:</b> {{ entry.Sequencing_notes }} <br>
 	<b>Phyla:</b> {{ entry.Phyla }} <br>
 	<b>Gaps:</b> {{ entry.Gaps }}<br> 
-	<b>Genbank BLAST bm Accession number:</b> {{ entry.Accession_number }}<br>
+	<b>Genbank BLAST bm Accession number:</b> <a href="http://www.ncbi.nlm.nih.gov/nuccore/{{ entry.Accession_number }}">{{ entry.Accession_number }}</a><br>
 	<b>Fredricks DB Blast:</b> {{ entry.FredricksDB_BLAST }}<br> 
 	<br>
 	<b>Sequence:</b> {{ entry.Sequence }}<br> 

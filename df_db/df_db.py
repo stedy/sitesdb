@@ -89,6 +89,10 @@ def query():
 def isolate_query():
 			return render_template('isolate_query.html') 
 
+@app.route('/bv_query') 
+def bv_query():
+			return render_template('bv_query.html') 
+
 @app.route('/results', methods = ['GET', 'POST'])
 
 def results():
@@ -115,6 +119,14 @@ def isolate_results():
 							[request.form['Isolate']], one = False)
 	return render_template('isolate_results.html', entries = entries) 
 
+
+@app.route('/bv_results', methods = ['GET', 'POST'])
+def bv_results():
+	if request.form['option']:
+		entries = query_db("""select ID, bv, visit, visitdt
+							from exam where bv = ?""",
+							[request.form['option']], one = False)
+	return render_template('bv_results.html', entries = entries) 
 
 @app.route('/logout')
 def logout():

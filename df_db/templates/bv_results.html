@@ -4,16 +4,16 @@
     <ul class=metanav>
 </ul>
     {% endif %}   
-    <ul class=entries>
-	<h2>Patient ID: {{ id }}</h2>
+    <ul class=bventries>
+	<li><b>ID Number</b></li>
+	<li><b>Visit Number</b></li>
+	<li><b>Visit Date</b></li>
+	<li><b>BV status</b></li>
         {% for entry in entries %}
-	<li><h2>{{ entry.visitdt }}</h2> <b>visit:</b> {{entry.visit}}
-        <br>
-	<b>dxnotes:</b> {{ entry.dxnotes }}<br>
-	<br>
-	<b>stddx:</b> {{ entry.stddx }} <br>
-	<b>cvexam:</b> {{ entry.cvexam }}<br>
-	<b>cvnotes:</b> {{ entry.cvnotes }}<br> 
+	<li>{{ entry.id }}</li>
+	<li>{{entry.visit}}</li>
+	<li>{{ entry.visitdt }}</li>
+	<li>{{ entry.bv }}</li>
 	{% else %}
 	<br></br>
 	<h2>Sad panda is sad because that file could not be found</h2>
