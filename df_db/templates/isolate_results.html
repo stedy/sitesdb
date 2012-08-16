@@ -8,7 +8,7 @@
         <h1> {{ entries[0].Isolate }} </h1>
 	{% for entry in entries %}
 	<br>
-	<b>ID:</b> {{ entry.Subject_ID }}</br>
+	<b>ID: </b><a href="{{ url_for('id_results', id_number = entry.Subject_ID)}}">{{ entry.Subject_ID }}</a></br>
 	<b>Visit:</b> {{ entry.Visit }}</br>
 	<b>Site:</b> {{ entry.Site }}</br>
 	<b>Amsels:</b> {{ entry.Amsels }}<br>

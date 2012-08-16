@@ -1,6 +1,6 @@
-body        { font-family: sans-serif; background: #eee; }
+body        { font-family: 'Verdana', sans-serif; background: #eee; }
 a, h1, h2   { colorL #377BA8; }
-h1, h2      { font-family: 'Georgia', serif; margin: 0; }
+h1      { font-family: 'Century Gothic', sans-serif; margin: 0; }
 h1          { border-bottom: 2px solid #eee; }
 h2          { font-size: 1.2em; }
 
@@ -9,6 +9,7 @@ h2          { font-size: 1.2em; }
                 padding: 0.8em; background: white; }
 .entries    { list-style: none; margin: 0; padding: 0; }
 .entries li { margin: 0.8em 1.2em; }
+.indiv.entries li h2 { margin: 0.8em 1.2em; font-family: 'symbol'; }
 .bventries li { margin: 0.8em 1.2em; width: 200px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }
 .isolate_results { margin: 0.8em 1.2em; width:1000px; word-wrap:break-word; display: inline-block; }

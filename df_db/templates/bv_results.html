@@ -10,7 +10,7 @@
 	<li><b>Visit Date</b></li>
 	<li><b>BV status</b></li>
         {% for entry in entries %}
-	<li>{{ entry.id }}</li>
+	<li><a href="{{ url_for('id_results', id_number= entry.id )}}">{{ entry.id }}</a>
 	<li>{{entry.visit}}</li>
 	<li>{{ entry.visitdt }}</li>
 	<li>{{ entry.bv }}</li>

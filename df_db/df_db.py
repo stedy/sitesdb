@@ -119,6 +119,16 @@ def isolate_results():
 							[request.form['Isolate']], one = False)
 	return render_template('isolate_results.html', entries = entries) 
 
+@app.route('/<id_number>')
+def id_results(id_number):
+	ids = str(id_number)
+	idnum = query_db("""select visit, visitdt, stddx, dxnotes, 
+						cvexam, cvnotes, visitdt, id from exam where id =?""", [ids])
+	if idnum is None:
+		about(404)
+	entries = idnum
+	return render_template('indiv.html', entries = entries)
+
 
 @app.route('/bv_results', methods = ['GET', 'POST'])
 def bv_results():
