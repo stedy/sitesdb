@@ -97,16 +97,17 @@ def bv_query():
 
 def results():
 	if request.form['visit']:
-         entries = query_db("""select visit, stddx, visitdt, dxnotes, cvexam, cvnotes from exam
+         entries = query_db("""select visit, stddx, visitdt, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam
 						    where id = ? and visit = ?""",
 						    [request.form['id'], request.form['visit']], one = False )
 	else:
-		entries = query_db('select visit, visitdt, stddx, dxnotes, cvexam, cvnotes from exam where id = ?',
+		entries = query_db('select visit, visitdt, stddx, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam where id = ?',
 							[request.form['id']], one = False )
         return render_template('get_results.html', id = request.form['id'], entries = entries)
 
 @app.route('/isolate_results', methods = ['GET', 'POST'])
 def isolate_results():
+	error = None
 	if request.form['Isolate']:
 		entries = query_db("""select Subject_ID, Visit, Site, Amsels, Isolate, Colony_Morphology,
 							Medium_Isolated, PCR_primers,
@@ -117,7 +118,11 @@ def isolate_results():
 							Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
 							Sequence from isolate where Isolate = ?""",
 							[request.form['Isolate']], one = False)
-	return render_template('isolate_results.html', entries = entries) 
+		return render_template('isolate_results.html', entries = entries) 
+	else:
+		error = "Must enter isolate name to search"
+		return render_template('isolate_query.html', error = error)
+		
 
 @app.route('/<id_number>')
 def id_results(id_number):
@@ -132,11 +137,15 @@ def id_results(id_number):
 
 @app.route('/bv_results', methods = ['GET', 'POST'])
 def bv_results():
+	error = None
 	if request.form['option']:
 		entries = query_db("""select ID, bv, visit, visitdt
 							from exam where bv = ?""",
 							[request.form['option']], one = False)
-	return render_template('bv_results.html', entries = entries) 
+		return render_template('bv_results.html', entries = entries) 
+	else:
+		error = "Must enter valid BV status to query"
+		return render_template('bv_query.html', error = error)
 
 @app.errorhandler(404)
 def page_not_found(e):
