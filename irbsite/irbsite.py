@@ -8,8 +8,8 @@ from contextlib import closing
 DATABASE = 'irb_db.db'
 DEBUG = True
 SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
+USERNAME = 'vidd_rulz'
+PASSWORD = 'test2012!'
 
 app = Flask(__name__)
 app.config.from_object(__name__)

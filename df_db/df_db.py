@@ -8,8 +8,8 @@ from contextlib import closing
 DATABASE = 'version1.db'
 DEBUG = True
 SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
+USERNAME = 'test'
+PASSWORD = 'pw-2012'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
