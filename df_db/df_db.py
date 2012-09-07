@@ -93,8 +93,13 @@ def isolate_query():
 def bv_query():
 			return render_template('bv_query.html') 
 
-@app.route('/results', methods = ['GET', 'POST'])
+@app.route('/image_results')
+def image_results():
+			return render_template('image_results.html')
 
+
+
+@app.route('/results', methods = ['GET', 'POST'])
 def results():
 	if request.form['visit']:
          entries = query_db("""select visit, stddx, visitdt, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam
@@ -118,7 +123,10 @@ def isolate_results():
 							Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
 							Sequence from isolate where Isolate = ?""",
 							[request.form['Isolate']], one = False)
-		return render_template('isolate_results.html', entries = entries) 
+		if entries is None:
+			abort(404)
+		else:
+			return render_template('isolate_results.html', entries = entries) 
 	else:
 		error = "Must enter isolate name to search"
 		return render_template('isolate_query.html', error = error)
