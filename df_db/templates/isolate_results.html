@@ -12,9 +12,9 @@
 	<b>Visit:</b> {{ entry.Visit }}</br>
 	<b>Site:</b> {{ entry.Site }}</br>
 	<b>Amsels:</b> {{ entry.Amsels }}<br>
-	<b>Colony Morphology:</b> {{ entry.Colony_Morphology }} <br>
+	<b>Colony Morphology:</b> {{ entry.Colony_Morphology }} <a href="{{ url_for('colonymorph_results')}}">image</a><br>
 	<b>Medium Isolated:</b> {{ entry.Medium_Isolated }} <br>
-	<b>Gram Stain:</b> {{ entry.Gram_stain }}<br>
+	<b>Gram Stain:</b> <a href="{{ url_for('gramstain_results') }}">{{ entry.Isolate }}</a><br>
 	<br>
 	<b>Extraction Date:</b> {{entry.Extraction_date }}<br>
 	<b>Extraction Notes:</b> {{entry.Extraction_notes }}<br>
@@ -35,6 +35,8 @@
 	<b>Fredricks DB Blast:</b> <a href="{{ url_for('image_results') }}">{{ entry.Isolate }}</a><br> 
 	<br>
 	<b>Sequence:</b> {{ entry.Sequence }}<br> 
-        {% endfor %}
+        <a href="isolateresults.csv">Download these results as CSV</a>
+	{% endfor %}
     </ul>
     {% endblock %}
+	

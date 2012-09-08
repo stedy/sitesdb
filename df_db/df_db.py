@@ -1,4 +1,5 @@
 import sqlite3
+import subprocess as sp
 from flask import Flask, request, session, g, redirect, url_for \
         , abort, render_template, flash
 
@@ -62,8 +63,6 @@ def login():
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
 	error = None
-#    if not session.get('logged in'):
-#        abort(401)
 	if request.form['id']:
 		g.db.execute('insert into exam (id, visit, stddx, dxnotes, cvexam, visitdt, cvnotes)' \
 				'values (?, ?, ?, ?, ?, ?, ?)',
@@ -98,17 +97,29 @@ def image_results():
 			return render_template('image_results.html')
 
 
+@app.route('/gramstain_results')
+def gramstain_results():
+			return render_template('gramstain_results.html')
+
+@app.route('/colonymorph_results')
+def colonymorph_results():
+			return render_template('colonymorph_results.html')
 
 @app.route('/results', methods = ['GET', 'POST'])
 def results():
+	error = None
 	if request.form['visit']:
          entries = query_db("""select visit, stddx, visitdt, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam
 						    where id = ? and visit = ?""",
 						    [request.form['id'], request.form['visit']], one = False )
+#        return render_template('get_results.html', id = request.form['id'], entries = entries)
+#	if request.form['visit'] and request.form['id']:
 	else:
 		entries = query_db('select visit, visitdt, stddx, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam where id = ?',
 							[request.form['id']], one = False )
         return render_template('get_results.html', id = request.form['id'], entries = entries)
+#	else:
+#		return render_template('/results', error = error)
 
 @app.route('/isolate_results', methods = ['GET', 'POST'])
 def isolate_results():
@@ -123,10 +134,10 @@ def isolate_results():
 							Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
 							Sequence from isolate where Isolate = ?""",
 							[request.form['Isolate']], one = False)
-		if entries is None:
-			abort(404)
-		else:
-			return render_template('isolate_results.html', entries = entries) 
+		#add function for getting results
+		isolate = str(request.form['Isolate'])
+		call = sp.call(["./isolatesql.sh", isolate])	
+		return render_template('isolate_results.html', entries = entries) 
 	else:
 		error = "Must enter isolate name to search"
 		return render_template('isolate_query.html', error = error)

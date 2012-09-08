@@ -2,3 +2,5 @@
 *.scf
 *.jpg
 *.pdf
+/static/gram_stain
+*.csv
