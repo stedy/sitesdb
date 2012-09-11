@@ -26,7 +26,7 @@
 	<br>
 	<b>Sequence Length (bp):</b> {{ entry.Sequence_Length_bp }}<br> 
 	<b>Genbank BLAST bm: </b> {{ entry.GenBank_BLAST_bm }}<br>
-	<b>BLAST: </b> {{ entry.BLAST }}<br>
+	<b>BLAST best match:</b> {{ entry.BLAST_bm }}<br>
 	<b>Blast Date:</b> {{ entry.BLAST_Date }} <br>
 	<b>Sequencing Notes:</b> {{ entry.Sequencing_notes }} <br>
 	<b>Phyla:</b> {{ entry.Phyla }} <br>
@@ -35,7 +35,6 @@
 	<b>Fredricks DB Blast:</b> <a href="{{ url_for('image_results') }}">{{ entry.Isolate }}</a><br> 
 	<br>
 	<b>Sequence:</b> {{ entry.Sequence }}<br> 
-        <a href="isolateresults.csv">Download these results as CSV</a>
 	{% endfor %}
     </ul>
     {% endblock %}
