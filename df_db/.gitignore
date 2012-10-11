@@ -4,3 +4,4 @@
 *.pdf
 /static/gram_stain
 *.csv
+converted_image_files
