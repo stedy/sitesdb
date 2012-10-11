@@ -112,8 +112,6 @@ def results():
          entries = query_db("""select visit, stddx, visitdt, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam
 						    where id = ? and visit = ?""",
 						    [request.form['id'], request.form['visit']], one = False )
-#        return render_template('get_results.html', id = request.form['id'], entries = entries)
-#	if request.form['visit'] and request.form['id']:
 	else:
 		entries = query_db('select visit, visitdt, stddx, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam where id = ?',
 							[request.form['id']], one = False )
