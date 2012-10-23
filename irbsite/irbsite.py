@@ -11,7 +11,6 @@ SECRET_KEY = 'development key'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-
 app.config.from_envvar('IRB_DB_SETTINGS', silent = True)
 
 def connect_db():
@@ -41,10 +40,15 @@ def query_db(query, args=(), one = False):
 @app.before_request
 def before_request():
     g.db = connect_db()
+    g.user = None
+    if 'user_id' in session:
+        g.user = query_db('select * from user where user_id = ?',
+                            [session['user_id']], one = True)
 
 @app.teardown_request
 def teardown_request(exception):
-    g.db.close()
+    if hasattr(g, 'db'):
+        g.db.close()
 
 
 @app.route('/', methods = ['GET', 'POST'])

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if error %}<p class=error><strong>Error:</strong> {{ error }} {% endif %}
-  {% if session.logged_in %}
+  {% if g.user %}
     <form action="{{ url_for('pi_results') }}" method=post class=test>
 	<dl>
 	    <dt>PI Name:

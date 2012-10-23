@@ -7,7 +7,8 @@
     <ul class=entries>
 	<h2>{{ entries[0].Title }}</h2>
 	<br>
-	<h2>Protocol: {{ entries[0].Protocol }}	IR File: {{ entries[0].IR_file }}</h2>
+  <h2>Protocol: <a href="{{ url_for('id_results', id_number=entries[0].Protocol )}}">{{ entries[0].Protocol }}</a>
+    IR File: {{ entries[0].IR_file }}</h2>
         <li><b>Report ID</li>
 	<li>Reported Reaction</li>
 	<li>Report Date</b></li>

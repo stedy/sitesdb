@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 	{{ error }}
-  {% if session.logged_in %}
+  {% if g.user %}
     <form action="{{ url_for('title_results') }}" method=post class=test>
 	<dl>
 	    <dt>Title keywords:

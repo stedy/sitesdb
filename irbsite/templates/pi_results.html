@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if session.logged_in %}
+  {% if g.user %}
     <ul class=metanav>
     </ul>
     {% endif %}

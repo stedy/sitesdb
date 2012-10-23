@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if session.logged_in %}
+  {% if g.user %}
     {% block script %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
     <script type="text/javascript" src="/static/datefun.js"></script>
     {% endblock %}
     <ul class=metanav>
     </ul>    
-    {% endif %}   
     <ul class=funding_entries>
 	<form action="{{ url_for('add_funding') }}" method=post class=addfunding>
 	<h2>{{ entries[0].Title }}</h2>
@@ -53,4 +52,5 @@
     </ul>
 	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> |
 	<a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
+    {% endif %}   
     {% endblock %}
