@@ -3,7 +3,6 @@
   {% if g.user %}
     <ul class=metanav>
     </ul>    
-    {% endif %}   
     <ul class=results>
         {% for entry in entries %}
 	<h2>{{ entry.Title }}</h2> 
@@ -29,4 +28,5 @@
 	<img src="/static/sad_panda.jpg" >
         {% endfor %}
     </ul>
+    {% endif %}   
     {% endblock %}

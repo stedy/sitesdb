@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if session.logged_in %}
+  {% if g.user %}
     <ul class=metanav>
     </ul>    
-    {% endif %}   
     <ul class=entries>
 	<h2>{{ entries[0].Title }}</h2>
 	<br>
@@ -23,5 +22,6 @@
         {% endfor %}
     </ul>
 	<a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a> |
-	<a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
-    {% endblock %}
+  <a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
+  {% endif %}
+  {% endblock %}
