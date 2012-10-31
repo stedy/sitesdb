@@ -20,15 +20,18 @@ def main():
 	vals = []
 	for x in files:
 	    k = files[i:len(files)]
-	    images = k[0:3]
+	    images = k[0:5]
 	    if len(images):
 	        vals.append(images)
-	    i += 3
+	    i += 5
 	for v in vals:
 	    root = v[0].split("_")[0]
-	    shargs = ['montage -mode concatenate -font Helvetica -tile 1x %s %s %s %s' %
-	        (args.input_path+"/"+v[0], args.input_path+"/"+v[1], args.input_path+"/"+v[2],
-	            args.output_path+"/"+root+'.jpg')]
+	    shargs = ['montage -mode concatenate -font Helvetica -tile 1x %s %s %s \
+                  %s %s %s' %
+	        (args.input_path+v[0], args.input_path+v[1], args.input_path+v[2],
+	            args.input_path+v[3], 
+                args.input_path+v[4],
+                args.output_path+root+'.jpg')]
 	    print shargs
         sh.Popen(shargs, shell = True)
 	

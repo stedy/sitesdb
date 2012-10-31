@@ -3,8 +3,8 @@
   {% if session.logged_in %}
     <ul class=metanav>
 </ul>
-    {% endif %}   
-    <h1>DNF00007</h1>
-	<img src="static/DNF00007.jpg" width=950px>
-    </ul>
+{% endif %}   
+  <ul><h1>{{ entries.Isolate }}</h1>
+    <img src='/{{ entries.path }}' width=950px>
+  </ul>
     {% endblock %}

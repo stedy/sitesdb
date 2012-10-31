@@ -32,7 +32,7 @@
 	<b>Phyla:</b> {{ entry.Phyla }} <br>
 	<b>Gaps:</b> {{ entry.Gaps }}<br> 
 	<b>Genbank BLAST bm Accession number:</b> <a href="http://www.ncbi.nlm.nih.gov/nuccore/{{ entry.Accession_number }}">{{ entry.Accession_number }}</a><br>
-	<b>Fredricks DB Blast:</b> <a href="{{ url_for('image_results') }}">{{ entry.Isolate }}</a><br> 
+	<b>Fredricks DB Blast:</b> <a href="{{ url_for('isolate_results_tf', isolate_number= entries[0].Isolate) }}">{{ entry.Isolate }}</a><br> 
 	<br>
 	<b>Sequence:</b> {{ entry.Sequence }}<br> 
 	{% endfor %}

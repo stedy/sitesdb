@@ -151,6 +151,16 @@ def id_results(id_number):
 	entries = idnum
 	return render_template('indiv.html', entries = entries)
 
+@app.route('/<isolate_number>/tracefile')
+def isolate_results_tf(isolate_number):
+    iid = str(isolate_number)
+    entries = query_db("""select Isolate, path from tracefile where Isolate = ?""",
+            [iid], one = True)
+    #if entries is None:
+    #    abort(404)
+    print entries
+    return render_template('image_results.html', entries = entries)
+
 
 @app.route('/bv_results', methods = ['GET', 'POST'])
 def bv_results():
