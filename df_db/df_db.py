@@ -132,13 +132,16 @@ def isolate_results():
 							Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
 							Sequence from isolate where Isolate = ?""",
 							[request.form['Isolate']], one = False)
-		#add function for getting results
-		isolate = str(request.form['Isolate'])
-		call = sp.call(["./isolatesql.sh", isolate])	
-		return render_template('isolate_results.html', entries = entries) 
-	else:
-		error = "Must enter isolate name to search"
-		return render_template('isolate_query.html', error = error)
+        if len(entries) == 0:
+            error = "No isolates in database for that ID"
+            return render_template('isolate_query.html', entries = entries, error = error) 
+        else:
+            #add function for getting results
+		    isolate = str(request.form['Isolate'])
+		    call = sp.call(["./isolatesql.sh", isolate])	
+		    return render_template('isolate_results.html', entries = entries)
+#		error = "Must enter isolate name to search"
+#		return render_template('isolate_query.html', entries = entries, error = error)
 		
 
 @app.route('/<id_number>')
