@@ -5,3 +5,4 @@
 /static/gram_stain
 *.csv
 converted_image_files
+image_processing

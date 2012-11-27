@@ -123,14 +123,18 @@ def results():
 def isolate_results():
 	error = None
 	if request.form['Isolate']:
-		entries = query_db("""select Subject_ID, Visit, Site, Amsels, Isolate, Colony_Morphology,
+		entries = query_db("""SELECT DISTINCT Subject_ID, Visit, Site, Amsels, Isolate, Colony_Morphology,
 							Medium_Isolated, PCR_primers,
-							Accession_number, Gram_stain, Extraction_date,
+							isolate.Accession_number, Gram_stain, Extraction_date,
 							Extraction_notes, PCR, PCR_Notes, PCR_Clean_up_date,
 							PCR_Clean_up_Kit, Sequence_length_bp,
 							GenBank_BLAST_bm, BLAST_bm, BLAST_date, 
 							Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
-							Sequence from isolate where Isolate = ?""",
+							Sequence, taxorder, taxfamily, taxgenus
+                            from isolate, linker, lineage WHERE
+                            isolate.Accession_number = linker.Accession_number
+                            and lineage.tax_id = linker.tax_id and
+                            isolate.Isolate = ?""",
 							[request.form['Isolate']], one = False)
         if len(entries) == 0:
             error = "No isolates in database for that ID"
