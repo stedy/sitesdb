@@ -11,7 +11,8 @@ h2          { font-size: 1.2em; }
 .indiv.entries li h2 { margin: 0.8em 1.2em; font-family: 'symbol'; }
 .bventries li { margin: 0.8em 1.2em; width: 200px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }
-.isolate_results { margin: 0.8em 1.2em; width:1000px; word-wrap:break-word; display: inline-block; }
+.isolate_results { margin: 0.8em 0.8em; width:1000px; word-wrap:break-word; display: inline-block; }
+.order_results li { margin: 0.8em 1.2em; width: 167px; display: inline-block; }
 .add-entry  { font-size: 0.9em; border-bottom: 1px solid #ccc; }
 .add-entry dl { font-weight: bold; }
 .metanav    { text-align: right; font-size: 0.8em; padding: 0.3em;

@@ -96,7 +96,6 @@ def bv_query():
 def image_results():
 			return render_template('image_results.html')
 
-
 @app.route('/gramstain_results')
 def gramstain_results():
 			return render_template('gramstain_results.html')
@@ -109,11 +108,11 @@ def colonymorph_results():
 def results():
 	error = None
 	if request.form['visit']:
-         entries = query_db("""select visit, stddx, visitdt, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam
+         entries = query_db("""SELECT visit, stddx, visitdt, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam
 						    where id = ? and visit = ?""",
 						    [request.form['id'], request.form['visit']], one = False )
 	else:
-		entries = query_db('select visit, visitdt, stddx, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam where id = ?',
+		entries = query_db('SELECT visit, visitdt, stddx, ectopy, cvamt, dxnotes, cvexam, cvnotes from exam where id = ?',
 							[request.form['id']], one = False )
         return render_template('get_results.html', id = request.form['id'], entries = entries)
 #	else:
@@ -131,9 +130,9 @@ def isolate_results():
 							GenBank_BLAST_bm, BLAST_bm, BLAST_date, 
 							Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
 							Sequence, taxorder, taxfamily, taxgenus
-                            from isolate, linker, lineage WHERE
+                            FROM isolate, linker, lineage WHERE
                             isolate.Accession_number = linker.Accession_number
-                            and lineage.tax_id = linker.tax_id and
+                            AND lineage.tax_id = linker.tax_id and
                             isolate.Isolate = ?""",
 							[request.form['Isolate']], one = False)
         if len(entries) == 0:
@@ -151,17 +150,17 @@ def isolate_results():
 @app.route('/<id_number>')
 def id_results(id_number):
 	ids = str(id_number)
-	idnum = query_db("""select visit, visitdt, stddx, dxnotes, 
+	idnum = query_db("""SELECT visit, visitdt, stddx, dxnotes, 
 						cvexam, cvnotes, visitdt, id from exam where id =?""", [ids])
 	if idnum is None:
-		about(404)
+		abort(404)
 	entries = idnum
 	return render_template('indiv.html', entries = entries)
 
 @app.route('/<isolate_number>/tracefile')
 def isolate_results_tf(isolate_number):
     iid = str(isolate_number)
-    entries = query_db("""select Isolate, path from tracefile where Isolate = ?""",
+    entries = query_db("""SELECT Isolate, path from tracefile where Isolate = ?""",
             [iid], one = True)
     return render_template('image_results.html', entries = entries)
 
@@ -170,13 +169,41 @@ def isolate_results_tf(isolate_number):
 def bv_results():
 	error = None
 	if request.form['option']:
-		entries = query_db("""select ID, bv, visit, visitdt
+		entries = query_db("""SELECT ID, bv, visit, visitdt
 							from exam where bv = ?""",
 							[request.form['option']], one = False)
 		return render_template('bv_results.html', entries = entries) 
 	else:
 		error = "Must enter valid BV status to query"
 		return render_template('bv_query.html', error = error)
+
+@app.route('/order/<taxorder>', methods = ['GET', 'POST'])
+def order_query(taxorder):
+    entries = query_db("""SELECT Isolate, GenBank_BLAST_bm,
+                        isolate.Accession_number, taxorder, taxgenus, taxfamily FROM isolate,
+                        linker, lineage where isolate.Accession_number = linker.Accession_number
+                        and linker.tax_id = lineage.tax_id and lineage.taxorder = ?""",
+                        [taxorder], one = False)
+    return render_template('tax_results.html', entries = entries)
+
+@app.route('/family/<taxfamily>', methods = ['GET', 'POST'])
+def family_query(taxfamily):
+    entries = query_db("""SELECT Isolate, GenBank_BLAST_bm,
+                        isolate.Accession_number, taxorder, taxgenus, taxfamily FROM isolate,
+                        linker, lineage where isolate.Accession_number = linker.Accession_number
+                        and linker.tax_id = lineage.tax_id and
+                        lineage.taxfamily = ?""",
+                        [taxfamily], one = False)
+    return render_template('tax_results.html', entries = entries)
+
+@app.route('/genus/<taxgenus>', methods = ['GET', 'POST'])
+def genus_query(taxgenus):
+    entries = query_db("""SELECT Isolate, GenBank_BLAST_bm,
+                        isolate.Accession_number, taxorder, taxgenus, taxfamily FROM isolate,
+                        linker, lineage where isolate.Accession_number = linker.Accession_number
+                        and linker.tax_id = lineage.tax_id and lineage.taxgenus = ?""",
+                        [taxgenus], one = False)
+    return render_template('tax_results.html', entries = entries)
 
 @app.errorhandler(404)
 def page_not_found(e):

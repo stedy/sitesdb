@@ -30,7 +30,10 @@
 	<b>Blast Date:</b> {{ entry.BLAST_Date }} <br>
 	<b>Sequencing Notes:</b> {{ entry.Sequencing_notes }} <br>
 	<b>Phyla:</b> {{ entry.Phyla }} <br>
-	<b>Gaps:</b> {{ entry.Gaps }}<br> 
+  <b>Genbank Taxonomy:</b> <a href="{{ url_for('order_query', taxorder = entry.taxorder)}}">{{ entry.taxorder }}</a> / 
+    <a href="{{ url_for('family_query', taxfamily = entry.taxfamily)}}">{{ entry.taxfamily }}</a> / 
+    <a href="{{ url_for('genus_query', taxgenus = entry.taxgenus)}}">{{ entry.taxgenus }}</a><br>
+  <b>Gaps:</b> {{ entry.Gaps }}<br> 
 	<b>Genbank BLAST bm Accession number:</b> <a href="http://www.ncbi.nlm.nih.gov/nuccore/{{ entry.Accession_number }}">{{ entry.Accession_number }}</a><br>
 	<b>Fredricks DB Blast:</b> <a href="{{ url_for('isolate_results_tf', isolate_number= entries[0].Isolate) }}">{{ entry.Isolate }}</a><br> 
 	<br>
