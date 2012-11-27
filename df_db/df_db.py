@@ -179,6 +179,7 @@ def bv_results():
 
 @app.route('/order/<taxorder>', methods = ['GET', 'POST'])
 def order_query(taxorder):
+    #taxorder = str(taxorder)
     entries = query_db("""SELECT Isolate, GenBank_BLAST_bm,
                         isolate.Accession_number, taxorder, taxgenus, taxfamily FROM isolate,
                         linker, lineage where isolate.Accession_number = linker.Accession_number
