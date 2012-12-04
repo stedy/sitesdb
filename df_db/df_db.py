@@ -159,11 +159,17 @@ def id_results(id_number):
 
 @app.route('/<isolate_number>/tracefile')
 def isolate_results_tf(isolate_number):
+    error = None
     iid = str(isolate_number)
     entries = query_db("""SELECT Isolate, path from tracefile where Isolate = ?""",
             [iid], one = True)
-    return render_template('image_results.html', entries = entries)
-
+    if entries == None:
+        error = "No tracefile for this isolate"
+        return render_template('image_results.html', entries = entries, error =
+                error)
+    else:
+        return render_template('image_results.html', entries = entries, error =
+                error)
 
 @app.route('/bv_results', methods = ['GET', 'POST'])
 def bv_results():

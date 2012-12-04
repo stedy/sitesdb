@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
+{% if error %}<p class=error><strong>Error:</strong> {{ error }} {% endif %}
   {% if session.logged_in %}
     <ul class=metanav>
 </ul>
 {% endif %}   
-  <ul><h1>{{ entries.Isolate }}</h1>
+<ul><h1>{{ entries.Isolate }}</h1>
     <img src='/{{ entries.path }}' width=950px>
   </ul>
     {% endblock %}

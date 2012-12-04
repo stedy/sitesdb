@@ -3,7 +3,6 @@
   {% if session.logged_in %}
     <ul class=metanav>
 </ul>
-    {% endif %}   
     <ul class=indiv.entries>
 	<h2>Patient ID: {{ entries[0].id }}</h2>
         {% for entry in entries %}
@@ -17,4 +16,8 @@
         <br></br>
 	{% endfor %}
     </ul>
+    {% endif %}
+  {% if not session.logged_in %}
+    Please login to continue
+    {% endif %}
     {% endblock %}

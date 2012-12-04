@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <ul class=metanav>
-</ul>
-    {% endif %}   
     <ul class=entries>
 	<h2>Patient ID: {{ id }}</h2>
         {% for entry in entries %}
@@ -17,5 +14,7 @@
 	<b>cvamt:</b> {{ entry.cvamt }}<br> 
 	<b>ectopy:</b> {{ entry.ectopy }}<br> 
         {% endfor %}
-    </ul>
+      </ul>
+    {% endif %}   
+
     {% endblock %}
