@@ -3,7 +3,6 @@
   {% if session.logged_in %}
     <ul class=metanav>
 </ul>
-  {% endif %}
 <ul class=order_results>
 	<h3>Organisms matching x at organism level </h3>
   <b><li>Isolate</li>
@@ -19,4 +18,5 @@
   <li>{{ entry.GenBank_BLAST_bm }}</li>
         {% endfor %}
     </ul>
+  {% endif %}
     {% endblock %}

@@ -3,7 +3,6 @@
   {% if session.logged_in %}
     <ul class=metanav>
 </ul>
-    {% endif %}   
     <ul class=isolate_results>
         <h1> {{ entries[0].Isolate }} </h1>
 	{% for entry in entries %}
@@ -40,5 +39,6 @@
 	<b>Sequence:</b> {{ entry.Sequence }}<br> 
 	{% endfor %}
     </ul>
+    {% endif %}   
     {% endblock %}
 	
