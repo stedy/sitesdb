@@ -11,7 +11,7 @@
   <li>Genus</li>
   <li>Genbank BLAST bm</li></b>
     {% for entry in entries %}
-	<li>{{ entry.Isolate }}</li> 
+    <li><a href="{{ url_for('individual_isolate', isolate_number = entry.Isolate)}}">{{ entry.Isolate }}</a></li> 
   <li><a href="{{ url_for('order_query', taxorder = entry.taxorder)}}">{{ entry.taxorder }}</a></li>
   <li><a href="{{ url_for('family_query', taxfamily = entry.taxfamily)}}">{{ entry.taxfamily }}</a></li>
   <li><a href="{{ url_for('genus_query', taxgenus = entry.taxgenus)}}">{{ entry.taxgenus }}</a></li>

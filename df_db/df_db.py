@@ -147,7 +147,7 @@ def isolate_results():
 #		return render_template('isolate_query.html', entries = entries, error = error)
 		
 
-@app.route('/<id_number>')
+@app.route('/exam/<id_number>')
 def id_results(id_number):
 	ids = str(id_number)
 	idnum = query_db("""SELECT visit, visitdt, stddx, dxnotes, 
@@ -157,7 +157,24 @@ def id_results(id_number):
 	entries = idnum
 	return render_template('indiv.html', entries = entries)
 
-@app.route('/<isolate_number>/tracefile')
+@app.route('/<isolate_number>')
+def individual_isolate(isolate_number):
+	entries = query_db("""SELECT DISTINCT Subject_ID, Visit, Site, Amsels, Isolate, Colony_Morphology,
+						Medium_Isolated, PCR_primers,
+						isolate.Accession_number, Gram_stain, Extraction_date,
+						Extraction_notes, PCR, PCR_Notes, PCR_Clean_up_date,
+						PCR_Clean_up_Kit, Sequence_length_bp,
+						GenBank_BLAST_bm, BLAST_bm, BLAST_date, 
+						Sequencing_notes, Phyla, Gaps, FredricksDB_BLAST,
+						Sequence, taxorder, taxfamily, taxgenus
+                        FROM isolate, linker, lineage WHERE
+                        isolate.Accession_number = linker.Accession_number
+                            AND lineage.tax_id = linker.tax_id and
+                            isolate.Isolate = ?""",
+							[isolate_number], one = False)
+	return render_template('isolate_results.html', entries = entries)
+
+@app.route('/tracefile/<isolate_number>')
 def isolate_results_tf(isolate_number):
     error = None
     iid = str(isolate_number)
