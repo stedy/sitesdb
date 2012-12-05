@@ -4,13 +4,14 @@ from flask import Flask, request, session, g, redirect, url_for \
         , abort, render_template, flash
 
 from contextlib import closing
+from werkzeug import check_password_hash, generate_password_hash
 
 #DATABASE = '/tmp/zflask.db'
 DATABASE = 'version1.db'
 DEBUG = True
 SECRET_KEY = 'development key'
-USERNAME = 'test'
-PASSWORD = 'pw-2012'
+#USERNAME = 'test'
+#PASSWORD = 'pw-2012'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -49,9 +50,12 @@ def teardown_request(exception):
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
+        user = query_db('''SELECT * from user where username = ?''',
+                request.form['username'], one = True)
+        if user is None:
             error = "Invalid Username"
-        elif request.form['password'] != app.config['PASSWORD']:
+        elif not check_password_hash(user['password'],
+            request.form['password']):
             error = "Invalid Password"
         else:
             session['logged_in'] = True
@@ -59,6 +63,27 @@ def login():
             return redirect(url_for('query'))
     return render_template('login.html', error = error)
 
+@app.route('/add_user', methods=['GET', 'POST'])
+def add_user():
+    error = None
+    if request.method == 'POST':
+        if not request.form['username']:
+            error = 'You must enter username'
+        elif not request.form['email'] or \
+                '@' not in request.form['email']:
+                    error = 'Please enter valid email'
+        elif not request.form['password']:
+            error = 'You must enter a password'
+        else:
+            db = connect_db()
+            db.execute('''INSERT INTO user (username, fullname, email, password)
+                        values (?,?,?,?)''', [request.form['username'],
+                            request.form['fullname'], request.form['email'],
+                            generate_password_hash(request.form['password'])])
+            db.commit()
+            flash('User added')
+            return redirect(url_for('login'))
+    return render_template('add_user.html', error = error)
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():

@@ -14,19 +14,24 @@ class df_dbTestCase(unittest.TestCase):
         os.close(self.db_fd)
         os.unlink(df_db.app.config['DATABASE'])
 
-	def test_add(self):
-		self.login('admin', 'default')
-		rv = self.app.post('/add_form', data=dict(
-			id= '20000', 
-			visit = 'F1', 
-			stddx = '0', 
-			dxnotes = '', 
-			cvexam = '1', 
-			visitdt = '15-Apr-11', 
-			cvnotes = 'normal'), follow_redirects = True)
-		assert '20000' in rv.data
-		assert 'blog_titles' not in rv.data
+    def login(self, username, password):
+        return self.app.post("/", data = dict(
+            username="test",
+            password="pw-2012"
+            ), follow_redirects = True)
 
+    def logout(self):
+        return self.app.get('/logout', follow_redirects=True)
+
+    def test_login_logout(self):
+        rv = self.login('admin', 'default')
+        assert 'You were logged in' in rv.data
+        rv = self.logout()
+        assert 'You were logged out' in rv.data
+        rv = self.login('adminx', 'default')
+        assert 'Invalid username' in rv.data
+        rv = self.login('admin', 'defaultx')
+        assert 'Invalid password' in rv.data
 
 
 if __name__ == '__main__':
