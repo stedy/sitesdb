@@ -143,18 +143,16 @@ def isolate_results():
 		    isolate = str(request.form['Isolate'])
 		    call = sp.call(["./isolatesql.sh", isolate])	
 		    return render_template('isolate_results.html', entries = entries)
-#		error = "Must enter isolate name to search"
-#		return render_template('isolate_query.html', entries = entries, error = error)
-		
+
 
 @app.route('/exam/<id_number>')
 def id_results(id_number):
 	ids = str(id_number)
-	idnum = query_db("""SELECT visit, visitdt, stddx, dxnotes, 
+	entries = query_db("""SELECT visit, visitdt, stddx, dxnotes, 
 						cvexam, cvnotes, visitdt, id from exam where id =?""", [ids])
-	if idnum is None:
+	if entries is None:
 		abort(404)
-	entries = idnum
+	#entries = idnum
 	return render_template('indiv.html', entries = entries)
 
 @app.route('/<isolate_number>')

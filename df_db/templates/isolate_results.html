@@ -4,7 +4,7 @@
     <ul class=metanav>
 </ul>
     <ul class=isolate_results>
-        <h1> {{ entries[0].Isolate }} </h1>
+      <h1> {{ entries[0].Isolate }} </h1>
 	{% for entry in entries %}
 	<br>
 	<b>ID: </b><a href="{{ url_for('id_results', id_number = entry.Subject_ID)}}">{{ entry.Subject_ID }}</a></br>
@@ -40,5 +40,6 @@
 	{% endfor %}
     </ul>
     {% endif %}   
+      <a href="../isolateresults.csv" target="_blank">Download these results as a csv</a>
     {% endblock %}
 	
