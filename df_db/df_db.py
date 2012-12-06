@@ -51,7 +51,7 @@ def login():
     error = None
     if request.method == 'POST':
         user = query_db('''SELECT * from user where username = ?''',
-                request.form['username'], one = True)
+                request.form['username']) #, one = True)
         if user is None:
             error = "Invalid Username"
         elif not check_password_hash(user['password'],
