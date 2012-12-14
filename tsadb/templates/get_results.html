@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+    </ul>    
+    <ul class=results>
+        {% for entry in entries %}
+	<h2>{{ entry.urid }}</h2> 
+	<br></br>
+	<b>Patient/donor:</b> {{ entry.ptdon }}
+	<br>
+	<b>Research/clinical:</b> {{entry.resclin}}
+        <br>
+	<b>Source Collection:</b> {{ entry.sourcecoll }}<br>
+	<b>Sample Type:</b> {{ entry.sample_type }}<br>
+	<b>Accession Number:</b> {{ entry.accession_number }}<br>
+	<b>Collection Date:</b> {{ entry.coll_date }}<br>
+	{% else %}
+	<h2>Sad Panda is sad because protocol {{id}} does not exist</h2>
+	<br>
+	<img src="/static/sad_panda.jpg" >
+        {% endfor %}
+    </ul>
+    {% endif %}   
+    {% endblock %}

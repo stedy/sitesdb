@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('results') }}" method=post class=test>
+	<dl>
+	    <dt><b>IDS-URID:
+	    <input type=text size=10 name=urid>
+	    </textarea>
+	    <input type=submit value="Search by IDS-URID">
+	</dl>
+    </form>
+    {% endif %}   
+    <ul class=results>
+        <em>Search based on IDS-URID</em>
+    </ul>
+<div class=footer>
+</div>
+    {% endblock %}
