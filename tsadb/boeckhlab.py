@@ -73,9 +73,10 @@ def login():
 def results():
 	error = None
 	if request.form['urid']:
-		entries = query_db("""select urid, ptdon, resclin, sample_type,
-                        sourcecoll, accession_number, coll_date 
-						from main where urid = ?""",
+		entries = query_db("""select demo.urid, ptdon, resclin, sample_type,
+                        sourcecoll, accession_number, coll_date, tx1date,
+                        donor_tx1, ptname, signed999209
+						from main, demo where main.urid = demo.urid and demo.urid = ?""",
 						[request.form['urid']], one = False ) 
 		return render_template('get_results.html', id = request.form['urid'], entries
 							= entries)
