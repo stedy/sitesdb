@@ -75,8 +75,12 @@ def results():
 	if request.form['urid']:
 		entries = query_db("""select demo.urid, ptdon, resclin, sample_type,
                         sourcecoll, accession_number, coll_date, tx1date,
-                        donor_tx1, ptname, signed999209
-						from main, demo where main.urid = demo.urid and demo.urid = ?""",
+                        donor_tx1, ptname, signed999209, freezer, mainbox,
+                        main_cell, label_info, comments,
+                        current_location_freezer, current_location_box,
+                        current_location_cell 
+						from main, demo, repo_location where main.urid =
+                        demo.urid and repo_location.urid = main.urid and demo.urid = ?""",
 						[request.form['urid']], one = False ) 
 		return render_template('get_results.html', id = request.form['urid'], entries
 							= entries)

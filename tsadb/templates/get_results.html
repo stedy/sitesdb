@@ -19,7 +19,20 @@
 	<b>Transplant 1 Date:</b> {{ entry.tx1date }}<br>
 	<b>donor tx 1:</b> {{ entry.donor_tx1 }}<br>
 	<b>Signed 999.209:</b> {{ entry.signed999209 }}<br>
-	{% else %}
+  <br><br>
+  <h2>Sample Info</h2>
+  <b>Freezer:</b> {{ entry.freezer }}<br>
+  <b>Main Box:</b> {{ entry.mainbox }}<br>
+  <b>Main Cell:</b> {{ entry.main_cell }}<br>
+  <b>Label Info:</b> {{ entry.label_info }}<br>
+  <b>Comments:</b> {{ entry.comments }}<br>
+  <br><br>
+  <h2>Sample Current Information</h2>
+  <b>Current Location Freezer:</b> {{ entry.current_location_freezer }}<br>
+  <b>Current Location Box:</b> {{ entry.current_location_box }}<br>
+  <b>Current Location Cell:</b> {{ entry.current_location_cell }}<br>
+
+  {% else %}
 	<h2>Sad Panda is sad because protocol {{id}} does not exist</h2>
 	<br>
 	<img src="/static/sad_panda.jpg" >
