@@ -205,7 +205,7 @@ def isolate_results_tf(isolate_number):
     entries = query_db("""SELECT Isolate, path from tracefile where Isolate = ?""",
             [iid], one = True)
     if entries == None:
-        error = "No tracefile for this isolate"
+        error = "No tracefile for isolate %s" % iid
         return render_template('image_results.html', entries = entries, error =
                 error)
     else:
