@@ -18,8 +18,17 @@
 	<b>Dummy Tube Letter:</b> {{ entry.dummy_tubeletter }}<br>
 	<b>Dummy Tube Number:</b> {{ entry.dummy_tubenumber }}<br>
 	<b>Date Out:</b> {{ entry.date_out_repo }}<br>
-	<b>Shipped To:</b> {{ entry.shipped_to }}
-	<b>Where Shipped:</b> {{entry.where_shipped }}<br> 
+  <b>Shipped To:</b> {{ entry.shipped_to }}<br>
+  <b>Where Shipped:</b> {{entry.where_shipped }}<br>
+  <b>Date Shipped:</b> {{entry.date_shipped }}<br>
+  <b>Shipped by:</b> {{ entry.init_shipped }}<br>
+  <br><br>
+  <b>Returned to Purgatory:</b> {{ entry.date_return_purg }}<br>
+  <b>Initials returned to Purgatory:</b> {{ entry.init_in_purg }}<br>
+  <br><br>
+  <b>Returned to Repository:</b> {{ entry.date_return_repo }}<br>
+  <b>Initials returned to Repository:</b> {{ entry.init_return_repo }}<br>
+  <b>Voulme remaining in sample:</b> {{ entry.vol_remain}}<br>
 	<br>
 	{% else %}
 	<h2>This otter is disappointed because {{ funding }} has not funded any studies</h2>
