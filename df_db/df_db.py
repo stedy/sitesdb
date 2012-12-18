@@ -50,8 +50,9 @@ def teardown_request(exception):
 def login():
     error = None
     if request.method == 'POST':
+        name = request.form['username']
         user = query_db('''SELECT * from user where username = ?''',
-                request.form['username']) #, one = True)
+                [name], one = True)
         if user is None:
             error = "Invalid Username"
         elif not check_password_hash(user['password'],
