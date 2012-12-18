@@ -5,7 +5,7 @@
 <div class=page>
   <a href="{{ url_for('query') }}" style="text-decoration:none"><h1>Boeckh lab DB</h1></a>
     <div class=metanav>
-    {% if g.user %}
+    {% if session.logged_in %}
 	<a href="{{ url_for('query') }}">ID query</a> |
 	<a href="{{ url_for('logout') }}">log out</a> 
     {% else %}

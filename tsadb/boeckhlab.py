@@ -38,7 +38,7 @@ def query_db(query, args=(), one = False):
 		for idx, value in enumerate(row)) for row in cur.fetchall()]
 	return (rv[0] if rv else None) if one else rv
 
-#then add om decorators
+#then add some decorators
 
 @app.before_request
 def before_request():
@@ -87,6 +87,18 @@ def results():
 	else:
 		error = "Must have either ID number to search"
 		return render_template('subj_query.html', error=error)
+
+@app.route('/<ids_urid>', methods = ['GET', 'POST'])
+def sample_movement(ids_urid):
+    ids = str(ids_urid)
+    entries = query_db("""select urid, Project_ID, projectbox, projectcell,
+                        projectcomment, dummy_tubeletter, date_out_repo, init_out_repo, 
+                        shipped_to, where_shipped, date_shipped, init_shipped,
+                        date_return_purg, init_in_purg, date_return_repo,
+                        init_return_repo, vol_remain from sample_movement where
+                        urid =?""", [ids])
+    return render_template('sample_movement.html', entries = entries)
+
 
 @app.route('/query')
 def query():
