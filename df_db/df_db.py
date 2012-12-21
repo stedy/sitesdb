@@ -61,7 +61,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('query'))
+            return redirect(url_for('main'))
     return render_template('login.html', error = error)
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -106,9 +106,17 @@ def add_form():
 def add_indiv():
 			return render_template('add_indiv.html')
 
+#@app.route('/add_indiv')
+#def add_indiv():
+#			return render_template('add_indiv.html')
+
 @app.route('/query') 
 def query():
 			return render_template('subj_query.html') 
+
+@app.route('/main')
+def main():
+			return render_template('index.html') 
 
 @app.route('/isolate_query') 
 def isolate_query():
