@@ -6,7 +6,8 @@
         {% for entry in entries %}
     <style>
 	#table1 {width: 150px; height: 75px; text-align: center; cellspacing=10;}
-    </style>
+</style>
+    <p id="demo"></p>
     <table id="table1">
     <tr>   
 	<td id="td1"><h1>{{ entry.Protocol }}</h1></td>
@@ -15,18 +16,27 @@
 	<td id="td2"><h2>{{ entry.IR_file }}</h2></td>
     </tr>
     <tr>
-	<td id="td3"><h3>{{ entry.PI }}<h3></td>
+	<td id="td3"><h3>{{ entry.PI }}</h3></td>
     </tr>
     <tr>
 	<td id="td4"><h2>{{ entry.Title }}</h2></td>
     </tr>
     <tr>
-        <td id="td5"><h1>7</td>
+      <td id="td5"><b>
+          <script>
+            { var x;
+            var name = prompt("Please enter the binder number you want:");
+            if (name != null){
+              x= "Binder number "+ name;
+              document.getElementById("td5").innerHTML=x;
+            }
+          }
+          </script>
+      </td>
     </tr>
     <tr>
 	<td id="td6"><b>Committee</b> {{ entry.CTE }}</td>
     </tr>
 	
         {% endfor %}
-    </ul>
     {% endblock %}
