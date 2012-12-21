@@ -4,5 +4,6 @@
 *.pdf
 /static/gram_stain
 *.csv
+*.fasta
 converted_image_files
 image_processing

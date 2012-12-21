@@ -2,9 +2,8 @@
 {% block body %}
   {% if error %}<p class=error><strong>Error:</strong> {{ error }} {% endif %}
   {% if session.logged_in %}
-  <br><br>
-  Welcome to Fredrickslab database
   <br>
+  <h1>Welcome to Fredricks Lab database</h1>
   <br>
   <b>Searches available:</b><br>
 
@@ -13,13 +12,8 @@
   <a href="{{ url_for('isolate_query') }}">Search by isolate number</a><br>
   <br>
   <b>Utilities Available:</b><br>
-  Generate FASTA from existing sequences<br>
+  <a href="../current_seqs.fasta" target="_blank">Generate FASTA from existing sequences</a><br>
   Local BLAST search<br>
     {% endif %}
-    </div>
-    {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-    
-    {% endfor %}
     {% endblock %}
 </div>

@@ -5,6 +5,7 @@ from flask import Flask, request, session, g, redirect, url_for \
 
 from contextlib import closing
 from werkzeug import check_password_hash, generate_password_hash
+import generate_fasta as gf
 
 #DATABASE = '/tmp/zflask.db'
 DATABASE = 'version1.db'
@@ -62,6 +63,7 @@ def login():
             session['logged_in'] = True
             flash('You were logged in')
             return redirect(url_for('main'))
+            gf.main()
     return render_template('login.html', error = error)
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -105,10 +107,6 @@ def add_form():
 @app.route('/add_indiv')
 def add_indiv():
 			return render_template('add_indiv.html')
-
-#@app.route('/add_indiv')
-#def add_indiv():
-#			return render_template('add_indiv.html')
 
 @app.route('/query') 
 def query():
