@@ -16,6 +16,7 @@ h2          { font-size: 1.2em; }
 .entries li h2 { margin-left: -1em; }
 li.date { color : #888; } 
 li.past { color : #FF0000; } 
+td.td5 { font-size: 1.2em; }
 .results li { margin: 0.8em 1.2em; }
 .add-entry  { font-size: 0.9em; border-bottom: 1px solid #ccc; }
 .add-entry dl { font-weight: bold; }

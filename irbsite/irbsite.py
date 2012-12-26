@@ -106,7 +106,7 @@ def add_mod():
 			    [request.form['Protocol'], request.form['Date_to_IRB'], 
 				request.form['Description'], request.form['Comments']])
 		g.db.commit()
-		flash('New funding was successfully added')
+		flash('New modification for %s was successfully added' % request.form['Protocol'])
     else:
 		error = 'Must have Protocol number to add entry'
     return render_template('subj_query.html', error = error)
