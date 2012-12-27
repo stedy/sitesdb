@@ -233,29 +233,31 @@ def bv_results():
 @app.route('/order/<taxorder>', methods = ['GET', 'POST'])
 def order_query(taxorder):
     #taxorder = str(taxorder)
-    entries = query_db("""SELECT Isolate, GenBank_BLAST_bm,
+    entries = query_db("""SELECT DISTINCT Isolate, GenBank_BLAST_bm,
                         isolate.Accession_number, taxorder, taxgenus, taxfamily FROM isolate,
                         linker, lineage where isolate.Accession_number = linker.Accession_number
-                        and linker.tax_id = lineage.tax_id and lineage.taxorder = ?""",
+                        and linker.tax_id = lineage.tax_id and lineage.taxorder
+                        = ? order by Isolate ASC""",
                         [taxorder], one = False)
     return render_template('tax_results.html', entries = entries)
 
 @app.route('/family/<taxfamily>', methods = ['GET', 'POST'])
 def family_query(taxfamily):
-    entries = query_db("""SELECT Isolate, GenBank_BLAST_bm,
+    entries = query_db("""SELECT DISTINCT Isolate, GenBank_BLAST_bm,
                         isolate.Accession_number, taxorder, taxgenus, taxfamily FROM isolate,
                         linker, lineage where isolate.Accession_number = linker.Accession_number
                         and linker.tax_id = lineage.tax_id and
-                        lineage.taxfamily = ?""",
+                        lineage.taxfamily = ? ORDER BY Isolate ASC""",
                         [taxfamily], one = False)
     return render_template('tax_results.html', entries = entries)
 
 @app.route('/genus/<taxgenus>', methods = ['GET', 'POST'])
 def genus_query(taxgenus):
-    entries = query_db("""SELECT Isolate, GenBank_BLAST_bm,
+    entries = query_db("""SELECT DISTINCT Isolate, GenBank_BLAST_bm,
                         isolate.Accession_number, taxorder, taxgenus, taxfamily FROM isolate,
                         linker, lineage where isolate.Accession_number = linker.Accession_number
-                        and linker.tax_id = lineage.tax_id and lineage.taxgenus = ?""",
+                        and linker.tax_id = lineage.tax_id and lineage.taxgenus
+                        = ? ORDER BY Isolate ASC""",
                         [taxgenus], one = False)
     return render_template('tax_results.html', entries = entries)
 
