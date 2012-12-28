@@ -168,7 +168,7 @@ def isolate_results():
                             isolate.Isolate = ?""",
 							[request.form['Isolate']], one = False)
         if len(entries) == 0:
-            error = "No isolates in database for that ID"
+            error = "No isolates in database for %s" % request.form['Isolate']
             return render_template('isolate_query.html', entries = entries, error = error) 
         else:
             #add function for getting results
