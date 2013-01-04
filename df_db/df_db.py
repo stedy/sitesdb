@@ -6,6 +6,7 @@ from flask import Flask, request, session, g, redirect, url_for \
 from contextlib import closing
 from werkzeug import check_password_hash, generate_password_hash
 import generate_fasta as gf
+import datetime as dt
 
 #DATABASE = '/tmp/zflask.db'
 DATABASE = 'version1.db'
@@ -262,12 +263,22 @@ def genus_query(taxgenus):
                         [taxgenus], one = False)
     return render_template('tax_results.html', entries = entries)
 
+#Downloads
+
 @app.route('/download_fasta', methods = ['GET', 'POST'])
 def download_fasta():
     error = None
     return send_from_directory(app.config['DOWNLOAD_FOLDER'],
     "current_seqs.fasta", as_attachment = True)
 
+#TODO figure of if timestamp desired?
+@app.route('/download_isolates', methods = ['GET', 'POST'])
+def download_isolates():
+    error = None
+    #timestamp = dt.datetime.now().strftime('%m%d%y_%H%M')
+    #isofname = 'isolate_results
+    return send_from_directory(app.config['DOWNLOAD_FOLDER'],
+            "isolateresults.csv", as_attachment = True)
 
 @app.errorhandler(404)
 def page_not_found(e):

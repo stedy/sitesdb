@@ -40,6 +40,6 @@
 	{% endfor %}
     </ul>
     {% endif %}   
-      <a href="../isolateresults.csv" target="_blank">Download these results as a csv</a>
+    <a href= {{ url_for('download_isolates') }}>Download these results as a csv</a>
     {% endblock %}
 	
