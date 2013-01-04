@@ -8,7 +8,7 @@ def main():
 
     cursor.execute("""select Isolate, Sequence from isolate;""")
 
-    with open('current_seqs.fasta', 'w') as cs:
+    with open('downloads/current_seqs.fasta', 'w') as cs:
         for i in cursor.fetchall():
             if len(i[1]) > 0:
                 cs.write(">" + i[0] + "\n" + i[1] + "\n")

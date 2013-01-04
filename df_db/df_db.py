@@ -1,7 +1,7 @@
 import sqlite3
 import subprocess as sp
 from flask import Flask, request, session, g, redirect, url_for \
-        , abort, render_template, flash
+        , abort, render_template, flash, send_from_directory
 
 from contextlib import closing
 from werkzeug import check_password_hash, generate_password_hash
@@ -11,6 +11,7 @@ import generate_fasta as gf
 DATABASE = 'version1.db'
 DEBUG = True
 SECRET_KEY = 'development key'
+DOWNLOAD_FOLDER = 'downloads'
 #USERNAME = 'test'
 #PASSWORD = 'pw-2012'
 
@@ -260,6 +261,13 @@ def genus_query(taxgenus):
                         = ? ORDER BY Isolate ASC""",
                         [taxgenus], one = False)
     return render_template('tax_results.html', entries = entries)
+
+@app.route('/download_fasta', methods = ['GET', 'POST'])
+def download_fasta():
+    error = None
+    return send_from_directory(app.config['DOWNLOAD_FOLDER'],
+    "current_seqs.fasta", as_attachment = True)
+
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -12,7 +12,7 @@
   <a href="{{ url_for('isolate_query') }}">Search by isolate number</a><br>
   <br>
   <b>Utilities Available:</b><br>
-  <a href="../current_seqs.fasta" target="_blank">Generate FASTA from existing sequences</a><br>
+  <a href="{{ url_for('download_fasta') }}" target="_blank">Generate FASTA from existing sequences</a><br>
   Local BLAST search<br>
     {% endif %}
     {% endblock %}
