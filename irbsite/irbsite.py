@@ -135,13 +135,38 @@ def id_results_ae(id_number):
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						ae.PI, ae.Protocol, 
+						ae.PI, ae.Protocol, ae.id,
 						ae.Report_ID, ae.Reported_RXN,
 						ae.Date_report from base,
 						ae where
 						ae.Protocol = base.Protocol and base.Protocol
 						= ? order by ae.Date_report ASC""", [ids])
 	return render_template('ae.html', entries = entries)
+
+#TODO start here
+@app.route('/<ae_id>/ae_edit', methods = ['GET', 'POST'])
+def ae_edit(ae_id):
+    entries = query_db("""select PI, Protocol, id, Report_ID, Reported_RXN,
+                            Date_report from ae where id = ?""", [ae_id])
+    return render_template('ae_edit.html', entries = entries)
+
+@app.route('/<ae_id>/submit_ae_edits', methods = ['GET', 'POST'])
+def submit_ae_edits(ae_id):
+    #if request.method == "POST":
+    g.db.execute("""DELETE from ae where id = ?""", [ae_id])
+    g.db.execute("""INSERT INTO ae (Protocol, Report_ID, Reported_RXN,
+                        Date_report) values (?,?,?,?)""",
+                            [request.form['Protocol'],
+                            request.form['Report_ID'],
+                            request.form['Reported_RXN'],
+                            request.form['Date_report']])
+    g.db.commit()
+    flash('New AE successfully added')
+    #TODO render back to ae form list
+    return render_template('subj_query.html')
+              
+
+
 
 @app.route('/<id_number>/mods')
 def id_results_mods(id_number):
@@ -291,6 +316,7 @@ def funding_results():
 	else:
 		error = "Must enter funding info to search"
 		return render_template('funding_query.html', error=error)
+
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():

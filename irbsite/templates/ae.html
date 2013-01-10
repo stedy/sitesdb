@@ -19,6 +19,8 @@
         
 	<li>{{ entry.Date_report }}</li>
 
+  <li><a href="{{ url_for('ae_edit', ae_id=entry.id )}}">edit</a></li>
+
         {% endfor %}
     </ul>
 	<a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a> |
