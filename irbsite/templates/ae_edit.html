@@ -11,11 +11,10 @@
   <li>Report Date</b></li>
 {% for entry in entries %}
   <form action="{{ url_for('submit_ae_edits', ae_id=entry.id) }}" method=post>
-	<br>
-  <li><input type=text size=16 name=Protocol value={{ entry.Protocol }}></li>
-  <li><input type=text size=16 name=Report_ID value={{ entry.Report_ID }}></li>
-  <li><input type=text size=16 name=Reported_RXN value={{ entry.Reported_RXN }}></li>
-  <li><input type=text size=16 name=Date_report value={{ entry.Date_report }}></li>
+  <li><input type="text" size=16 name=Protocol value={{ entry.Protocol }}></li>
+  <li><input type="text" size=16 name=Report_ID value={{ entry.Report_ID }}></li>
+  <li><textarea name=Reported_RXN cols="25" rows="5" wrap="hard">{{ entry.Reported_RXN }}</textarea></li>
+  <li><input type="text" size=16 name=Date_report value={{ entry.Date_report }}></li>
   <br>
   <li><input type="submit" value="Save Edits" /></li>
   </form>

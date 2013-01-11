@@ -161,7 +161,7 @@ def submit_ae_edits(ae_id):
                             request.form['Reported_RXN'],
                             request.form['Date_report']])
     g.db.commit()
-    flash('New AE successfully added')
+    flash('AE for %s successfully edited' % request.form['Protocol'])
     #TODO render back to ae form list
     return render_template('subj_query.html')
               
