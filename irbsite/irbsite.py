@@ -143,7 +143,6 @@ def id_results_ae(id_number):
 						= ? order by ae.Date_report ASC""", [ids])
 	return render_template('ae.html', entries = entries)
 
-#TODO start here
 @app.route('/<ae_id>/ae_edit', methods = ['GET', 'POST'])
 def ae_edit(ae_id):
     entries = query_db("""select PI, Protocol, id, Report_ID, Reported_RXN,
