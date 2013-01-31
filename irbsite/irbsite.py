@@ -161,17 +161,17 @@ def submit_ae_edits(ae_id):
                             request.form['Date_report']])
     g.db.commit()
     #TODO render back to ae form list
-    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						ae.PI, ae.Protocol, ae.id,
-						ae.Report_ID, ae.Reported_RXN,
-						ae.Date_report from base,
-						ae where
-						ae.Protocol = base.Protocol and base.Protocol
-						= ? order by ae.Date_report ASC""",
-                        request.form['Protocol'])
+#    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+#						ae.PI, ae.Protocol, ae.id,
+#						ae.Report_ID, ae.Reported_RXN,
+#						ae.Date_report from base,
+#						ae where
+#						ae.Protocol = base.Protocol and base.Protocol
+#						= ? order by ae.Date_report ASC""",
+#                        request.form['Protocol'])
     flash('AE for %s successfully edited' % request.form['Protocol'])
-    return render_template('ae.html', entries = entries)
-    #return render_template('subj_query.html')
+#    return render_template('ae.html', entries = entries)
+    return render_template('subj_query.html')
               
 
 
