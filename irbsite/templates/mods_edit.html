@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    <ul class=metanav>
+    </ul>    
+    <ul class=mod_entries>
+	<h2>Edit mods</h2>
+	<br>
+  <li><b>Protocol</li>
+	<li>Date to IRB</li>
+	<li>Description</li>
+	<li>Comments</b></li>
+	{% for entry in entries %}
+  <br>
+  <form action="{{ url_for('submit_mods_edits', mods_id = entry.id) }}" method=post>
+	<li><input type="text" size=10 name=Protocol value= {{ entry.Protocol }} ></li>
+  <li><input type="text" size=10 name=Date_to_IRB value={{ entry.Date_to_IRB }}></li>
+  <li><input type="text" size=20 name=Description value={{ entry.Description }}></li>
+	<li><input type="text" size=20 name=Comments value={{ entry.Comments }}></li>
+  <br>
+	<li><input type="submit" value="Add mod">
+  </form>
+        {% endfor %}
+    {% endif %}   
+    {% endblock %}

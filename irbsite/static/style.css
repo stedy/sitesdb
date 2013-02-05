@@ -12,7 +12,7 @@ h2          { font-size: 1.2em; }
 .test dt { margin: 0.8em 1.2em; width: 120px; display: inline-block }
 .entries li { margin: 0.8em 1.2em; width: 200px; display: inline-block; }
 .funding_entries li { margin: 0.8em 1.2em; width: 90px; display: inline-block; }
-.mod_entries li { margin: 0.8em 1.2em; width: 200px; display: inline-block; }
+.mod_entries li { margin: 0.8em 1.2em; width: 170px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }
 li.date { color : #888; } 
 li.past { color : #FF0000; } 

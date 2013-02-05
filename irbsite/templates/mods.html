@@ -23,7 +23,9 @@
         
 	<li>{{ entry.Comments }}</li>
 
-        {% endfor %}
+  <li><a href="{{ url_for('mods_edit', mods_id=entry.id )}}">edit</a></li>
+
+    {% endfor %}
 	<br>
 	<li><input type=text size=10 name=Protocol value= {{ entries[0].Protocol }} ></li>
 	<li><input type=text size=10 name=Date_to_IRB></li>

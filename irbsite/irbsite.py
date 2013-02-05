@@ -174,7 +174,7 @@ def funding_edit(funding_id):
 def submit_funding_edits(funding_id):
     #if request.method == "POST":
     g.db.execute("""DELETE from funding where id = ?""", [funding_id])
-    g.db.execute("""INSERT INTO ae (Protocol, PI, Source, Source_ID, start,
+    g.db.execute("""INSERT INTO funding (Protocol, PI, Source, Source_ID, start,
                         end, notes) values (?,?,?,?,?,?,?)""",
                             [request.form['Protocol'],
                             request.form['PI'],
@@ -194,13 +194,34 @@ def id_results_mods(id_number):
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						mods.PI, mods.Protocol, 
+						mods.PI, mods.Protocol, mods.id,
 						mods.submitted, mods.Comments, mods.description,
 						mods.Date_to_IRB from base,
 						mods where
 						mods.Protocol = base.Protocol and base.Protocol
 						= ? order by mods.Date_to_IRB ASC""", [ids])
 	return render_template('mods.html', entries = entries)
+
+#edit functionality for mods
+
+@app.route('/<mods_id>/mods_edit', methods = ['GET', 'POST'])
+def mods_edit(mods_id):
+    entries = query_db("""select Protocol, PI, id, description
+                         from mods where id = ?""", [mods_id])
+    return render_template('mods_edit.html', entries = entries)
+
+@app.route('/<mods_id>/submit_mods_edits', methods = ['GET', 'POST'])
+def submit_mods_edits(mods_id):
+    g.db.execute("""DELETE from mods where id = ?""", [mods_id])
+    g.db.execute("""INSERT INTO mods (Protocol, PI, Source, Source_ID, start,
+                        end, notes) values (?,?,?,?,?,?,?)""",
+                            [request.form['Protocol'],
+                            request.form['Date_to_IRB'],
+                            request.form['Description'],
+                            request.form['Comments']])
+    g.db.commit()
+    flash('funding for %s successfully edited' % request.form['Protocol'])
+    return render_template('subj_query.html')
 
 #add entries
 @app.route('/add_study')
