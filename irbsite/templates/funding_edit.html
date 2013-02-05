@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    {% block script %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+    <script type="text/javascript" src="/static/datefun.js"></script>
+    {% endblock %}
+    <ul class=metanav>
+    </ul>    
+    <ul class=funding_entries>
+	<form action="{{ url_for('add_funding') }}" method=post class=addfunding>
+	<h2>{{ entries[0].Title }}</h2>
+	<br>
+	<h2>Protocol: {{ entries[0].Protocol }} </h2>
+	<h2>IR File: {{ entries[0].IR_file }}</h2>
+	<br>
+	<li><b>Protocol</li>
+        <li>PI</li>
+	<li>Source</li>
+	<li>Source ID</li>
+	<li>Start Date</li>
+	<li>End Date</li>
+	<li>Notes</b></li>
+	
+	{% for entry in entries %}
+  <form action="{{ url_for('submit_funding_edits', funding_id=entry.id) }}" method=post>
+  <li><input type=text size=10 name=Protocol value = {{ entry.Protocol }} ></li>
+  <li><input type=text size=10 name=PI value = {{ entry.PI }}></li>
+  <li><input type=text size=10 name=Source value= {{ entry.Source }}></li>
+  <li><input type=text size=10 name=Source_ID value = {{ entry.Source_ID }}></li>
+  <li><input type=text size=10 name=start value= {{ entry.start }}></li>
+  <li><input type=text size=10 name=end value= {{ entry.end }}></li>
+  <li><textarea name=Notes cols="25" rows="4" wrap="hard">{{ entry.notes }}</textarea></li>
+	<br>
+  <li><input type=submit value="Edit Funding" /></li>
+  </form>
+    {% endfor %}
+    {% endif %}   
+    {% endblock %}

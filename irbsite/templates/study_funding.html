@@ -21,7 +21,6 @@
 	<li>Start Date</li>
 	<li>End Date</li>
 	<li>Notes</b></li>
-	
 	{% for entry in entries %}
 	<br>
 	<li>{{ entries[0].Protocol }}</li>
@@ -38,7 +37,8 @@
 		
 	<li>{{ entry.notes }}</li>
 
-        {% endfor %}
+  <li><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></li>
+  {% endfor %}
         <br>
 	<li><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></li>
 	<li><input type=text size=10 name=PI></li>

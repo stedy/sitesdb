@@ -160,21 +160,31 @@ def submit_ae_edits(ae_id):
                             request.form['Reported_RXN'],
                             request.form['Date_report']])
     g.db.commit()
-    #TODO render back to ae form list
-#    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-#						ae.PI, ae.Protocol, ae.id,
-#						ae.Report_ID, ae.Reported_RXN,
-#						ae.Date_report from base,
-#						ae where
-#						ae.Protocol = base.Protocol and base.Protocol
-#						= ? order by ae.Date_report ASC""",
-#                        request.form['Protocol'])
     flash('AE for %s successfully edited' % request.form['Protocol'])
-#    return render_template('ae.html', entries = entries)
     return render_template('subj_query.html')
-              
 
+#edit functionality for funding
+@app.route('/<funding_id>/funding_edit', methods = ['GET', 'POST'])
+def funding_edit(funding_id):
+    entries = query_db("""select Protocol, PI, id, Source, Source_ID, start,
+                            end, notes from funding where id = ?""", [funding_id])
+    return render_template('funding_edit.html', entries = entries)
 
+@app.route('/<funding_id>/submit_funding_edits', methods = ['GET', 'POST'])
+def submit_funding_edits(funding_id):
+    #if request.method == "POST":
+    g.db.execute("""DELETE from funding where id = ?""", [funding_id])
+    g.db.execute("""INSERT INTO ae (Protocol, PI, Source, Source_ID, start,
+                        end, notes) values (?,?,?,?,?,?,?)""",
+                            [request.form['Protocol'],
+                            request.form['PI'],
+                            request.form['Source'], request.form['Source_ID'],
+                            request.form['start'],
+                            request.form['end'],
+                            request.form['notes']])
+    g.db.commit()
+    flash('funding for %s successfully edited' % request.form['Protocol'])
+    return render_template('subj_query.html')
 
 @app.route('/<id_number>/mods')
 def id_results_mods(id_number):
@@ -207,7 +217,7 @@ def id_results_sn(id_number):
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
 						funding.PI, funding.Title, 
 						funding.source, funding.Source_ID,
-						funding.start, funding.end, funding.notes from base,
+						funding.start, funding.id, funding.end, funding.notes from base,
 						funding where
 						funding.Protocol = base.Protocol and base.Protocol
 						= ?""", [ids])
