@@ -99,6 +99,11 @@ def sample_movement(ids_urid):
                         urid =?""", [ids])
     return render_template('sample_movement.html', entries = entries)
 
+#TODO
+#@app.route('/all_samples', methods = ['GET', 'POST'])
+#def all_samples():
+#    entries = query_db("""select 
+
 
 @app.route('/query')
 def query():

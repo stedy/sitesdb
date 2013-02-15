@@ -1,5 +1,6 @@
 *.jpg
 *.db
+*.csv
 *.swp
 *.pyc
 original/
