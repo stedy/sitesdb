@@ -5,36 +5,31 @@
     </ul>    
     <ul class=results>
         {% for entry in entries %}
-	<h2>{{ entry.urid }}</h2> 
-	<br></br>
-	<b>Patient/donor:</b> {{ entry.ptdon }}
-	<br>
-	<b>Research/clinical:</b> {{entry.resclin}}
-        <br>
-	<b>Source Collection:</b> {{ entry.sourcecoll }}<br>
-	<b>Sample Type:</b> {{ entry.sample_type }}<br>
-	<b>Accession Number:</b> {{ entry.accession_number }}<br>
-	<b>Collection Date:</b> {{ entry.coll_date }}<br>
-	<b>Patient Name:</b> {{ entry.ptname }}<br>
-	<b>Transplant 1 Date:</b> {{ entry.tx1date }}<br>
-	<b>Donor transplant 1:</b> {{ entry.donor_tx1 }}<br>
-	<b>Signed 999.209:</b> {{ entry.signed999209 }}<br>
-  <br><br>
-  <h2>Sample Info</h2>
-  <b>Freezer:</b> {{ entry.freezer }}<br>
-  <b>Main Box:</b> {{ entry.mainbox }}<br>
-  <b>Main Cell:</b> {{ entry.main_cell }}<br>
-  <b>Label Info:</b> {{ entry.label_info }}<br>
-  <b>Comments:</b> {{ entry.comments }}<br>
-  <br><br>
-  <h2>Current Information for <a href="{{ url_for('sample_movement', ids_urid = entry.urid)}}">{{ entry.urid }}</a></h2>
-  <b>Current Location Freezer:</b> {{ entry.current_location_freezer }}<br>
-  <b>Current Location Box:</b> {{ entry.current_location_box }}<br>
-  <b>Current Location Cell:</b> {{ entry.current_location_cell }}<br>
-
+	<h2>Sample Info for {{ entry.irs_id }}</h2> 
+  <table>
+    <tr><td><b>Patient/donor</b></td><td>{{ entry.ptdon }}</td></tr>
+	<tr><td><b>Research/clinical</td><td> {{entry.sample_res}}</td></tr>
+	<tr><td><b>Source Collection</td><td> {{ entry.sourcecoll }}</td></tr>
+	<tr><td><b>Sample Type</td><td> {{ entry.sample_type }}</td></tr>
+	<tr><td><b>Accession Number</td><td> {{ entry.sample_acc }}</td></tr>
+	<tr><td><b>Collection Date</td><td> {{ entry.coldate }}</td></tr>
+	<tr><td><b>Patient Name</td><td> {{ entry.pt_name }}</td></tr>
+	<tr><td><b>Transplant 1 Date</td><td> {{ entry.txdate }}</td></tr>
+	<tr><td><b>Donor transplant 1</td><td> {{ entry.donor_names }}</td></tr>
+	<tr><td><b>Signed 999.209</td><td> {{ entry.signed9 }}</td></tr>
+  <tr><td><b>Freezer</td><td> {{ entry.freezer }}</td></tr>
+  <tr><td><b>Main Box</td><td> {{ entry.mainbox }}</td></tr>
+  <tr><td><b>Main Cell</td><td> {{ entry.main_cell }}</td></tr>
+  <tr><td><b>Label Info</td><td> {{ entry.label_info }}</td></tr>
+  <tr><td><b>Comments</td><td> {{ entry.comments }}</td></tr>
+  <tr><td><b>Date out</td><td> {{ entry.date_out }}</td></tr>
+  <tr><td><b>Shipped To</td><td> {{ entry.shipped_to }}</td></tr>
+  <tr><td><b>Sent To</td><td> {{ entry.sent_to }}</td></tr>
+  <tr><td><b>Received Date</td><td> {{ entry.received_date }}</td></tr>
+  </table>
   {% else %}
 	<h2>Sad Panda is sad because protocol {{id}} does not exist</h2>
-	<br>
+	</td></tr>
 	<img src="/static/sad_panda.jpg" >
         {% endfor %}
     </ul>

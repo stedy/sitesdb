@@ -70,12 +70,13 @@ def login():
 
  
 @app.route('/all_samples', methods = ['GET', 'POST'])
-def results():
+def all_samples():
 	error = None
-	entries = query_db("""select irs_ID, proj_ID, proj_tube_NO, 
+	entries = query_db("""select irs_id, proj_id, proj_tube_no, 
                         proj_cell, date_out, shipped_to,
-                        sent_to, received_date from sample_movement""", one = False ) 
-	return render_template('all_samples.html', entries = entries)
+                        sent_to, received_date from sample_movement where
+                        irs_id = ?""", str([ids_id]), one = False ) 
+	return render_template('get_results.html', entries = entries)
 
 @app.route('/all_patients', methods = ['GET', 'POST'])
 def pt_demo():
@@ -83,6 +84,18 @@ def pt_demo():
                             sourcecoll, sample_acc, coldate, pt_name, txdate,
                             donor_names, signed9 from demo""", one = False)
     return render_template('all_patients.html', entries = entries)
+
+@app.route('/<irs_id>', methods = ['GET', 'POST'])
+def indiv_results(irs_id):
+    ids = str(irs_id)
+    entries = query_db("""select demo.irs_id, ptdon, sample_res, sample_type,
+                            sourcecoll, sample_acc, coldate, pt_name, txdate,
+                            donor_names, signed9, proj_id, proj_tube_no,
+                            proj_cell, date_out, shipped_to, sent_to,
+                            received_date from demo, sample_movement where
+                            demo.irs_id = sample_movement.irs_id and
+                            demo.irs_id = ?""", [ids])
+    return render_template('get_results.html', entries = entries)
 
 
 @app.route('/query')
