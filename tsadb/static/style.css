@@ -26,6 +26,17 @@ li.past { color : #FF0000; }
                 border: 1px solid #AACBE2; }
 .error      { background: #F0D6D6; padding: 0.5em; }
 
+table {
+  width: "550px"; text-align: left; border: 1px solid;
+}
+
+td {
+  padding: 2px 2px 2px 5px;
+}
+
+tr:nth-child(2n+1) {
+  background-color: #DDECEF;
+}
 div.page div.footer  {
 		background:  #DDECEF;	
 		color: #888;

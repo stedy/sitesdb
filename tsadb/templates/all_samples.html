@@ -5,31 +5,26 @@
     </ul>    
     {% endif %}
    
-    <ul class=all_samples>
-      <li><b>IDS ID</li>
-        <li>PID</li>
-        <li>Tube no.</li>
-        <li>Cell no.</li>
-        <li>Date out</li>
-        <li>Shipped To</li>
-        <li>Sent To</li>
-        <li>Rec'd Date</b></li>
-
-
+      <h1>Sample Manifest</h1>
+  <table>
+      <td><b>IDS ID</td>
+        <td><b>PID</td>
+          <td><b>Tube no.</td>
+            <td><b>Cell no.</td>
+              <td><b>Date out</td>
+                <td><b>Shipped To</td>
+                  <td><b>Sent To</td>
+                    <td><b>Received Date</b></td>
       {% for entry in entries %}
-      <br>
-      <li>{{ entry.irs_ID }}</li>
-      <li>{{ entry.proj_ID }}</li>
-      <li>{{ entry.proj_tube_NO }}</li>
-      <li>{{ entry.proj_cell }}</li>
-      <li>{{ entry.date_out }}</li>
-      <li>{{ entry.shipped_to }}</li>
-      <li>{{ entry.sent_to }}</li>
-      <li>{{ entry.received_date }}</li>
-	{% else %}
-	<h2>This otter is disappointed</h2>
-	<br>
-	<img src="/static/dissapointed_otter.jpg" >
+      <tr><td>{{ entry.irs_ID }}</td>
+      <td>{{ entry.proj_ID }}</td>
+      <td>{{ entry.proj_tube_NO }}</td>
+      <td>{{ entry.proj_cell }}</td>
+      <td>{{ entry.date_out }}</td>
+      <td>{{ entry.shipped_to }}</td>
+      <td>{{ entry.sent_to }}</td>
+      <td>{{ entry.received_date }}</td></tr>
         {% endfor %}
-    </ul>
+    </table>
+	<br>
     {% endblock %}
