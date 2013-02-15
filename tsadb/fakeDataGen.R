@@ -21,7 +21,7 @@ received <- date.out + sample.int(200)
 received.logical <- ifelse(received > Sys.Date(), NA, received)
 class(received.logical) <- "Date"
 
-test <- data.frame(irs.id, proj.id, proj.tube.no, proj.cell, 
+final <- data.frame(irs.id, proj.id, proj.tube.no, proj.cell, 
                    date.out, shipped.to,
                    sent.to, received.logical)
-write.csv(test, "test_sampleFlow.csv", row.names=F)
+write.csv(final, "test_sampleFlow.csv", row.names=F)
