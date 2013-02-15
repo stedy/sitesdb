@@ -77,21 +77,12 @@ def results():
                         sent_to, received_date from sample_movement""", one = False ) 
 	return render_template('all_samples.html', entries = entries)
 
-@app.route('/<ids_urid>', methods = ['GET', 'POST'])
-def sample_movement(ids_urid):
-    ids = str(ids_urid)
-    entries = query_db("""select urid, Project_ID, projectbox, projectcell,
-                        projectcomment, dummy_tubeletter, date_out_repo, init_out_repo, 
-                        shipped_to, where_shipped, date_shipped, init_shipped,
-                        date_return_purg, init_in_purg, date_return_repo,
-                        init_return_repo, vol_remain from sample_movement where
-                        urid =?""", [ids])
-    return render_template('sample_movement.html', entries = entries)
-
-#TODO
-#@app.route('/all_samples', methods = ['GET', 'POST'])
-#def all_samples():
-#    entries = query_db("""select 
+@app.route('/all_patients', methods = ['GET', 'POST'])
+def pt_demo():
+    entries = query_db("""select irs_id, ptdon, sample_res, sample_type,
+                            sourcecoll, sample_acc, coldate, pt_name, txdate,
+                            donor_names, signed9 from demo""", one = False)
+    return render_template('all_patients.html', entries = entries)
 
 
 @app.route('/query')
