@@ -8,8 +8,8 @@ from contextlib import closing
 DATABASE = 'tsadb.db'
 DEBUG = True
 SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'test'
+USERNAME = 'zachs'
+PASSWORD = 'pwd2012'
 
 
 app = Flask(__name__)
@@ -69,24 +69,13 @@ def login():
     return render_template('login.html', error = error)
 
  
-@app.route('/results', methods = ['GET', 'POST'])
+@app.route('/all_samples', methods = ['GET', 'POST'])
 def results():
 	error = None
-	if request.form['urid']:
-		entries = query_db("""select demo.urid, ptdon, resclin, sample_type,
-                        sourcecoll, accession_number, coll_date, tx1date,
-                        donor_tx1, ptname, signed999209, freezer, mainbox,
-                        main_cell, label_info, comments,
-                        current_location_freezer, current_location_box,
-                        current_location_cell 
-						from main, demo, repo_location where main.urid =
-                        demo.urid and repo_location.urid = main.urid and demo.urid = ?""",
-						[request.form['urid']], one = False ) 
-		return render_template('get_results.html', id = request.form['urid'], entries
-							= entries)
-	else:
-		error = "Must have either ID number to search"
-		return render_template('subj_query.html', error=error)
+	entries = query_db("""select irs_ID, proj_ID, proj_tube_NO, 
+                        proj_cell, date_out, shipped_to,
+                        sent_to, received_date from sample_movement""", one = False ) 
+	return render_template('all_samples.html', entries = entries)
 
 @app.route('/<ids_urid>', methods = ['GET', 'POST'])
 def sample_movement(ids_urid):

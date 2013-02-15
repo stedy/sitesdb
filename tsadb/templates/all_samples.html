@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}
+   
+    <ul class=all_samples>
+      <li><b>IDS ID</li>
+        <li>PID</li>
+        <li>Tube no.</li>
+        <li>Cell no.</li>
+        <li>Date out</li>
+        <li>Shipped To</li>
+        <li>Sent To</li>
+        <li>Rec'd Date</b></li>
+
+
+      {% for entry in entries %}
+      <br>
+      <li>{{ entry.irs_ID }}</li>
+      <li>{{ entry.proj_ID }}</li>
+      <li>{{ entry.proj_tube_NO }}</li>
+      <li>{{ entry.proj_cell }}</li>
+      <li>{{ entry.date_out }}</li>
+      <li>{{ entry.shipped_to }}</li>
+      <li>{{ entry.sent_to }}</li>
+      <li>{{ entry.received_date }}</li>
+	{% else %}
+	<h2>This otter is disappointed</h2>
+	<br>
+	<img src="/static/dissapointed_otter.jpg" >
+        {% endfor %}
+    </ul>
+    {% endblock %}
