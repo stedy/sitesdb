@@ -20,7 +20,7 @@
                     <td><b>999.209</b></td>
                     
       {% for entry in entries %}
-      <tr><td>{{ entry.irs_id }}</td>
+      <tr><td><a href="{{ url_for('indiv_results', irs_id=entry.irs_id)}}">{{ entry.irs_id }}</a></td>
       <td>{{ entry.ptdon }}</td>
       <td>{{ entry.sample_res }}</td>
       <td>{{ entry.sample_type }}</td>

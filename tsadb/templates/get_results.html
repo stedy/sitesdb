@@ -4,7 +4,6 @@
     <ul class=metanav>
     </ul>    
     <ul class=results>
-      {{ entries }}
         {% for entry in entries %}
 	<h2>Sample Info for {{ entry.irs_id }}</h2> 
   <table>
@@ -34,5 +33,5 @@
 	<img src="/static/sad_panda.jpg" >
         {% endfor %}
     </ul>
-    {% endif %}   
-    {% endblock %}
+    {% endif %}
+{% endblock %}
