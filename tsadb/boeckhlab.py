@@ -65,7 +65,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('query'))
+            return redirect(url_for('pt_demo'))
     return render_template('login.html', error = error)
 
  
@@ -74,9 +74,8 @@ def all_samples():
 	error = None
 	entries = query_db("""select irs_id, proj_id, proj_tube_no, 
                         proj_cell, date_out, shipped_to,
-                        sent_to, received_date from sample_movement where
-                        irs_id = ?""", str([ids_id]), one = False ) 
-	return render_template('get_results.html', entries = entries)
+                        sent_to, received_date from sample_movement""", one = False ) 
+	return render_template('all_samples.html', entries = entries)
 
 @app.route('/all_patients', methods = ['GET', 'POST'])
 def pt_demo():

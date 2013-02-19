@@ -2,7 +2,7 @@
 {% block body %}
   {% if session.logged_in %}
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-    <form action="{{ url_for('results') }}" method=post class=test>
+    <form action="{{ url_for('pt_demo') }}" method=post class=test>
 	<dl>
 	    <dt><b>IDS-URID:
 	    <input type=text size=10 name=irs_id>
