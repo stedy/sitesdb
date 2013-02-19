@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="/upload" method="POST">
+	    <input type="file">
+	    <input type=submit value="submit">
+    </form>
+    {% endif %}   
+    <ul class=results>
+        <em>Search based on IDS-URID</em>
+    </ul>
+<div class=footer>
+</div>
+    {% endblock %}

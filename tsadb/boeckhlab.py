@@ -1,8 +1,10 @@
 import sqlite3
 import time
+import os
 from flask import Flask, request, session, g, redirect, url_for \
         , abort, render_template, flash, jsonify
-from werkzeug import check_password_hash, generate_password_hash
+from werkzeug import check_password_hash, generate_password_hash, \
+        secure_filename
 from contextlib import closing
 
 DATABASE = 'tsadb.db'
@@ -10,11 +12,13 @@ DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'zachs'
 PASSWORD = 'pwd2012'
-
+ALLOWED_EXTENSIONS = set(['csv', 'txt'])
+UPLOAD_FOLDER = 'uploads'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.from_envvar('IRB_DB_SETTINGS', silent = True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def connect_db():
     """Returns a new connection to the database"""
@@ -37,6 +41,11 @@ def query_db(query, args=(), one = False):
 	rv = [dict((cur.description[idx][0], value)
 		for idx, value in enumerate(row)) for row in cur.fetchall()]
 	return (rv[0] if rv else None) if one else rv
+
+def allowed_file(filename):
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 
 #then add some decorators
 
@@ -100,6 +109,25 @@ def indiv_results(irs_id):
 @app.route('/query')
 def query():
     return render_template('subj_query.html')
+
+@app.route('/multiple_search', methods = ['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file', filename=filename))
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file> 
+      <input type=submit value=Upload>
+   </form>
+   '''
+
 
 @app.errorhandler(404)
 def page_not_found(e):
