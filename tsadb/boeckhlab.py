@@ -52,7 +52,7 @@ def get_ids(filename):
     reader = csv.reader(open(filename))
     for line in reader:
         ids.append(line[0])
-    return tuple(ids)
+    return tuple(sorted(ids))
 
 
 #then add some decorators
@@ -128,7 +128,7 @@ def multiple_search():
             indivs = get_ids(filename)
             entries = query_db("""SELECT * FROM sample_movement WHERE irs_id IN
                     (%s)""" % ','.join('?'*len(indivs)), indivs)
-            return render_template('mstemp.html', entries=entries)
+            return render_template('ms_results.html', entries=entries)
 
     return '''
     <!doctype html>
