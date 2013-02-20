@@ -4,7 +4,8 @@
     <ul class=metanav>
     </ul>    
     {% endif %}
-   
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" /></script>
+<script type="text/javascript" src="/static/checker.js" /></script>
       <h1>Sample Manifest</h1>
   <table>
       <td><b>IDS ID</td>
@@ -15,7 +16,8 @@
                 <td><b>Shipped To</td>
                   <td><b>Sent To</td>
                     <td><b>Received Date</b></td>
-                      <td><b>Ship</b></td>
+                    <td><b>Ship Out<input type="checkbox" name="select-send" id="select-send"/></b></td>
+                        <td><b>Receive In<input type="checkbox" name="select-receive" id = "select-receive"/></b></td>
       {% for entry in entries %}
       <tr><td>{{ entry.irs_id }}</td>
       <td>{{ entry.proj_id }}</td>
@@ -25,7 +27,8 @@
       <td>{{ entry.shipped_to }}</td>
       <td>{{ entry.sent_to }}</td>
       <td>{{ entry.received_date }}</td>
-      <td><input type="checkbox" checked="checked" /></td></tr>
+      <td align="center"><input type="checkbox" name="X4" id="X4"/></td>
+      <td align="center"><input type="checkbox" /></td></tr>
         {% endfor %}
     </table>
 	<br>
