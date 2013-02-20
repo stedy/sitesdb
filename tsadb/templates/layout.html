@@ -6,7 +6,8 @@
   <a href="{{ url_for('pt_demo') }}" style="text-decoration:none"><h1>Boeckh lab DB</h1></a>
     <div class=metanav>
     {% if session.logged_in %}
-	<a href="{{ url_for('query') }}">ID query</a> |
+	<a href="{{ url_for('multiple_search') }}">Upload file</a> |
+	<a href="{{ url_for('query') }}">Individual query</a> |
 	<a href="{{ url_for('logout') }}">log out</a> 
     {% else %}
 	<a href="{{ url_for('login') }}">log in</a> 

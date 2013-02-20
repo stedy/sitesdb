@@ -119,32 +119,28 @@ def query():
     return render_template('subj_query.html')
 
 @app.route('/multiple_search', methods = ['GET', 'POST'])
-def upload_file():
+def multiple_search():
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            #return redirect(url_for('uploaded_file', filename=filename))
             indivs = get_ids(filename)
-            print indivs
-            #stemp = "select * from sample_movement where irs_id in indivs"
-            entries = query_db("""select * from sample_movement where irs_id in
-                    ?""", [indivs])
-            #entries = query_db(stemp)
-            
+            entries = query_db("""SELECT * FROM sample_movement WHERE irs_id IN
+                    (%s)""" % ','.join('?'*len(indivs)), indivs)
             return render_template('mstemp.html', entries=entries)
 
     return '''
     <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
+    <title>Upload CSVs</title>
+    <h1>Upload new CSV or txt file of interest</h1>
     <form action="" method=post enctype=multipart/form-data>
       <p><input type=file name=file> 
       <input type=submit value=Upload>
    </form>
+   <b>Note:</b> this query will only handle a CSV file with ID numbers in the first
+   column and less than 1000 ID numbers.
    '''
-
 
 @app.errorhandler(404)
 def page_not_found(e):
