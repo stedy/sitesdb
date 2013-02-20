@@ -1,6 +1,7 @@
 import sqlite3
 import time
 import os
+import csv
 from flask import Flask, request, session, g, redirect, url_for \
         , abort, render_template, flash, jsonify
 from werkzeug import check_password_hash, generate_password_hash, \
@@ -12,7 +13,7 @@ DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'zachs'
 PASSWORD = 'pwd2012'
-ALLOWED_EXTENSIONS = set(['csv', 'txt'])
+ALLOWED_EXTENSIONS = set(['csv', 'txt', 'CSV'])
 UPLOAD_FOLDER = 'uploads'
 
 app = Flask(__name__)
@@ -45,6 +46,13 @@ def query_db(query, args=(), one = False):
 def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+def get_ids(filename):
+    ids = []
+    reader = csv.reader(open(filename))
+    for line in reader:
+        ids.append(line[0])
+    return tuple(ids)
 
 
 #then add some decorators
@@ -117,7 +125,16 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
+            #return redirect(url_for('uploaded_file', filename=filename))
+            indivs = get_ids(filename)
+            print indivs
+            #stemp = "select * from sample_movement where irs_id in indivs"
+            entries = query_db("""select * from sample_movement where irs_id in
+                    ?""", [indivs])
+            #entries = query_db(stemp)
+            
+            return render_template('mstemp.html', entries=entries)
+
     return '''
     <!doctype html>
     <title>Upload new File</title>
