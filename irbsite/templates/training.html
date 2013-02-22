@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+ {% block script %}
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+ <script type="text/javascript" src="/static/datefun.js"></script>
+ {% endblock %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}   
+    <ul class=mod_entries>
+  <li><b>Name</li>
+	<li>Most Recent</li>
+	<li>Good Until</b></li>
+	{% for entry in entries %}
+	<br>
+	<li>{{ entry.name }}</li>
+
+	<li class="date">{{ entry.most_recent }}</li>
+	
+	<li class="date">{{entry.good_until }}</li>
+
+
+    {% endfor %}
+    {% endblock %}

@@ -384,6 +384,12 @@ def register():
     return render_template('register.html', error=error)
 
 
+@app.route('/training')
+def training():
+    entries = query_db("""SELECT name, most_recent, good_until FROM
+            training""", one = False)
+    return render_template('training.html', entries = entries)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
