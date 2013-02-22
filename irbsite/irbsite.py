@@ -214,14 +214,14 @@ def mods_edit(mods_id):
 @app.route('/<mods_id>/submit_mods_edits', methods = ['GET', 'POST'])
 def submit_mods_edits(mods_id):
     g.db.execute("""DELETE from mods where id = ?""", [mods_id])
-    g.db.execute("""INSERT INTO mods (Protocol, PI, Source, Source_ID, start,
-                        end, notes) values (?,?,?,?,?,?,?)""",
+    g.db.execute("""INSERT INTO mods (Protocol, Date_to_IRB, Description,
+                    Comments) values (?,?,?,?)""",
                             [request.form['Protocol'],
                             request.form['Date_to_IRB'],
                             request.form['Description'],
                             request.form['Comments']])
     g.db.commit()
-    flash('funding for %s successfully edited' % request.form['Protocol'])
+    flash('Mod for %s successfully edited' % request.form['Protocol'])
     return render_template('subj_query.html')
 
 #add entries
