@@ -206,7 +206,8 @@ def id_results_mods(id_number):
 
 @app.route('/<mods_id>/mods_edit', methods = ['GET', 'POST'])
 def mods_edit(mods_id):
-    entries = query_db("""select Protocol, PI, id, description
+    entries = query_db("""select Protocol, PI, id, description,
+                        Date_to_IRB, Comments
                          from mods where id = ?""", [mods_id])
     return render_template('mods_edit.html', entries = entries)
 
