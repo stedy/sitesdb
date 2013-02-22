@@ -5,10 +5,13 @@
     </ul>    
     {% endif %}   
     <ul class=mod_entries>
-	<form action="{{ url_for('add_mod') }}" method=post class=addmod>
-	<h2>{{ entries[0].Title }}</h2>
+      <h1>Modifications, CRRs, Notifications, NTF</h1>
+  <form action="{{ url_for('add_mod') }}" method=post class=addmod>
+	<h2>Title: {{ entries[0].Title }}</h2>
 	<br>
-	<h2>Protocol: {{ entries[0].Protocol }}	IR File: {{ entries[0].IR_file }}</h2>
+  <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }} | UW Protocol #:</h2>
+    <br>
+    <h2>Committee:  | Correspondence</h2>
         <li><b>Protocol</li>
 	<li>Date to IRB</li>
 	<li>Description</li>
