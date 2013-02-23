@@ -31,4 +31,15 @@ div.page div.footer  {
 		color: #888;
 		padding: 5px 10px;
 		font-size: 12 px;
-} 
+}
+table {
+  width: "550px"; text-align: left; border: 1px solid;
+  }
+
+td {
+   padding: 2px 2px 2px 5px;
+   }
+
+tr:nth-child(2n+1) {
+   background-color: #DDECEF;
+   }

@@ -11,23 +11,24 @@
   <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
   <br>
   <h2>Committee:  | Correspondence:  </h2>
-  <li><b>Document Name</li>
-	<li>Document Date</li>
-	<li>Approved Date</li></b>
+  <table>
+  <td><b>Document Name</td>
+    <td><b>Document Date</td>
+      <td><b>Approved Date</td>
 	{% for entry in entries %}
-	<br>
-	<li>{{ entry.doc_name }}</li>
+	<tr>
+	<td>{{ entry.doc_name }}</td>
 	
-	<li>{{entry.doc_date}}</li>
+	<td>{{entry.doc_date}}</td>
         
-	<li>{{ entry.aprvd_date }}</li>
-
+	<td>{{ entry.aprvd_date }}</td></tr>
 	{% else %}
 	<h2>Sad Panda is sad because protocol {{ entry.id }} does not exist</h2>
 	<br>
 	<img src="/static/sad_panda.jpg" >
-        {% endfor %}
     </ul>
+{% endfor %}
+</table>
 	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a>
 	 | <a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a>
 	 | <a href="{{ url_for('binder_template', id_number= entries[0].Protocol ) }}">Binder Template</a>
