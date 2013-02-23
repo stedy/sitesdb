@@ -5,11 +5,12 @@
     </ul>    
     {% endif %}   
     <ul class=entries>
-	<h2>Title: {{ entries[0].Title }}</h2>
+      <h1>Study Documents</h1>
+      <h2>Title: {{ entries[0].Title }}</h2>
 	<br>
-	<h2>PI: {{ entries[0].PI }}</h2>
-	<h2>Protocol: {{ entries[0].Protocol }} </h2>
-	<h2>IR File: {{ entries[0].IR_file }}</h2>
+  <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
+  <br>
+  <h2>Committee:  | Correspondence:  </h2>
   <li><b>Document Name</li>
 	<li>Document Date</li>
 	<li>Approved Date</li></b>
