@@ -13,43 +13,45 @@
 	<br>
 	<h2>FHCRC Protocol# {{ entries[0].Protocol }} </h2>
 	<h2>IR File: {{ entries[0].IR_file }}</h2>
-	<br>
-	<li><b>Protocol</li>
-        <li>PI</li>
-	<li>Source</li>
-	<li>Source ID</li>
-	<li>Start Date</li>
-	<li>End Date</li>
-	<li>Notes</b></li>
+  <br>
+  <table>
+    <tr><td><b>Protocol</td>
+        <td><b>PI</td>
+          <td><b>Source</td>
+            <td><b>Source ID</td>
+              <td><b>Start Date</td>
+                <td><b>End Date</td>
+                  <td><b>Notes</td>
+                    <td><b>Edit</b></td></tr>
 	{% for entry in entries %}
-	<br>
-	<li>{{ entries[0].Protocol }}</li>
+  <tr><td>{{ entries[0].Protocol }}</td>
 
-	<li>{{ entry.PI }}</li>
+	<td>{{ entry.PI }}</td>
 
-	<li>{{ entry.Source }}</li>
+	<td>{{ entry.Source }}</td>
 	
-	<li>{{ entry.Source_ID }}</li>
+	<td>{{ entry.Source_ID }}</td>
         
-	<li>{{ entry.start }}</li>
+	<td>{{ entry.start }}</td>
 	
-	<li class="date">{{ entry.end }}</li>
+	<td class="date">{{ entry.end }}</td>
 		
-	<li>{{ entry.notes }}</li>
+	<td>{{ entry.notes }}</td>
 
-  <li><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></li>
+  <td><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></td></tr>
   {% endfor %}
         <br>
-	<li><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></li>
-	<li><input type=text size=10 name=PI></li>
-	<li><input type=text size=10 name=Source></li>
-	<li><input type=text size=10 name=Source_ID></li>
-	<li><input type=text size=10 name=start></li>
-	<li><input type=text size=10 name=end></li>
-  <li><textarea name=notes cols="12" rows="4" wrap="hard"></textarea></li>
-	<br>
-	<li><input type=submit value="Add Funding">
-    </ul>
+        <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
+	<td><input type=text size=10 name=PI></td>
+	<td><input type=text size=10 name=Source></td>
+	<td><input type=text size=10 name=Source_ID></td>
+	<td><input type=text size=10 name=start></td>
+	<td><input type=text size=10 name=end></td>
+  <td><textarea name=notes cols="12" rows="4" wrap="hard"></textarea></td>
+</tr></table>
+  <br>
+	<input type=submit value="Add Funding">
+  </ul>
 	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> |
 	<a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
     {% endif %}   
