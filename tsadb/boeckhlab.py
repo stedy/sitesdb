@@ -125,7 +125,9 @@ def multiple_search():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            indivs = get_ids(filename)
+            indivs = get_ids(os.path.join(app.config['UPLOAD_FOLDER'],
+                filename))
+            print os.path.join(app.config['UPLOAD_FOLDER'],filename)
             entries = query_db("""SELECT * FROM sample_movement WHERE irs_id IN
                     (%s)""" % ','.join('?'*len(indivs)), indivs)
             return render_template('ms_results.html', entries=entries)
