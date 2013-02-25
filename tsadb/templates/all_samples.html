@@ -16,7 +16,7 @@
                   <td><b>Sent To</td>
                     <td><b>Received Date</b></td>
       {% for entry in entries %}
-      <tr><td>{{ entry.irs_id }}</td>
+      <tr><td><a href="{{ url_for('indiv_results', irs_id=entry.irs_id)}}">{{ entry.irs_id }}</a></td>
       <td>{{ entry.proj_id }}</td>
       <td>{{ entry.proj_tube_no }}</td>
       <td>{{ entry.proj_cell }}</td>
