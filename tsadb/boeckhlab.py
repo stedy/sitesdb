@@ -143,6 +143,21 @@ def multiple_search():
    <b>Note:</b> this query will only handle a CSV file with ID numbers in the first
    column and less than 1000 ID numbers.
    '''
+#test for facebook-style timeline
+
+@app.route('/test_movement', methods = ['GET', 'POST'])
+def test_movement():
+	error = None
+	entries = query_db("""select irs_id, max(datestamp),
+                        sent_from, datestamp, site from test_movement GROUP BY irs_id""", one = False ) 
+	return render_template('test_movement.html', entries = entries)
+
+@app.route('/movement/<irs_id>', methods = ['GET', 'POST'])
+def test_indiv_results(irs_id):
+    ids = str(irs_id)
+    entries = query_db("""select irs_id, datestamp, sent_from, site
+                            from test_movement where irs_id = ?""", [ids])
+    return render_template('indiv_sample_timeline.html', entries = entries)
 
 @app.errorhandler(404)
 def page_not_found(e):

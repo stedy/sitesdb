@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <ul class=metanav>
+    </ul>    
+    <ul class=results>
+  <table>
+    <tr><td><b>IDS ID</b></td>
+      <td><b>Last movement</td>
+        <td><b>Shipped To</td>
+        <td><b>Sent To</td></tr>
+
+    {% for entry in entries %}
+    <tr><td><a href="{{ url_for('test_indiv_results', irs_id = entry.irs_id)}}">{{ entry.irs_id }}</a></td>
+	<td> {{ entry.datestamp }}</td>
+  <td> {{ entry.sent_from }}</td>
+  <td> {{ entry.site }}</td></tr>
+  {% else %}
+	<h2>Sad Panda is sad because protocol {{id}} does not exist</h2>
+	</td></tr>
+	<img src="/static/sad_panda.jpg" >
+        {% endfor %}
+  </table>
+    </ul>
+    {% endif %}
+{% endblock %}
