@@ -15,9 +15,25 @@
             <td><input type=text size=10 name=initials></td>
             <td>Date of Birth:</td>
             <td><input type=text size=10 name=dob></td></tr>
-          <tr><td>Tx type:</td>
-            <td><input type=text size=10 name=txtype value = "auto"></td></tr>
-
+          <tr><td>Hispanic?</td>
+            <td><select name=hispanic>
+                <option value="y">Yes</option>
+                <option value="n">No</option>
+                <option value="u">Prefer not to say</option>
+              </select>
+          <td>Gender</td>
+            <td><select name=gender>
+                <option value="m">Male</option>
+                <option value="f">Female</option>
+                <option value="o">Other</option>
+              </select>
+          <tr><td>Ethnicity</td></tr>
+          <tr><td>Am Indian/Alaska Native</td><td><input type="checkbox" name="amer_ind" id="amer_ind"/></td>
+            <tr><td>Asian</td><td><input type="checkbox" name="asian" id="asian"/></td></tr>
+            <tr><td>Native Hawaiian/Pac. Islander</td><td><input type="checkbox" name="hipac" id="hipac"/></td></tr>
+            <tr><td>Black/Afr Am</td><td><input type="checkbox" name="black" id="black"/></td></tr>
+            <tr><td>White</td><td><input type="checkbox" name="white" id="white"/></td></tr>
+            <tr><td>Unknown/Prefer not to say</td><td><input type="checkbox" name="unknown_race" id="unknown_race"/></td></tr>
         </table>
         <br>
         <h1>Consent Information</h1>
@@ -41,9 +57,14 @@
     </table>
     <br>
     <h1>Transplant Info and Infection Dates</h1>
-      <input type=text size=20 name=txdate>
-	    <input type=text size=20 name=injection1>
-	    </textarea>
+    <table>
+    <tr><td>Tx type:</td>
+            <td><input type=text size=10 name=txtype value = "auto"></td></tr>
+    <tr><td>Tx Date:</td>
+      <td><input type=text size=20 name=txdate></td></tr>
+    <tr><td>Injection 1:</td>
+      <td><input type=text size=20 name=injection1></td></tr>
+</table>
 	    <br></br>
 	    <input type=submit value=Submit>
 	</dl>
