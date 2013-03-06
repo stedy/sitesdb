@@ -4,27 +4,44 @@
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <form action="{{ url_for('add_form') }}" method=post class=addstudy>
-	<dl>
-	    <dt> UPN:    
-	    <input type=text size=20 name=upn>
-	    <dt>UW ID:
-	    <input type=text size=10 name=uw_id>
-	    <dt>Initials:
-	    <input type=text size=10 name=initials>
-	    <dt>Study PI:
-	    <input type=text size=20 name=dob>
-	    <dt>RN/Coord:
-      <input type=text size=20 name=txtype>
-	    <dt>Review Type:
-	    <input type=text size=20 name=pre_screening_date>
-	    <input type=text size=20 name=arrival_date>
-	    <input type=text size=20 name=consent>
-	    <input type=text size=20 name=consent_reason>
-	    <input type=text size=20 name=consent_comments>
-	    <input type=text size=20 name=randomize>
-	    <input type=text size=20 name=baseline>
-	    <input type=text size=20 name=allocation>
-	    <input type=text size=20 name=txdate>
+      <dl>
+        <h1>Screening and Randomization</h1>
+        <table>
+          <tr><td> UPN:</td>
+            <td><input type=text size=10 name=upn></td>
+            <td>UW ID:</td>
+            <td><input type=text size=10 name=uw_id></td></tr>
+          <tr><td>Initials:</td>
+            <td><input type=text size=10 name=initials></td>
+            <td>Date of Birth:</td>
+            <td><input type=text size=10 name=dob></td></tr>
+          <tr><td>Tx type:</td>
+            <td><input type=text size=10 name=txtype value = "auto"></td></tr>
+
+        </table>
+        <br>
+        <h1>Consent Information</h1>
+        <table>
+        <tr><td>Pre Screening Date</td>
+          <td><input type=text size=20 name=pre_screening_date></td>
+        <td>Arrival Date</td>
+          <td><input type=text size=20 name=arrival_date></td></tr>
+        <tr><td>Consent</td>
+          <td><input type=text size=30 name=consent></td></tr>
+        <tr><td>Consent Reason</td>
+          <td><input type=text size=30 name=consent_reason></td></tr>
+        <tr><td>Consent Comments</td>
+          <td><input type=text size=20 name=consent_comments></td>
+        <tr><td>Randomize Date</td>
+          <td><input type=text size=20 name=randomize></td></tr>
+        <tr><td>Baseline #</td>
+          <td><input type=text size=20 name=baseline></tr>
+        <tr><td>Allocation #</td>
+          <td><input type=text size=20 name=allocation></tr>
+    </table>
+    <br>
+    <h1>Transplant Info and Infection Dates</h1>
+      <input type=text size=20 name=txdate>
 	    <input type=text size=20 name=injection1>
 	    </textarea>
 	    <br></br>
