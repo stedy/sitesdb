@@ -1,29 +1,36 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if g.user %}
 <div class=metanav>
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <form action="{{ url_for('add_form') }}" method=post class=addstudy>
 	<dl>
-	    <dt> Title:    
-	    <input type=text size=110 name=TITLE>
-	    <dt>Protocol:
-	    <input type=text size=10 name=Protocol>
-	    <dt>IR File:
-	    <input type=text size=10 name=IR_file>
+	    <dt> UPN:    
+	    <input type=text size=20 name=upn>
+	    <dt>UW ID:
+	    <input type=text size=10 name=uw_id>
+	    <dt>Initials:
+	    <input type=text size=10 name=initials>
 	    <dt>Study PI:
-	    <input type=text size=20 name=PI>
+	    <input type=text size=20 name=dob>
 	    <dt>RN/Coord:
-	    <input type=text size=20 name=rn_coord>
+      <input type=text size=20 name=txtype>
 	    <dt>Review Type:
-	    <input type=text size=20 name=Type>
+	    <input type=text size=20 name=pre_screening_date>
+	    <input type=text size=20 name=arrival_date>
+	    <input type=text size=20 name=consent>
+	    <input type=text size=20 name=consent_reason>
+	    <input type=text size=20 name=consent_comments>
+	    <input type=text size=20 name=randomize>
+	    <input type=text size=20 name=baseline>
+	    <input type=text size=20 name=allocation>
+	    <input type=text size=20 name=txdate>
+	    <input type=text size=20 name=injection1>
 	    </textarea>
 	    <br></br>
 	    <input type=submit value=Submit>
 	</dl>
     </form>
-    {% endif %}   
     <ul class=entries>
         <li><em>All fields optional except Protocol</em>
     </ul>

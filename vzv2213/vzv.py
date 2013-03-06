@@ -5,7 +5,6 @@ from flask import Flask, request, session, g, redirect, url_for \
 
 from contextlib import closing
 from werkzeug import check_password_hash, generate_password_hash
-import generate_fasta as gf
 import datetime as dt
 
 DATABASE = 'vzv.db'
@@ -37,10 +36,28 @@ def query_db(query, args=(), one = False):
 
 #then add some decorators
 
-@app.route('/')
+@app.before_request
+def before_request():
+    g.db = connect_db()
+    g.user = None
+    if 'user_id' in session:
+        g.user = query_db('select * from user where user_id = ?',
+                        [session['user_id']], one = True)
+
+@app.teardown_request
+def teardown_request(exception):
+    if hasattr(g, 'db'):
+        g.db.close()
+
+
+@app.route('/', methods = ['GET', 'POST'])
 def main():
-    if request_form['UPN']:
-        g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, txtype,
+    return render_template('temp.html')
+
+@app.route('/add_form', methods = ['GET', 'POST'])
+def add_form():
+    error = None
+    g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, txtype,
                     pre_screening_date, arrival_date, consent, consent_reason,
                     consent_comments, randomize, baseline, allocation, txdate,
                     injection1) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
@@ -53,11 +70,14 @@ def main():
                     request.form['randomize'],
                     request.form['baseline'], request.form['allocation'],
                     request.form['txdate'], request.form['injection1']])
-        g.db.commit()
-        flash('New patient successfully added')
-    else:
-        error = "Must have UPN to add patient"
-    return render_template('add_indiv.html', error = error)
+    g.db.commit()
+    flash('New patient successfully added')
+    return render_template('temp.html', error = error)
+
+@app.route('/add_patient')
+def add_patient():
+    return render_template('add_patient.html')
+
 
 @app.before_request
 def before_request():
