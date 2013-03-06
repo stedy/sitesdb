@@ -37,6 +37,28 @@ def query_db(query, args=(), one = False):
 
 #then add some decorators
 
+@app.route('/')
+def main():
+    if request_form['UPN']:
+        g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, txtype,
+                    pre_screening_date, arrival_date, consent, consent_reason,
+                    consent_comments, randomize, baseline, allocation, txdate,
+                    injection1) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    [request.form['upn'], request.form['uw_id'],
+                    request.form['initials'], request.form['dob'],
+                    request.form['txtype'], request.form['pre_screening_date'],
+                    request.form['arrival_date'], request.form['consent'],
+                    request.form['consent_reason'],
+                    request.form['consent_comments'],
+                    request.form['randomize'],
+                    request.form['baseline'], request.form['allocation'],
+                    request.form['txdate'], request.form['injection1']])
+        g.db.commit()
+        flash('New patient successfully added')
+    else:
+        error = "Must have UPN to add patient"
+    return render_template('add_indiv.html', error = error)
+
 @app.before_request
 def before_request():
     g.db = connect_db()
