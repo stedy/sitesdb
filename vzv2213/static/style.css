@@ -40,6 +40,3 @@ td {
    padding: 2px 2px 2px 5px;
    }
 
-tr:nth-child(2n+1) {
-   background-color: #DDECEF;
-   }

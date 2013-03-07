@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class=metanav>
-</div>
+{% if g.user %}
+<ul class=metanav>
+</ul>
+{% endif %}
+<h1>Input sample info</h1>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <form action="{{ url_for('add_form') }}" method=post class=addstudy>
       <dl>
@@ -54,6 +57,8 @@
           <td><input type=text size=20 name=baseline></tr>
         <tr><td>Allocation #</td>
           <td><input type=text size=20 name=allocation></tr>
+        <tr><td>Patient User ID #</td>
+          <td><input type=text size=20 name=pt_userid></tr>
     </table>
     <br>
     <h1>Transplant Info and Infection Dates</h1>
@@ -64,12 +69,40 @@
       <td><input type=text size=20 name=txdate></td></tr>
     <tr><td>Injection 1:</td>
       <td><input type=text size=20 name=injection1></td></tr>
+    <tr><td>Projected Injection 2:</td>
+      <td><input type=text size=20 name=injection2p></td>
+      <td>Actual Injection 2:</td>
+      <td><input type=text size=20 name=injection2a></td></tr>
+    <tr><td>Projected Injection 3:</td>
+      <td><input type=text size=20 name=injection3p></td>
+      <td>Actual Injection 3:</td>
+      <td><input type=text size=20 name=injection3a></td></tr>
+    <tr><td>Projected Injection 3:</td>
+      <td><input type=text size=20 name=injection3p></td>
+      <td>Actual Injection 3:</td>
+      <td><input type=text size=20 name=injection3a></td></tr>
+    <tr><td>Projected Injection 4:</td>
+      <td><input type=text size=20 name=injection4p></td>
+      <td>Actual Injection 4:</td>
+      <td><input type=text size=20 name=injection4a></td></tr>
+    <tr><td>Projected Injection 5:</td>
+      <td><input type=text size=20 name=injection5p></td>
+      <td>Actual Injection 5:</td>
+      <td><input type=text size=20 name=injection5a></td></tr>
+    <tr><td>Projected Injection 6:</td>
+      <td><input type=text size=20 name=injection6p></td>
+      <td>Actual Injection 6:</td>
+      <td><input type=text size=20 name=injection6a></td></tr>
+    <tr><td>Projected Injection 7:</td>
+      <td><input type=text size=20 name=injection7p></td>
+      <td>Actual Injection 7:</td>
+      <td><input type=text size=20 name=injection7a></td></tr>
 </table>
 	    <br></br>
 	    <input type=submit value=Submit>
 	</dl>
     </form>
     <ul class=entries>
-        <li><em>All fields optional except Protocol</em>
+        <em>All fields optional except UPN</em>
     </ul>
     {% endblock %}
