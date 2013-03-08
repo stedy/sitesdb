@@ -52,7 +52,7 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    return render_template('temp.html')
+    return render_template('main.html')
 
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
