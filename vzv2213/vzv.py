@@ -41,7 +41,7 @@ def before_request():
     g.db = connect_db()
     g.user = None
     if 'user_id' in session:
-        g.user = query_db('select * from user where user_id = ?',
+        g.user = query_db('select * from user where user_id = XXX',
                         [session['user_id']], one = True)
 
 @app.teardown_request
@@ -57,22 +57,23 @@ def main():
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
     error = None
+    print request.form['upn']
+    print request.form['injection5a']
+    print request.form['consent']
+
     g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
-                    gender, amer_ind, asian, hipac, black, white,
-                    unknown_race, pt_userid, txtype,
+                    gender, ethnicity, pt_userid, txtype,
                     pre_screening_date, arrival_date, consent, consent_reason,
                     consent_comments, randomize, baseline, allocation, txdate,
                     injection1, injection2p, injection2a,
                     injection3p, injection3a, injection4p, injection4a,
                     injection5p, injection5a, injection6p, injection6a,
                     injection7p, injection7a) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['upn'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
-                    request.form['amer_ind'], request.form['asian'],
-                    request.form['hipac'], request.form['black'],
-                    request.form['white'], request.form['unknown_race'],
+                    request.form['ethnicity'],
                     request.form['pt_userid'],
                     request.form['txtype'], request.form['pre_screening_date'],
                     request.form['arrival_date'], request.form['consent'],

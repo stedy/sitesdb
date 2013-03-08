@@ -30,13 +30,15 @@
                 <option value="f">Female</option>
                 <option value="o">Other</option>
               </select>
-          <tr><td>Ethnicity</td></tr>
-          <tr><td>Am Indian/Alaska Native</td><td><input type="checkbox" name="amer_ind" id="amer_ind"/></td>
-            <tr><td>Asian</td><td><input type="checkbox" name="asian" id="asian"/></td></tr>
-            <tr><td>Native Hawaiian/Pac. Islander</td><td><input type="checkbox" name="hipac" id="hipac"/></td></tr>
-            <tr><td>Black/Afr Am</td><td><input type="checkbox" name="black" id="black"/></td></tr>
-            <tr><td>White</td><td><input type="checkbox" name="white" id="white"/></td></tr>
-            <tr><td>Unknown/Prefer not to say</td><td><input type="checkbox" name="unknown_race" id="unknown_race"/></td></tr>
+              <tr><td>Ethnicity</td>
+            <td><select name=ethnicity>
+          <option value="amind">Am Indian/Alaska Native</option>
+          <option value="asian">Asian</option>
+          <option value="hipac">Native Hawaiian/Pac. Islander</option>
+          <option value="afram">Black/Afr Am</option>
+          <option value="white">White</option>
+          <option value="unknown">Unknown/Prefer not to say</option>
+        </select>
         </table>
         <br>
         <h1>Consent Information</h1>
@@ -47,10 +49,10 @@
           <td><input type=text size=20 name=arrival_date></td></tr>
         <tr><td>Consent</td>
           <td><select name=consent>
-              <option value="signed">Signed</option>
-              <option value="not_signed">Not signed</option>
-        </select></td></tr>
-        <tr><td>Consent Reason</td>
+          <option value="signed">Signed</option>
+          <option value="not_signed">Not signed</option>
+    </select></td></tr>
+          <tr><td>Consent Reason</td>
           <td><input type=text size=30 name=consent_reason></td></tr>
         <tr><td>Consent Comments</td>
           <td><input type=text size=20 name=consent_comments></td>
