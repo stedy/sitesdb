@@ -57,9 +57,6 @@ def main():
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
     error = None
-    print request.form['upn']
-    print request.form['injection5a']
-    print request.form['consent']
 
     g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
@@ -90,6 +87,12 @@ def add_form():
     g.db.commit()
     flash('New patient successfully added')
     return render_template('temp.html', error = error)
+
+@app.route('/<id_number>')
+def id_results(id_number):
+    ids = str(upn)
+    #TODO start here
+
 
 @app.route('/add_patient')
 def add_patient():
