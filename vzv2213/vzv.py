@@ -88,9 +88,9 @@ def add_form():
     flash('New patient successfully added')
     return render_template('temp.html', error = error)
 
-@app.route('/<id_number>')
-def id_results(id_number):
-    ids = str(upn)
+@app.route('/edit', methods = ['GET', 'POST'])
+def results():
+    ids = str(request.form['upn'])
     entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
                     pre_screening_date, arrival_date, consent, consent_reason,
@@ -98,8 +98,9 @@ def id_results(id_number):
                     injection1, injection2p, injection2a,
                     injection3p, injection3a, injection4p, injection4a,
                     injection5p, injection5a, injection6p, injection6a,
-                    injection7p, injection7a from demo WHERE upn = ?""", [ids])
-    return render_template('get_results.html', entries=entries)
+                    injection7p, injection7a from demo WHERE upn = ?""",
+                    [ids])
+    return render_template('edit_patient.html', entries=entries)
 
 @app.route('/query')
 def query():

@@ -6,102 +6,86 @@
 {% endif %}
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <form action="{{ url_for('add_form') }}" method=post class=addstudy>
+      {% for entry in entries %}
       <dl>
         <h2>Screening and Randomization</h2>
         <table>
           <tr><td> UPN:</td>
-            <td><input type=text size=10 name=upn></td>
+            <td>{{ entry.upn }}</td>
             <td>UW ID:</td>
-            <td><input type=text size=10 name=uw_id></td></tr>
+            <td>{{ entry.uw_id }}</td></tr>
           <tr><td>Initials:</td>
-            <td><input type=text size=10 name=initials></td>
+            <td>{{ entry.initials }}</td>
             <td>Date of Birth:</td>
-            <td><input type=text size=10 name=dob></td></tr>
+            <td>{{ entry.dob }}</td></tr>
           <tr><td>Hispanic?</td>
-            <td><select name=hispanic>
-                <option value="y">Yes</option>
-                <option value="n">No</option>
-                <option value="u">Prefer not to say</option>
-              </select>
-          <td>Gender</td>
-            <td><select name=gender>
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-                <option value="o">Other</option>
-              </select>
+            <td>{{ entry.hispanic }}</td>
+            <td>Gender</td>
+            <td>{{ entry.gender }}</td></tr>
               <tr><td>Ethnicity</td>
-            <td><select name=ethnicity>
-          <option value="amind">Am Indian/Alaska Native</option>
-          <option value="asian">Asian</option>
-          <option value="hipac">Native Hawaiian/Pac. Islander</option>
-          <option value="afram">Black/Afr Am</option>
-          <option value="white">White</option>
-          <option value="unknown">Unknown/Prefer not to say</option>
-        </select>
-        </table>
+                <td>{{ entry.ethnicity }}</td></tr>
+              </table>
         <br>
         <h2>Consent Information</h2>
         <table>
         <tr><td>Pre Screening Date</td>
-          <td><input type=text size=20 name=pre_screening_date></td>
+          <td><{{ pre_screening_date }}></td>
         <td>Arrival Date</td>
-          <td><input type=text size=20 name=arrival_date></td></tr>
+        <td><{{ arrival_date }}></td></tr>
         <tr><td>Consent</td>
-          <td><select name=consent>
-          <option value="signed">Signed</option>
-          <option value="not_signed">Not signed</option>
-    </select></td></tr>
+        <td>{{ entry.consent }}</td>
           <tr><td>Consent Reason</td>
-          <td><input type=text size=30 name=consent_reason></td></tr>
+            <td>{{ entry.consent_reason }}</td></tr>
         <tr><td>Consent Comments</td>
-          <td><input type=text size=20 name=consent_comments></td>
+          <td>{{ entry.consent_comments }}</td>
         <tr><td>Randomize Date</td>
-          <td><input type=text size=20 name=randomize></td></tr>
+          <td>{{ entry.randomize }}</td></tr>
         <tr><td>Baseline #</td>
-          <td><input type=text size=20 name=baseline></tr>
+          <td>{{ entry.baseline }}</tr>
         <tr><td>Allocation #</td>
-          <td><input type=text size=20 name=allocation></tr>
+          <td>{{ entry.allocation }}</tr>
         <tr><td>Patient User ID #</td>
-          <td><input type=text size=20 name=pt_userid></tr>
+          <td>{{ entry.pt_userid }}</tr>
     </table>
     <br>
     <h2>Transplant Info and Infection Dates</h2>
     <table>
     <tr><td>Tx type:</td>
-            <td><input type=text size=10 name=txtype value = "auto"></td></tr>
+            <td>"auto"</td></tr>
     <tr><td>Tx Date:</td>
-      <td><input type=text size=20 name=txdate></td></tr>
+      <td>{{ entry.txdate }}</td></tr>
     <tr><td>Injection 1:</td>
-      <td><input type=text size=20 name=injection1></td></tr>
+      <td>{{ entry.injection1 }}</td></tr>
     <tr><td>Projected Injection 2:</td>
-      <td><input type=text size=20 name=injection2p></td>
+      <td> {{entry.injection2p }}</td>
       <td>Actual Injection 2:</td>
-      <td><input type=text size=20 name=injection2a></td></tr>
+      <td><{{injection2a }}></td></tr>
     <tr><td>Projected Injection 3:</td>
-      <td><input type=text size=20 name=injection3p></td>
+      <td><{{injection3p }}></td>
       <td>Actual Injection 3:</td>
-      <td><input type=text size=20 name=injection3a></td></tr>
+      <td><{{injection3a }}></td></tr>
     <tr><td>Projected Injection 3:</td>
-      <td><input type=text size=20 name=injection3p></td>
+      <td><{{injection3p }}></td>
       <td>Actual Injection 3:</td>
-      <td><input type=text size=20 name=injection3a></td></tr>
+      <td><{{injection3a }}></td></tr>
     <tr><td>Projected Injection 4:</td>
-      <td><input type=text size=20 name=injection4p></td>
+      <td><{{injection4p }}></td>
       <td>Actual Injection 4:</td>
-      <td><input type=text size=20 name=injection4a></td></tr>
+      <td><{{injection4a }}></td></tr>
     <tr><td>Projected Injection 5:</td>
-      <td><input type=text size=20 name=injection5p></td>
+      <td><{{injection5p }}></td>
       <td>Actual Injection 5:</td>
-      <td><input type=text size=20 name=injection5a></td></tr>
+      <td><{{injection5a }}></td></tr>
     <tr><td>Projected Injection 6:</td>
-      <td><input type=text size=20 name=injection6p></td>
+      <td><{{injection6p }}></td>
       <td>Actual Injection 6:</td>
-      <td><input type=text size=20 name=injection6a></td></tr>
+      <td><{{injection6a }}></td></tr>
     <tr><td>Projected Injection 7:</td>
-      <td><input type=text size=20 name=injection7p></td>
+      <td><{{injection7p }}></td>
       <td>Actual Injection 7:</td>
-      <td><input type=text size=20 name=injection7a></td></tr>
-</table>
+      <td><{{injection7a }}></td></tr>
+  </table>
+  {% endfor %}
 	    <br></br>
 	    <input type=submit value=Submit>
 	</dl>
