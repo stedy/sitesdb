@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
+    <form action="{{ url_for('query') }}" method=post class=test>
+      <dl>
+        <input type=text size=10 name=upn>
+        <input type=submit value="Search by UPN">
+      </dl>
+    </form>
+    <ul class = results>
+      <em>Seach based on UPN</em>
+    </ul>
+    {% endblock %}
+
+
+

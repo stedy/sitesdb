@@ -2,8 +2,8 @@
 {% block body %}
 <h2>What would you like to do today?</h2>
 <br>
-Add New Patient
+<a href="{{ url_for('add_patient') }}">Add New Patient</a>
 <br>
-Edit Existing Patient
+<a href="{{ url_for('query') }}">Edit Existing Patient</a>
 
   {% endblock %}
