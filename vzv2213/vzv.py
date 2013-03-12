@@ -112,10 +112,38 @@ def add_patient():
 
 @app.route('/update_form', methods= ['GET', 'POST'])
 def update_form():
-    print request.form['injection2a']
-    #print request.form['injection4p']
-    #print request.form['upn']
-    return render_template('temp.html')
+    upn = request.form['upn']
+    g.db.execute("""DELETE FROM demo WHERE upn = ?""", [upn])
+    g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
+                    gender, ethnicity, pt_userid, txtype,
+                    pre_screening_date, arrival_date, consent, consent_reason,
+                    consent_comments, randomize, baseline, allocation, txdate,
+                    injection1, injection2p, injection2a,
+                    injection3p, injection3a, injection4p, injection4a,
+                    injection5p, injection5a, injection6p, injection6a,
+                    injection7p, injection7a) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    [request.form['upn'], request.form['uw_id'],
+                    request.form['initials'], request.form['dob'],
+                    request.form['hispanic'], request.form['gender'],
+                    request.form['ethnicity'],
+                    request.form['pt_userid'],
+                    request.form['txtype'], request.form['pre_screening_date'],
+                    request.form['arrival_date'], request.form['consent'],
+                    request.form['consent_reason'],
+                    request.form['consent_comments'], request.form['randomize'],
+                    request.form['baseline'], request.form['allocation'],
+                    request.form['txdate'], request.form['injection1'],
+                    request.form['injection2p'], request.form['injection2a'],
+                    request.form['injection3p'], request.form['injection3a'],
+                    request.form['injection4p'], request.form['injection4a'],
+                    request.form['injection5p'], request.form['injection5a'],
+                    request.form['injection6p'], request.form['injection6a'],
+                    request.form['injection7p'], request.form['injection7a']
+                    ])
+    g.db.commit()
+    flash('Entry for UPN %s edited' % upn)
+    return render_template('main.html')
 
 
 @app.before_request
