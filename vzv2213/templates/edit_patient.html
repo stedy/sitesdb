@@ -59,31 +59,33 @@
     <tr><td>Projected Injection 2:</td>
       <td><input type=text size=20 name=injection2p value={{ entry.injection2p }}></td>
       <td>Actual Injection 2:</td>
-      <td><input type=text size=20 name=injection2a></td>
+      <td><input type=text size=20 name=injection2a value={{entry.injection2a }}></td></tr>
     <tr><td>Projected Injection 3:</td>
       <td><input type=text size=20 name=injection3p value={{ entry.injection3p }}></td>
       <td>Actual Injection 3:</td>
-      <td><input type=text size=20 name=injection3a></td></tr>
+      <td><input type=text size=20 name=injection3a value={{ entry.injection3a }}></td></tr>
     <tr><td>Projected Injection 4:</td>
       <td><input type=text size=20 name=injection4p value={{ entry.injection4p }}></td>
       <td>Actual Injection 4:</td>
-      <td><input type=text size=20 name=injection4a></td></tr>
+      <td><input type=text size=20 name=injection4a value={{ entry.injection4a }}></td></tr>
     <tr><td>Projected Injection 5:</td>
       <td><input type=text size=20 name=injection5p value={{ entry.injection5p }}></td>
       <td>Actual Injection 5:</td>
-      <td><input type=text size=20 name=injection5a></td></tr>
+      <td><input type=text size=20 name=injection5a value={{ entry.injection5a }}></td></tr>
     <tr><td>Projected Injection 6:</td>
       <td><input type=text size=20 name=injection6p value={{ entry.injection6p }}></td>
       <td>Actual Injection 6:</td>
-      <td><input type=text size=20 name=injection6a></td>
+      <td><input type=text size=20 name=injection6a value={{ entry.injection6a }}></td></tr>
     <tr><td>Projected Injection 7:</td>
       <td><input type=text size=20 name=injection7p value={{ entry.injection7p }}></td>
       <td>Actual Injection 7:</td>
-      <td><input type=text size=20 name=injection7a></td></tr>
+      <td><input type=text size=20 name=injection7a value={{ entry.injection7a }}></td></tr>
   </table>
-  {% endfor %}
 	    <br></br>
-	    <input type=submit value=Submit>
+      <input type=submit value=Submit>
+      {% else %}
+      <h2>Sorry, that UPN does not exist in the database</h2>
+  {% endfor %}
 	</dl>
     </form>
     <ul class=entries>

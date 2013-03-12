@@ -58,9 +58,9 @@ def main():
 def add_form():
     error = None
     injection1_raw = request.form['injection1']
-    injection1 = dt.datetime.strptime(injection1_raw, "%m/%d/%y")
+    injection1 = dt.datetime.strptime(injection1_raw, "%m/%d/%Y")
     days = [30, 60, 90, 180, 450, 810]
-    fu_days = [(injection1 + dt.timedelta(weeks=day)).strftime("%m/%d/%y") for day in days]
+    fu_days = [(injection1 + dt.timedelta(weeks=day)).strftime("%m/%d/%Y") for day in days]
     g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     pre_screening_date, arrival_date, consent, consent_reason,
