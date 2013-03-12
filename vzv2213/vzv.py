@@ -57,16 +57,21 @@ def main():
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
     error = None
-
+    injection1_raw = request.form['injection1']
+    injection1 = dt.datetime.strptime(injection1_raw, "%m/%d/%y")
+    days = [30, 60, 90, 180, 450, 810]
+    fu_days = [(injection1 + dt.timedelta(weeks=day)).strftime("%m/%d/%y") for day in days]
+    print fu_days
+    print fu_days[2]
     g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     pre_screening_date, arrival_date, consent, consent_reason,
                     consent_comments, randomize, baseline, allocation, txdate,
-                    injection1, injection2p, injection2a,
-                    injection3p, injection3a, injection4p, injection4a,
-                    injection5p, injection5a, injection6p, injection6a,
-                    injection7p, injection7a) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    injection1, injection2p,
+                    injection3p, injection4p,
+                    injection5p, injection6p,
+                    injection7p) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['upn'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -78,15 +83,11 @@ def add_form():
                     request.form['consent_comments'], request.form['randomize'],
                     request.form['baseline'], request.form['allocation'],
                     request.form['txdate'], request.form['injection1'],
-                    request.form['injection2p'], request.form['injection2a'],
-                    request.form['injection3p'], request.form['injection3a'],
-                    request.form['injection4p'], request.form['injection4a'],
-                    request.form['injection5p'], request.form['injection5a'],
-                    request.form['injection6p'], request.form['injection6a'],
-                    request.form['injection7p'], request.form['injection7a']])
+                    fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
+                    fu_days[5]])
     g.db.commit()
     flash('New patient successfully added')
-    return render_template('temp.html', error = error)
+    return render_template('main.html', error = error)
 
 @app.route('/edit', methods = ['GET', 'POST'])
 def results():
