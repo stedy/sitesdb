@@ -5,79 +5,79 @@
 </ul>
 {% endif %}
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-    <form action="{{ url_for('add_form') }}" method=post class=addstudy>
+    <form action="{{ url_for('update_form') }}" method=post class=addstudy>
       {% for entry in entries %}
       <dl>
         <h2>Screening and Randomization</h2>
         <table>
           <tr><td> UPN:</td>
-            <td>{{ entry.upn }}</td>
+            <td><input type=text size=20 name= upn value={{ entry.upn }}></td>
             <td>UW ID:</td>
-            <td>{{ entry.uw_id }}</td></tr>
+            <td><input type=text size=20 name=uw_id value={{ entry.uw_id }}></td></tr>
           <tr><td>Initials:</td>
-            <td>{{ entry.initials }}</td>
+            <td><input type=text size=20 name=initials value={{ entry.initials }}></td>
             <td>Date of Birth:</td>
-            <td>{{ entry.dob }}</td></tr>
+            <td><input type=text size=20 name=dob value={{ entry.dob }}></td></tr>
           <tr><td>Hispanic?</td>
-            <td>{{ entry.hispanic }}</td>
+            <td><input type=text size=20 name=hispanic value={{ entry.hispanic }}></td>
             <td>Gender</td>
-            <td>{{ entry.gender }}</td></tr>
+            <td><input type=text size=20 name=gender value={{ entry.gender }}></td></tr>
               <tr><td>Ethnicity</td>
-                <td>{{ entry.ethnicity }}</td></tr>
+                <td><input type=text size=20 name=gender value={{ entry.ethnicity }}></td></tr>
               </table>
         <br>
         <h2>Consent Information</h2>
         <table>
         <tr><td>Pre Screening Date</td>
-          <td>{{ entry.pre_screening_date }}</td>
-        <td>Arrival Date</td>
-        <td>{{ entry.arrival_date }}</td></tr>
+          <td><input type=text size=20 name=pre_screening_date value={{ entry.pre_screening_date }}></td>
+          <td>Arrival Date</td>
+          <td><input type=text size=20 name=arrival_date value={{ entry.arrival_date }}></td></tr>
         <tr><td>Consent</td>
-        <td>{{ entry.consent }}</td>
+          <td><input type=text size=20 name=consent value={{ entry.consent }}></td>
           <tr><td>Consent Reason</td>
-            <td>{{ entry.consent_reason }}</td></tr>
+            <td><input type=text size=30 name=consent_reason value="{{ entry.consent_reason }}"></td></tr>
         <tr><td>Consent Comments</td>
-          <td>{{ entry.consent_comments }}</td>
+          <td><input type=text size=30 name=consent_comments value="{{ entry.consent_comments }}"></td>
         <tr><td>Randomize Date</td>
-          <td>{{ entry.randomize }}</td></tr>
+          <td><input type=text size=20 name=randomize value={{ entry.randomize }}></td></tr>
         <tr><td>Baseline #</td>
-          <td>{{ entry.baseline }}</tr>
+          <td><input type=text size=20 name=baseline value={{ entry.baseline }}></tr>
         <tr><td>Allocation #</td>
-          <td>{{ entry.allocation }}</tr>
+          <td><input type=text size=20 name=allocation value={{ entry.allocation }}></tr>
         <tr><td>Patient User ID #</td>
-          <td>{{ entry.pt_userid }}</tr>
+          <td><input type=text size=20 name=pt_userid value={{ entry.pt_userid }}></tr>
     </table>
     <br>
     <h2>Transplant Info and Infection Dates</h2>
     <table>
     <tr><td>Tx type:</td>
-      <td>{{ entry.txtype }}</td></tr>
+      <td><input type=text size=20 name=txtype value={{ entry.txtype }}></td></tr>
     <tr><td>Tx Date:</td>
-      <td>{{ entry.txdate }}</td></tr>
+      <td><input type=text size=20 name=txdate value={{ entry.txdate }}></td></tr>
     <tr><td>Injection 1:</td>
-      <td>{{ entry.injection1 }}</td></tr>
+      <td><input type=text size=20 name=txdate value={{ entry.injection1 }}></td></tr>
     <tr><td>Projected Injection 2:</td>
-      <td>{{ entry.injection2p }}</td>
+      <td><input type=text size=20 name=injection2p value={{ entry.injection2p }}></td>
       <td>Actual Injection 2:</td>
       <td><input type=text size=20 name=injection2a></td>
     <tr><td>Projected Injection 3:</td>
-      <td>{{ entry.injection3p }}</td>
+      <td><input type=text size=20 name=injection3p value={{ entry.injection3p }}></td>
       <td>Actual Injection 3:</td>
       <td><input type=text size=20 name=injection3a></td></tr>
     <tr><td>Projected Injection 4:</td>
-      <td>{{ entry.injection4p }}</td>
+      <td><input type=text size=20 name=injection4p value={{ entry.injection4p }}></td>
       <td>Actual Injection 4:</td>
       <td><input type=text size=20 name=injection4a></td></tr>
     <tr><td>Projected Injection 5:</td>
-      <td>{{ entry.injection5p }}</td>
+      <td><input type=text size=20 name=injection5p value={{ entry.injection5p }}></td>
       <td>Actual Injection 5:</td>
       <td><input type=text size=20 name=injection5a></td></tr>
     <tr><td>Projected Injection 6:</td>
-      <td>{{ entry.injection6p }}</td>
+      <td><input type=text size=20 name=injection6p value={{ entry.injection6p }}></td>
       <td>Actual Injection 6:</td>
       <td><input type=text size=20 name=injection6a></td>
     <tr><td>Projected Injection 7:</td>
-      <td>{{ entry.injection7p }}</td>
+      <td><input type=text size=20 name=injection7p value={{ entry.injection7p }}></td>
       <td>Actual Injection 7:</td>
       <td><input type=text size=20 name=injection7a></td></tr>
   </table>

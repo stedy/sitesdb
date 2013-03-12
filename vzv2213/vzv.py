@@ -61,8 +61,6 @@ def add_form():
     injection1 = dt.datetime.strptime(injection1_raw, "%m/%d/%y")
     days = [30, 60, 90, 180, 450, 810]
     fu_days = [(injection1 + dt.timedelta(weeks=day)).strftime("%m/%d/%y") for day in days]
-    print fu_days
-    print fu_days[2]
     g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     pre_screening_date, arrival_date, consent, consent_reason,
@@ -111,6 +109,13 @@ def query():
 @app.route('/add_patient')
 def add_patient():
     return render_template('add_patient.html')
+
+@app.route('/update_form', methods= ['GET', 'POST'])
+def update_form():
+    print request.form['injection2a']
+    #print request.form['injection4p']
+    #print request.form['upn']
+    return render_template('temp.html')
 
 
 @app.before_request
