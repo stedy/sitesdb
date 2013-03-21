@@ -106,6 +106,10 @@ def query():
     return render_template('pt_lookup.html')
 
 
+@app.route('/check_query')
+def check_query():
+    return render_template('check_lookup.html')
+
 @app.route('/add_patient')
 def add_patient():
     return render_template('add_patient.html')
