@@ -103,6 +103,25 @@ def results():
                     [ids])
     return render_template('edit_patient.html', entries=entries)
 
+@app.route('/checkedit', methods = ['GET', 'POST'])
+def check_results():
+    checknum = str(request.form['check_no'])
+    print checknum
+    entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
+                    gender, ethnicity, pt_userid, txtype,
+                    consent, consent_reason,
+                    randomize, baseline, allocation, txdate,
+                    injection1, injection2p, injection2a,
+                    injection3p, injection3a, injection4p, injection4a,
+                    injection5p, injection5a, injection6p, injection6a,
+                    injection7p, injection7a, check1no, check1amt,
+                    check1date, check2no, check2amt, check2date,
+                    check3no, check3amt, check3date, check4no, check4amt,
+                    check4date from demo WHERE check1no = ? OR
+                    check2no = ? OR check3no = ? or check4no= ?""",
+                    [checknum, checknum, checknum, checknum])
+    return render_template('edit_patient.html', entries=entries)
+
 @app.route('/query')
 def query():
     return render_template('pt_lookup.html')
