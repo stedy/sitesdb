@@ -57,11 +57,12 @@ def main():
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
     error = None
-    txdate_raw = request.form['txdate']
-    txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
-    days = [21, 42, 63, 91, 365, 730]
-    fu_days = [(txdate + dt.timedelta(weeks=day/7)).strftime("%m/%d/%Y") for day in days]
-    g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
+    if request.form['txdate']:
+        txdate_raw = request.form['txdate']
+        txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
+        days = [21, 42, 63, 91, 365, 730]
+        fu_days = [(txdate + dt.timedelta(weeks=day/7)).strftime("%m/%d/%Y") for day in days]
+        g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
                     randomize, baseline, allocation, txdate,
@@ -82,8 +83,10 @@ def add_form():
                     request.form['txdate'], request.form['injection1'],
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
                     fu_days[5]])
-    g.db.commit()
-    flash('New patient successfully added')
+        g.db.commit()
+        flash('New patient successfully added')
+    else:
+        error = "Must have txdate to enter new patient"
     return render_template('main.html', error = error)
 
 @app.route('/edit', methods = ['GET', 'POST'])
