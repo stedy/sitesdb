@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+<ul class=metanav>
+</ul>
+{% endif %}
+  {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+  <table>
+    <tr><td>UPN</td><td>UW ID</td><td>Initials</td><td>Tx date</td><td>Injection Date</td></tr>
+    {% for entry in entries %}
+    <tr><td>{{ entry.upn }}</td><td>{{ entry.uw_id }}</td><td>{{ entry.initials }}</td><td>{{ entry.txdate }}</td>
+      <td>{{ entry.injection1 }}</td></tr>
+    {% endfor %}
+      </table>
+{% endblock %}

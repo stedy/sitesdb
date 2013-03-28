@@ -181,6 +181,12 @@ def update_form():
     flash('Entry for UPN %s edited' % upn)
     return render_template('main.html')
 
+@app.route('/all_patients')
+def all_patients():
+    entries = query_db("""SELECT upn, uw_id, initials, txdate, injection1 FROM
+    demo""")
+    return render_template('all_patients.html', entries = entries)
+
 
 @app.before_request
 def before_request():
