@@ -151,8 +151,8 @@ def update_form():
                     injection5p, injection5a, injection6p, injection6a,
                     injection7p, injection7a, check1no, check1amt, check1date,
                     check2no, check2amt, check2date, check3no, check3amt,
-                    check3date, check4no, check4amt, check4date) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    check3date, check4no, check4amt, check4date, offstudy) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['upn'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -175,7 +175,7 @@ def update_form():
                     request.form['check3no'], request.form['check3amt'],
                     request.form['check3date'],
                     request.form['check4no'], request.form['check4amt'],
-                    request.form['check4date']
+                    request.form['check4date'], request.form['offstudy']
                     ])
     g.db.commit()
     flash('Entry for UPN %s edited' % upn)

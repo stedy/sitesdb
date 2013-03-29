@@ -17,7 +17,8 @@ CREATE TABLE demo (upn text, uw_id text, initials text, dob date,
                   check4date date, check4amt text, check4no text,
                   check5date date, check5amt text, check5no text,
                   check6date date, check6amt text, check6no text,
-                  check7date date, check7amt text, check7no text
+                  check7date date, check7amt text, check7no text,
+                  offstudy date
                 );
 
 
