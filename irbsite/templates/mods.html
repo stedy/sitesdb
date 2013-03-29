@@ -11,24 +11,40 @@
 	<br>
   <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }} | UW Protocol #:</h2>
     <br>
-    <h2>Committee:  | Correspondence</h2>
-        <li><b>Protocol</li>
-	<li>Date to IRB</li>
-	<li>Description</li>
-	<li>Comments</b></li>
+    <h2>Committee:  | Correspondence notification:</h2>
+<table>
+  <tr><td><b>Date received</td>
+      <td><b>Due Date</td>
+        <td><b>Date Submitted</td>
+          <td><b>Date of Expected Review</td>
+            <td><b>Date back from IRO</td>
+              <td><b>Approved Date</td>
+                <td><b>Description</td>
+                  <td><b>Submitted by</td>
+                    <td><b>Comments</td>
+                      <td><b>Edit</b></td></tr>
 	{% for entry in entries %}
-	<br>
-	<li>{{ entries[0].Protocol }}</li>
+  <tr><td>{{ entry.Date_received }}</td>
 
-	<li>{{ entry.Date_to_IRB }}</li>
-	
-	<li>{{entry.Description }}</li>
+	<td>{{ entry.date_due }}</td>
+
+  <td>{{ entry.date_submitted }}</td>
+
+  <td>{{ entry.Exp_date }}</td>
         
-	<li>{{ entry.Comments }}</li>
+	<td>{{ entry.date_back }}</td>
 
-  <li><a href="{{ url_for('mods_edit', mods_id=entry.id )}}">edit</a></li>
-
+	<td>{{ entry.aprvd_date }}</td>
+  
+  <td>{{ entry.Description }}</td>
+ 
+  <td>{{ entry.submitted }}</td>
+  
+  <td>{{ entry.Comments }}</td>
+  
+  <td><a href="{{ url_for('mods_edit', mods_id=entry.id )}}">edit</a></td></tr>
     {% endfor %}
+</table>
 	<br>
 	<li><input type=text size=10 name=Protocol value= {{ entries[0].Protocol }} ></li>
 	<li><input type=text size=10 name=Date_to_IRB></li>
