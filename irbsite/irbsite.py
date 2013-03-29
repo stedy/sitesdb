@@ -194,9 +194,10 @@ def id_results_mods(id_number):
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						mods.PI, mods.Protocol, mods.id,
-						mods.submitted, mods.Comments, mods.description,
-						mods.Date_to_IRB from base,
+						mods.PI, mods.Protocol, mods.id, mods.date_due,
+                        mods.Exp_date,
+						mods.submitted, mods.Comments, mods.Description,
+						mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
 						mods where
 						mods.Protocol = base.Protocol and base.Protocol
 						= ? order by mods.Date_to_IRB ASC""", [ids])

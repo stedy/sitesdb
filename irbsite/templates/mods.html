@@ -24,11 +24,11 @@
                     <td><b>Comments</td>
                       <td><b>Edit</b></td></tr>
 	{% for entry in entries %}
-  <tr><td>{{ entry.Date_received }}</td>
+  <tr><td>{{ entry.date_received }}</td>
 
 	<td>{{ entry.date_due }}</td>
 
-  <td>{{ entry.date_submitted }}</td>
+  <td>{{ entry.Date_to_IRB }}</td>
 
   <td>{{ entry.Exp_date }}</td>
         
@@ -44,12 +44,16 @@
   
   <td><a href="{{ url_for('mods_edit', mods_id=entry.id )}}">edit</a></td></tr>
     {% endfor %}
+    <tr><td><input type=text size=10 name=Date_to_IRB></td>
+	<td><input type=text size=10 name=date_due></td>
+	<td><input type=text size=10 name=date_submitted></td>
+	<td><input type=text size=10 name=Exp_date></td>
+	<td><input type=text size=10 name=date_back></td>
+	<td><input type=text size=10 name=aprvd_date></td>
+	<td><input type=text size=10 name=Description></td>
+	<td><input type=text size=10 name=submitted></td>
+  <td><input type=text size=10 name=Comments></td></tr>
 </table>
-	<br>
-	<li><input type=text size=10 name=Protocol value= {{ entries[0].Protocol }} ></li>
-	<li><input type=text size=10 name=Date_to_IRB></li>
-	<li><input type=text size=20 name=Description></li>
-	<li><input type=text size=20 name=Comments></li>
 	<br>
 	<li><input type=submit value="Add mod">
 	
