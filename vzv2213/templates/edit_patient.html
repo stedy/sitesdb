@@ -47,7 +47,7 @@
         <tr><td>Patient User ID #</td>
           <td><input type=text size=20 name=pt_userid value={{ entry.pt_userid }}></tr>
         <tr><td>Off Study Date</td>
-          <td><input type=text size=20 name=pt_userid value={{ entry.offstudy }}></tr>
+          <td><input type=text size=20 name=offstudy value={{ entry.offstudy }}></tr>
     </table>
     <br>
     <h2>Transplant Info and Infection Dates</h2>
@@ -86,30 +86,38 @@
   <br>
   <h2>Check info</h2>
   <table>
-  <tr><td>Check Number</td>
+  <tr><td>Visit 1 Check #</td>
     <td><input type=text size=20 name=check1no value={{ entry.check1no }}></td>
-    <td>Check Amount</td>
+    <td>Amount</td>
     <td><input type=text size=20 name=check1amt value={{ entry.check1amt }}></td>
-    <td>Check Date</td>
-    <td><input type=text size=20 name=check1date value={{ entry.check1date }}></td></tr>
-  <tr><td>Check Number</td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check1date value={{ entry.check1date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check1comments value={{ entry.check1comments }}></td></tr>
+  <tr><td>Visit 2 Check #</td>
     <td><input type=text size=20 name=check2no value={{ entry.check2no }}></td>
-    <td>Check Amount</td>
+    <td>Amount</td>
     <td><input type=text size=20 name=check2amt value={{ entry.check2amt }}></td>
-    <td>Check Date</td>
-    <td><input type=text size=20 name=check2date value={{ entry.check2date }}></td></tr>
-  <tr><td>Check Number</td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check2date value={{ entry.check2date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check2comments value={{ entry.check2comments }}></td></tr>
+  <tr><td>Visit 3 Check #</td>
     <td><input type=text size=20 name=check3no value={{ entry.check3no }}></td>
-    <td>Check Amount</td>
+    <td>Amount</td>
     <td><input type=text size=20 name=check3amt value={{ entry.check3amt }}></td>
-    <td>Check Date</td>
-    <td><input type=text size=20 name=check3date value={{ entry.check3date }}></td></tr>
-  <tr><td>Check Number</td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check3date value={{ entry.check3date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check3comments value={{ entry.check3comments }}></td></tr>
+  <tr><td>Visit 4 Check #</td>
     <td><input type=text size=20 name=check4no value={{ entry.check4no }}></td>
-    <td>Check Amount</td>
+    <td>Amount</td>
     <td><input type=text size=20 name=check4amt value={{ entry.check4amt }}></td>
-    <td>Check Date</td>
-    <td><input type=text size=20 name=check4date value={{ entry.check4date }}></td></tr>
+    <td>Date</td>
+    <td><input type=text size=20 name=check4date value={{ entry.check4date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check4comments value={{ entry.check4comments }}></td></tr>
 </table>
 	    <br></br>
       <input type=submit value=Submit>

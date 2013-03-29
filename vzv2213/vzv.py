@@ -150,9 +150,12 @@ def update_form():
                     injection3p, injection3a, injection4p, injection4a,
                     injection5p, injection5a, injection6p, injection6a,
                     injection7p, injection7a, check1no, check1amt, check1date,
-                    check2no, check2amt, check2date, check3no, check3amt,
-                    check3date, check4no, check4amt, check4date, offstudy) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    check1comment, check2no, check2amt, check2date,
+                    check2comment, check3no, check3amt,
+                    check3date, check3comment, check4no, check4amt, check4date,
+                    check4comment, offstudy) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['upn'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -169,13 +172,14 @@ def update_form():
                     request.form['injection6p'], request.form['injection6a'],
                     request.form['injection7p'], request.form['injection7a'],
                     request.form['check1no'], request.form['check1amt'],
-                    request.form['check1date'],
+                    request.form['check1date'], request.form['check1comment'],
                     request.form['check2no'], request.form['check2amt'],
-                    request.form['check2date'],
+                    request.form['check2date'], request.form['check2comment'],
                     request.form['check3no'], request.form['check3amt'],
-                    request.form['check3date'],
+                    request.form['check3date'], request.form['check3comment'],
                     request.form['check4no'], request.form['check4amt'],
-                    request.form['check4date'], request.form['offstudy']
+                    request.form['check4date'], request.form['check4comment'],
+                    request.form['offstudy']
                     ])
     g.db.commit()
     flash('Entry for UPN %s edited' % upn)

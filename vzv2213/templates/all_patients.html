@@ -6,6 +6,7 @@
 <ul class=metanav>
 </ul>
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+  <i>(Click on table header to sort)</i>
   <table class="sortable">
     <tr><td>UPN</td><td>UW ID</td><td>Initials</td><td>Tx date</td><td>Injection Date</td></tr>
     {% for entry in entries %}
