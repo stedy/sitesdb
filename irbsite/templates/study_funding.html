@@ -46,14 +46,24 @@
 
   <td><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></td></tr>
   {% endfor %}
-        <br>
-        <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
+  <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
+    <td><input type=text size=10 name=Title></td>
+    <td><select name=Award_type>
+        <option value="Primary">Primary</option>
+        <option value="Sub-Award">Sub-Award</option>
+        <option value="Contract">Contract</option>
+      </select>
 	<td><input type=text size=10 name=PI></td>
+	<td><input type=text size=10 name=Institution></td>
 	<td><input type=text size=10 name=Source></td>
-	<td><input type=text size=10 name=Source_ID></td>
 	<td><input type=text size=10 name=start></td>
 	<td><input type=text size=10 name=end></td>
-  <td><textarea name=notes cols="12" rows="4" wrap="hard"></textarea></td>
+  <td><select name=NCE>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select></td>
+	<td><input type=text size=10 name=FVAF></td>
+  <td><textarea name=notes cols="8" rows="4" wrap="hard"></textarea></td>
 </tr></table>
   <br>
 	<input type=submit value="Add Funding">

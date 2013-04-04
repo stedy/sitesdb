@@ -174,13 +174,15 @@ def funding_edit(funding_id):
 def submit_funding_edits(funding_id):
     #if request.method == "POST":
     g.db.execute("""DELETE from funding where id = ?""", [funding_id])
-    g.db.execute("""INSERT INTO funding (Protocol, PI, Source, Source_ID, start,
-                        end, notes) values (?,?,?,?,?,?,?)""",
-                            [request.form['Protocol'],
-                            request.form['PI'],
-                            request.form['Source'], request.form['Source_ID'],
-                            request.form['start'],
-                            request.form['end'],
+    g.db.execute("""INSERT INTO funding (Protocol, Title, Award_type,
+                        PI, Institution, Source, start, end,
+                        NCE, FVAF, notes) values (?,?,?,?,?,?,?,?,?,?,?)""",
+                            [request.form['Protocol'], request.form['Title'],
+                                request.form['Award_type'], 
+                            request.form['PI'], request.form['Institution'],
+                            request.form['Source'], request.form['start'],
+                            request.form['end'], request.form['NCE'],
+                            request.form['FVAF'],
                             request.form['notes']])
     g.db.commit()
     flash('funding for %s successfully edited' % request.form['Protocol'])
