@@ -239,7 +239,8 @@ def id_results_sn(id_number):
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
 						funding.PI, funding.Title, 
-						funding.source, funding.Source_ID,
+						funding.source, funding.Source_ID, funding.Award_type,
+                        funding.Institution, funding.NCE, funding.FVAF,
 						funding.start, funding.id, funding.end, funding.notes from base,
 						funding where
 						funding.Protocol = base.Protocol and base.Protocol

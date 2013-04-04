@@ -16,28 +16,31 @@
   <br>
   <table>
     <tr><td><b>Protocol</td>
-    <tr><td><b>Type of Award</td>
+      <td><b>Funding Title</td>
+       <td><b>Type of Award</td>
         <td><b>PI</td>
           <td><b>Institution</td>
             <td><b>Source</td>
               <td><b>Start Date</td>
                 <td><b>End Date</td>
-                <td><b>No Cost Extension</td>
+                <td><b>NCE</td>
                 <td><b>FVAF Submit date</td>
                   <td><b>Notes</td>
                     <td><b>Edit</b></td></tr>
 	{% for entry in entries %}
   <tr><td>{{ entries[0].Protocol }}</td>
 
+	<td>{{ entry.Title }}</td>
+	<td>{{ entry.Award_type }}</td>
 	<td>{{ entry.PI }}</td>
+	<td>{{ entry.Institution }}</td>
 
 	<td>{{ entry.Source }}</td>
-	
-	<td>{{ entry.Source_ID }}</td>
-        
 	<td>{{ entry.start }}</td>
 	
 	<td class="date">{{ entry.end }}</td>
+	<td>{{ entry.NCE }}</td>
+	<td>{{ entry.FVAF }}</td>
 		
 	<td>{{ entry.notes }}</td>
 
