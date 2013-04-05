@@ -122,7 +122,7 @@ def id_results(id_number):
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title,
-			docs.aprvd_date, docs.doc_name, base.PI,
+			docs.aprvd_date, docs.doc_name, docs.Version, docs.Type, base.PI,
 			docs.doc_date from base, docs where docs.Protocol = base.Protocol 
 			and base.Protocol = ? order by docs.doc_date ASC""", [ids])
 	return render_template('study.html', entries = entries)	
