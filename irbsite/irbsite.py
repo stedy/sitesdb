@@ -73,11 +73,11 @@ def login():
 def add_form():
     error = None
     if request.form['Protocol']:
-		g.db.execute('insert into base (Protocol, TITLE, PI) values (?, ?, ?)',
-			    [request.form['Protocol'], request.form['TITLE'],
+        g.db.execute('insert into base (Protocol, Title, PI) values (?, ?, ?)',
+			    [request.form['Protocol'], request.form['Title'],
 				request.form['PI']])
-		g.db.commit()
-		flash('New entry was successfully posted')
+        g.db.commit()
+        flash('New entry was successfully posted')
     else:
 		error = 'Must have Protocol number to add entry'
     return render_template('add_study.html', error = error)

@@ -6,7 +6,7 @@
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <form action="{{ url_for('add_form') }}" method=post class=addstudy>
 	    <dt> Title:
-      <input type=text size=110 name=TITLE>
+      <input type=text size=110 name=Title>
       <table width="400">
         <td>Study PI:</td>
         <td><input type=text size=20 name=PI></td></tr>
@@ -21,7 +21,7 @@
 	    <td>Sponsor:
       <td><input type=text size=20 name=Funding_source></td></tr>
 	    <td>RN/Coord:
-	    <td><input type=text size=20 name=rn_coord></td></tr>
+	    <td><input type=text size=20 name=RN_coord></td></tr>
 	    <td>Initial Approval Date:
         <td><input type=text size=20 name=IRB_approved></td></tr>
       <tr><td>Primary IRB</td>
@@ -41,12 +41,11 @@
 	    <td>IRB expires:
         <td><input type=text size=20 name=IRB_expires></td></tr>
 	    <td>Study Status:
-        <td><input type=text size=20 name=Status></td></tr>
+        <td><input type=text size=20 name=Accrual_status></td></tr>
 	    <td>IND:
         <td><input type=text size=20 name=IND></td></tr>
 	    <td>Patient Goal:
-        <td><input type=text size=20 name=Patient_goal></td></tr>
-
+        <td><input type=text size=20 name=Pt_total></td></tr>
 	    <td>Review Type:
 	    <td><input type=text size=20 name=Type></td></tr>
 	    </table>
