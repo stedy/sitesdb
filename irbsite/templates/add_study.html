@@ -5,23 +5,53 @@
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <form action="{{ url_for('add_form') }}" method=post class=addstudy>
-	<dl>
-	    <dt> Title:    
-	    <input type=text size=110 name=TITLE>
-	    <dt>Protocol:
-	    <input type=text size=10 name=Protocol>
-	    <dt>IR File:
-	    <input type=text size=10 name=IR_file>
-	    <dt>Study PI:
-	    <input type=text size=20 name=PI>
-	    <dt>RN/Coord:
-	    <input type=text size=20 name=rn_coord>
-	    <dt>Review Type:
-	    <input type=text size=20 name=Type>
-	    </textarea>
+	    <dt> Title:
+      <input type=text size=110 name=TITLE>
+      <table width="400">
+        <td>Study PI:</td>
+        <td><input type=text size=20 name=PI></td></tr>
+	    <td>Protocol:
+	    <td><input type=text size=20 name=Protocol></td></tr>
+	    <td>IRB Number:
+	    <td><input type=text size=20 name=IR_file></td></tr>
+	    <td>UW Protocol Number:
+	    <td><input type=text size=20 name=UW></td></tr>
+	    <td>Committee:
+	    <td><input type=text size=20 name=CTE></td></tr>
+	    <td>Sponsor:
+      <td><input type=text size=20 name=Funding_source></td></tr>
+	    <td>RN/Coord:
+	    <td><input type=text size=20 name=rn_coord></td></tr>
+	    <td>Initial Approval Date:
+        <td><input type=text size=20 name=IRB_approved></td></tr>
+      <tr><td>Primary IRB</td>
+      <td><select name=Primary_IRB>
+            <option value="FH">FH</option>
+            <option value="UW">UW</option>
+        </select></tr>
+        <tr><td>FHCRC coop</td>
+      <td><select name=FHCRC_coop>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select></tr>
+        <tr><td>FHCRC Renewal Date:
+        <td><input type=text size=20 name=FHCRC_renewal></td></tr>
+	    <td>UW Renewal Date:
+        <td><input type=text size=20 name=UW_renewal></td></tr>
+	    <td>IRB expires:
+        <td><input type=text size=20 name=IRB_expires></td></tr>
+	    <td>Study Status:
+        <td><input type=text size=20 name=Status></td></tr>
+	    <td>IND:
+        <td><input type=text size=20 name=IND></td></tr>
+	    <td>Patient Goal:
+        <td><input type=text size=20 name=Patient_goal></td></tr>
+
+	    <td>Review Type:
+	    <td><input type=text size=20 name=Type></td></tr>
+	    </table>
 	    <br></br>
-	    <input type=submit value=Submit>
-	</dl>
+	    <td><input type=submit value=Submit>
     </form>
     {% endif %}   
     <ul class=entries>
