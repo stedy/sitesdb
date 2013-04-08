@@ -35,7 +35,7 @@ def query_db(query, args=(), one = False):
 		for idx, value in enumerate(row)) for row in cur.fetchall()]
 	return (rv[0] if rv else None) if one else rv
 
-#then add om decorators
+#then decorators
 
 @app.before_request
 def before_request():
@@ -127,6 +127,20 @@ def id_results(id_number):
 			and base.Protocol = ? order by docs.doc_date ASC""", [ids])
 	return render_template('study.html', entries = entries)	
 
+#Add new docs
+@app.route('/add_docs', methods = ['GET', 'POST'])
+def add_docs():
+    error = None
+    #if request.form['doc_name']:
+    g.db.execute("""INSERT INTO docs (Protocol, doc_name, Version, doc_date,
+            aprvd_date, Type) values (?,?,?,?,?,?)""",
+            [request.form['Protocol'], request.form['doc_name'],
+                request.form['Version'], request.form['doc_date'],
+                request.form['aprvd_date'], request.form['Type']])
+    g.db.commit()
+    flash('New doc was successfully added')
+    return render_template('subj_query.html')
+
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
 	ids = str(id_number)
@@ -164,6 +178,7 @@ def submit_ae_edits(ae_id):
     return render_template('subj_query.html')
 
 #edit functionality for funding
+
 @app.route('/<funding_id>/funding_edit', methods = ['GET', 'POST'])
 def funding_edit(funding_id):
     entries = query_db("""select Protocol, PI, id, Source, Source_ID, start,
