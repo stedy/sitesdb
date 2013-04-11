@@ -9,17 +9,20 @@
     </ul>    
     {% endif %}   
     <ul class=mod_entries>
-  <li><b>Name</li>
-	<li>Most Recent</li>
-	<li>Good Until</b></li>
+      <table>
+  <td><b>Name</td>
+	<td>Type of training</td>
+	<td>Most Recent</td>
+  <td>Expiration Date</b></td></tr>
 	{% for entry in entries %}
-	<br>
-	<li>{{ entry.name }}</li>
+	<tr><td>{{ entry.Name }}</td>
+	<td>{{ entry.Type }}</td>
 
-	<li >{{ entry.most_recent }}</li>
+	<td >{{ entry.Most_recent }}</td>
 	
-	<li class="date">{{entry.good_until }}</li>
+  <td class="date">{{ entry.Good_until }}</td></tr>
 
 
     {% endfor %}
+</table>
     {% endblock %}

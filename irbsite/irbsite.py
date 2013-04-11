@@ -416,8 +416,8 @@ def register():
 
 @app.route('/training')
 def training():
-    entries = query_db("""SELECT name, most_recent, good_until FROM
-            training order by name ASC""", one = False)
+    entries = query_db("""SELECT Name, Type, Most_recent, Good_until FROM
+            training order by Name ASC""", one = False)
     return render_template('training.html', entries = entries)
 
 
