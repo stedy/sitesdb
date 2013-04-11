@@ -73,11 +73,21 @@ def login():
 def add_form():
     error = None
     if request.form['Protocol']:
-        g.db.execute('insert into base (Protocol, Title, PI) values (?, ?, ?)',
+        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
+        CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
+        FHCRC_renewal, UW_renewal, IRB_expires, Accrual_status, IND, Pt_total,
+        Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
 			    [request.form['Protocol'], request.form['Title'],
-				request.form['PI']])
+				request.form['PI'], request.form['IR_file'],
+                request.form['UW'], request.form['CTE'],
+                request.form['Funding_source'], request.form['RN_coord'],
+                request.form['IRB_approved'], request.form['Primary_IRB'],
+                request.form['FHCRC_coop'], request.form['FHCRC_renewal'],
+                request.form['UW_renewal'], request.form['IRB_expires'],
+                request.form['Accrual_status'], request.form['IND'],
+                request.form['Pt_total'], request.form['Type']])
         g.db.commit()
-        flash('New entry was successfully posted')
+        flash('New study was successfully added')
     else:
 		error = 'Must have Protocol number to add entry'
     return render_template('add_study.html', error = error)
@@ -86,7 +96,7 @@ def add_form():
 def add_funding():
     error = None
     if request.form['PI']:
-		g.db.execute("""insert into funding (Protocol, PI, Source, Source_ID, start, end,
+		g.db.execute("""INSERT INTO funding (Protocol, PI, Source, Source_ID, start, end,
 					notes) values (?,?,?,?,?,?,?)""",
 			    [request.form['Protocol'], request.form['PI'], request.form['Source'],
 				request.form['Source_ID'], request.form['start'],
