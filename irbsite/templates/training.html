@@ -7,6 +7,7 @@
     {% endblock %}
     {% endif %}
     <ul class=mod_entries>
+      <form action={{ url_for('add_training') }} method=post>
    <table>
        <td><b>Name</td>
          <td>Type of training</td>
@@ -21,5 +22,27 @@
 
 
              {% endfor %}
-           </table>
+           </table><br>
+           <i>Add new individual</i>
+           <br><table>
+       <td><b>Name</td>
+         <td>Type of training</td>
+         <td>Most Recent</td>
+         <td>Expiration Date</b></td></tr>
+     <td><input type=text size=16 name=Name></td>
+     <td><select name=Type>
+          <option value="In House Human Subjects">In House Human Subjects</option>
+          <option value="CITI Human Subjects">CITI Human Subjects</option>
+          <option value="Refresher in-house">In House Refresher</option>
+          <option value="Refresher CITI">CITI Refresher</option>
+          <option value="GCP">GCP</option>
+          <option value="Other">Other</option>
+        </select>
+          <td><input type="text" size=16 name=Most_recent></td>
+          <td><input type="text" size=16 name=Good_until></td></tr>
+      </table>
+      <br>
+      <input type="submit" value="Add New Individual" />
+      </form>
+
                {% endblock %}

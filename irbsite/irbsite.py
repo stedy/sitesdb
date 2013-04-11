@@ -121,6 +121,20 @@ def add_mod():
 		error = 'Must have Protocol number to add entry'
     return render_template('subj_query.html', error = error)
 
+@app.route('/add_training', methods=['GET', 'POST'])
+def add_training():
+    error = None
+    if request.form['Name']:
+		g.db.execute("""insert into training (Name, Type, Most_recent,
+						Good_until) values (?,?,?,?)""",
+			    [request.form['Name'], request.form['Type'], 
+				request.form['Most_recent'], request.form['Good_until']])
+		g.db.commit()
+		flash('New training for %s was successfully added' % request.form['Name'])
+    else:
+		error = 'Must have Protocol number to add entry'
+    return render_template('subj_query.html', error = error)
+
 #search based on ID number
 
 @app.route('/<id_number>')
