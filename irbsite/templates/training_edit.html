@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    <ul class=metanav>
+    </ul>
+    <h2>Edit Training</h2>
+    <ul class=entries>
+      <table>
+      <td><b>Name</td>
+        <td><b>Type of Training</td>
+          <td><b>Most Recent</td>
+            <td><b>Expiration Date</b></td></tr>
+{% for entry in entries %}
+  <form action="{{ url_for('submit_training_edits', training_id=entry.id) }}" method=post>
+  <td><input type="text" size=16 name=Name value={{ entry.Name }}></td>
+  <td><select name=Type>
+    <option value="In House Human Subjects">In House Human Subjects</option>
+    <option value="CITI Human Subjects">CITI Human Subjects</option>
+    <option value="Refresher in-house">In House Refresher</option>
+    <option value="Refresher CITI">CITI Refresher</option>
+    <option value="GCP">GCP</option>
+    <option value="Other">Other</option>
+  </select>
+  <td><input type="text" size=16 name=Most_recent value={{ entry.Most_recent }}></td>
+  <td><input type="text" size=16 name=Good_until value={{ entry.Good_until }}></td>
+  </table>
+  <br>
+  <input type="submit" value="Save Edits" />
+</form>
+        {% endfor %}
+  {% endif %}
+  {% endblock %}
