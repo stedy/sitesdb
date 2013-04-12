@@ -336,10 +336,6 @@ def pi_query():
 def funding_query():
 			return render_template('funding_query.html')
 
-@app.route('/date_query') 
-def date_query():
-			return render_template('date_query.html')
- 
 @app.route('/results', methods = ['GET', 'POST'])
 def results():
 	error = None
@@ -385,25 +381,6 @@ def title_results():
 						LIKE ?""", [titlestr], one = False)
 	return render_template('title_results.html', entries
 							= entries)
-
-@app.route('/date_results', methods = ['GET', 'POST'])
-def date_results():
-	if request.form['datemin']:
-		mind = str(request.form['datemin'])
-		maxd = str(request.form['datemax'])
-		mind = time.strptime(mind, "%m/%d/%y")
-		mindval = "%s-%s-%s" % (mind.tm_year, mind.tm_mon, mind.tm_mday)
-		maxd = time.strptime(maxd, "%m/%d/%y")
-		maxdval = "%s-%s-%s" % (maxd.tm_year, maxd.tm_mon, maxd.tm_mday)
-		entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
-						IRB_approved, Funding_source, Type, CTE, Accrual_status 
- 						from base where IRB_expires > ? AND IRB_expires < ?""",
-						[mindval, maxdval], one = False ) 
-		return render_template('date_results.html', entries = entries)
-	else:
-		error = "Must have date range to search"
-		return render_template('date_query.html', error=error)
-		
 
 @app.route('/funding_results', methods = ['GET', 'POST'])
 def funding_results():
