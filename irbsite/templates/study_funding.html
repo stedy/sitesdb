@@ -29,21 +29,16 @@
                     <td><b>Edit</b></td></tr>
 	{% for entry in entries %}
   <tr><td>{{ entries[0].Protocol }}</td>
-
 	<td>{{ entry.Title }}</td>
 	<td>{{ entry.Award_type }}</td>
 	<td>{{ entry.PI }}</td>
 	<td>{{ entry.Institution }}</td>
-
 	<td>{{ entry.Source }}</td>
 	<td>{{ entry.start }}</td>
-	
 	<td class="date">{{ entry.end }}</td>
 	<td>{{ entry.NCE }}</td>
 	<td>{{ entry.FVAF }}</td>
-		
 	<td>{{ entry.notes }}</td>
-
   <td><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></td></tr>
   {% endfor %}
   <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
@@ -67,8 +62,10 @@
 </tr></table>
   <br>
 	<input type=submit value="Add Funding">
-  </ul>
+</ul>
+<div class="footer">
 	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> |
 	<a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
-    {% endif %}   
+</div>
+  {% endif %}
     {% endblock %}

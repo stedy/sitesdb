@@ -25,23 +25,14 @@
                       <td><b>Edit</b></td></tr>
 	{% for entry in entries %}
   <tr><td>{{ entry.date_received }}</td>
-
 	<td>{{ entry.date_due }}</td>
-
   <td>{{ entry.Date_to_IRB }}</td>
-
   <td>{{ entry.Exp_date }}</td>
-        
 	<td>{{ entry.date_back }}</td>
-
 	<td>{{ entry.aprvd_date }}</td>
-  
   <td>{{ entry.Description }}</td>
- 
   <td>{{ entry.submitted }}</td>
-  
   <td>{{ entry.Comments }}</td>
-  
   <td><a href="{{ url_for('mods_edit', mods_id=entry.id )}}">edit</a></td></tr>
     {% endfor %}
     <tr><td><input type=text size=10 name=Date_to_IRB></td>
@@ -54,10 +45,11 @@
 	<td><input type=text size=10 name=submitted></td>
   <td><input type=text size=10 name=Comments></td></tr>
 </table>
-	<br>
 	<li><input type=submit value="Add mod">
-	
-    </ul>
+	<br>
+</ul>
+<div class="footer">
 	<a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a> |
 	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> 
-    {% endblock %}
+</div>
+  {% endblock %}
