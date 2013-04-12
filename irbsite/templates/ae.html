@@ -8,20 +8,18 @@
 	<br>
   <h2>Protocol: <a href="{{ url_for('id_results', id_number=entries[0].Protocol )}}">{{ entries[0].Protocol }}</a>
     IR File: {{ entries[0].IR_file }}</h2>
-        <li><b>Report ID</li>
-	<li>Reported Reaction</li>
-	<li>Report Date</b></li>
+  <table>
+    <tr><td><b>Report ID</td>
+        <td><b>Reported Reaction</td>
+          <td><b>Report Date</td></tr>
 	{% for entry in entries %}
-	<br>
-	<li>{{ entry.Report_ID }}</li>
-	
-	<li>{{entry.Reported_RXN }}</li>
-        
-	<li>{{ entry.Date_report }}</li>
+	<td>{{ entry.Report_ID }}</td>
+	<td>{{entry.Reported_RXN }}</td>
+	<td>{{ entry.Date_report }}</td>
+  <td><a href="{{ url_for('ae_edit', ae_id=entry.id )}}">edit</a></td></tr>
 
-  <li><a href="{{ url_for('ae_edit', ae_id=entry.id )}}">edit</a></li>
-
-        {% endfor %}
+{% endfor %}
+</table>
     </ul>
     <div class="footer">
     <a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a> |

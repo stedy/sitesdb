@@ -4,19 +4,20 @@
     <ul class=metanav>
     </ul>
     <h2>Edit AE entries</h2>
-    <ul class=entries>
-  <li><b>Protocol</li>
-  <li>Report ID</li>
-	<li>Reported Reaction</li>
-  <li>Report Date</b></li>
+  <table>
+    <tr><td><b>Protocol</td>
+    <td><b>Report ID</td>
+      <td><b>Reported Reaction</td>
+        <td><b>Report Date</td></tr>
 {% for entry in entries %}
   <form action="{{ url_for('submit_ae_edits', ae_id=entry.id) }}" method=post>
-  <li><input type="text" size=16 name=Protocol value={{ entry.Protocol }}></li>
-  <li><input type="text" size=16 name=Report_ID value={{ entry.Report_ID }}></li>
-  <li><textarea name=Reported_RXN cols="25" rows="5" wrap="hard">{{ entry.Reported_RXN }}</textarea></li>
-  <li><input type="text" size=16 name=Date_report value={{ entry.Date_report }}></li>
-  <br>
-  <li><input type="submit" value="Save Edits" /></li>
+    <tr><td><input type="text" size=16 name=Protocol value={{ entry.Protocol }}></td>
+  <td><input type="text" size=16 name=Report_ID value={{ entry.Report_ID }}></td>
+  <td><input type="text" size = 50 name=Reported_RXN value="{{ entry.Reported_RXN }}"></td>
+  <td><input type="text" size=16 name=Date_report value={{ entry.Date_report }}></td></tr>
+</table>
+<br>
+  <td><input type="submit" value="Save Edits" /></td>
   </form>
         {% endfor %}
   {% endif %}
