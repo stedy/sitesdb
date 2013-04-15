@@ -11,7 +11,7 @@
         <h2>Screening and Randomization</h2>
         <table>
           <tr><td> UPN</td>
-            <td><input type=text size=20 name= upn value={{ entry.upn }}></td>
+            <td><input type=text size=20 name=upn value={{ entry.upn }}></td>
             <td>UW ID</td>
             <td><input type=text size=20 name=uw_id value={{ entry.uw_id }}></td></tr>
           <tr><td>Initials</td>
@@ -24,20 +24,16 @@
             <td><input type=text size=20 name=gender value={{ entry.gender }}></td></tr>
               <tr><td>Ethnicity</td>
                 <td><input type=text size=20 name=ethnicity value={{ entry.ethnicity }}></td></tr>
+              <tr><td>Off study</td>
+                <td><input type=text size=20 name=offstudy value={{ entry.offstudy }}></td></tr>
               </table>
         <br>
         <h2>Consent Information</h2>
         <table>
-        <tr><td>Pre Screening Date</td>
-          <td><input type=text size=20 name=pre_screening_date value={{ entry.pre_screening_date }}></td>
-          <td>Arrival Date</td>
-          <td><input type=text size=20 name=arrival_date value={{ entry.arrival_date }}></td></tr>
         <tr><td>Consent</td>
           <td><input type=text size=20 name=consent value={{ entry.consent }}></td>
           <tr><td>Consent Reason</td>
             <td><input type=text size=30 name=consent_reason value="{{ entry.consent_reason }}"></td></tr>
-        <tr><td>Consent Comments</td>
-          <td><input type=text size=30 name=consent_comments value="{{ entry.consent_comments }}"></td>
         <tr><td>Randomize Date</td>
           <td><input type=text size=20 name=randomize value={{ entry.randomize }}></td></tr>
         <tr><td>Baseline #</td>
@@ -46,8 +42,6 @@
           <td><input type=text size=20 name=allocation value={{ entry.allocation }}></tr>
         <tr><td>Patient User ID #</td>
           <td><input type=text size=20 name=pt_userid value={{ entry.pt_userid }}></tr>
-        <tr><td>Off Study Date</td>
-          <td><input type=text size=20 name=offstudy value={{ entry.offstudy }}></tr>
     </table>
     <br>
     <h2>Transplant Info and Infection Dates</h2>
@@ -93,7 +87,7 @@
     <td>Date</td>
     <td><input type=text size=20 name=check1date value={{ entry.check1date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check1comments value={{ entry.check1comments }}></td></tr>
+    <td><input type=text size=30 name=check1comment value={{ entry.check1comment }}></td></tr>
   <tr><td>Visit 2 Check #</td>
     <td><input type=text size=20 name=check2no value={{ entry.check2no }}></td>
     <td>Amount</td>
@@ -101,7 +95,7 @@
     <td>Date</td>
     <td><input type=text size=20 name=check2date value={{ entry.check2date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check2comments value={{ entry.check2comments }}></td></tr>
+    <td><input type=text size=30 name=check2comment value={{ entry.check2comment }}></td></tr>
   <tr><td>Visit 3 Check #</td>
     <td><input type=text size=20 name=check3no value={{ entry.check3no }}></td>
     <td>Amount</td>
@@ -109,7 +103,7 @@
     <td>Date</td>
     <td><input type=text size=20 name=check3date value={{ entry.check3date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check3comments value={{ entry.check3comments }}></td></tr>
+    <td><input type=text size=30 name=check3comment value={{ entry.check3comment }}></td></tr>
   <tr><td>Visit 4 Check #</td>
     <td><input type=text size=20 name=check4no value={{ entry.check4no }}></td>
     <td>Amount</td>
@@ -117,7 +111,7 @@
     <td>Date</td>
     <td><input type=text size=20 name=check4date value={{ entry.check4date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check4comments value={{ entry.check4comments }}></td></tr>
+    <td><input type=text size=30 name=check4comment value={{ entry.check4comment }}></td></tr>
 </table>
 	    <br></br>
       <input type=submit value=Submit>
@@ -127,6 +121,6 @@
 	</dl>
     </form>
     <ul class=entries>
-        <em>All fields optional except UPN</em>
+        <em>All fields optional except txdate</em>
     </ul>
     {% endblock %}
