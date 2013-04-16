@@ -87,7 +87,7 @@
     <td>Date</td>
     <td><input type=text size=20 name=check1date value={{ entry.check1date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check1comment value={{ entry.check1comment }}></td></tr>
+    <td><input type=text size=30 name=check1comment value="{{ entry.check1comment }}"></td></tr>
   <tr><td>Visit 2 Check #</td>
     <td><input type=text size=20 name=check2no value={{ entry.check2no }}></td>
     <td>Amount</td>
@@ -95,7 +95,7 @@
     <td>Date</td>
     <td><input type=text size=20 name=check2date value={{ entry.check2date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check2comment value={{ entry.check2comment }}></td></tr>
+    <td><input type=text size=30 name=check2comment value="{{ entry.check2comment }}"></td></tr>
   <tr><td>Visit 3 Check #</td>
     <td><input type=text size=20 name=check3no value={{ entry.check3no }}></td>
     <td>Amount</td>
@@ -103,7 +103,7 @@
     <td>Date</td>
     <td><input type=text size=20 name=check3date value={{ entry.check3date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check3comment value={{ entry.check3comment }}></td></tr>
+    <td><input type=text size=30 name=check3comment value="{{ entry.check3comment }}"></td></tr>
   <tr><td>Visit 4 Check #</td>
     <td><input type=text size=20 name=check4no value={{ entry.check4no }}></td>
     <td>Amount</td>
@@ -111,12 +111,12 @@
     <td>Date</td>
     <td><input type=text size=20 name=check4date value={{ entry.check4date }}></td>
     <td>Comments</td>
-    <td><input type=text size=30 name=check4comment value={{ entry.check4comment }}></td></tr>
+    <td><input type=text size=30 name=check4comment value="{{ entry.check4comment }}"></td></tr>
 </table>
 	    <br></br>
       <input type=submit value=Submit>
       {% else %}
-      <h2>Sorry, that UPN does not exist in the database</h2>
+      <h2>Sorry, that value does not exist in the database</h2>
   {% endfor %}
 	</dl>
     </form>

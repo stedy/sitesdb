@@ -3,6 +3,7 @@
 *.csv
 *.swp
 *.pyc
+vzv2213/vzv.db
 original/
 mksql/
 irbsite/irb_db.db

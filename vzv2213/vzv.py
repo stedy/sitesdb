@@ -100,8 +100,10 @@ def results():
                     injection3p, injection3a, injection4p, injection4a,
                     injection5p, injection5a, injection6p, injection6a,
                     injection7p, injection7a, check1no, check1amt,
-                    check1date, check2no, check2amt, check2date,
-                    check3no, check3amt, check3date, check4no, check4amt,
+                    check1date, check1comment, check2no, check2amt, check2date,
+                    check2comment,
+                    check3no, check3amt, check3date, check3comment, check4no,
+                    check4amt, check4comment,
                     check4date from demo WHERE upn = ?""",
                     [ids])
     return render_template('edit_patient.html', entries=entries)
