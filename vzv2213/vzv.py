@@ -91,7 +91,7 @@ def add_form():
 
 @app.route('/edit', methods = ['GET', 'POST'])
 def results():
-    ids = str(request.form['upn'])
+    ids = str(request.form['allocation'])
     entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
@@ -142,12 +142,12 @@ def add_patient():
 
 @app.route('/update_form', methods= ['GET', 'POST'])
 def update_form():
-    upn = request.form['upn']
-    g.db.execute("""DELETE FROM demo WHERE upn = ?""", [upn])
-    g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
+    allocation = request.form['allocation']
+    g.db.execute("""DELETE FROM demo WHERE allocation = ?""", [allocation])
+    g.db.execute("""INSERT INTO demo (allocation, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
-                    randomize, baseline, allocation, txdate,
+                    randomize, baseline, upn, txdate,
                     injection1, injection2p, injection2a,
                     injection3p, injection3a, injection4p, injection4a,
                     injection5p, injection5a, injection6p, injection6a,
@@ -158,7 +158,7 @@ def update_form():
                     check4comment, offstudy) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
                     ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                    [request.form['upn'], request.form['uw_id'],
+                    [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
                     request.form['ethnicity'],
@@ -184,12 +184,12 @@ def update_form():
                     request.form['offstudy']
                     ])
     g.db.commit()
-    flash('Entry for UPN %s edited' % upn)
+    flash('Entry for allocation %s edited' % allocation)
     return render_template('main.html')
 
 @app.route('/all_patients')
 def all_patients():
-    entries = query_db("""SELECT upn, uw_id, initials, txdate, injection1 FROM
+    entries = query_db("""SELECT allocation, uw_id, initials, txdate, injection1 FROM
     demo""")
     return render_template('all_patients.html', entries = entries)
 
