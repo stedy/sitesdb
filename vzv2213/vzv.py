@@ -57,7 +57,7 @@ def main():
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
     error = None
-    if request.form['txdate']:
+    if request.form['txdate'] and request.form['allocation']:
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         days = [21, 42, 63, 91, 365, 730]
@@ -86,7 +86,7 @@ def add_form():
         g.db.commit()
         flash('New patient successfully added')
     else:
-        error = "Must have txdate to enter new patient"
+        error = "Must have txdate and allocation to enter new patient"
     return render_template('main.html', error = error)
 
 @app.route('/edit', methods = ['GET', 'POST'])
@@ -104,7 +104,7 @@ def results():
                     check2comment,
                     check3no, check3amt, check3date, check3comment, check4no,
                     check4amt, check4comment,
-                    check4date from demo WHERE upn = ?""",
+                    check4date from demo WHERE allocation = ?""",
                     [ids])
     return render_template('edit_patient.html', entries=entries)
 
