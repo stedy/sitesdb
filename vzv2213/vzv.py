@@ -189,7 +189,7 @@ def update_form():
 
 @app.route('/all_patients')
 def all_patients():
-    entries = query_db("""SELECT allocation, uw_id, initials, txdate, injection1 FROM
+    entries = query_db("""SELECT allocation, dob, pt_userid, uw_id, initials, txdate, injection1 FROM
     demo""")
     return render_template('all_patients.html', entries = entries)
 

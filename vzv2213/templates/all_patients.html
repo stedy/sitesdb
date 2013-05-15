@@ -8,10 +8,10 @@
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
   <i>(Click on table header to sort)</i>
   <table class="sortable">
-    <tr><td>UPN</td><td>UW ID</td><td>Initials</td><td>Tx date</td><td>Injection Date</td></tr>
+    <tr><td>Study ID</td><td>UPN</td><td>UW ID</td><td>Initials</td><td>DOB</td><td>Tx date</td><td>Injection Date</td></tr>
     {% for entry in entries %}
-    <tr><td>{{ entry.upn }}</td><td>{{ entry.uw_id }}</td><td>{{ entry.initials }}</td><td>{{ entry.txdate }}</td>
-      <td>{{ entry.injection1 }}</td></tr>
+    <tr><td>{{ entry.pt_userid }}</td><td>{{ entry.upn }}</td><td>{{ entry.uw_id }}</td><td>{{ entry.initials }}</td><td>{{ entry.dob }}</td>
+      <td>{{ entry.txdate }}</td><td>{{ entry.injection1 }}</td></tr>
     {% endfor %}
       </table>
 {% endblock %}
