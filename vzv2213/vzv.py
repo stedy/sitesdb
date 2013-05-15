@@ -52,7 +52,8 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    return render_template('main.html')
+    entries = query_db("""SELECT allocation, injection5p, phonecall from demo""")
+    return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
@@ -62,6 +63,7 @@ def add_form():
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         days = [21, 42, 63, 91, 365, 730]
         fu_days = [(txdate + dt.timedelta(weeks=day/7)).strftime("%m/%d/%Y") for day in days]
+        calldate = (txdate + dt.timedelta(weeks=90/7)).strftime("%m/%d/%Y") 
         g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
@@ -69,8 +71,8 @@ def add_form():
                     injection1, injection2p,
                     injection3p, injection4p,
                     injection5p, injection6p,
-                    injection7p) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    injection7p, phonecall) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['upn'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -82,7 +84,7 @@ def add_form():
                     request.form['baseline'], request.form['allocation'],
                     request.form['txdate'], request.form['injection1'],
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
-                    fu_days[5]])
+                    fu_days[5], calldate])
         g.db.commit()
         flash('New patient successfully added')
     else:
