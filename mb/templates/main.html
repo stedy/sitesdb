@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+{% block script %}
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="/static/datefun.js"></script>
+{% endblock %}
+{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+<h2>What would you like to do today?</h2>
+<br>
+Enroll new subject
+<br><br>
+<h2>Does anyone need to be called today?</h2>
+View all subjects in study
+<br>
+<table id="dates_table">
+  <tr><td>Study ID</td><td>Visit 5</td><td>Call Date</td></tr>
+  {% for entry in entries %}
+  <tr><td>{{ entry.allocation }}</td><td>{{ entry.injection5p }}</td><td class="date">{{ entry.phonecall }}</td>
+    {% endfor %}
+  </table>
+  {% endblock %}
