@@ -63,7 +63,7 @@ def add_form():
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         days = [21, 42, 63, 91, 365, 730]
         fu_days = [(txdate + dt.timedelta(weeks=day/7)).strftime("%m/%d/%Y") for day in days]
-        calldate = (txdate + dt.timedelta(weeks=90/7)).strftime("%m/%d/%Y") 
+        calldate = (txdate + dt.timedelta(weeks=185/7)).strftime("%m/%d/%Y") 
         g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
