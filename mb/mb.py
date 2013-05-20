@@ -64,35 +64,22 @@ def main():
 def add_form():
     error = None
     if request.form['txdate'] and request.form['subject_ID']:
-        swabs = [7 * x for x in range(13)]
+        swabs = [7 * x for x in range(14)]
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         expected_week1 = next_weekday(txdate,0).strftime("%m/%d/%Y")
         fu_days = [(next_weekday(txdate,0) + dt.timedelta(days=day)).strftime("%m/%d/%Y") for
                 day in swabs]
-        print fu_days
-#        g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
-#                    gender, ethnicity, pt_userid, txtype,
-#                    consent, consent_reason,
-#                    randomize, baseline, allocation, txdate,
-#                    injection1, injection2p,
-#                    injection3p, injection4p,
-#                    injection5p, injection6p,
-#                    injection7p, phonecall) values
-#                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-#                    [request.form['upn'], request.form['uw_id'],
-#                    request.form['initials'], request.form['dob'],
-#                    request.form['hispanic'], request.form['gender'],
-#                    request.form['ethnicity'],
-#                    request.form['pt_userid'],
-#                    request.form['txtype'], request.form['consent'],
-#                    request.form['consent_reason'],
-#                    request.form['randomize'],
-#                    request.form['baseline'], request.form['allocation'],
-#                    request.form['txdate'], request.form['injection1'],
+        g.db.execute("""INSERT INTO demo (subject_ID, uwid, pt_init, Name,
+                    Status, txdate, Donrep) values
+                    (?,?,?,?,?,?,?)""",
+                    [request.form['subject_ID'], request.form['uwid'],
+                    request.form['pt_init'], request.form['Name'],
+                    request.form['Status'], request.form['txdate'],
+                    request.form['Donrep']])
 #                    fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
 #                    fu_days[5], calldate])
-#        g.db.commit()
+        g.db.commit()
         flash('New patient successfully added')
     else:
         error = "Must have txdate and allocation to enter new patient"

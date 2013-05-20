@@ -11,12 +11,21 @@
         <table>
           <tr><td> Subject ID:</td>
             <td><input type=text size=10 name=subject_ID></td>
-          <tr><td>Initials:</td>
-            <td><input type=text size=10 name=initials></td>
             <td>UW ID:</td>
             <td><input type=text size=10 name=uwid></td></tr>
+            <td>Name:</td>
+            <td><input type=text size=10 name=Name></td>
+            <td>Initials:</td>
+            <td><input type=text size=10 name=pt_init></td></tr>
             <td>Status:</td>
-            <td><input type=text size=10 name=Status></td></tr>
+            <td><input type=text size=10 name=Status></td>
+            <td>Donor/Recipient:</td>
+            <td><select name=Donrep>
+            <option value="Donor">Donor</option>
+            <option value="Recipient">Recipient</option>
+          </select>
+        </table>
+        <br>
     <h2>Transplant Info Dates</h2>
     <table>
     <tr><td>Expected Pre Tx:</td>
@@ -26,11 +35,11 @@
     <tr><td>Tx Date:</td>
       <td><input type=text size=20 name=txdate></td></tr>
 </table>
-	    <br></br>
+	    <br>
 	    <input type=submit value=Submit>
 	</dl>
     </form>
     <ul class=entries>
-        <em>All fields optional except txdate and allocation</em>
+        <em>All fields optional except txdate and Subject ID</em>
     </ul>
     {% endblock %}
