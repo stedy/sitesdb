@@ -7,8 +7,10 @@
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 <h2>What would you like to do today?</h2>
 <br>
-Enroll new subject
-<br><br>
+<a href="{{ url_for('add_subject') }}">Enroll New Subject</a>
+<br>
+<a href="{{ url_for('query') }}">Edit Subject</a>
+<br>
 <h2>Does anyone need to be called today?</h2>
 View all subjects in study
 <br>

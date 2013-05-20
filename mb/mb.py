@@ -106,7 +106,7 @@ def results():
 
 @app.route('/query')
 def query():
-    return render_template('pt_lookup.html')
+    return render_template('subj_lookup.html')
 
 
 @app.route('/check_query')
