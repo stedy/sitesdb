@@ -13,13 +13,4 @@
 <br>
 <a href="{{ url_for('all_subjects') }}">View All Enrolled Subjects</a>
 <br>
-<h2>Does anyone need to be called today?</h2>
-View all subjects in study
-<br>
-<table id="dates_table">
-  <tr><td>Study ID</td><td>Visit 5</td><td>Call Date</td></tr>
-  {% for entry in entries %}
-  <tr><td>{{ entry.allocation }}</td><td>{{ entry.injection5p }}</td><td class="date">{{ entry.phonecall }}</td>
-    {% endfor %}
-  </table>
   {% endblock %}
