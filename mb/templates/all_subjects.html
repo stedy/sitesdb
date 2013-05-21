@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+{% block script %}
+  <script type="text/javascript" src="/static/sorttable.js"></script>
+  {% endblock %}
+<ul class=metanav>
+</ul>
+  {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+  <i>(Click on table header to sort)</i>
+  <table class="sortable">
+    <tr><td>Study ID</td><td>UW ID</td><td>Initials</td><td>Tx date</td></tr>
+    {% for entry in entries %}
+    <tr><td>{{ entry.subject_ID }}</td></td><td>{{ entry.uwid }}</td><td>{{ entry.pt_init }}</td>
+      <td>{{ entry.txdate }}</td></tr>
+    {% endfor %}
+      </table>
+{% endblock %}

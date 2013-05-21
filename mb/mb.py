@@ -228,11 +228,11 @@ def update_form():
     flash('Entry for subject ID %s edited' % subject_ID)
     return render_template('main.html')
 
-@app.route('/all_patients')
-def all_patients():
-    entries = query_db("""SELECT subject_ID, dob, pt_userid, uw_id, initials, txdate, injection1 FROM
-    demo""")
-    return render_template('all_patients.html', entries = entries)
+@app.route('/all_subjects')
+def all_subjects():
+    entries = query_db("""SELECT subject_ID, pt_init, Name, uwid, Status,
+                    txdate, Donrep FROM demo""")
+    return render_template('all_subjects.html', entries = entries)
 
 
 @app.before_request
