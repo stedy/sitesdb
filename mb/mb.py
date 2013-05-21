@@ -82,27 +82,16 @@ def add_form():
         g.db.commit()
         flash('New patient successfully added')
     else:
-        error = "Must have txdate and allocation to enter new patient"
+        error = "Must have txdate and subject ID to enter new patient"
     return render_template('main.html', error = error)
 
 @app.route('/edit', methods = ['GET', 'POST'])
 def results():
-    ids = str(request.form['allocation'])
-    entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
-                    gender, ethnicity, pt_userid, txtype,
-                    consent, consent_reason,
-                    randomize, baseline, allocation, txdate,
-                    injection1, injection2p, injection2a,
-                    injection3p, injection3a, injection4p, injection4a,
-                    injection5p, injection5a, injection6p, injection6a,
-                    injection7p, injection7a, check1no, check1amt,
-                    check1date, check1comment, check2no, check2amt, check2date,
-                    check2comment,
-                    check3no, check3amt, check3date, check3comment, check4no,
-                    check4amt, check4comment,
-                    check4date from demo WHERE allocation = ?""",
+    ids = str(request.form['subject_ID'])
+    entries = query_db("""SELECT subject_id, pt_init, Name, uwid,
+                    Status, txdate, Donrep from demo WHERE subject_ID = ?""",
                     [ids])
-    return render_template('edit_patient.html', entries=entries)
+    return render_template('edit_subject.html', entries=entries)
 
 @app.route('/query')
 def query():
@@ -119,54 +108,58 @@ def add_subject():
 
 @app.route('/update_form', methods= ['GET', 'POST'])
 def update_form():
-    allocation = request.form['allocation']
-    g.db.execute("""DELETE FROM demo WHERE allocation = ?""", [allocation])
-    g.db.execute("""INSERT INTO demo (allocation, uw_id, initials, dob, hispanic, 
-                    gender, ethnicity, pt_userid, txtype,
-                    consent, consent_reason,
-                    randomize, baseline, upn, txdate,
-                    injection1, injection2p, injection2a,
-                    injection3p, injection3a, injection4p, injection4a,
-                    injection5p, injection5a, injection6p, injection6a,
-                    injection7p, injection7a, check1no, check1amt, check1date,
-                    check1comment, check2no, check2amt, check2date,
-                    check2comment, check3no, check3amt,
-                    check3date, check3comment, check4no, check4amt, check4date,
-                    check4comment, offstudy) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+    subject_ID = request.form['subject_ID']
+    g.db.execute("""DELETE FROM demo WHERE subject_ID = ?""", [subject_ID])
+    g.db.execute("""INSERT INTO demo (subject_ID, pt_init, Name, uwid, Status,
+                    txdate, Donrep) values
+                    (?,?,?,?,?,?,?)""",
+                    [request.form['subject_ID'], request.form['pt_init'],
+                    request.form['Name'], request.form['uwid'],
+                    request.form['Status'], request.form['txdate'],
+                    request.form['Donrep']])
+    g.db.execute("""INSERT INTO recipient_swabs (subject_ID, Expected_pre_tx, 
+                    Received_pre_tx, 
+                    Expected_week1, Received_week1,
+                    Expected_week2, Received_week2,
+                    Expected_week3, Received_week3,
+                    Expected_week4, Received_week4,
+                    Expected_week5, Received_week5,
+                    Expected_week6, Received_week6,
+                    Expected_week7, Received_week7,
+                    Expected_week8, Received_week8,
+                    Expected_week9, Received_week9,
+                    Expected_week10, Received_week10,
+                    Expected_week11, Received_week11,
+                    Expected_week12, Received_week12,
+                    Expected_week13, Received_week13,
+                    Expected_week14, Received_week14) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
                     ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                    [request.form['allocation'], request.form['uw_id'],
-                    request.form['initials'], request.form['dob'],
-                    request.form['hispanic'], request.form['gender'],
-                    request.form['ethnicity'],
-                    request.form['pt_userid'],
-                    request.form['txtype'], request.form['consent'],
-                    request.form['consent_reason'], request.form['randomize'],
-                    request.form['baseline'], request.form['allocation'],
-                    request.form['txdate'], request.form['injection1'],
-                    request.form['injection2p'], request.form['injection2a'],
-                    request.form['injection3p'], request.form['injection3a'],
-                    request.form['injection4p'], request.form['injection4a'],
-                    request.form['injection5p'], request.form['injection5a'],
-                    request.form['injection6p'], request.form['injection6a'],
-                    request.form['injection7p'], request.form['injection7a'],
-                    request.form['check1no'], request.form['check1amt'],
-                    request.form['check1date'], request.form['check1comment'],
-                    request.form['check2no'], request.form['check2amt'],
-                    request.form['check2date'], request.form['check2comment'],
-                    request.form['check3no'], request.form['check3amt'],
-                    request.form['check3date'], request.form['check3comment'],
-                    request.form['check4no'], request.form['check4amt'],
-                    request.form['check4date'], request.form['check4comment'],
-                    request.form['offstudy']
+                    [request.form['subject_ID'],
+                    request.form['Expected_pre_tx'],
+                    request.form['Received_pre_tx'],
+                    request.form['Expected_week1'], request.form['Received_week1'],
+                    request.form['Expected_week2'], request.form['Received_week2'],
+                    request.form['Expected_week3'], request.form['Received_week3'],
+                    request.form['Expected_week4'], request.form['Received_week4'],
+                    request.form['Expected_week5'], request.form['Received_week5'],
+                    request.form['Expected_week6'], request.form['Received_week6'],
+                    request.form['Expected_week7'], request.form['Received_week7'],
+                    request.form['Expected_week8'], request.form['Received_week8'],
+                    request.form['Expected_week9'], request.form['Received_week9'],
+                    request.form['Expected_week10'], request.form['Received_week10'],
+                    request.form['Expected_week11'], request.form['Received_week11'],
+                    request.form['Expected_week12'], request.form['Received_week12'],
+                    request.form['Expected_week13'], request.form['Received_week13'],
+                    request.form['Expected_week14'], request.form['Received_week14']
                     ])
     g.db.commit()
-    flash('Entry for allocation %s edited' % allocation)
+    flash('Entry for subject ID %s edited' % subject_ID)
     return render_template('main.html')
 
 @app.route('/all_patients')
 def all_patients():
-    entries = query_db("""SELECT allocation, dob, pt_userid, uw_id, initials, txdate, injection1 FROM
+    entries = query_db("""SELECT subject_ID, dob, pt_userid, uw_id, initials, txdate, injection1 FROM
     demo""")
     return render_template('all_patients.html', entries = entries)
 
