@@ -198,6 +198,8 @@ def update_form():
                     ])
     g.db.execute("""DELETE FROM recipient_blood WHERE subject_ID = ?""", [subject_ID])
     g.db.execute("""INSERT INTO recipient_blood (subject_ID,
+                    Blood_draw_pre_tx, Blood_received_pre_tx,
+                    Pre_tx_time_drawn, Pre_tx_time_processed,
                     Blood_expected_week1, Blood_received_week1,
                     Week1_time_drawn, Week1_time_processed,
                     Blood_expected_week2, Blood_received_week2,
@@ -206,8 +208,12 @@ def update_form():
                     Week3_time_drawn, Week3_time_processed,
                     Blood_expected_week4, Blood_received_week4,
                     Week4_time_drawn, Week4_time_processed) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['subject_ID'],
+                    request.form['Blood_draw_pre_tx'],
+                    request.form['Blood_received_pre_tx'],
+                    request.form['Pre_tx_time_drawn'],
+                    request.form['Pre_tx_time_processed'],
                     request.form['Blood_expected_week1'],
                     request.form['Blood_received_week1'],
                     request.form['Week1_time_drawn'],
