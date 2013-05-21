@@ -90,7 +90,49 @@
       <td><input type=text size=20 name=Received_week14 value="{{ entry.Received_week14 }}"></td></tr>
   </table>
   <br>
-      <input type=submit value=Submit>
+    <h2>Blood Draw Info and Collection Dates</h2>
+  <table>
+    <tr><td>Tx Date</td>
+      <td><input type=text size=20 name=txdate value="{{ entry.txdate }}"></td></tr>
+    <tr><td>Pre Tx blood draw</td>
+      <td><input type=text size=20 name=Blood_draw_pre_tx value="{{ entry.Blood_draw_pre_tx }}"></td>
+    <td>Pre Tx blood Received</td>
+      <td><input type=text size=20 name=Blood_received_pre_tx value="{{ entry.Blood_received_pre_tx }}"></td>
+    <tr><td>Week 1 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week1 value="{{ entry.Blood_expected_week1 }}"></td>
+      <td>Week 1 Received</td>
+      <td><input type=text size=20 name=Blood_received_week1 value="{{ entry.Blood_received_week1 }}"></td></tr>
+    <tr><td>Week 1 Time Drawn</td>
+      <td><input type=text size=20 name=Week1_time_drawn value="{{ entry.Week1_time_drawn }}"></td>
+      <td>Week 1 Time Processed</td>
+      <td><input type=text size=20 name=Week1_time_processed value="{{ entry.Week1_time_processed }}"></td></tr>
+    <tr><td>Week 2 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week2 value="{{ entry.Blood_expected_week2 }}"></td>
+      <td>Week 2 Received</td>
+      <td><input type=text size=20 name=Blood_received_week2 value="{{ entry.Blood_received_week2 }}"></td></tr>
+    <tr><td>Week 2 Time Drawn</td>
+      <td><input type=text size=20 name=Week2_time_drawn value="{{ entry.Week2_time_drawn }}"></td>
+      <td>Week 2 Time Processed</td>
+      <td><input type=text size=20 name=Week2_time_processed value="{{ entry.Week2_time_processed }}"></td></tr>
+    <tr><td>Week 3 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week3 value="{{ entry.Blood_expected_week2 }}"></td>
+      <td>Week 3 Received</td>
+      <td><input type=text size=20 name=Blood_received_week3 value="{{ entry.Blood_received_week2 }}"></td></tr>
+    <tr><td>Week 3 Time Drawn</td>
+      <td><input type=text size=20 name=Week3_time_drawn value="{{ entry.Week3_time_drawn }}"></td>
+      <td>Week 3 Time Processed</td>
+      <td><input type=text size=20 name=Week3_time_processed value="{{ entry.Week3_time_processed }}"></td></tr>
+    <tr><td>Week 4 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week4 value="{{ entry.Blood_expected_week4 }}"></td>
+      <td>Week 4 Received</td>
+      <td><input type=text size=20 name=Blood_received_week4 value="{{ entry.Blood_received_week4 }}"></td></tr>
+    <tr><td>Week 4 Time Drawn</td>
+      <td><input type=text size=20 name=Week4_time_drawn value="{{ entry.Week4_time_drawn }}"></td>
+      <td>Week 4 Time Processed</td>
+      <td><input type=text size=20 name=Week4_time_processed value="{{ entry.Week4_time_processed }}"></td></tr>
+  </table>
+  <br>
+    <input type=submit value=Submit>
       {% else %}
       <h2>Sorry, that value does not exist in the database</h2>
   {% endfor %}

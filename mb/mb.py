@@ -92,6 +92,8 @@ def add_form():
                     Expected_week13,
                     Expected_week14) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     outvals)
+        g.db.execute("""INSERT INTO recipient_blood (Subject_ID) values (?)""",
+                    [request.form['subject_ID']])
         g.db.commit()
         flash('New patient successfully added')
     else:
@@ -116,10 +118,19 @@ def results():
                     Expected_week11, Received_week11,
                     Expected_week12, Received_week12,
                     Expected_week13, Received_week13,
-                    Expected_week14, Received_week14
-                    from demo,
-                    recipient_swabs WHERE demo.subject_ID =
-                    recipient_swabs.subject_ID and
+                    Expected_week14, Received_week14,
+                    Blood_expected_week1, Blood_received_week1,
+                    Week1_time_drawn, Week1_time_processed,
+                    Blood_expected_week2, Blood_received_week2,
+                    Week2_time_drawn, Week2_time_processed,
+                    Blood_expected_week3, Blood_received_week3,
+                    Week3_time_drawn, Week3_time_processed,
+                    Blood_expected_week4, Blood_received_week4,
+                    Week4_time_drawn, Week4_time_processed
+                    from demo, recipient_swabs,
+                    recipient_blood WHERE demo.subject_ID =
+                    recipient_swabs.subject_ID AND demo.subject_ID =
+                    recipient_blood.subject_ID AND
                     demo.subject_ID = ?""",
                     [ids])
     return render_template('edit_subject.html', entries=entries)
@@ -185,6 +196,34 @@ def update_form():
                     request.form['Expected_week13'], request.form['Received_week13'],
                     request.form['Expected_week14'], request.form['Received_week14']
                     ])
+    g.db.execute("""DELETE FROM recipient_blood WHERE subject_ID = ?""", [subject_ID])
+    g.db.execute("""INSERT INTO recipient_blood (subject_ID,
+                    Blood_expected_week1, Blood_received_week1,
+                    Week1_time_drawn, Week1_time_processed,
+                    Blood_expected_week2, Blood_received_week2,
+                    Week2_time_drawn, Week2_time_processed,
+                    Blood_expected_week3, Blood_received_week3,
+                    Week3_time_drawn, Week3_time_processed,
+                    Blood_expected_week4, Blood_received_week4,
+                    Week4_time_drawn, Week4_time_processed) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    [request.form['subject_ID'],
+                    request.form['Blood_expected_week1'],
+                    request.form['Blood_received_week1'],
+                    request.form['Week1_time_drawn'],
+                    request.form['Week1_time_processed'],
+                    request.form['Blood_expected_week2'],
+                    request.form['Blood_received_week2'],
+                    request.form['Week2_time_drawn'],
+                    request.form['Week2_time_processed'],
+                    request.form['Blood_expected_week3'],
+                    request.form['Blood_received_week3'],
+                    request.form['Week3_time_drawn'],
+                    request.form['Week3_time_processed'],
+                    request.form['Blood_expected_week4'],
+                    request.form['Blood_received_week4'],
+                    request.form['Week4_time_drawn'],
+                    request.form['Week4_time_processed']])
     g.db.commit()
     flash('Entry for subject ID %s edited' % subject_ID)
     return render_template('main.html')

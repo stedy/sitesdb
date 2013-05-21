@@ -37,15 +37,15 @@ CREATE TABLE donor_swabs (subject_ID text, Expected_pre_tx date, Received_pre_tx
                     Expected_week14 date, Received_week14 date);
 
 DROP TABLE IF EXISTS recipient_blood;
-CREATE TABLE recipient_blood (subject_ID text, Blood_draw_pre_tx date, Received_pre_tx date,
+CREATE TABLE recipient_blood (subject_ID text, Blood_draw_pre_tx date, Blood_received_pre_tx date,
                     Pre_tx_time_drawn text, Pre_td_time_processed text,
-                    Expected_week1 date, Received_week1 date,
+                    Blood_expected_week1 date, Blood_received_week1 date,
                     Week1_time_drawn text, Week1_time_processed text,
-                    Expected_week2 date, Received_week2 date,
+                    Blood_expected_week2 date, Blood_received_week2 date,
                     Week2_time_drawn text, Week2_time_processed text,
-                    Expected_week3 date, Received_week3 date,
+                    Blood_expected_week3 date, Blood_received_week3 date,
                     Week3_time_drawn text, Week3_time_processed text,
-                    Expected_week4 date, Received_week4 date,
+                    Blood_expected_week4 date, Blood_received_week4 date,
                     Week4_time_drawn text, Week4_time_processed text);
 
 DROP TABLE IF EXISTS donor_blood;
