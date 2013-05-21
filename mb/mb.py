@@ -65,11 +65,16 @@ def add_form():
     error = None
     if request.form['txdate'] and request.form['subject_ID']:
         swabs = [7 * x for x in range(14)]
+        print len(swabs)
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         expected_week1 = next_weekday(txdate,0).strftime("%m/%d/%Y")
         fu_days = [(next_weekday(txdate,0) + dt.timedelta(days=day)).strftime("%m/%d/%Y") for
                 day in swabs]
+        outvals = [request.form['subject_ID']]
+        for x in range(14):
+            outvals.append(fu_days[x])
+        
         g.db.execute("""INSERT INTO demo (subject_ID, uwid, pt_init, Name,
                     Status, txdate, Donrep) values
                     (?,?,?,?,?,?,?)""",
@@ -77,8 +82,22 @@ def add_form():
                     request.form['pt_init'], request.form['Name'],
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep']])
-#                    fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
-#                    fu_days[5], calldate])
+        g.db.execute("""INSERT INTO recipient_swabs (subject_ID,
+                    Expected_week1,
+                    Expected_week2,
+                    Expected_week3,
+                    Expected_week4,
+                    Expected_week5,
+                    Expected_week6,
+                    Expected_week7,
+                    Expected_week8,
+                    Expected_week9,
+                    Expected_week10,
+                    Expected_week11,
+                    Expected_week12,
+                    Expected_week13,
+                    Expected_week14) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    outvals)
         g.db.commit()
         flash('New patient successfully added')
     else:
@@ -117,6 +136,7 @@ def update_form():
                     request.form['Name'], request.form['uwid'],
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep']])
+    g.db.execute("""DELETE FROM recipient_swabs WHERE subject_ID = ?""", [subject_ID])
     g.db.execute("""INSERT INTO recipient_swabs (subject_ID, Expected_pre_tx, 
                     Received_pre_tx, 
                     Expected_week1, Received_week1,
