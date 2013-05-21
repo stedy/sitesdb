@@ -83,18 +83,12 @@ def add_form():
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep']])
         g.db.execute("""INSERT INTO recipient_swabs (subject_ID,
-                    Expected_week1,
-                    Expected_week2,
-                    Expected_week3,
-                    Expected_week4,
-                    Expected_week5,
-                    Expected_week6,
-                    Expected_week7,
-                    Expected_week8,
-                    Expected_week9,
-                    Expected_week10,
-                    Expected_week11,
-                    Expected_week12,
+                    Expected_week1, Expected_week2,
+                    Expected_week3, Expected_week4,
+                    Expected_week5, Expected_week6,
+                    Expected_week7, Expected_week8,
+                    Expected_week9, Expected_week10,
+                    Expected_week11, Expected_week12,
                     Expected_week13,
                     Expected_week14) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     outvals)
@@ -107,8 +101,26 @@ def add_form():
 @app.route('/edit', methods = ['GET', 'POST'])
 def results():
     ids = str(request.form['subject_ID'])
-    entries = query_db("""SELECT subject_id, pt_init, Name, uwid,
-                    Status, txdate, Donrep from demo WHERE subject_ID = ?""",
+    entries = query_db("""SELECT demo.subject_ID, pt_init, Name, uwid,
+                    Status, txdate, Donrep, Expected_week1, Expected_week2,
+                    Expected_week1, Received_week1,
+                    Expected_week2, Received_week2,
+                    Expected_week3, Received_week3,
+                    Expected_week4, Received_week4,
+                    Expected_week5, Received_week5,
+                    Expected_week6, Received_week6,
+                    Expected_week7, Received_week7,
+                    Expected_week8, Received_week8,
+                    Expected_week9, Received_week9,
+                    Expected_week10, Received_week10,
+                    Expected_week11, Received_week11,
+                    Expected_week12, Received_week12,
+                    Expected_week13, Received_week13,
+                    Expected_week14, Received_week14
+                    from demo,
+                    recipient_swabs WHERE demo.subject_ID =
+                    recipient_swabs.subject_ID and
+                    demo.subject_ID = ?""",
                     [ids])
     return render_template('edit_subject.html', entries=entries)
 
