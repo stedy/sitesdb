@@ -106,7 +106,7 @@ def results():
                     check2comment,
                     check3no, check3amt, check3date, check3comment, check4no,
                     check4amt, check4date, check4comment, check5no,
-                    check5amt, check5comment, check5date 
+                    check5amt, check5comment, check5date, phonecall
                     from demo WHERE allocation = ?""",
                     [ids])
     return render_template('edit_patient.html', entries=entries)
@@ -159,7 +159,7 @@ def update_form():
                     check2comment, check3no, check3amt,
                     check3date, check3comment, check4no, check4amt, check4date,
                     check4comment, offstudy,
-                    check5no, check5amt, check5date, check5comment) values
+                    check5no, check5amt, check5date, check5comment, phonecall) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
                     ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
@@ -188,6 +188,7 @@ def update_form():
                     request.form['offstudy'],
                     request.form['check5no'], request.form['check5amt'],
                     request.form['check5date'], request.form['check5comment'],
+                    request.form['phonecall']
                     ])
     g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
