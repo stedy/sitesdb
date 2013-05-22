@@ -10,8 +10,8 @@
       <dl>
         <h2>Screening and Randomization</h2>
         <table>
-          <tr><td> UPN</td>
-            <td><input type=text size=20 name=upn value={{ entry.upn }}></td>
+        <tr><td>Allocation #</td>
+          <td><input type=text size=20 name=allocation value={{ entry.allocation }}></tr>
             <td>UW ID</td>
             <td><input type=text size=20 name=uw_id value={{ entry.uw_id }}></td></tr>
           <tr><td>Initials</td>
@@ -38,8 +38,8 @@
           <td><input type=text size=20 name=randomize value={{ entry.randomize }}></td></tr>
         <tr><td>Baseline #</td>
           <td><input type=text size=20 name=baseline value={{ entry.baseline }}></tr>
-        <tr><td>Allocation #</td>
-          <td><input type=text size=20 name=allocation value={{ entry.allocation }}></tr>
+          <tr><td> UPN</td>
+            <td><input type=text size=20 name=upn value={{ entry.upn }}></td>
         <tr><td>Patient User ID #</td>
           <td><input type=text size=20 name=pt_userid value={{ entry.pt_userid }}></tr>
     </table>
@@ -112,6 +112,14 @@
     <td><input type=text size=20 name=check4date value={{ entry.check4date }}></td>
     <td>Comments</td>
     <td><input type=text size=30 name=check4comment value="{{ entry.check4comment }}"></td></tr>
+  <tr><td>Visit 5 Check #</td>
+    <td><input type=text size=20 name=check5no value={{ entry.check5no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check5amt value={{ entry.check5amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check5date value={{ entry.check5date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check5comment value="{{ entry.check5comment }}"></td></tr>
 </table>
 	    <br></br>
       <input type=submit value=Submit>
@@ -121,6 +129,6 @@
 	</dl>
     </form>
     <ul class=entries>
-        <em>All fields optional except txdate and allocation</em>
+        <em>All fields optional except txdate and allocation.  Add dates in the form MM/DD/YYYY</em>
     </ul>
     {% endblock %}

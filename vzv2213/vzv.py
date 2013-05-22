@@ -61,9 +61,9 @@ def add_form():
     if request.form['txdate'] and request.form['allocation']:
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
-        days = [21, 42, 63, 91, 365, 730]
-        fu_days = [(txdate + dt.timedelta(weeks=day/7)).strftime("%m/%d/%Y") for day in days]
-        calldate = (txdate + dt.timedelta(weeks=185/7)).strftime("%m/%d/%Y") 
+        days = [30, 60, 90, 118, 180, 455]
+        fu_days = [(txdate + dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in days]
+        calldate = (txdate + dt.timedelta(days=90+118)).strftime("%m/%d/%Y") 
         g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
@@ -157,9 +157,10 @@ def update_form():
                     check1comment, check2no, check2amt, check2date,
                     check2comment, check3no, check3amt,
                     check3date, check3comment, check4no, check4amt, check4date,
-                    check4comment, offstudy) values
+                    check4comment, offstudy,
+                    check1comment, check2no, check2amt, check2date) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -183,7 +184,9 @@ def update_form():
                     request.form['check3date'], request.form['check3comment'],
                     request.form['check4no'], request.form['check4amt'],
                     request.form['check4date'], request.form['check4comment'],
-                    request.form['offstudy']
+                    request.form['offstudy'],
+                    request.form['check5no'], request.form['check5amt'],
+                    request.form['check5date'], request.form['check5comment'],
                     ])
     g.db.commit()
     flash('Entry for allocation %s edited' % allocation)

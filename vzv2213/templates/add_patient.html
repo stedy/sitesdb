@@ -9,8 +9,8 @@
       <dl>
         <h2>Screening and Randomization</h2>
         <table>
-          <tr><td> UPN:</td>
-            <td><input type=text size=10 name=upn></td>
+        <tr><td>Allocation #</td>
+          <td><input type=text size=20 name=allocation></tr>
             <td>UW ID:</td>
             <td><input type=text size=10 name=uw_id></td></tr>
           <tr><td>Initials:</td>
@@ -53,8 +53,8 @@
           <td><input type=text size=20 name=randomize></td></tr>
         <tr><td>Baseline #</td>
           <td><input type=text size=20 name=baseline></tr>
-        <tr><td>Allocation #</td>
-          <td><input type=text size=20 name=allocation></tr>
+          <tr><td> UPN:</td>
+            <td><input type=text size=10 name=upn></td>
         <tr><td>Patient User ID #</td>
           <td><input type=text size=20 name=pt_userid></tr>
     </table>
@@ -73,6 +73,6 @@
 	</dl>
     </form>
     <ul class=entries>
-        <em>All fields optional except txdate and allocation</em>
+        <em>All fields optional except txdate and allocation.  Add dates in the form MM/DD/YYYY</em>
     </ul>
     {% endblock %}
