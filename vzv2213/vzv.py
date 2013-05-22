@@ -105,8 +105,9 @@ def results():
                     check1date, check1comment, check2no, check2amt, check2date,
                     check2comment,
                     check3no, check3amt, check3date, check3comment, check4no,
-                    check4amt, check4comment,
-                    check4date from demo WHERE allocation = ?""",
+                    check4amt, check4date, check4comment, check5no,
+                    check5amt, check5comment, check5date 
+                    from demo WHERE allocation = ?""",
                     [ids])
     return render_template('edit_patient.html', entries=entries)
 
@@ -158,7 +159,7 @@ def update_form():
                     check2comment, check3no, check3amt,
                     check3date, check3comment, check4no, check4amt, check4date,
                     check4comment, offstudy,
-                    check5comment, check5no, check5amt, check5date) values
+                    check5no, check5amt, check5date, check5comment) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
                     ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
