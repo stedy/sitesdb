@@ -126,8 +126,9 @@ def check_results():
                     check1date, check2no, check2amt, check2date,
                     check3no, check3amt, check3date, check4no, check4amt,
                     check4date from demo WHERE check1no = ? OR
-                    check2no = ? OR check3no = ? or check4no= ?""",
-                    [checknum, checknum, checknum, checknum])
+                    check2no = ? OR check3no = ? OR check4no= ? OR
+                    check5no = ?""",
+                    [checknum, checknum, checknum, checknum, checknum])
     return render_template('edit_patient.html', entries=entries)
 
 @app.route('/query')
@@ -161,7 +162,7 @@ def update_form():
                     check4comment, offstudy,
                     check5no, check5amt, check5date, check5comment, phonecall) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -190,9 +191,10 @@ def update_form():
                     request.form['check5date'], request.form['check5comment'],
                     request.form['phonecall']
                     ])
+    entries = query_db("""SELECT allocation, injection5p, phonecall from demo""")
     g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
-    return render_template('main.html')
+    return render_template('main.html', entries=entries)
 
 @app.route('/all_patients')
 def all_patients():
