@@ -114,7 +114,6 @@ def results():
 @app.route('/checkedit', methods = ['GET', 'POST'])
 def check_results():
     checknum = str(request.form['check_no'])
-    print checknum
     entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
