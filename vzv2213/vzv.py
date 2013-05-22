@@ -158,7 +158,7 @@ def update_form():
                     check2comment, check3no, check3amt,
                     check3date, check3comment, check4no, check4amt, check4date,
                     check4comment, offstudy,
-                    check1comment, check2no, check2amt, check2date) values
+                    check5comment, check5no, check5amt, check5date) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
                     ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
