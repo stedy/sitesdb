@@ -22,8 +22,8 @@
 </table>
     </ul>
     <div class="footer">
-    <a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a> |
-  <a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
+  <a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a> |
+    <a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a>
 </div>
   {% endif %}
   {% endblock %}

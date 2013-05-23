@@ -3,12 +3,11 @@
 	{{ error }}
   {% if g.user %}
     <form action="{{ url_for('title_results') }}" method=post class=test>
-	<dl>
-	    <dt>Title keywords:
+	    <tr>Title keywords:
 	    <input type=text size=15 name=title>
-	    </textarea>
+    </textarea>
+    <tr>
 	    <input type=submit value="Search">
-	</dl>
     </form>
     {% endif %}   
     <ul class=results>
