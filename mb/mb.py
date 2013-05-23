@@ -74,7 +74,6 @@ def add_form():
         outvals = [raw_id]
         for x in range(14):
             outvals.append(fu_days[x])
-        
         g.db.execute("""INSERT INTO demo (subject_ID, uwid, pt_init, Name,
                     Status, txdate, Donrep) values
                     (?,?,?,?,?,?,?)""",
@@ -82,18 +81,26 @@ def add_form():
                     request.form['pt_init'], request.form['Name'],
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep']])
-        g.db.execute("""INSERT INTO recipient_swabs (subject_ID,
-                    Expected_week1, Expected_week2,
-                    Expected_week3, Expected_week4,
-                    Expected_week5, Expected_week6,
-                    Expected_week7, Expected_week8,
-                    Expected_week9, Expected_week10,
-                    Expected_week11, Expected_week12,
-                    Expected_week13,
-                    Expected_week14) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                    outvals)
-        g.db.execute("""INSERT INTO recipient_blood (Subject_ID) values (?)""",
-                    [raw_id])
+        if request.form['Donrep'] == "Recipient":
+            g.db.execute("""INSERT INTO recipient_swabs (subject_ID,
+                        Expected_week1, Expected_week2,
+                        Expected_week3, Expected_week4,
+                        Expected_week5, Expected_week6,
+                        Expected_week7, Expected_week8,
+                        Expected_week9, Expected_week10,
+                        Expected_week11, Expected_week12,
+                        Expected_week13,
+                        Expected_week14) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                        outvals)
+            g.db.execute("""INSERT INTO recipient_blood (Subject_ID) values (?)""",
+                        [raw_id])
+        if request.form['Donrep'] == "Donor":
+            g.db.execute("""INSERT INTO donor_swabs (subject_ID,
+                        Expected_pre_tx, Received_pre_tx) values (?,?,?)""",
+                        [raw_id, request.form['Expected_pre_tx'],
+                        request.form['Received_pre_tx']])
+            g.db.execute("""INSERT INTO donor_blood (Subject_ID) values (?)""",
+                        [raw_id])
         g.db.commit()
         flash('New patient successfully added')
     else:
