@@ -64,21 +64,21 @@ def main():
 def add_form():
     error = None
     if request.form['txdate'] and request.form['subject_ID']:
+        raw_id = "M-" + request.form['subject_ID'] + "-S001"
         swabs = [7 * x for x in range(14)]
-        print len(swabs)
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         expected_week1 = next_weekday(txdate,0).strftime("%m/%d/%Y")
         fu_days = [(next_weekday(txdate,0) + dt.timedelta(days=day)).strftime("%m/%d/%Y") for
                 day in swabs]
-        outvals = [request.form['subject_ID']]
+        outvals = [raw_id]
         for x in range(14):
             outvals.append(fu_days[x])
         
         g.db.execute("""INSERT INTO demo (subject_ID, uwid, pt_init, Name,
                     Status, txdate, Donrep) values
                     (?,?,?,?,?,?,?)""",
-                    [request.form['subject_ID'], request.form['uwid'],
+                    [raw_id, request.form['uwid'],
                     request.form['pt_init'], request.form['Name'],
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep']])
@@ -93,7 +93,7 @@ def add_form():
                     Expected_week14) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     outvals)
         g.db.execute("""INSERT INTO recipient_blood (Subject_ID) values (?)""",
-                    [request.form['subject_ID']])
+                    [raw_id])
         g.db.commit()
         flash('New patient successfully added')
     else:
