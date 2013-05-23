@@ -75,12 +75,13 @@ def add_form():
         for x in range(14):
             outvals.append(fu_days[x])
         g.db.execute("""INSERT INTO demo (subject_ID, uwid, pt_init, Name,
-                    Status, txdate, Donrep) values
-                    (?,?,?,?,?,?,?)""",
+                    Status, txdate, Donrep, conditioning_start_date) values
+                    (?,?,?,?,?,?,?,?)""",
                     [raw_id, request.form['uwid'],
                     request.form['pt_init'], request.form['Name'],
                     request.form['Status'], request.form['txdate'],
-                    request.form['Donrep']])
+                    request.form['Donrep'],
+                    request.form['conditioning_start_date']])
         if request.form['Donrep'] == "Recipient":
             g.db.execute("""INSERT INTO recipient_swabs (subject_ID,
                         Expected_week1, Expected_week2,
