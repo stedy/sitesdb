@@ -11,9 +11,9 @@
         <h1>Human Subjects Training</h1>
         <table>
        <td><b>Name</td>
-         <td>Type of training</td>
-         <td>Most Recent</td>
-           <td>Expiration Date</b></td></tr>
+         <td><b>Type of training</td>
+         <td><b>Most Recent</td>
+           <td><b>Expiration Date</td></tr>
        {% for entry in entries %}
        <tr><td>{{ entry.Name }}</td>
          <td>{{ entry.Type }}</td>
@@ -27,9 +27,9 @@
            <i>Add new individual</i>
            <br><table>
        <td><b>Name</td>
-         <td>Type of training</td>
-         <td>Most Recent</td>
-         <td>Expiration Date</b></td></tr>
+         <td><b>Type of training</td>
+           <td><b>Most Recent</td>
+             <td><b>Expiration Date</td></tr>
      <td><input type=text size=16 name=Name></td>
      <td><select name=Type>
           <option value="In House Human Subjects">In House Human Subjects</option>

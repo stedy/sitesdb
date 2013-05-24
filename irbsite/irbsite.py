@@ -133,7 +133,9 @@ def add_training():
 		flash('New training for %s was successfully added' % request.form['Name'])
     else:
 		error = 'Must have Protocol number to add entry'
-    return render_template('subj_query.html', error = error)
+    entries = query_db("""SELECT Name, Type, Most_recent, Good_until, id FROM
+            training order by Name ASC""", one = False)
+    return render_template('training.html', error = error, entries = entries)
 
 #search based on ID number
 
@@ -284,7 +286,10 @@ def submit_training_edits(training_id):
                             request.form['Good_until']])
     g.db.commit()
     flash('Training for %s successfully edited' % request.form['Name'])
-    return render_template('subj_query.html')
+    entries = query_db("""SELECT Name, Type, Most_recent, Good_until, id FROM
+            training order by Name ASC""", one = False)
+    return render_template('training.html', entries = entries)
+    #return render_template('subj_query.html')
 
 #add entries
 @app.route('/add_study')
