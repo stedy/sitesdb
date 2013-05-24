@@ -10,10 +10,6 @@
     <ul class=funding_entries>
 	{% for entry in entries %}
 	<form action="{{ url_for('submit_funding_edits', funding_id= entry.id) }}" method=post class=addfunding>
-	<h2>{{ entries[0].Title }}</h2>
-	<br>
-	<h2>FHCRC Protocol# {{ entries[0].Protocol }} </h2>
-	<h2>IR File: {{ entries[0].IR_file }}</h2>
   <br>
   <table>
     <tr><td><b>Protocol</td>
@@ -29,7 +25,7 @@
                   <td><b>Notes</td>
 
   <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
-    <td><input type=text size=10 name=Title value= "{{ entry.Title}}"></td>
+    <td><input type=text size=15 name=Title value= "{{ entry.Title}}"></td>
     <td><select name=Award_type>
         <option value="Primary">Primary</option>
         <option value="Sub-Award">Sub-Award</option>

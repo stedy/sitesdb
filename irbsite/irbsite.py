@@ -213,13 +213,13 @@ def funding_edit(funding_id):
 
 @app.route('/<funding_id>/submit_funding_edits', methods = ['GET', 'POST'])
 def submit_funding_edits(funding_id):
-    #if request.method == "POST":
+    study_id = request.form['Protocol']
     g.db.execute("""DELETE from funding where id = ?""", [funding_id])
-    g.db.execute("""INSERT INTO funding (Protocol, Title, Award_type,
+    g.db.execute("""INSERT INTO funding (Protocol, Funding_Title, Award_type,
                         PI, Institution, Source, start, end,
                         NCE, FVAF, notes) values (?,?,?,?,?,?,?,?,?,?,?)""",
-                            [request.form['Protocol'], request.form['Title'],
-                                request.form['Award_type'], 
+                            [request.form['Protocol'], request.form['Funding_Title'],
+                            request.form['Award_type'],
                             request.form['PI'], request.form['Institution'],
                             request.form['Source'], request.form['start'],
                             request.form['end'], request.form['NCE'],
@@ -227,7 +227,16 @@ def submit_funding_edits(funding_id):
                             request.form['notes']])
     g.db.commit()
     flash('funding for %s successfully edited' % request.form['Protocol'])
-    return render_template('subj_query.html')
+#    return render_template('subj_query.html')
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						funding.PI, funding.Funding_Title, 
+						funding.source, funding.Source_ID, funding.Award_type,
+                        funding.Institution, funding.NCE, funding.FVAF,
+						funding.start, funding.id, funding.end, funding.notes from base,
+						funding where
+						funding.Protocol = base.Protocol and base.Protocol
+						= ?""", [study_id])
+    return render_template('study_funding.html', entries = entries)
 
 @app.route('/<id_number>/mods')
 def id_results_mods(id_number):
@@ -292,7 +301,12 @@ def submit_docs_edits(docs_id):
                             request.form['Type']])
     g.db.commit()
     flash('Doc for %s successfully edited' % request.form['Protocol'])
-    return render_template('subj_query.html')
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title,
+			docs.aprvd_date, docs.doc_name, docs.Version, docs.Type, base.PI,
+			docs.doc_date, docs.id from base, docs where docs.Protocol = base.Protocol 
+			and base.Protocol = ? order by docs.doc_date ASC""",
+            [request.form['Protocol']])
+    return render_template('study.html', entries=entries)
 
 #edit functionality for training deadlines
 
@@ -329,7 +343,7 @@ def id_results_sn(id_number):
 	if idnum is None:
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						funding.PI, funding.Title, 
+						funding.PI, funding.Funding_Title, 
 						funding.source, funding.Source_ID, funding.Award_type,
                         funding.Institution, funding.NCE, funding.FVAF,
 						funding.start, funding.id, funding.end, funding.notes from base,
