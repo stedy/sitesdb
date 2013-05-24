@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+    <ul class=metanav>
+    </ul>
+    <ul class=entries>
+      <h1>Study Documents</h1>
+  <table>
+  <tr><td><b>Protocol</td>
+    <td><b>Document Name</td>
+      <td><b>Sub Study</td>
+      <td><b>Version</td>
+    <td><b>Document Date</td>
+      <td><b>Approved Date</td>
+        <td><b>Document Type</td></tr>
+    {% for entry in entries %}
+    <form action="{{ url_for('submit_docs_edits', docs_id = entry.id) }}" method=post>
+          <td><input type=text size=10 name=Protocol value = "{{ entries[0].Protocol }}"></td>
+          <td><input type=text size=40 name=doc_name value = "{{ entry.doc_name }}"></td>
+          <td><input type=text size=20 name=substudy value = "{{ entry.substudy }}"></td>
+          <td><input type=text size=12 name=Version value = "{{ entry.Version }}"></td>
+          <td><input type=text size=15 name=doc_date value = "{{ entry.doc_date }}"></td>
+          <td><input type=text size=15 name=aprvd_date value = "{{ entry.aprvd_date }}"></td>
+    <td><select name=Type>
+        <option value="Advertisement">Advertisement</option>
+        <option value="Questionnaires">Questionnaires</option>
+        <option value="Other">Other</option>
+        <option value="Protocol">Protocol</option>
+        <option value="Consent">Consent</option>
+        <option value="IB">IB</option>
+        </select>
+      </td>
+  </tr></table>
+  <br>
+<input type="submit" value="Edit Document">
+</form>
+  </ul>
+      {% endfor %}
+  {% endif %}
+   {% endblock %}

@@ -149,7 +149,7 @@ def id_results(id_number):
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title,
 			docs.aprvd_date, docs.doc_name, docs.Version, docs.Type, base.PI,
-			docs.doc_date from base, docs where docs.Protocol = base.Protocol 
+			docs.doc_date, docs.id from base, docs where docs.Protocol = base.Protocol 
 			and base.Protocol = ? order by docs.doc_date ASC""", [ids])
 	return render_template('study.html', entries = entries)	
 
@@ -268,6 +268,32 @@ def submit_mods_edits(mods_id):
     flash('Mod for %s successfully edited' % request.form['Protocol'])
     return render_template('subj_query.html')
 
+#edit functionality for study documents
+
+@app.route('/<docs_id>/edit_docs', methods = ['GET', 'POST'])
+def docs_edit(docs_id):
+    entries = query_db("""select Protocol, doc_name, substudy,
+                        Version, doc_date, aprvd_date, id
+                         from docs where id = ?""", [docs_id])
+    return render_template('docs_edit.html', entries = entries)
+
+@app.route('/<docs_id>/submit_docs_edits', methods = ['GET', 'POST'])
+def submit_docs_edits(docs_id):
+    g.db.execute("""DELETE from docs where id = ?""", [docs_id])
+    g.db.execute("""INSERT INTO docs (Protocol, doc_name, substudy,
+                    Version, doc_date, aprvd_date, Type) 
+                    values (?,?,?,?,?,?,?)""",
+                            [request.form['Protocol'],
+                            request.form['doc_name'],
+                            request.form['substudy'],
+                            request.form['Version'],
+                            request.form['doc_date'],
+                            request.form['aprvd_date'],
+                            request.form['Type']])
+    g.db.commit()
+    flash('Doc for %s successfully edited' % request.form['Protocol'])
+    return render_template('subj_query.html')
+
 #edit functionality for training deadlines
 
 @app.route('/<training_id>/training_edit', methods = ['GET', 'POST'])
@@ -289,7 +315,6 @@ def submit_training_edits(training_id):
     entries = query_db("""SELECT Name, Type, Most_recent, Good_until, id FROM
             training order by Name ASC""", one = False)
     return render_template('training.html', entries = entries)
-    #return render_template('subj_query.html')
 
 #add entries
 @app.route('/add_study')
@@ -324,6 +349,8 @@ def binder_template(id_number):
 						base.PI, base.CTE from base
 						where base.Protocol = ?""", [ids])
 	return render_template('binder_template.html', entries=entries)
+
+#Search queries and results
 
 @app.route('/query') 
 def query():
