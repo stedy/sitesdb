@@ -3,16 +3,14 @@
   {% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
   {% if g.user %}
     <form action="{{ url_for('funding_results') }}" method=post class=test>
-	<dl>
-	    <dt>Funding Name:
-	    <input type=text size=15 name=funding>
+	    <tr>Funding Name:
+	    <input type=text size=50 name=funding>
 	    </textarea>
-	    <dt><input type=submit value="Search">
-	</dl>
+	    <input type=submit value="Search">
     </form>
     {% endif %}   
     <ul class=results>
-        <li><em>Search based on Funding Source</em>
+        <em>Search based on Funding Source</em>
     </ul>
 <div class=footer>
 <a href="{{ url_for('add_study') }}">Add New Study</a>

@@ -29,7 +29,7 @@
                     <td><b>Edit</b></td></tr>
 	{% for entry in entries %}
   <tr><td>{{ entries[0].Protocol }}</td>
-	<td>{{ entry.Title }}</td>
+	<td>{{ entry.Funding_Title }}</td>
 	<td>{{ entry.Award_type }}</td>
 	<td>{{ entry.PI }}</td>
 	<td>{{ entry.Institution }}</td>
@@ -42,7 +42,7 @@
   <td><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></td></tr>
   {% endfor %}
   <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
-    <td><input type=text size=10 name=Title></td>
+    <td><input type=text size=10 name=Funding_Title></td>
     <td><select name=Award_type>
         <option value="Primary">Primary</option>
         <option value="Sub-Award">Sub-Award</option>
@@ -59,6 +59,7 @@
     </select></td>
 	<td><input type=text size=10 name=FVAF></td>
   <td><textarea name=notes cols="8" rows="4" wrap="hard"></textarea></td>
+
 </tr></table>
   <br>
 	<input type=submit value="Add Funding">

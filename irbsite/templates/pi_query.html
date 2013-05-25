@@ -3,12 +3,11 @@
   {% if error %}<p class=error><strong>Error:</strong> {{ error }} {% endif %}
   {% if g.user %}
     <form action="{{ url_for('pi_results') }}" method=post class=test>
-	<dl>
-	    <dt>PI Name:
-	    <input type=text size=15 name=PI>
-	    </textarea>
+	    <tr>PI Name:
+	    <input type=text size=50 name=PI>
+    </textarea>
+    <tr>
 	    <input type=submit value="Search">
-	</dl>
     </form>
     {% endif %}   
     <ul class=entries>

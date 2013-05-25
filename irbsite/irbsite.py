@@ -94,13 +94,26 @@ def add_form():
 
 @app.route('/add_funding', methods=['GET', 'POST'])
 def add_funding():
+    print [request.form['Protocol'], request.form['Funding_Title'],
+                request.form['Award_type'], request.form['PI'],
+                request.form['Institution'],
+                request.form['Source'], request.form['start'],
+				request.form['end'], request.form['NCE'], request.form['FVAF'],
+                request.form['notes']]
     error = None
     if request.form['PI']:
-		g.db.execute("""INSERT INTO funding (Protocol, PI, Source, Source_ID, start, end,
-					notes) values (?,?,?,?,?,?,?)""",
-			    [request.form['Protocol'], request.form['PI'], request.form['Source'],
-				request.form['Source_ID'], request.form['start'],
-				request.form['end'], request.form['notes']])
+		g.db.execute("""INSERT INTO funding (Protocol, Funding_Title,
+        Award_type, PI, 
+        Institution, 
+        Source, start, 
+        end, NCE, FVAF, 
+        notes) values (?,?,?,?,?,?,?,?,?,?,?)""",
+			    [request.form['Protocol'], request.form['Funding_Title'],
+                request.form['Award_type'], request.form['PI'],
+                request.form['Institution'],
+                request.form['Source'], request.form['start'],
+				request.form['end'], request.form['NCE'], request.form['FVAF'],
+                request.form['notes']])
 		g.db.commit()
 		flash('New funding was successfully added')
     else:
