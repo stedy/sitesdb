@@ -26,7 +26,7 @@
   <tr><td>{{ entry.date_received }}</td>
 	<td>{{ entry.date_due }}</td>
   <td>{{ entry.Date_to_IRB }}</td>
-  <td>{{ entry.Exp_date }}</td>
+  <td>{{ entry.exp_review_date }}</td>
 	<td>{{ entry.date_back }}</td>
 	<td>{{ entry.aprvd_date }}</td>
   <td>{{ entry.Description }}</td>
@@ -48,15 +48,16 @@
                 <td><b>Description</td>
                   <td><b>Submitted by</td>
                     <td><b>Comments</td></tr>
-                    <tr><td><input type=text size=10 name=date_received></td>
-	<td><input type=text size=10 name=date_received></td>
-	<td><input type=text size=10 name=date_submitted></td>
-	<td><input type=text size=10 name=Exp_date></td>
+  <tr><td><input type=text size=10 name=date_received></td>
+	<td><input type=text size=10 name=date_due></td>
+	<td><input type=text size=10 name=Date_to_IRB></td>
+	<td><input type=text size=10 name=exp_review_date></td>
 	<td><input type=text size=10 name=date_back></td>
 	<td><input type=text size=10 name=aprvd_date></td>
 	<td><input type=text size=10 name=Description></td>
 	<td><input type=text size=10 name=submitted></td>
-  <td><input type=text size=10 name=Comments></td></tr>
+  <td><input type=text size=10 name=Comments></td>
+  <td><input type=text size=4 name=Protocol value={{ entries[0].Protocol }}></td</tr>
 </table>
 <br>
 <input type=submit value="Add mod">

@@ -123,16 +123,26 @@ def add_funding():
 @app.route('/add_mod', methods=['GET', 'POST'])
 def add_mod():
     error = None
-    if request.form['Protocol']:
-		g.db.execute("""insert into mods (Protocol, Date_to_IRB, Description,
-						Comments) values (?,?,?,?)""",
-			    [request.form['Protocol'], request.form['Date_to_IRB'], 
-				request.form['Description'], request.form['Comments']])
-		g.db.commit()
-		flash('New modification for %s was successfully added' % request.form['Protocol'])
-    else:
-		error = 'Must have Protocol number to add entry'
-    return render_template('subj_query.html', error = error)
+    g.db.execute("""insert into mods (Protocol, exp_review_date, date_back, date_received, 
+                    date_due, Date_to_IRB, Description, submitted, aprvd_date,
+					Comments) values (?,?,?,?,?,?,?,?,?,?)""",			    
+                    [request.form['Protocol'], request.form['exp_review_date'],
+                        request.form['date_back'], request.form['date_received'],
+                        request.form['date_due'], request.form['Date_to_IRB'], 
+				        request.form['Description'], request.form['submitted'], 
+                        request.form['aprvd_date'], request.form['Comments']])
+    g.db.commit()
+    flash('New modification for %s was successfully added' % request.form['Protocol'])
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						mods.PI, mods.Protocol, mods.id, mods.date_due,
+                        mods.exp_review_date, mods.date_back,
+						mods.submitted, mods.Comments, mods.Description,
+						mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
+						mods where
+						mods.Protocol = base.Protocol and base.Protocol
+						= ? order by mods.Date_to_IRB ASC""",
+                        [request.form['Protocol']])
+    return render_template('mods.html', entries = entries)
 
 @app.route('/add_training', methods=['GET', 'POST'])
 def add_training():
@@ -260,7 +270,7 @@ def id_results_mods(id_number):
 		abort(404)
 	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
 						mods.PI, mods.Protocol, mods.id, mods.date_due,
-                        mods.Exp_date,
+                        mods.exp_review_date, mods.date_back,
 						mods.submitted, mods.Comments, mods.Description,
 						mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
 						mods where
