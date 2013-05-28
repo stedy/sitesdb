@@ -149,6 +149,25 @@ def add_mod():
                         [request.form['Protocol']])
     return render_template('mods.html', entries = entries)
 
+@app.route('/add_ae', methods=['GET', 'POST'])
+def add_ae():
+    g.db.execute("""INSERT INTO ae (Protocol, Report_ID, Reported_RXN,
+                Date_report) values (?,?,?,?)""",
+                [request.form['Protocol'], request.form['Report_ID'],
+                    request.form['Reported_RXN'], request.form['Date_report']])
+    g.db.commit()
+    flash('New AE for %s was successfully added' % request.form['Protocol'])
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						ae.PI, ae.Protocol, ae.id,
+						ae.Report_ID, ae.Reported_RXN,
+						ae.Date_report from base,
+						ae where
+						ae.Protocol = base.Protocol and base.Protocol
+						= ? order by ae.Date_report ASC""",
+                        [request.form['Protocol']])
+    return render_template('ae.html', entries = entries)
+
+
 @app.route('/add_training', methods=['GET', 'POST'])
 def add_training():
     error = None
