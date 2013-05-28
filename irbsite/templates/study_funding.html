@@ -15,7 +15,7 @@
 	<h2>IR File: {{ entries[0].IR_file }}</h2>
   <br>
   <table>
-    <tr><td><b>Protocol</td>
+    <tr><td><b>ID</td>
       <td><b>Funding Title</td>
        <td><b>Type of Award</td>
         <td><b>PI</td>
@@ -41,7 +41,7 @@
 	<td>{{ entry.notes }}</td>
   <td><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></td></tr>
   {% endfor %}
-  <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
+  <tr><td><input type=text size=6 name=Protocol value = {{ entries[0].Protocol }} ></td>
     <td><input type=text size=10 name=Funding_Title></td>
     <td><select name=Award_type>
         <option value="Primary">Primary</option>

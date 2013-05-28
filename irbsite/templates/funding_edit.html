@@ -12,7 +12,7 @@
 	<form action="{{ url_for('submit_funding_edits', funding_id= entry.id) }}" method=post class=addfunding>
   <br>
   <table>
-    <tr><td><b>Protocol</td>
+    <tr><td><b>ID</td>
       <td><b>Funding Title</td>
        <td><b>Type of Award</td>
         <td><b>PI</td>
@@ -24,8 +24,8 @@
                 <td><b>FVAF Submit date</td>
                   <td><b>Notes</td>
 
-  <tr><td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }} ></td>
-    <td><input type=text size=15 name=Title value= "{{ entry.Title}}"></td>
+  <tr><td><input type=text size=8 name=Protocol value = {{ entries[0].Protocol }} ></td>
+    <td><input type=text size=153 name=Funding_Title value= "{{ entry.Funding_Title}}"></td>
     <td><select name=Award_type>
         <option value="Primary">Primary</option>
         <option value="Sub-Award">Sub-Award</option>
@@ -40,7 +40,7 @@
         <option value="Y">Y</option>
         <option value="N">N</option>
     </select></td>
-    <td><input type=text size=10 name=FVAF value = "{{ entry.FVAF }}"></td>
+    <td><input type=text size=8 name=FVAF value = "{{ entry.FVAF }}"></td>
   <td><textarea name=notes cols="8" rows="4" wrap="hard" value = "{{ entry.notes }}"></textarea></td>
   {% endfor %}
 </tr></table>

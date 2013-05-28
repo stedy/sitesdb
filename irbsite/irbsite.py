@@ -250,16 +250,16 @@ def submit_funding_edits(funding_id):
                             request.form['notes']])
     g.db.commit()
     flash('funding for %s successfully edited' % request.form['Protocol'])
-#    return render_template('subj_query.html')
-    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						funding.PI, funding.Funding_Title, 
-						funding.source, funding.Source_ID, funding.Award_type,
-                        funding.Institution, funding.NCE, funding.FVAF,
-						funding.start, funding.id, funding.end, funding.notes from base,
-						funding where
-						funding.Protocol = base.Protocol and base.Protocol
-						= ?""", [study_id])
-    return render_template('study_funding.html', entries = entries)
+    return render_template('subj_query.html')
+#    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+#						funding.PI, funding.Funding_Title, 
+#						funding.source, funding.Source_ID, funding.Award_type,
+#                        funding.Institution, funding.NCE, funding.FVAF,
+#						funding.start, funding.id, funding.end, funding.notes from base,
+#						funding where
+#						funding.Protocol = base.Protocol and base.Protocol
+#						= ?""", [study_id])
+#    return render_template('study_funding.html', entries = entries)
 
 @app.route('/<id_number>/mods')
 def id_results_mods(id_number):
@@ -307,7 +307,16 @@ def submit_mods_edits(mods_id):
                             request.form['Comments']])
     g.db.commit()
     flash('Mod for %s successfully edited' % request.form['Protocol'])
-    return render_template('subj_query.html')
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						mods.PI, mods.Protocol, mods.id, mods.date_due,
+                        mods.exp_review_date, mods.date_back,
+						mods.submitted, mods.Comments, mods.Description,
+						mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
+						mods where
+						mods.Protocol = base.Protocol and base.Protocol
+						= ? order by mods.Date_to_IRB ASC""",
+                        [request.form['Protocol']])
+    return render_template('mods.html', entries = entries)
 
 #edit functionality for study documents
 
