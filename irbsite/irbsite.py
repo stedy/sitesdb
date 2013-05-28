@@ -29,11 +29,11 @@ def get_user_id(username):
     return rv[0] if rv else None
 
 def query_db(query, args=(), one = False):
-	"""Queries the database and returns a list of dictionaries"""
-	cur = g.db.execute(query, args)
-	rv = [dict((cur.description[idx][0], value)
-		for idx, value in enumerate(row)) for row in cur.fetchall()]
-	return (rv[0] if rv else None) if one else rv
+    """Queries the database and returns a list of dictionaries"""
+    cur = g.db.execute(query, args)
+    rv = [dict((cur.description[idx][0], value)
+        for idx, value in enumerate(row)) for row in cur.fetchall()]
+    return (rv[0] if rv else None) if one else rv
 
 #then decorators
 
@@ -77,8 +77,8 @@ def add_form():
         CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
         FHCRC_renewal, UW_renewal, IRB_expires, Accrual_status, IND, Pt_total,
         Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-			    [request.form['Protocol'], request.form['Title'],
-				request.form['PI'], request.form['IR_file'],
+                [request.form['Protocol'], request.form['Title'],
+                request.form['PI'], request.form['IR_file'],
                 request.form['UW'], request.form['CTE'],
                 request.form['Funding_source'], request.form['RN_coord'],
                 request.form['IRB_approved'], request.form['Primary_IRB'],
@@ -89,8 +89,8 @@ def add_form():
         g.db.commit()
         flash('New study was successfully added')
     else:
-		error = 'Must have Protocol number to add entry'
-    return render_template('add_study.html', error = error)
+        error = 'Must have Protocol number to add entry'
+    return render_template('subj_query.html', error = error)
 
 @app.route('/add_funding', methods=['GET', 'POST'])
 def add_funding():
@@ -98,31 +98,31 @@ def add_funding():
                 request.form['Award_type'], request.form['PI'],
                 request.form['Institution'],
                 request.form['Source'], request.form['start'],
-				request.form['end'], request.form['NCE'], request.form['FVAF'],
+                request.form['end'], request.form['NCE'], request.form['FVAF'],
                 request.form['notes']]
     if request.form['PI']:
-		g.db.execute("""INSERT INTO funding (Protocol, Funding_Title,
+        g.db.execute("""INSERT INTO funding (Protocol, Funding_Title,
         Award_type, PI, 
         Institution, 
         Source, start, 
         end, NCE, FVAF, 
         notes) values (?,?,?,?,?,?,?,?,?,?,?)""",
-			    [request.form['Protocol'], request.form['Funding_Title'],
+                [request.form['Protocol'], request.form['Funding_Title'],
                 request.form['Award_type'], request.form['PI'],
                 request.form['Institution'],
                 request.form['Source'], request.form['start'],
-				request.form['end'], request.form['NCE'], request.form['FVAF'],
+                request.form['end'], request.form['NCE'], request.form['FVAF'],
                 request.form['notes']])
-		g.db.commit()
-		flash('New funding was successfully added')
+        g.db.commit()
+        flash('New funding was successfully added')
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						funding.PI, funding.Funding_Title, 
-						funding.source, funding.Source_ID, funding.Award_type,
+                        funding.PI, funding.Funding_Title, 
+                        funding.source, funding.Source_ID, funding.Award_type,
                         funding.Institution, funding.NCE, funding.FVAF,
-						funding.start, funding.id, funding.end, funding.notes from base,
-						funding where
-						funding.Protocol = base.Protocol and base.Protocol
-						= ?""", [request.form['Protocol']])
+                        funding.start, funding.id, funding.end, funding.notes from base,
+                        funding where
+                        funding.Protocol = base.Protocol and base.Protocol
+                        = ?""", [request.form['Protocol']])
     return render_template('study_funding.html', entries = entries)
 
 @app.route('/add_mod', methods=['GET', 'POST'])
@@ -130,22 +130,22 @@ def add_mod():
     error = None
     g.db.execute("""insert into mods (Protocol, exp_review_date, date_back, date_received, 
                     date_due, Date_to_IRB, Description, submitted, aprvd_date,
-					Comments) values (?,?,?,?,?,?,?,?,?,?)""",			    
+                    Comments) values (?,?,?,?,?,?,?,?,?,?)""",                
                     [request.form['Protocol'], request.form['exp_review_date'],
                         request.form['date_back'], request.form['date_received'],
                         request.form['date_due'], request.form['Date_to_IRB'], 
-				        request.form['Description'], request.form['submitted'], 
+                        request.form['Description'], request.form['submitted'], 
                         request.form['aprvd_date'], request.form['Comments']])
     g.db.commit()
     flash('New modification for %s was successfully added' % request.form['Protocol'])
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						mods.PI, mods.Protocol, mods.id, mods.date_due,
+                        mods.PI, mods.Protocol, mods.id, mods.date_due,
                         mods.exp_review_date, mods.date_back,
-						mods.submitted, mods.Comments, mods.Description,
-						mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
-						mods where
-						mods.Protocol = base.Protocol and base.Protocol
-						= ? order by mods.Date_to_IRB ASC""",
+                        mods.submitted, mods.Comments, mods.Description,
+                        mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
+                        mods where
+                        mods.Protocol = base.Protocol and base.Protocol
+                        = ? order by mods.Date_to_IRB ASC""",
                         [request.form['Protocol']])
     return render_template('mods.html', entries = entries)
 
@@ -158,12 +158,12 @@ def add_ae():
     g.db.commit()
     flash('New AE for %s was successfully added' % request.form['Protocol'])
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						ae.PI, ae.Protocol, ae.id,
-						ae.Report_ID, ae.Reported_RXN,
-						ae.Date_report from base,
-						ae where
-						ae.Protocol = base.Protocol and base.Protocol
-						= ? order by ae.Date_report ASC""",
+                        ae.PI, ae.Protocol, ae.id,
+                        ae.Report_ID, ae.Reported_RXN,
+                        ae.Date_report from base,
+                        ae where
+                        ae.Protocol = base.Protocol and base.Protocol
+                        = ? order by ae.Date_report ASC""",
                         [request.form['Protocol']])
     return render_template('ae.html', entries = entries)
 
@@ -172,14 +172,14 @@ def add_ae():
 def add_training():
     error = None
     if request.form['Name']:
-		g.db.execute("""insert into training (Name, Type, Most_recent,
-						Good_until) values (?,?,?,?)""",
-			    [request.form['Name'], request.form['Type'], 
-				request.form['Most_recent'], request.form['Good_until']])
-		g.db.commit()
-		flash('New training for %s was successfully added' % request.form['Name'])
+        g.db.execute("""insert into training (Name, Type, Most_recent,
+                        Good_until) values (?,?,?,?)""",
+                [request.form['Name'], request.form['Type'], 
+                request.form['Most_recent'], request.form['Good_until']])
+        g.db.commit()
+        flash('New training for %s was successfully added' % request.form['Name'])
     else:
-		error = 'Must have Protocol number to add entry'
+        error = 'Must have Protocol number to add entry'
     entries = query_db("""SELECT Name, Type, Most_recent, Good_until, id FROM
             training order by Name ASC""", one = False)
     return render_template('training.html', error = error, entries = entries)
@@ -188,17 +188,23 @@ def add_training():
 
 @app.route('/<id_number>')
 def id_results(id_number):
-	ids = str(id_number)
-	"""Display all results and info for a given IR number """	
-	idnum = query_db('select Protocol from docs where Protocol = ?', [ids], one =
-		True)
-	if idnum is None:
-		abort(404)
-	entries = query_db("""select base.Protocol, base.IR_file, base.Title,
-			docs.aprvd_date, docs.doc_name, docs.Version, docs.Type, base.PI,
-			docs.doc_date, docs.id from base, docs where docs.Protocol = base.Protocol 
-			and base.Protocol = ? order by docs.doc_date ASC""", [ids])
-	return render_template('study.html', entries = entries)	
+    ids = str(id_number)
+    """Display all results and info for a given IR number """    
+    idnum = query_db('select Protocol from docs where Protocol = ?', [ids], one =
+        True)
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title,
+                        docs.aprvd_date, docs.doc_name, docs.Version, docs.Type, base.PI,
+                        docs.doc_date, docs.id from base, docs where docs.Protocol = base.Protocol
+                        and base.Protocol = ? order by docs.doc_date ASC""",
+                        [ids])
+    if entries:
+        return render_template('study.html', entries = entries)    
+    else:
+        entries = query_db("""select base.Protocol, base.IR_file, base.Title
+            from base where base.Protocol = ?""", [ids])
+        return render_template('study_none.html', entries = entries)    
+    
+
 
 #Add new docs
 @app.route('/add_docs', methods = ['GET', 'POST'])
@@ -216,19 +222,19 @@ def add_docs():
 
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
-	ids = str(id_number)
-	idnum = query_db("""select Protocol from ae where
-						Protocol = ?""", [ids], one = True)
-	if idnum is None:
-		abort(404)
-	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						ae.PI, ae.Protocol, ae.id,
-						ae.Report_ID, ae.Reported_RXN,
-						ae.Date_report from base,
-						ae where
-						ae.Protocol = base.Protocol and base.Protocol
-						= ? order by ae.Date_report ASC""", [ids])
-	return render_template('ae.html', entries = entries)
+    ids = str(id_number)
+    idnum = query_db("""select Protocol from ae where
+                        Protocol = ?""", [ids], one = True)
+    if idnum is None:
+        abort(404)
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+                        ae.PI, ae.Protocol, ae.id,
+                        ae.Report_ID, ae.Reported_RXN,
+                        ae.Date_report from base,
+                        ae where
+                        ae.Protocol = base.Protocol and base.Protocol
+                        = ? order by ae.Date_report ASC""", [ids])
+    return render_template('ae.html', entries = entries)
 
 @app.route('/<ae_id>/ae_edit', methods = ['GET', 'POST'])
 def ae_edit(ae_id):
@@ -276,31 +282,31 @@ def submit_funding_edits(funding_id):
     flash('funding for %s successfully edited' % request.form['Protocol'])
 #    return render_template('subj_query.html')
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						funding.PI, funding.Funding_Title, 
-						funding.source, funding.Source_ID, funding.Award_type,
+                        funding.PI, funding.Funding_Title, 
+                        funding.source, funding.Source_ID, funding.Award_type,
                         funding.Institution, funding.NCE, funding.FVAF,
-						funding.start, funding.id, funding.end, funding.notes from base,
-						funding where
-						funding.Protocol = base.Protocol and base.Protocol
-						= ?""", [study_id])
+                        funding.start, funding.id, funding.end, funding.notes from base,
+                        funding where
+                        funding.Protocol = base.Protocol and base.Protocol
+                        = ?""", [study_id])
     return render_template('study_funding.html', entries = entries)
 
 @app.route('/<id_number>/mods')
 def id_results_mods(id_number):
-	ids = str(id_number)
-	idnum = query_db("""select Protocol from mods where
-						Protocol = ?""", [ids])
-	if idnum is None:
-		abort(404)
-	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						mods.PI, mods.Protocol, mods.id, mods.date_due,
+    ids = str(id_number)
+    idnum = query_db("""select Protocol from mods where
+                        Protocol = ?""", [ids])
+    if idnum is None:
+        abort(404)
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+                        mods.PI, mods.Protocol, mods.id, mods.date_due,
                         mods.exp_review_date, mods.date_back,
-						mods.submitted, mods.Comments, mods.Description,
-						mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
-						mods where
-						mods.Protocol = base.Protocol and base.Protocol
-						= ? order by mods.Date_to_IRB ASC""", [ids])
-	return render_template('mods.html', entries = entries)
+                        mods.submitted, mods.Comments, mods.Description,
+                        mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
+                        mods where
+                        mods.Protocol = base.Protocol and base.Protocol
+                        = ? order by mods.Date_to_IRB ASC""", [ids])
+    return render_template('mods.html', entries = entries)
 
 #edit functionality for mods
 
@@ -332,13 +338,13 @@ def submit_mods_edits(mods_id):
     g.db.commit()
     flash('Mod for %s successfully edited' % request.form['Protocol'])
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						mods.PI, mods.Protocol, mods.id, mods.date_due,
+                        mods.PI, mods.Protocol, mods.id, mods.date_due,
                         mods.exp_review_date, mods.date_back,
-						mods.submitted, mods.Comments, mods.Description,
-						mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
-						mods where
-						mods.Protocol = base.Protocol and base.Protocol
-						= ? order by mods.Date_to_IRB ASC""",
+                        mods.submitted, mods.Comments, mods.Description,
+                        mods.Date_to_IRB, mods.date_received, mods.aprvd_date from base,
+                        mods where
+                        mods.Protocol = base.Protocol and base.Protocol
+                        = ? order by mods.Date_to_IRB ASC""",
                         [request.form['Protocol']])
     return render_template('mods.html', entries = entries)
 
@@ -367,9 +373,9 @@ def submit_docs_edits(docs_id):
     g.db.commit()
     flash('Doc for %s successfully edited' % request.form['Protocol'])
     entries = query_db("""select base.Protocol, base.IR_file, base.Title,
-			docs.aprvd_date, docs.doc_name, docs.Version, docs.Type, base.PI,
-			docs.doc_date, docs.id from base, docs where docs.Protocol = base.Protocol 
-			and base.Protocol = ? order by docs.doc_date ASC""",
+            docs.aprvd_date, docs.doc_name, docs.Version, docs.Type, base.PI,
+            docs.doc_date, docs.id from base, docs where docs.Protocol = base.Protocol 
+            and base.Protocol = ? order by docs.doc_date ASC""",
             [request.form['Protocol']])
     return render_template('study.html', entries=entries)
 
@@ -398,115 +404,115 @@ def submit_training_edits(training_id):
 #add entries
 @app.route('/add_study')
 def add_study():
-	        return render_template('add_study.html')
+            return render_template('add_study.html')
 
 @app.route('/<id_number>/study_funding')
 def id_results_sn(id_number):
-	ids = str(id_number)
-	idnum = query_db("""select Protocol from funding where
-						Protocol = ? """, [ids], one = True)
-	if idnum is None:
-		abort(404)
-	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						funding.PI, funding.Funding_Title, 
-						funding.source, funding.Source_ID, funding.Award_type,
+    ids = str(id_number)
+    idnum = query_db("""select Protocol from funding where
+                        Protocol = ? """, [ids], one = True)
+    if idnum is None:
+        abort(404)
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+                        funding.PI, funding.Funding_Title, 
+                        funding.source, funding.Source_ID, funding.Award_type,
                         funding.Institution, funding.NCE, funding.FVAF,
-						funding.start, funding.id, funding.end, funding.notes from base,
-						funding where
-						funding.Protocol = base.Protocol and base.Protocol
-						= ?""", [ids])
-	return render_template('study_funding.html', entries = entries)
+                        funding.start, funding.id, funding.end, funding.notes from base,
+                        funding where
+                        funding.Protocol = base.Protocol and base.Protocol
+                        = ?""", [ids])
+    return render_template('study_funding.html', entries = entries)
 
 @app.route('/<id_number>/binder_template')
 def binder_template(id_number):
-	ids = str(id_number)
-	bnum = query_db("""select Protocol from funding where
-						Protocol = ? """, [ids], one = True)
-	if bnum is None:
-		abort(404)
-	entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-						base.PI, base.CTE from base
-						where base.Protocol = ?""", [ids])
-	return render_template('binder_template.html', entries=entries)
+    ids = str(id_number)
+    bnum = query_db("""select Protocol from funding where
+                        Protocol = ? """, [ids], one = True)
+    if bnum is None:
+        abort(404)
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+                        base.PI, base.CTE from base
+                        where base.Protocol = ?""", [ids])
+    return render_template('binder_template.html', entries=entries)
 
 #Search queries and results
 
 @app.route('/query') 
 def query():
-			return render_template('subj_query.html') 
+            return render_template('subj_query.html') 
 
 @app.route('/title_query') 
 def title_query():
-			return render_template('title_query.html') 
+            return render_template('title_query.html') 
 
 @app.route('/pi_query') 
 def pi_query():
-			return render_template('pi_query.html')
+            return render_template('pi_query.html')
 
 @app.route('/funding_query') 
 def funding_query():
-			return render_template('funding_query.html')
+            return render_template('funding_query.html')
 
 @app.route('/results', methods = ['GET', 'POST'])
 def results():
-	error = None
-	if request.form['id']:
-		entries = query_db("""select Title, PI, Comments, IR_file, rn_coord, IRB_expires, 
-						IRB_approved, Funding_source, Type, CTE, Accrual_status
-						from base where Protocol = ?""",
-						[request.form['id']], one = False ) 
-		return render_template('get_results.html', id = request.form['id'], entries
-							= entries)
-	if request.form['ir']:
-		entries = query_db("""select Title, PI, IR_file, Comments, rn_coord, IRB_expires, 
-						IRB_approved, Funding_source, Type, CTE, Accrual_status 
-						from base where IR_file = ?""",
-						[request.form['ir']], one = False )
-		return render_template('get_results.html', id = request.form['id'], entries
-							= entries)
-	else:
-		error = "Must have either ID number to search"
-		return render_template('subj_query.html', error=error)
+    error = None
+    if request.form['id']:
+        entries = query_db("""select Title, PI, Comments, IR_file, rn_coord, IRB_expires, 
+                        IRB_approved, Funding_source, Type, CTE, Accrual_status
+                        from base where Protocol = ?""",
+                        [request.form['id']], one = False ) 
+        return render_template('get_results.html', id = request.form['id'], entries
+                            = entries)
+    if request.form['ir']:
+        entries = query_db("""select Title, PI, IR_file, Comments, rn_coord, IRB_expires, 
+                        IRB_approved, Funding_source, Type, CTE, Accrual_status 
+                        from base where IR_file = ?""",
+                        [request.form['ir']], one = False )
+        return render_template('get_results.html', id = request.form['id'], entries
+                            = entries)
+    else:
+        error = "Must have either ID number to search"
+        return render_template('subj_query.html', error=error)
 
 @app.route('/pi_results', methods = ['GET', 'POST'])
 def pi_results():
-	error = None
-	if request.form['PI']:
-		entries = query_db("""select Title, Protocol, UW, Comments, IR_file, rn_coord, IRB_expires, 
-						IRB_approved, Funding_source, Type, CTE, Accrual_status 
- 						from base where PI = ?""",
-						[request.form['PI']], one = False ) 
-		return render_template('pi_results.html', PI = request.form['PI'], entries
-							= entries)
-	else:
-		error = "Must have PI name to search"
-		return render_template('pi_query.html', error=error)
+    error = None
+    if request.form['PI']:
+        entries = query_db("""select Title, Protocol, UW, Comments, IR_file, rn_coord, IRB_expires, 
+                        IRB_approved, Funding_source, Type, CTE, Accrual_status 
+                         from base where PI = ?""",
+                        [request.form['PI']], one = False ) 
+        return render_template('pi_results.html', PI = request.form['PI'], entries
+                            = entries)
+    else:
+        error = "Must have PI name to search"
+        return render_template('pi_query.html', error=error)
 
 @app.route('/title_results', methods = ['GET', 'POST'])
 def title_results():
-	if request.form['title']:
-		titlestr = "%" + request.form['title'] + "%"
-		entries = query_db("""select PI, Protocol, rn_coord, IRB_expires,
-						IRB_approved, Funding_source, Type, CTE, Accrual_status,
-						Title, IR_file, Comments from base where Title
-						LIKE ?""", [titlestr], one = False)
-	return render_template('title_results.html', entries
-							= entries)
+    if request.form['title']:
+        titlestr = "%" + request.form['title'] + "%"
+        entries = query_db("""select PI, Protocol, rn_coord, IRB_expires,
+                        IRB_approved, Funding_source, Type, CTE, Accrual_status,
+                        Title, IR_file, Comments from base where Title
+                        LIKE ?""", [titlestr], one = False)
+    return render_template('title_results.html', entries
+                            = entries)
 
 @app.route('/funding_results', methods = ['GET', 'POST'])
 def funding_results():
-	error = None
-	if request.form['funding']:
-		fundingstr = "%" + request.form['funding'] + "%"
-		entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
-						IRB_approved, Funding_source, Type, CTE, Accrual_status 
- 						from base where Funding_source LIKE ?""",
-						[fundingstr], one = False ) 
-		return render_template('funding_results.html', Funding = request.form['funding'], entries
-							= entries)
-	else:
-		error = "Must enter funding info to search"
-		return render_template('funding_query.html', error=error)
+    error = None
+    if request.form['funding']:
+        fundingstr = "%" + request.form['funding'] + "%"
+        entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
+                        IRB_approved, Funding_source, Type, CTE, Accrual_status 
+                         from base where Funding_source LIKE ?""",
+                        [fundingstr], one = False ) 
+        return render_template('funding_results.html', Funding = request.form['funding'], entries
+                            = entries)
+    else:
+        error = "Must enter funding info to search"
+        return render_template('funding_query.html', error=error)
 
 
 @app.route('/register', methods = ['GET', 'POST'])
@@ -545,14 +551,14 @@ def training():
 
 @app.errorhandler(404)
 def page_not_found(e):
-	return render_template('404.html'), 404
+    return render_template('404.html'), 404
 
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('login'))	
+    return redirect(url_for('login'))    
 
 
 if __name__ == '__main__':

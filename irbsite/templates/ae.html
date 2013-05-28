@@ -24,13 +24,14 @@
 <h2>Add New AE</h2>
 <form action="{{ url_for('add_ae') }}" method=post>
   <table>
-    <tr><td><b>Report ID</td>
+    <tr><td><b>Protocol</td>
+      <td><b>Report ID</td>
         <td><b>Reported Reaction</td>
           <td><b>Report Date</td></tr>
-    <tr><td><input type=text size=20 name=Report_ID></td>
-      <td><input type=text size=20 name=Reported_RXN></td>
-      <td><input type=text size=20 name=Date_report></td>
-      <td><input type=text size=4 name=Protocol value="{{ entries[0].Protocol }}"></tr>
+          <tr><td><input type=text size=4 name=Protocol value="{{ entries[0].Protocol }}">
+    <td><input type=text size=20 name=Report_ID></td>
+      <td><input type=text size=60 name=Reported_RXN></td>
+      <td><input type=text size=20 name=Date_report></td></tr>
     </table>
     <br>
     <input type=submit value="Add AE">

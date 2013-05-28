@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}   
+    <ul class=entries>
+      <h1>Study Documents</h1>
+      <h2>Title: {{ entries[0].Title }}</h2>
+	<br>
+  <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
+  <h2>Committee:  | Correspondence:  </h2>
+  <br><br>
+  <i>No documents have been entered yet</i>
+  <br><br>
+  <br>
+<h2>Add new study document</h2>
+<form action="{{ url_for('add_docs') }}" method=post>
+<table>
+  <tr><td><b>Protocol</td>
+    <td><b>Document Name</td>
+      <td><b>Sub Study</td>
+      <td><b>Version</td>
+    <td><b>Document Date</td>
+      <td><b>Approved Date</td>
+        <td><b>Document Type</td></tr>
+        <tr>
+          <td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }}></td>
+          <td><input type=text size=40 name=doc_name></td>
+    <td><input type=text size=20 name=substudy></td>
+    <td><input type=text size=12 name=Version></td>
+    <td><input type=text size=15 name=doc_date></td>
+    <td><input type=text size=15 name=aprvd_date></td>
+    <td><select name=Type>
+        <option value="Advertisement">Advertisement</option>
+        <option value="Questionnaires">Questionnaires</option>
+        <option value="Other">Other</option>
+        <option value="Protocol">Protocol</option>
+        <option value="Consent">Consent</option>
+        <option value="IB">IB</option>
+        </select>
+      </td>
+  </tr>
+</table>
+<input type=submit value="Add Document">
+<br><br>
+<div class="footer">
+	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a>
+	 | <a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Mods</a>
+	 | <a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a>
+	 | <a href="{{ url_for('binder_template', id_number= entries[0].Protocol ) }}">Binder Template</a>
+ </div>
+   {% endblock %}
