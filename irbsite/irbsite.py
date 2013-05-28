@@ -100,7 +100,6 @@ def add_funding():
                 request.form['Source'], request.form['start'],
 				request.form['end'], request.form['NCE'], request.form['FVAF'],
                 request.form['notes']]
-    error = None
     if request.form['PI']:
 		g.db.execute("""INSERT INTO funding (Protocol, Funding_Title,
         Award_type, PI, 
@@ -116,9 +115,15 @@ def add_funding():
                 request.form['notes']])
 		g.db.commit()
 		flash('New funding was successfully added')
-    else:
-		error = 'Must have Protocol number to add entry'
-    return render_template('funding_query.html', error = error)
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						funding.PI, funding.Funding_Title, 
+						funding.source, funding.Source_ID, funding.Award_type,
+                        funding.Institution, funding.NCE, funding.FVAF,
+						funding.start, funding.id, funding.end, funding.notes from base,
+						funding where
+						funding.Protocol = base.Protocol and base.Protocol
+						= ?""", [request.form['Protocol']])
+    return render_template('study_funding.html', entries = entries)
 
 @app.route('/add_mod', methods=['GET', 'POST'])
 def add_mod():
@@ -250,16 +255,16 @@ def submit_funding_edits(funding_id):
                             request.form['notes']])
     g.db.commit()
     flash('funding for %s successfully edited' % request.form['Protocol'])
-    return render_template('subj_query.html')
-#    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
-#						funding.PI, funding.Funding_Title, 
-#						funding.source, funding.Source_ID, funding.Award_type,
-#                        funding.Institution, funding.NCE, funding.FVAF,
-#						funding.start, funding.id, funding.end, funding.notes from base,
-#						funding where
-#						funding.Protocol = base.Protocol and base.Protocol
-#						= ?""", [study_id])
-#    return render_template('study_funding.html', entries = entries)
+#    return render_template('subj_query.html')
+    entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
+						funding.PI, funding.Funding_Title, 
+						funding.source, funding.Source_ID, funding.Award_type,
+                        funding.Institution, funding.NCE, funding.FVAF,
+						funding.start, funding.id, funding.end, funding.notes from base,
+						funding where
+						funding.Protocol = base.Protocol and base.Protocol
+						= ?""", [study_id])
+    return render_template('study_funding.html', entries = entries)
 
 @app.route('/<id_number>/mods')
 def id_results_mods(id_number):
