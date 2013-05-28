@@ -282,7 +282,8 @@ def id_results_mods(id_number):
 
 @app.route('/<mods_id>/mods_edit', methods = ['GET', 'POST'])
 def mods_edit(mods_id):
-    entries = query_db("""select Protocol, PI, id, description,
+    entries = query_db("""select Protocol, date_received, date_due,
+                        exp_review_date, id, date_back, aprvd_date, Description, submitted,
                         Date_to_IRB, Comments
                          from mods where id = ?""", [mods_id])
     return render_template('mods_edit.html', entries = entries)
@@ -290,11 +291,19 @@ def mods_edit(mods_id):
 @app.route('/<mods_id>/submit_mods_edits', methods = ['GET', 'POST'])
 def submit_mods_edits(mods_id):
     g.db.execute("""DELETE from mods where id = ?""", [mods_id])
-    g.db.execute("""INSERT INTO mods (Protocol, Date_to_IRB, Description,
-                    Comments) values (?,?,?,?)""",
+    g.db.execute("""INSERT INTO mods (Protocol, date_received, 
+                                      date_due, Date_to_IRB, exp_review_date,
+                                      date_back, aprvd_date, Description,
+                                      submitted, Comments) values 
+                                      (?,?,?,?,?,?,?,?,?,?)""",
                             [request.form['Protocol'],
+                            request.form['date_received'],
+                            request.form['date_due'],
                             request.form['Date_to_IRB'],
+                            request.form['exp_review_date'],
+                            request.form['date_back'], request.form['aprvd_date'],
                             request.form['Description'],
+                            request.form['submitted'],
                             request.form['Comments']])
     g.db.commit()
     flash('Mod for %s successfully edited' % request.form['Protocol'])

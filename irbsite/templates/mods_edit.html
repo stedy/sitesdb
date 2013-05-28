@@ -4,21 +4,33 @@
     <ul class=metanav>
     </ul>    
     <ul class=mod_entries>
-	<h2>Edit mods</h2>
-	<br>
-  <li><b>Protocol</li>
-	<li>Date to IRB</li>
-	<li>Description</li>
-	<li>Comments</b></li>
 	{% for entry in entries %}
+  <h2>Edit mods for {{ entry.Protocol }}</h2>
+      <table>
+  <tr><td><b>Due Date</td>
+      <td><b>Date Submitted</td>
+      <td><b>Date of Expected Review</td>
+      <td><b>Date Received</td>
+      <td><b>Date back from IRO</td>
+      <td><b>Approved Date</td>
+        <td><b>Description</td>
+          <td><b>Submitted by</td>
+  <td><b>Comments</b></td>
   <br>
   <form action="{{ url_for('submit_mods_edits', mods_id = entry.id) }}" method=post>
-	<li><input type="text" size=10 name=Protocol value= "{{ entry.Protocol }}" ></li>
-  <li><input type="text" size=10 name=Date_to_IRB value="{{ entry.Date_to_IRB }}"></li>
-  <li><input type="text" size=20 name=Description value="{{ entry.Description }}"></li>
-	<li><input type="text" size=20 name=Comments value="{{ entry.Comments }}"></li>
+    <tr><td><input type="text" size=10 name=date_due value="{{ entry.date_due }}"></td>
+  <td><input type="text" size=10 name=Date_to_IRB value="{{ entry.Date_to_IRB }}"></td>
+  <td><input type="text" size=10 name=exp_review_date value="{{ entry.exp_review_date }}"></td>
+  <td><input type="text" size=10 name=date_back value="{{ entry.date_back }}"></td>
+  <td><input type="text" size=10 name=date_received value="{{ entry.date_received }}"></td>
+  <td><input type="text" size=10 name=aprvd_date value="{{ entry.aprvd_date }}"></td>
+  <td><input type="text" size=10 name=Description value="{{ entry.Description }}"></td>
+  <td><input type="text" size=10 name=submitted value="{{ entry.submitted }}"></td>
+	<td><input type="text" size=10 name=Comments value="{{ entry.Comments }}"></td>
+  <td><input type="text" size=4 name=Protocol value= "{{ entry.Protocol }}" ></td>
+</table>
   <br>
-	<li><input type="submit" value="Edit mod">
+  <td><input type="submit" value="Edit mod"><td>
   </form>
         {% endfor %}
     {% endif %}   
