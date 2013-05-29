@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    <ul class=metanav>
+    </ul>    
+    {% endif %}   
+    <ul class=mod_entries>
+      <h1>Modifications, CRRs, Notifications, NTF</h1>
+	<h2>Title: {{ entries[0].Title }}</h2>
+	<br>
+  <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }} | UW Protocol #:</h2>
+    <br><br>
+    <i>There are not any mods yet for this study</i>
+    <br><br>
+<h2>Add new mod</h2>
+  <form action="{{ url_for('add_mod') }}" method=post class=addmod>
+    <table>
+  <tr><td><b>Date received</td>
+      <td><b>Due Date</td>
+        <td><b>Date Submitted</td>
+          <td><b>Date of Expected Review</td>
+            <td><b>Date back from IRO</td>
+              <td><b>Approved Date</td>
+                <td><b>Description</td>
+                  <td><b>Submitted by</td>
+                    <td><b>Comments</td></tr>
+  <tr><td><input type=text size=10 name=date_received></td>
+	<td><input type=text size=10 name=date_due></td>
+	<td><input type=text size=10 name=Date_to_IRB></td>
+	<td><input type=text size=10 name=exp_review_date></td>
+	<td><input type=text size=10 name=date_back></td>
+	<td><input type=text size=10 name=aprvd_date></td>
+	<td><input type=text size=10 name=Description></td>
+	<td><input type=text size=10 name=submitted></td>
+  <td><input type=text size=10 name=Comments></td>
+  <td><input type=text size=4 name=Protocol value={{ entries[0].Protocol }}></td</tr>
+</table>
+<input type=submit value="Add mod">
+<br><br>
+
+<div class="footer">
+	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> |
+	<a href="{{ url_for('id_results_sn', id_number= entries[0].Protocol ) }}">Study Funding</a>
+</div>
+  {% endblock %}

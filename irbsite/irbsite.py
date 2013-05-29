@@ -297,10 +297,6 @@ def submit_funding_edits(funding_id):
 @app.route('/<id_number>/mods')
 def id_results_mods(id_number):
     ids = str(id_number)
-    idnum = query_db("""select Protocol from mods where
-                        Protocol = ?""", [ids])
-    if idnum is None:
-        abort(404)
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
                         mods.PI, mods.Protocol, mods.id, mods.date_due,
                         mods.exp_review_date, mods.date_back,
@@ -309,7 +305,13 @@ def id_results_mods(id_number):
                         mods where
                         mods.Protocol = base.Protocol and base.Protocol
                         = ? order by mods.Date_to_IRB ASC""", [ids])
-    return render_template('mods.html', entries = entries)
+    if entries:
+        return render_template('mods.html', entries = entries)
+    else:
+        entries = query_db("""SELECT Protocol, IR_File, Title from base
+                            where Protocol = ?""", [ids])
+        return render_template('mods_none.html', entries = entries)
+
 
 #edit functionality for mods
 
