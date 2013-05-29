@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    {% block script %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+    <script type="text/javascript" src="/static/datefun.js"></script>
+    {% endblock %}
+    <ul class=metanav>
+    </ul>    
+    <ul class=funding_entries>
+	<form action="{{ url_for('add_funding') }}" method=post class=addfunding>
+	<h2>FHCRC Protocol# {{ entries[0].Protocol }} </h2>
+	<h2>IR File: {{ entries[0].IR_file }}</h2>
+  <br>
+  <table>
+    <tr><td><b>ID</td>
+      <td><b>Funding Title</td>
+       <td><b>Type of Award</td>
+        <td><b>PI</td>
+          <td><b>Institution</td>
+            <td><b>Source</td>
+              <td><b>Start Date</td>
+                <td><b>End Date</td>
+                <td><b>NCE</td>
+                <td><b>FVAF Submit date</td>
+                  <td><b>Notes</td>
+                    <td><b>Edit</b></td></tr>
+	{% for entry in entries %}
+  <tr><td>{{ entries[0].Protocol }}</td>
+	<td>{{ entry.Funding_Title }}</td>
+	<td>{{ entry.Award_type }}</td>
+	<td>{{ entry.PI }}</td>
+	<td>{{ entry.Institution }}</td>
+	<td>{{ entry.Source }}</td>
+	<td>{{ entry.start }}</td>
+	<td class="date">{{ entry.end }}</td>
+	<td>{{ entry.NCE }}</td>
+	<td>{{ entry.FVAF }}</td>
+	<td>{{ entry.notes }}</td>
+  <td><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></td></tr>
+  {% endfor %}
+  <tr><td><input type=text size=6 name=Protocol value = {{ entries[0].Protocol }} ></td>
+    <td><input type=text size=10 name=Funding_Title></td>
+    <td><select name=Award_type>
+        <option value="Primary">Primary</option>
+        <option value="Sub-Award">Sub-Award</option>
+        <option value="Contract">Contract</option>
+      </select>
+	<td><input type=text size=10 name=PI></td>
+	<td><input type=text size=10 name=Institution></td>
+	<td><input type=text size=10 name=Source></td>
+	<td><input type=text size=10 name=start></td>
+	<td><input type=text size=10 name=end></td>
+  <td><select name=NCE>
+        <option value="Y">Y</option>
+        <option value="N">N</option>
+    </select></td>
+	<td><input type=text size=10 name=FVAF></td>
+  <td><textarea name=notes cols="8" rows="4" wrap="hard"></textarea></td>
+
+</tr></table>
+  <br>
+	<input type=submit value="Add Funding">
+</ul>
+<div class="footer">
+	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a> |
+	<a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Modifications</a>
+</div>
+  {% endif %}
+    {% endblock %}

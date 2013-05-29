@@ -225,8 +225,6 @@ def id_results_ae(id_number):
     ids = str(id_number)
     idnum = query_db("""select Protocol from ae where
                         Protocol = ?""", [ids], one = True)
-    if idnum is None:
-        abort(404)
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
                         ae.PI, ae.Protocol, ae.id,
                         ae.Report_ID, ae.Reported_RXN,
@@ -234,7 +232,12 @@ def id_results_ae(id_number):
                         ae where
                         ae.Protocol = base.Protocol and base.Protocol
                         = ? order by ae.Date_report ASC""", [ids])
-    return render_template('ae.html', entries = entries)
+    if entries:
+        return render_template('ae.html', entries = entries)
+    else:
+        entries = query_db("""SELECT Protocol, IR_File, Title from base
+                            where Protocol = ?""", [ids])
+        return render_template('ae_none.html', entries = entries)
 
 @app.route('/<ae_id>/ae_edit', methods = ['GET', 'POST'])
 def ae_edit(ae_id):
@@ -409,10 +412,6 @@ def add_study():
 @app.route('/<id_number>/study_funding')
 def id_results_sn(id_number):
     ids = str(id_number)
-    idnum = query_db("""select Protocol from funding where
-                        Protocol = ? """, [ids], one = True)
-    if idnum is None:
-        abort(404)
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
                         funding.PI, funding.Funding_Title, 
                         funding.source, funding.Source_ID, funding.Award_type,
@@ -421,7 +420,12 @@ def id_results_sn(id_number):
                         funding where
                         funding.Protocol = base.Protocol and base.Protocol
                         = ?""", [ids])
-    return render_template('study_funding.html', entries = entries)
+    if entries:
+        return render_template('study_funding.html', entries = entries)
+    else:
+        entries = query_db("""SELECT Protocol, IR_file, Title FROM base where
+                        Protocol = ?""", [ids])
+        return render_template('study_funding_none.html', entries = entries)
 
 @app.route('/<id_number>/binder_template')
 def binder_template(id_number):
