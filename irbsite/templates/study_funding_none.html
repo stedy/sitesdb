@@ -11,34 +11,22 @@
 	<form action="{{ url_for('add_funding') }}" method=post class=addfunding>
 	<h2>FHCRC Protocol# {{ entries[0].Protocol }} </h2>
 	<h2>IR File: {{ entries[0].IR_file }}</h2>
-  <br>
+  <br><br>
+  <i>There are no funding documents yet</i>
+  <br><br>
+  <h2>Add Study funding</h2>
   <table>
-    <tr><td><b>ID</td>
-      <td><b>Funding Title</td>
-       <td><b>Type of Award</td>
-        <td><b>PI</td>
-          <td><b>Institution</td>
-            <td><b>Source</td>
-              <td><b>Start Date</td>
-                <td><b>End Date</td>
-                <td><b>NCE</td>
-                <td><b>FVAF Submit date</td>
-                  <td><b>Notes</td>
-                    <td><b>Edit</b></td></tr>
-	{% for entry in entries %}
-  <tr><td>{{ entries[0].Protocol }}</td>
-	<td>{{ entry.Funding_Title }}</td>
-	<td>{{ entry.Award_type }}</td>
-	<td>{{ entry.PI }}</td>
-	<td>{{ entry.Institution }}</td>
-	<td>{{ entry.Source }}</td>
-	<td>{{ entry.start }}</td>
-	<td class="date">{{ entry.end }}</td>
-	<td>{{ entry.NCE }}</td>
-	<td>{{ entry.FVAF }}</td>
-	<td>{{ entry.notes }}</td>
-  <td><a href="{{ url_for('funding_edit', funding_id=entry.id )}}">edit</a></td></tr>
-  {% endfor %}
+        <tr><td><b>ID</td>
+                    <td><b>Funding Title</td>
+                        <td><b>Type of Award</td>
+                            <td><b>PI</td>
+                                 <td><b>Institution</td>
+                                      <td><b>Source</td>
+                                           <td><b>Start Date</td>
+                                                <td><b>End Date</td>
+                                                   <td><b>NCE</td>
+                                                      <td><b>FVAF submit date</td>
+                                                          <td><b>Notes</td></tr>
   <tr><td><input type=text size=6 name=Protocol value = {{ entries[0].Protocol }} ></td>
     <td><input type=text size=10 name=Funding_Title></td>
     <td><select name=Award_type>
