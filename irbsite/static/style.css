@@ -14,8 +14,8 @@ h2          { font-size: 1.2em; }
 .funding_entries li { margin: 0.8em 1.2em; width: 90px; display: inline-block; }
 .mod_entries li { margin: 0.8em 1.2em; width: 170px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }
-td.date { color : #888; } 
-td.past { color : #FF0000; } 
+td.date { color : #FF0000; } 
+td.past { color : #888; } 
 td.td5 { font-size: 1.2em; }
 .results li { margin: 0.8em 1.2em; }
 .add-entry  { font-size: 0.9em; border-bottom: 1px solid #ccc; }

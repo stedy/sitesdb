@@ -24,3 +24,6 @@ CREATE TABLE demo (upn text, uw_id text, initials text, dob date,
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (name text, user_id text);
+
+DROP TABLE IF EXISTS calls;
+CREATE TABLE calls (allocation text, calldate date);
