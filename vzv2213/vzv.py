@@ -52,7 +52,8 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT allocation, injection5p, phonecall from demo""")
+    entries = query_db("""SELECT allocation, MIN(calldate) AS cdate FROM calls WHERE
+            calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY allocation""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
@@ -63,8 +64,12 @@ def add_form():
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         days = [30, 60, 90, 118, 180, 455]
         fu_days = [(txdate + dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in days]
-        calldate = (txdate + dt.timedelta(days=90+118)).strftime("%m/%d/%Y") 
-        g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic, 
+        calldate = (txdate + dt.timedelta(days=90+118)).strftime("%m/%d/%Y")
+        calldate_time = dt.datetime.strptime(calldate, "%m/%d/%Y")
+        calldays = [x * 30 for x in range(1,21)]
+        calldays_projected = [(calldate_time +
+                    dt.timedelta(days=callday)).strftime("%m/%d/%Y") for callday in calldays]
+        g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
                     randomize, baseline, allocation, txdate,
@@ -85,6 +90,9 @@ def add_form():
                     request.form['txdate'], request.form['injection1'],
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
                     fu_days[5], calldate])
+        for cp in calldays_projected:
+            g.db.execute("""INSERT INTO calls (allocation, calldate) values
+                    (?,?)""", [request.form['allocation'], cp])
         g.db.commit()
         flash('New patient successfully added')
     else:
