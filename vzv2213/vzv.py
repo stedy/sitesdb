@@ -172,8 +172,8 @@ def update_form():
                     check2comment, check3no, check3amt,
                     check3date, check3comment, check4no, check4amt, check4date,
                     check4comment, offstudy,
-                    check5no, check5amt, check5date, check5comment, phonecall) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+                    check5no, check5amt, check5date, check5comment) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
                     ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
@@ -200,10 +200,8 @@ def update_form():
                     request.form['check4date'], request.form['check4comment'],
                     request.form['offstudy'],
                     request.form['check5no'], request.form['check5amt'],
-                    request.form['check5date'], request.form['check5comment'],
-                    request.form['phonecall']
+                    request.form['check5date'], request.form['check5comment']
                     ])
-    entries = query_db("""SELECT allocation, injection5p, phonecall from demo""")
     g.db.commit()
     cd, exp, chkno, chkdt = [], [], [], []
     for x in range(1,21):
@@ -221,6 +219,8 @@ def update_form():
             allocation = ?""", [a,c,d,b,request.form['allocation']])
         g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
+    entries = query_db("""SELECT allocation, MIN(expected_calldate) AS cdate FROM calls WHERE
+            expected_calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY allocation""")
     return render_template('main.html', entries=entries)
 
 @app.route('/all_patients')

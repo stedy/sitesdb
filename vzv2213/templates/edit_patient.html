@@ -26,8 +26,6 @@
                 <td><input type=text size=20 name=ethnicity value={{ entry.ethnicity }}></td></tr>
               <tr><td>Off study</td>
                 <td><input type=text size=20 name=offstudy value={{ entry.offstudy }}></td></tr>
-              <tr><td>Phone call</td>
-                <td><input type=text size=20 name=phonecall value={{ entry.phonecall }}></td></tr>
               </table>
         <br>
         <h2>Consent Information</h2>
@@ -127,7 +125,7 @@
 <br>
 <h2>Call Info</h2>
 <table>
-  <tr><td><b>Expected Call Date</td><td><b>Actual Call Date</td><td><b>Check Number</td><td><b>Check Date</td></tr>
+  <tr><td><b>Expected Call Date</td><td><b>Actual Call Date</td><td><b>Check Number</td><td><b>Check Amount</td></tr>
   {% for call in phonecalls %}
   <tr><td><input type=text size=20 name=expcall{{ loop.index }} value="{{ call.expected_calldate }}"></td>
     <td><input type=text size=20 name=calldate{{ loop.index }} value="{{ call.actual_calldate }}"></td>
