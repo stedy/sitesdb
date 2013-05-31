@@ -52,8 +52,8 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT allocation, MIN(calldate) AS cdate FROM calls WHERE
-            calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY allocation""")
+    entries = query_db("""SELECT allocation, MIN(expected_calldate) AS cdate FROM calls WHERE
+            expected_calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY allocation""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
@@ -91,7 +91,7 @@ def add_form():
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
                     fu_days[5], calldate])
         for cp in calldays_projected:
-            g.db.execute("""INSERT INTO calls (allocation, calldate) values
+            g.db.execute("""INSERT INTO calls (allocation, expected_calldate) values
                     (?,?)""", [request.form['allocation'], cp])
         g.db.commit()
         flash('New patient successfully added')
@@ -117,7 +117,12 @@ def results():
                     check5amt, check5comment, check5date, phonecall
                     from demo WHERE allocation = ?""",
                     [ids])
-    return render_template('edit_patient.html', entries=entries)
+    phonecalls = query_db("""SELECT allocation, expected_calldate,
+                    actual_calldate, call_check_no, call_check_amt 
+                    from calls where allocation = ?""",
+                    [ids])
+    return render_template('edit_patient.html', entries=entries,
+            phonecalls=phonecalls)
 
 @app.route('/checkedit', methods = ['GET', 'POST'])
 def check_results():
@@ -200,6 +205,21 @@ def update_form():
                     ])
     entries = query_db("""SELECT allocation, injection5p, phonecall from demo""")
     g.db.commit()
+    cd, exp, chkno, chkdt = [], [], [], []
+    for x in range(1,21):
+        val = 'calldate%s' % x
+        expval= 'expcall%s' % x
+        checknoval = 'call_check_no%s' % x
+        chkdtval = 'call_check_amt%s' % x
+        cd.append(request.form[val])
+        exp.append(request.form[expval])
+        chkno.append(request.form[checknoval])
+        chkdt.append(request.form[chkdtval])
+    for a,b,c,d in zip(cd, exp, chkno, chkdt):
+        g.db.execute("""UPDATE calls SET actual_calldate = ?, call_check_no = ?,
+            call_check_amt = ? WHERE expected_calldate = ? AND
+            allocation = ?""", [a,c,d,b,request.form['allocation']])
+        g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
     return render_template('main.html', entries=entries)
 
