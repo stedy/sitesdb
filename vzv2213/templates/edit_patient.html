@@ -8,14 +8,24 @@
     <form action="{{ url_for('update_form') }}" method=post class=addstudy>
       {% for entry in entries %}
       <dl>
-        <h2>Screening and Randomization</h2>
+        <h2>Registration</h2>
         <table>
         <tr><td>Allocation #</td>
-          <td><input type=text size=20 name=allocation value={{ entry.allocation }}></tr>
+          <td><input type=text size=20 name=allocation value={{ entry.allocation }}>
             <td>UW ID</td>
             <td><input type=text size=20 name=uw_id value={{ entry.uw_id }}></td></tr>
-          <tr><td>Initials</td>
-            <td><input type=text size=20 name=initials value={{ entry.initials }}></td>
+        <tr><td>Baseline #</td>
+          <td><input type=text size=20 name=baseline value={{ entry.baseline }}>
+          <td> UPN</td>
+            <td><input type=text size=20 name=upn value={{ entry.upn }}></td></tr>
+        <tr><td>Patient User ID #</td>
+          <td><input type=text size=20 name=pt_userid value={{ entry.pt_userid }}></td>
+          <td>Initials</td>
+            <td><input type=text size=20 name=initials value={{ entry.initials }}></td></tr>
+        </table>
+        <br>
+            <h2>Demographics</h2>
+            <table>
             <td>Date of Birth</td>
             <td><input type=text size=20 name=dob value={{ entry.dob }}></td></tr>
           <tr><td>Hispanic?</td>
@@ -23,10 +33,10 @@
             <td>Gender</td>
             <td><input type=text size=20 name=gender value={{ entry.gender }}></td></tr>
               <tr><td>Ethnicity</td>
-                <td><input type=text size=20 name=ethnicity value={{ entry.ethnicity }}></td></tr>
-              <tr><td>Off study</td>
+                <td><input type=text size=20 name=ethnicity value={{ entry.ethnicity }}></td>
+              <td>Off study</td>
                 <td><input type=text size=20 name=offstudy value={{ entry.offstudy }}></td></tr>
-              </table>
+            </table>
         <br>
         <h2>Consent Information</h2>
         <table>
@@ -36,12 +46,6 @@
             <td><input type=text size=30 name=consent_reason value="{{ entry.consent_reason }}"></td></tr>
         <tr><td>Randomize Date</td>
           <td><input type=text size=20 name=randomize value={{ entry.randomize }}></td></tr>
-        <tr><td>Baseline #</td>
-          <td><input type=text size=20 name=baseline value={{ entry.baseline }}></tr>
-          <tr><td> UPN</td>
-            <td><input type=text size=20 name=upn value={{ entry.upn }}></td>
-        <tr><td>Patient User ID #</td>
-          <td><input type=text size=20 name=pt_userid value={{ entry.pt_userid }}></tr>
     </table>
     <br>
     <h2>Transplant Info and Infection Dates</h2>
