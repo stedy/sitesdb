@@ -52,8 +52,10 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT allocation, MIN(expected_calldate) AS cdate FROM calls WHERE
-            expected_calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY allocation""")
+    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate) AS cdate,
+    initials FROM calls, demo WHERE calls.allocation = demo.allocation and
+            expected_calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY
+            calls.allocation""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
@@ -88,7 +90,7 @@ def add_form():
                     request.form['randomize'],
                     request.form['baseline'], request.form['allocation'],
                     request.form['txdate'], request.form['injection1'],
-                    fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4], 
+                    fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4],
                     fu_days[5], calldate])
         for cp in calldays_projected:
             g.db.execute("""INSERT INTO calls (allocation, expected_calldate) values

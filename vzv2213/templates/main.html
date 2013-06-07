@@ -19,9 +19,9 @@
 <h2>Does anyone need to be called today?</h2>
 <br>
 <table id="dates_table" class="sortable">
-  <tr><td>Study ID</td><td>Next Call Date</td></tr>
+  <tr><td>Study ID</td><td>Initials</td><td>Next Call Date</td></tr>
   {% for entry in entries %}
-  <tr><td>{{ entry.allocation }}</td><td class="date">{{ entry.cdate }}</td>
+  <tr><td>{{ entry.allocation }}</td><td>{{ entry.initials}}</td><td class="date">{{ entry.cdate }}</td>
     {% endfor %}
   </table>
   {% endblock %}
