@@ -21,7 +21,8 @@
 <table id="dates_table" class="sortable">
   <tr><td>Study ID</td><td>Initials</td><td>Next Call Date</td><td>Next Call Type</td></tr>
   {% for entry in entries %}
-  <tr><td>{{ entry.allocation }}</td><td>{{ entry.initials}}</td><td class="date">{{ entry.cdate }}</td><td>{{ entry.type }}</td>
+  <tr><td><a href="{{ url_for('id_edit', id_number=entry.allocation)}}">{{ entry.allocation }}</a></td><td>{{ entry.initials}}</td>
+    <td class="date">{{ entry.cdate }}</td><td>{{ entry.type }}</td>
     {% endfor %}
   </table>
   {% endblock %}

@@ -149,10 +149,34 @@ def check_results():
                     [checknum, checknum, checknum, checknum, checknum])
     return render_template('edit_patient.html', entries=entries)
 
+@app.route('/<id_number>')
+def id_edit(id_number):
+    ids = str(id_number)
+    entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
+                    gender, ethnicity, pt_userid, txtype,
+                    consent, consent_reason,
+                    randomize, baseline, allocation, txdate,
+                    injection1, injection2p, injection2a,
+                    injection3p, injection3a, injection4p, injection4a,
+                    injection5p, injection5a, injection6p, injection6a,
+                    injection7p, injection7a, check1no, check1amt,
+                    check1date, check1comment, check2no, check2amt, check2date,
+                    check2comment,
+                    check3no, check3amt, check3date, check3comment, check4no,
+                    check4amt, check4date, check4comment, check5no,
+                    check5amt, check5comment, check5date, phonecall
+                    from demo WHERE allocation = ?""",
+                    [ids])
+    phonecalls = query_db("""SELECT allocation, expected_calldate,
+                    actual_calldate, call_check_no, call_check_amt 
+                    from calls where allocation = ?""",
+                    [ids])
+    return render_template('edit_patient.html', entries=entries,
+            phonecalls=phonecalls)
+
 @app.route('/query')
 def query():
     return render_template('pt_lookup.html')
-
 
 @app.route('/check_query')
 def check_query():
