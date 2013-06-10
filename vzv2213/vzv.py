@@ -52,7 +52,8 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate) AS cdate,
+    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate) AS
+            cdate, calltype AS type,
     initials FROM calls, demo WHERE calls.allocation = demo.allocation and
             expected_calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY
             calls.allocation""")
@@ -68,9 +69,11 @@ def add_form():
         fu_days = [(txdate + dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in days]
         calldate = (txdate + dt.timedelta(days=90+118)).strftime("%m/%d/%Y")
         calldate_time = dt.datetime.strptime(calldate, "%m/%d/%Y")
-        calldays = [x * 30 for x in range(1,21)]
+        calldays = [x * 30 for x in range(1,61)]
+        calltype = ['monthly', 'monthly', '3 month'] * 20
         calldays_projected = [(calldate_time +
                     dt.timedelta(days=callday)).strftime("%m/%d/%Y") for callday in calldays]
+        calldays_complete = zip(calldays_projected, calltype)
         g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
@@ -92,9 +95,10 @@ def add_form():
                     request.form['txdate'], request.form['injection1'],
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4],
                     fu_days[5], calldate])
-        for cp in calldays_projected:
-            g.db.execute("""INSERT INTO calls (allocation, expected_calldate) values
-                    (?,?)""", [request.form['allocation'], cp])
+        for cp, ct in calldays_complete:
+            g.db.execute("""INSERT INTO calls (allocation, expected_calldate,
+            calltype) values
+                    (?,?,?)""", [request.form['allocation'], cp, ct])
         g.db.commit()
         flash('New patient successfully added')
     else:

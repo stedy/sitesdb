@@ -26,5 +26,6 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (name text, user_id text);
 
 DROP TABLE IF EXISTS calls;
-CREATE TABLE calls (allocation text, expected_calldate date, actual_calldate date,
+CREATE TABLE calls (allocation text, expected_calldate date, calltype text, 
+                    actual_calldate date,
                     call_check_no text, call_check_amt text);
