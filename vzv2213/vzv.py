@@ -52,9 +52,8 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate) AS
-            cdate, calltype AS type,
-    initials FROM calls, demo WHERE calls.allocation = demo.allocation and
+    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql) AS
+            cdate, calltype, expected_calldate, initials FROM calls, demo WHERE calls.allocation = demo.allocation and
             expected_calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY
             calls.allocation""")
     return render_template('main.html', entries=entries)
@@ -73,7 +72,9 @@ def add_form():
         calltype = ['monthly', 'monthly', '3 month'] * 20
         calldays_projected = [(calldate_time +
                     dt.timedelta(days=callday)).strftime("%m/%d/%Y") for callday in calldays]
-        calldays_complete = zip(calldays_projected, calltype)
+        calldays_projected_sql = [(calldate_time +
+                    dt.timedelta(days=callday)).strftime("%Y-%m-%d") for callday in calldays]
+        calldays_complete = zip(calldays_projected, calldays_projected_sql, calltype)
         g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
@@ -95,10 +96,10 @@ def add_form():
                     request.form['txdate'], request.form['injection1'],
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4],
                     fu_days[5], calldate])
-        for cp, ct in calldays_complete:
+        for cp, cps, ct in calldays_complete:
             g.db.execute("""INSERT INTO calls (allocation, expected_calldate,
-            calltype) values
-                    (?,?,?)""", [request.form['allocation'], cp, ct])
+            expected_calldate_sql, calltype) values
+                    (?,?,?,?)""", [request.form['allocation'], cp, cps, ct])
         g.db.commit()
         flash('New patient successfully added')
     else:
