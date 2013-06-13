@@ -53,7 +53,7 @@ def teardown_request(exception):
 @app.route('/', methods = ['GET', 'POST'])
 def main():
     entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql),
-            calltype AS cdate, expected_calldate, initials FROM calls, demo 
+            calltype, expected_calldate, initials FROM calls, demo 
             WHERE calls.allocation = demo.allocation and
             expected_calldate_sql > date('NOW') GROUP BY
             calls.allocation""")
@@ -251,8 +251,11 @@ def update_form():
             allocation = ?""", [a,c,d,b,request.form['allocation']])
         g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
-    entries = query_db("""SELECT allocation, MIN(expected_calldate) AS cdate FROM calls WHERE
-            expected_calldate > strftime('%m/%d/%Y', date('NOW')) GROUP BY allocation""")
+    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql),
+            calltype, expected_calldate, initials FROM calls, demo 
+            WHERE calls.allocation = demo.allocation and
+            expected_calldate_sql > date('NOW') GROUP BY
+            calls.allocation""")
     return render_template('main.html', entries=entries)
 
 @app.route('/all_patients')
