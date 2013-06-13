@@ -52,7 +52,8 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql),
+    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql)
+            as cdate,
             calltype, expected_calldate, initials FROM calls, demo 
             WHERE calls.allocation = demo.allocation and
             expected_calldate_sql > date('NOW') GROUP BY
