@@ -17,13 +17,13 @@
 <a href="{{ url_for('all_patients') }}">View a table of all patients</a>
 <br><br>
 <h2>Does anyone need to be called today?</h2>
-
 <br>
+{{ entries }}
 <table id="dates_table" class="sortable">
   <tr><td>Study ID</td><td>Initials</td><td>Next Call Date</td><td>Next Call Type</td></tr>
   {% for entry in entries %}
   <tr><td><a href="{{ url_for('id_edit', id_number=entry.allocation)}}">{{ entry.allocation }}</a></td><td>{{ entry.initials}}</td>
-    <td class="date">{{ entry.cdate }}</td><td>{{ entry.calltype }}</td>
+    <td class="date">{{ entry.expected_calldate }}</td><td>{{ entry.calltype }}</td>
     {% endfor %}
   </table>
   {% endblock %}

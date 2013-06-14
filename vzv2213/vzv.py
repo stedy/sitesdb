@@ -52,12 +52,14 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql)
-            as cdate,
-            calltype, expected_calldate, initials FROM calls, demo 
-            WHERE calls.allocation = demo.allocation and
-            expected_calldate_sql > date('NOW') GROUP BY
-            calls.allocation""")
+    entries = query_db("""SELECT calls.allocation, calls.expected_calldate_sql,
+            calls.calltype, calls.expected_calldate, calls.initials FROM calls
+            INNER JOIN
+            (SELECT allocation, MIN(expected_calldate_sql) as mindate
+            FROM calls where expected_calldate_sql > date('NOW') 
+            GROUP BY allocation) as latest
+            ON calls.allocation = latest.allocation and
+            calls.expected_calldate_sql = latest.mindate;""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
@@ -99,9 +101,10 @@ def add_form():
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4],
                     fu_days[5], calldate])
         for cp, cps, ct in calldays_complete:
-            g.db.execute("""INSERT INTO calls (allocation, expected_calldate,
+            g.db.execute("""INSERT INTO calls (allocation, initials, expected_calldate,
             expected_calldate_sql, calltype) values
-                    (?,?,?,?)""", [request.form['allocation'], cp, cps, ct])
+                    (?,?,?,?,?)""", [request.form['allocation'],
+                    request.form['initials'], cp, cps, ct])
         g.db.commit()
         flash('New patient successfully added')
     else:
