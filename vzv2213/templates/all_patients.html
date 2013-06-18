@@ -3,7 +3,8 @@
 {% block script %}
   <script type="text/javascript" src="/static/sorttable.js"></script>
   {% endblock %}
-<ul class=metanav>
+  {% if g.user %}
+  <ul class=metanav>
 </ul>
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
   <i>(Click on table header to sort)</i>
@@ -13,5 +14,6 @@
     <tr><td>{{ entry.allocation }}</td><td>{{ entry.upn }}</td><td>{{ entry.uw_id }}</td><td>{{ entry.initials }}</td><td>{{ entry.dob }}</td>
       <td>{{ entry.txdate }}</td><td>{{ entry.injection1 }}</td></tr>
     {% endfor %}
-      </table>
+  </table>
+  {% endif %}
 {% endblock %}

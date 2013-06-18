@@ -6,6 +6,9 @@
   <script type="text/javascript" src="/static/sorttable.js"></script>
 {% endblock %}
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+{% if g.user %}
+<ul class=metanav>
+</ul>
 <h2>What would you like to do today?</h2>
 <br>
 <a href="{{ url_for('add_patient') }}">Add New Patient</a>
@@ -25,4 +28,5 @@
     <td class="date">{{ entry.expected_calldate }}</td><td>{{ entry.calltype }}</td>
     {% endfor %}
   </table>
+  {% endif %}
   {% endblock %}

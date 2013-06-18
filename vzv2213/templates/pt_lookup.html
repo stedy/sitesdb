@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
+{% if g.user %}
+{% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
     <form action="{{ url_for('results') }}" method=post class=test>
       <dl>
         <input type=text size=10 name=allocation>
@@ -10,6 +11,7 @@
     <ul class = results>
       <em>Seach based on Allocation Number</em>
     </ul>
+    {% endif %}
     {% endblock %}
 
 

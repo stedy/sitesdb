@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
+{% if g.user %}
   {% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
     <form action="{{ url_for('check_results') }}" method=post class=test>
       <dl>
@@ -10,6 +11,7 @@
     <ul class = results>
       <em>Search by Check Number</em>
     </ul>
+    {% endif %}
     {% endblock %}
 
 

@@ -3,7 +3,6 @@
 {% if g.user %}
 <ul class=metanav>
 </ul>
-{% endif %}
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
     <form action="{{ url_for('update_form') }}" method=post class=addstudy>
       {% for entry in entries %}
@@ -160,4 +159,5 @@
     <ul class=entries>
         <em>All fields optional except txdate and allocation.  Add dates in the form MM/DD/YYYY</em>
     </ul>
+{% endif %}
     {% endblock %}

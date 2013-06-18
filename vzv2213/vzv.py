@@ -43,9 +43,9 @@ def query_db(query, args=(), one = False):
 def before_request():
     g.db = connect_db()
     g.user = None
-    if 'user_id' in session:
-        g.user = query_db('select * from user where user_id = XXX',
-                        [session['user_id']], one = True)
+    if 'username' in session:
+        g.user = query_db("""SELECT * FROM user where username = ?""",
+                        [session['username']], one = True)
 
 @app.teardown_request
 def teardown_request(exception):
@@ -68,8 +68,8 @@ def login():
                 request.form['password']):
                     error = "Invalid Password"
         else:
-            session['logged_in'] = True
             flash('You were logged in')
+            session['username'] = user['username']
             return redirect(url_for('main'))
     return render_template('login.html', error = error)
 
@@ -312,6 +312,11 @@ def teardown_request(exception):
 def page_not_found(e):
 	return render_template('404.html'), 404
 
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run()
