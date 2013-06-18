@@ -34,7 +34,10 @@ def query_db(query, args=(), one = False):
 		for idx, value in enumerate(row)) for row in cur.fetchall()]
 	return (rv[0] if rv else None) if one else rv
 
+
+
 #then add some decorators
+
 
 @app.before_request
 def before_request():
@@ -50,7 +53,28 @@ def teardown_request(exception):
         g.db.close()
 
 
+
+
 @app.route('/', methods = ['GET', 'POST'])
+def login():
+    error = None
+    if request.method == "POST":
+        name = request.form['username']
+        user = query_db("""SELECT * from user where username = ?""", [name],
+                one = True)
+        if user is None:
+            error = "Invalid Username"
+        elif not check_password_hash(user['password'],
+                request.form['password']):
+                    error = "Invalid Password"
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('main'))
+    return render_template('login.html', error = error)
+
+
+@app.route('/main')
 def main():
     entries = query_db("""SELECT calls.allocation, calls.expected_calldate_sql,
             calls.calltype, calls.expected_calldate, calls.initials FROM calls
