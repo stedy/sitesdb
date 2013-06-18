@@ -126,7 +126,10 @@ def results():
                     check2comment,
                     check3no, check3amt, check3date, check3comment, check4no,
                     check4amt, check4date, check4comment, check5no,
-                    check5amt, check5comment, check5date, phonecall
+                    check5amt, check5comment, check5date,
+                    check6amt, check6date, check6comment, check6no,
+                    check7amt, check7date, check7comment, check7no,
+                    phonecall
                     from demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT allocation, expected_calldate,
@@ -170,7 +173,10 @@ def id_edit(id_number):
                     check2comment,
                     check3no, check3amt, check3date, check3comment, check4no,
                     check4amt, check4date, check4comment, check5no,
-                    check5amt, check5comment, check5date, phonecall
+                    check5amt, check5comment, check5date,
+                    check6amt, check6date, check6comment, check6no,
+                    check7amt, check7date, check7comment, check7no,
+                    phonecall
                     from demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT allocation, expected_calldate,
