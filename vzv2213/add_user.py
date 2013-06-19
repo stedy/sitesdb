@@ -6,5 +6,5 @@ con.text_factory = str
 cursor = con.cursor()
 
 cursor.execute("""INSERT INTO user (username, password) values (?,?)""",
-                ['vzv2472', generate_password_hash('FHCRC_1600')])
+                ['vzv2472', generate_password_hash('2472fhcrc')])
 con.commit()

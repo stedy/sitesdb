@@ -40,7 +40,11 @@
         <h2>Consent Information</h2>
         <table>
         <tr><td>Consent</td>
-          <td><input type=text size=20 name=consent value={{ entry.consent }}></td>
+          <td><select name=consent>
+                    <option value="signed">Signed</option>
+                    <option value="refused">Refused</option>
+                    <option value="ineligible">Not eligible</option>
+          </select>
           <tr><td>Consent Reason</td>
             <td><input type=text size=30 name=consent_reason value="{{ entry.consent_reason }}"></td></tr>
         <tr><td>Randomize Date</td>
