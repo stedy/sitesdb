@@ -238,9 +238,11 @@ def update_form():
                     check2comment, check3no, check3amt,
                     check3date, check3comment, check4no, check4amt, check4date,
                     check4comment, offstudy,
-                    check5no, check5amt, check5date, check5comment) values
+                    check5no, check5amt, check5date, check5comment,
+                    check6no, check6amt, check6date, check6comment,
+                    check7no, check7amt, check7date, check7comment) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -266,7 +268,11 @@ def update_form():
                     request.form['check4date'], request.form['check4comment'],
                     request.form['offstudy'],
                     request.form['check5no'], request.form['check5amt'],
-                    request.form['check5date'], request.form['check5comment']
+                    request.form['check5date'], request.form['check5comment'],
+                    request.form['check6no'], request.form['check6amt'],
+                    request.form['check6date'], request.form['check6comment'],
+                    request.form['check7no'], request.form['check7amt'],
+                    request.form['check7date'], request.form['check7comment']
                     ])
     g.db.commit()
     cd, exp, chkno, chkdt = [], [], [], []
