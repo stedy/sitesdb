@@ -94,9 +94,9 @@ def add_form():
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         days = [30, 60, 90, 118, 180, 455]
         fu_days = [(txdate + dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in days]
-        calldate = (txdate + dt.timedelta(days=90+118)).strftime("%m/%d/%Y")
+        calldate = (txdate + dt.timedelta(days=30+118)).strftime("%m/%d/%Y")
         calldate_time = dt.datetime.strptime(calldate, "%m/%d/%Y")
-        calldays = [x * 30 for x in range(1,61)]
+        calldays = [x * 30 for x in range(60)]
         calltype = ['monthly', 'monthly', '3 month'] * 20
         calldays_projected = [(calldate_time +
                     dt.timedelta(days=callday)).strftime("%m/%d/%Y") for callday in calldays]
