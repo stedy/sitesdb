@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+<ul class=metanav>
+</ul>
+  {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('update_form') }}" method=post class=addstudy>
+      {% for entry in entries %}
+      <dl>
+        <h2>Registration</h2>
+        <table>
+        <tr><td>Allocation #</td>
+          <td><input type=text size=20 name=allocation value={{ entry.allocation }}>
+            <td>UW ID</td>
+            <td><input type=text size=20 name=uw_id value={{ entry.uw_id }}></td></tr>
+        <tr><td>Baseline #</td>
+          <td><input type=text size=20 name=baseline value={{ entry.baseline }}>
+          <td> UPN</td>
+            <td><input type=text size=20 name=upn value={{ entry.upn }}></td></tr>
+        <tr><td>Patient User ID #</td>
+          <td><input type=text size=20 name=pt_userid value={{ entry.pt_userid }}></td>
+          <td>Initials</td>
+            <td><input type=text size=20 name=initials value={{ entry.initials }}></td></tr>
+        </table>
+        <br>
+            <h2>Demographics</h2>
+            <table>
+            <td>Date of Birth</td>
+            <td><input type=text size=20 name=dob value={{ entry.dob }}></td></tr>
+          <tr><td>Hispanic?</td>
+            <td><input type=text size=20 name=hispanic value={{ entry.hispanic }}></td>
+            <td>Gender</td>
+            <td><input type=text size=20 name=gender value={{ entry.gender }}></td></tr>
+              <tr><td>Ethnicity</td>
+                <td><input type=text size=20 name=ethnicity value={{ entry.ethnicity }}></td>
+              <td>Off study</td>
+                <td><input type=text size=20 name=offstudy value={{ entry.offstudy }}></td></tr>
+            </table>
+        <br>
+        <h2>Consent Information</h2>
+        <table>
+        <tr><td>Consent</td>
+          <td><select name=consent>
+                    <option value="signed">Signed</option>
+                    <option value="refused">Refused</option>
+                    <option value="ineligible">Not eligible</option>
+          </select>
+          <tr><td>Consent Reason</td>
+            <td><input type=text size=30 name=consent_reason value="{{ entry.consent_reason }}"></td></tr>
+        <tr><td>Randomize Date</td>
+          <td><input type=text size=20 name=randomize value={{ entry.randomize }}></td></tr>
+    </table>
+    <br>
+    <h2>Transplant Info and Infection Dates</h2>
+    <table>
+    <tr><td>Tx type</td>
+      <td><input type=text size=20 name=txtype value={{ entry.txtype }}></td></tr>
+    <tr><td>Tx Date</td>
+      <td><input type=text size=20 name=txdate value={{ entry.txdate }}></td></tr>
+    <tr><td>Injection 1</td>
+      <td><input type=text size=20 name=injection1 value={{ entry.injection1 }}></td></tr>
+    <tr><td>Projected Injection 2</td>
+      <td><input type=text size=20 name=injection2p value={{ entry.injection2p }}></td>
+      <td>Actual Injection 2</td>
+      <td><input type=text size=20 name=injection2a value={{entry.injection2a }}></td></tr>
+    <tr><td>Projected Injection 3</td>
+      <td><input type=text size=20 name=injection3p value={{ entry.injection3p }}></td>
+      <td>Actual Injection 3</td>
+      <td><input type=text size=20 name=injection3a value={{ entry.injection3a }}></td></tr>
+    <tr><td>Projected Injection 4</td>
+      <td><input type=text size=20 name=injection4p value={{ entry.injection4p }}></td>
+      <td>Actual Injection 4</td>
+      <td><input type=text size=20 name=injection4a value={{ entry.injection4a }}></td></tr>
+    <tr><td>Projected Visit 5</td>
+      <td><input type=text size=20 name=injection5p value={{ entry.injection5p }}></td>
+      <td>Actual Visit 5</td>
+      <td><input type=text size=20 name=injection5a value={{ entry.injection5a }}></td></tr>
+    <tr><td>Projected Visit 6</td>
+      <td><input type=text size=20 name=injection6p value={{ entry.injection6p }}></td>
+      <td>Actual Visit 6</td>
+      <td><input type=text size=20 name=injection6a value={{ entry.injection6a }}></td></tr>
+    <tr><td>Projected Visit 7</td>
+      <td><input type=text size=20 name=injection7p value={{ entry.injection7p }}></td>
+      <td>Actual Visit 7</td>
+      <td><input type=text size=20 name=injection7a value={{ entry.injection7a }}></td></tr>
+  </table>
+  <br>
+  <h2>Check info</h2>
+  <table>
+  <tr><td>Visit 1 Check #</td>
+    <td><input type=text size=20 name=check1no value={{ entry.check1no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check1amt value={{ entry.check1amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check1date value={{ entry.check1date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check1comment value="{{ entry.check1comment }}"></td></tr>
+  <tr><td>Visit 2 Check #</td>
+    <td><input type=text size=20 name=check2no value={{ entry.check2no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check2amt value={{ entry.check2amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check2date value={{ entry.check2date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check2comment value="{{ entry.check2comment }}"></td></tr>
+  <tr><td>Visit 3 Check #</td>
+    <td><input type=text size=20 name=check3no value={{ entry.check3no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check3amt value={{ entry.check3amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check3date value={{ entry.check3date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check3comment value="{{ entry.check3comment }}"></td></tr>
+  <tr><td>Visit 4 Check #</td>
+    <td><input type=text size=20 name=check4no value={{ entry.check4no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check4amt value={{ entry.check4amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check4date value={{ entry.check4date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check4comment value="{{ entry.check4comment }}"></td></tr>
+  <tr><td>Visit 5 Check #</td>
+    <td><input type=text size=20 name=check5no value={{ entry.check5no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check5amt value={{ entry.check5amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check5date value={{ entry.check5date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check5comment value="{{ entry.check5comment }}"></td></tr>
+  <tr><td>Visit 6 Check #</td>
+    <td><input type=text size=20 name=check6no value={{ entry.check6no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check6amt value={{ entry.check6amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check6date value={{ entry.check6date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check6comment value="{{ entry.check6comment }}"></td></tr>
+  <tr><td>Visit 7 Check #</td>
+    <td><input type=text size=20 name=check7no value={{ entry.check7no }}></td>
+    <td>Amount</td>
+    <td><input type=text size=20 name=check7amt value={{ entry.check7amt }}></td>
+    <td>Date</td>
+    <td><input type=text size=20 name=check7date value={{ entry.check7date }}></td>
+    <td>Comments</td>
+    <td><input type=text size=30 name=check7comment value="{{ entry.check7comment }}"></td></tr>
+  {% endfor %}
+</table>
+<br>
+<h2>Call Info</h2>
+<table>
+  <tr><td><b>Expected Call Date</td><td><b>Actual Call Date</td><td><b>Check Number</td><td><b>Check Amount</td></tr>
+  {% for call in phonecalls %}
+  <tr><td><input type=text size=20 name=expcall{{ loop.index }} value="{{ call.expected_calldate }}"></td>
+    <td><input type=text size=20 name=calldate{{ loop.index }} value="{{ call.actual_calldate }}"></td>
+    <td><input type=text size=20 name=call_check_no{{ loop.index }} value="{{ call.call_check_no }}"</tr>
+    <td><input type=text size=20 name=call_check_amt{{ loop.index }} value="{{ call.call_check_amt }}"</tr>
+{% endfor %}
+</table>
+	    <br></br>
+      <input type=submit value=Submit>
+	</dl>
+    </form>
+    <ul class=entries>
+        <em>All fields optional except txdate and allocation.  Add dates in the form MM/DD/YYYY</em>
+    </ul>
+{% endif %}
+    {% endblock %}
