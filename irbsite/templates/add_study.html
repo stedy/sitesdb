@@ -4,10 +4,11 @@
 <div class=metanav>
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-    <form action="{{ url_for('add_form') }}" method=post class=addstudy>
-	    <dt> Title:
-      <input type=text size=110 name=Title>
+  <form action="{{ url_for('add_form') }}" method=post class=addstudy>
+    <h2>Add New Study</h2>
       <table width="400">
+        <td> Title:</td>
+        <td><textarea rows="6" cols="30" name=Title></textarea></td></tr>
         <td>Study PI:</td>
         <td><input type=text size=20 name=PI></td></tr>
 	    <td>Protocol:
