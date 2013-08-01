@@ -86,8 +86,11 @@ def add_form():
                 request.form['UW_renewal'], request.form['IRB_expires'],
                 request.form['Accrual_status'], request.form['IND'],
                 request.form['Pt_total'], request.form['Type']])
+        g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
+                values (?,?,?)""", [request.form['Protocol'],
+                    g.user['username'], int(time.time())])
         g.db.commit()
-        flash('New study was successfully added')
+        flash('New study was successfully added by %s' % g.user['username'])
     else:
         error = 'Must have Protocol number to add entry'
     return render_template('subj_query.html', error = error)
