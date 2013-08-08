@@ -18,8 +18,8 @@
        <tr><td>{{ entry.Name }}</td>
          <td>{{ entry.Type }}</td>
          <td>{{ entry.Most_recent }}</td>
-         <td class="date">{{ entry.Good_until }}</td>
-       <td><a href="{{ url_for('training_edit', training_id = entry.id )}}">edit</a></td></tr>
+          <td class="date">{{ entry.Good_until }}</td>
+         <td><a href="{{ url_for('training_edit', training_id = entry.id )}}">edit</a></td></tr>
 
 
              {% endfor %}
@@ -28,8 +28,7 @@
            <br><table>
        <td><b>Name</td>
          <td><b>Type of training</td>
-           <td><b>Most Recent</td>
-             <td><b>Expiration Date</td></tr>
+           <td><b>Most Recent</td></tr>
      <td><input type=text size=16 name=Name></td>
      <td><select name=Type>
           <option value="In House Human Subjects">In House Human Subjects</option>
@@ -40,7 +39,6 @@
           <option value="Other">Other</option>
         </select>
           <td><input type="text" size=16 name=Most_recent></td>
-          <td><input type="text" size=16 name=Good_until></td></tr>
       </table>
       <br>
       <input type="submit" value="Add New Individual" />

@@ -1,9 +1,11 @@
 import sqlite3
 import time
+import datetime as dt
 from flask import Flask, request, session, g, redirect, url_for \
         , abort, render_template, flash, jsonify
 from werkzeug import check_password_hash, generate_password_hash
 from contextlib import closing
+
 
 DATABASE = 'irb_db.db'
 DEBUG = True
@@ -175,10 +177,14 @@ def add_ae():
 def add_training():
     error = None
     if request.form['Name']:
+        expiredate_raw = request.form['Most_recent'] 
+        expiredate = dt.datetime.strptime(expiredate_raw, "%m/%d/%Y")
+        dateexpired = expiredate + dt.timedelta(days=1095) 
+        dateexpired = dateexpired.strftime("%m/%d/%Y")
         g.db.execute("""insert into training (Name, Type, Most_recent,
                         Good_until) values (?,?,?,?)""",
                 [request.form['Name'], request.form['Type'], 
-                request.form['Most_recent'], request.form['Good_until']])
+                request.form['Most_recent'], dateexpired])
         g.db.commit()
         flash('New training for %s was successfully added' % request.form['Name'])
     else:
