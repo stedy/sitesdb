@@ -507,7 +507,7 @@ def pi_results():
 def title_results():
     if request.form['title']:
         titlestr = "%" + request.form['title'] + "%"
-        entries = query_db("""select PI, Protocol, rn_coord, IRB_expires,
+        entries = query_db("""select PI, Protocol, RN_coord, IRB_expires,
                         IRB_approved, Funding_source, Type, CTE, Accrual_status,
                         Title, IR_file, Comments from base where Title
                         LIKE ?""", [titlestr], one = False)
@@ -519,7 +519,7 @@ def funding_results():
     error = None
     if request.form['funding']:
         fundingstr = "%" + request.form['funding'] + "%"
-        entries = query_db("""select Title, Protocol, Comments, IR_file, rn_coord, IRB_expires, 
+        entries = query_db("""select Title, Protocol, Comments, IR_file, RN_coord, IRB_expires, 
                         IRB_approved, Funding_source, Type, CTE, Accrual_status 
                          from base where Funding_source LIKE ?""",
                         [fundingstr], one = False ) 
