@@ -441,8 +441,9 @@ def id_results_sn(id_number):
 @app.route('/<id_number>/binder_template')
 def binder_template(id_number):
     ids = str(id_number)
-    bnum = query_db("""select Protocol from funding where
+    bnum = query_db("""select Protocol from base where
                         Protocol = ? """, [ids], one = True)
+    print bnum
     if bnum is None:
         abort(404)
     entries = query_db("""select base.Protocol, base.IR_file, base.Title, 
