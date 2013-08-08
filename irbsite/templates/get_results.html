@@ -20,7 +20,8 @@
 	<b>Funding Source:</b> {{ entry.Funding_source }}<br>
 	<b>Committee:</b> {{ entry.CTE }}
 	<br></br>
-	<b>Comments:</b> {{entry.COMMENTS }} 
+  <b>IRB coordinator:</b> {{ entry.user_id }}</br>
+  <b>Comments:</b> {{entry.COMMENTS }}</br>
 	<br></br>
 	{% else %}
 	<h2>Sad Panda is sad because protocol {{id}} does not exist</h2>

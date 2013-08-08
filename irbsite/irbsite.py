@@ -473,9 +473,11 @@ def funding_query():
 def results():
     error = None
     if request.form['id']:
-        entries = query_db("""select Title, PI, Comments, IR_file, rn_coord, IRB_expires, 
-                        IRB_approved, Funding_source, Type, CTE, Accrual_status
-                        from base where Protocol = ?""",
+        entries = query_db("""select base.Title, base.PI, base.Comments, base.IR_file, base.rn_coord, base.IRB_expires, 
+                        base.IRB_approved, base.Funding_source, base.Type,
+                        base.CTE, base.Accrual_status, createdby.user_id
+                        from base, createdby where base.Protocol =
+                        createdby.Protocol and base.Protocol = ?""",
                         [request.form['id']], one = False ) 
         return render_template('get_results.html', id = request.form['id'], entries
                             = entries)
