@@ -172,27 +172,6 @@ def add_ae():
                         [request.form['Protocol']])
     return render_template('ae.html', entries = entries)
 
-
-@app.route('/add_training', methods=['GET', 'POST'])
-def add_training():
-    error = None
-    if request.form['Name']:
-        expiredate_raw = request.form['Most_recent'] 
-        expiredate = dt.datetime.strptime(expiredate_raw, "%m/%d/%Y")
-        dateexpired = expiredate + dt.timedelta(days=1095) 
-        dateexpired = dateexpired.strftime("%m/%d/%Y")
-        g.db.execute("""insert into training (Name, Type, Most_recent,
-                        Good_until) values (?,?,?,?)""",
-                [request.form['Name'], request.form['Type'], 
-                request.form['Most_recent'], dateexpired])
-        g.db.commit()
-        flash('New training for %s was successfully added' % request.form['Name'])
-    else:
-        error = 'Must have Protocol number to add entry'
-    entries = query_db("""SELECT Name, Type, Most_recent, Good_until, id FROM
-            training order by Name ASC""", one = False)
-    return render_template('training.html', error = error, entries = entries)
-
 #search based on ID number
 
 @app.route('/<id_number>')
@@ -393,27 +372,6 @@ def submit_docs_edits(docs_id):
             [request.form['Protocol']])
     return render_template('study.html', entries=entries)
 
-#edit functionality for training deadlines
-
-@app.route('/<training_id>/training_edit', methods = ['GET', 'POST'])
-def training_edit(training_id):
-    entries = query_db("""select Name, Type, Most_recent, Good_until, id
-                         from training where id = ?""", [training_id])
-    return render_template('training_edit.html', entries = entries)
-
-@app.route('/<training_id>/submit_training_edits', methods = ['GET', 'POST'])
-def submit_training_edits(training_id):
-    g.db.execute("""DELETE FROM training where id = ?""", [training_id])
-    g.db.execute("""INSERT INTO training (Name, Type, Most_recent, Good_until) values (?,?,?,?)""",
-                            [request.form['Name'],
-                            request.form['Type'],
-                            request.form['Most_recent'],
-                            request.form['Good_until']])
-    g.db.commit()
-    flash('Training for %s successfully edited' % request.form['Name'])
-    entries = query_db("""SELECT Name, Type, Most_recent, Good_until, id FROM
-            training order by Name ASC""", one = False)
-    return render_template('training.html', entries = entries)
 
 #add entries
 @app.route('/add_study')
@@ -558,14 +516,6 @@ def register():
                 flash('You were successfully registered and can login now')
                 return redirect(url_for('login'))
     return render_template('register.html', error=error)
-
-
-@app.route('/training')
-def training():
-    entries = query_db("""SELECT Name, Type, Most_recent, Good_until, id FROM
-            training order by Name ASC""", one = False)
-    return render_template('training.html', entries = entries)
-
 
 @app.errorhandler(404)
 def page_not_found(e):
