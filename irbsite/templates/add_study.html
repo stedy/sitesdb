@@ -5,42 +5,59 @@
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form action="{{ url_for('add_form') }}" method=post class=addstudy>
-    <h2>Add New Study</h2>
-      <table width="400">
+    <h2>VIDD Study Database - Add Study</h2>
+      <table width="600">
         <td> Title:</td>
-        <td><textarea rows="6" cols="30" name=Title></textarea></td></tr>
+        <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
+
+      <td><b>Contacts</b></td></tr>
         <td>Study PI:</td>
-        <td><input type=text size=20 name=PI></td></tr>
-	    <td>Protocol:
-	    <td><input type=text size=20 name=Protocol></td></tr>
-	    <td>IRB Number:
-	    <td><input type=text size=20 name=IR_file></td></tr>
-	    <td>UW Protocol Number:
-	    <td><input type=text size=20 name=UW></td></tr>
-	    <td>Committee:
-	    <td><input type=text size=20 name=CTE></td></tr>
-	    <td>Sponsor:
-      <td><input type=text size=20 name=Funding_source></td></tr>
-	    <td>RN/Coord:
-	    <td><input type=text size=20 name=RN_coord></td></tr>
-	    <td>Initial Approval Date:
-        <td><input type=text size=20 name=IRB_approved></td></tr>
+        <td><input type=text size=30 name=PI></td></tr>
+	    <td>RN/Coordinator:
+	    <td><input type=text size=30 name=RN_coord></td></tr>
       <tr><td>Primary IRB</td>
       <td><select name=Primary_IRB>
             <option value="FH">FH</option>
             <option value="UW">UW</option>
-        </select></tr>
-        <tr><td>FHCRC coop</td>
-      <td><select name=FHCRC_coop>
+          </select>
+	    <td>Sponsor:
+      <td><input type=text size=30 name=Funding_source></td>
+	    <td>IND:
+      <td><select name=IND>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select></tr>
+      <td>Protocol:
+	    <td><input type=text size=20 name=Protocol></td></tr>
+	    <td>IRB Number:
+	    <td><input type=text size=20 name=IR_file></td></tr>
+    <td>IACUC Number:</td></tr>
+    <td>Regulatory Coordinator</td></tr>
+	    <td>Review Committee:
+	    <td><input type=text size=20 name=CTE></td></tr>
+    <td>Study Status:</td></tr>
+  <td>Review Type</td></tr>
+    <td>Full <input type="checkbox" name="sports" value="full"  /></td>
+  <td>Coop <input type="checkbox" name="sports" value="coop"  /></td/></tr>
+    <td>Minimal <input type="checkbox" name="sports" value="minimal"  /></td>
+  <td>IRB Authorization<input type="checkbox" name="sports" value="irbauth"  /></td/></tr>
+  <td>Exempt <input type="checkbox" name="sports" value="exempt"  /></td>
+  <td>IACUC Authorization<input type="checkbox" name="sports" value="iacucauth"  /></td/></tr>
+<td>Non Human Subjects <input type="checkbox" name="sports" value="nothumansubjects"  /></tr>
+    </table>
+    <br><br>
+    <h2>Study Population Characteristics</h2>
+      <table width="600">
+        
+        <h2>Dates</h2>
+        <td>Initial Approval Date:
+        <td><input type=text size=20 name=IRB_approved></td></tr>
+	    <td>IRB expires:
+        <td><input type=text size=20 name=IRB_expires></td></tr>
         <tr><td>FHCRC Renewal Date:
         <td><input type=text size=20 name=FHCRC_renewal></td></tr>
 	    <td>UW Renewal Date:
         <td><input type=text size=20 name=UW_renewal></td></tr>
-	    <td>IRB expires:
-        <td><input type=text size=20 name=IRB_expires></td></tr>
 	    <td>Study Status:
         <td><select name=Accrual_status>
             <option value="Open">Open</option>
