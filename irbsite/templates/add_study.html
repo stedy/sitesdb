@@ -37,13 +37,13 @@
 	    <td><input type=text size=20 name=CTE></td></tr>
     <td>Study Status:</td></tr>
   <td>Review Type</td></tr>
-    <td>Full <input type="checkbox" name="reviewtype" value="full"  /></td>
-  <td>Coop <input type="checkbox" name="reviewtype" value="coop"  /></td/></tr>
-    <td>Minimal <input type="checkbox" name="reviewtype" value="minimal"  /></td>
-  <td>IRB Authorization<input type="checkbox" name="reviewtype" value="irbauth"  /></td/></tr>
-  <td>Exempt <input type="checkbox" name="reviewtype" value="exempt"  /></td>
-  <td>IACUC Authorization<input type="checkbox" name="reviewtype" value="iacucauth"  /></td/></tr>
-<td>Non Human Subjects <input type="checkbox" name="reviewtype" value="nothumansubjects"  /></tr>
+    <td>Full <input type="checkbox" name="full" value="full"  /></td>
+  <td>Coop <input type="checkbox" name="coop" value="coop"  /></td/></tr>
+    <td>Minimal <input type="checkbox" name="minimal" value="minimal"  /></td>
+  <td>IRB Authorization<input type="checkbox" name="irbauth" value="irbauth"  /></td/></tr>
+  <td>Exempt <input type="checkbox" name="exempt" value="exempt"  /></td>
+  <td>IACUC Authorization<input type="checkbox" name="iacucauth" value="iacucauth"  /></td/></tr>
+<td>Non Human Subjects <input type="checkbox" name="nothumansubjects" value="nothumansubjects"  /></tr>
     </table>
     <br><br>
     <h2>Study Population Characteristics</h2>
@@ -52,12 +52,12 @@
         <td><input type=text size=20 name=Pt_total></td>
         <td>Age range:</tr>
         <td><b>Population</b></tr>
-      <td>HCT-allo<input type="checkbox" name="dontype" value="hctallo"/></td/>
-      <td>HCT-auto <input type="checkbox" name="dontype" value="hctauto"/></td>
-      <td>Heme<input type="checkbox" name="dontype" value="heme"/></td/></tr>
-  <td>Solid organ<input type="checkbox" name="dontype" value="solidorgan"/></td/>
-  <td>Auto immune<input type="checkbox" name="dontype" value="autoimmune"/></td/>
-  <td>BV<input type="checkbox" name="dontype" value="bv"/></td/></tr>
+      <td>HCT-allo<input type="checkbox" name="hctallo" value="hctallo"/></td/>
+      <td>HCT-auto <input type="checkbox" name="hctauto" value="hctauto"/></td>
+      <td>Heme<input type="checkbox" name="heme" value="heme"/></td/></tr>
+  <td>Solid organ<input type="checkbox" name="solidorgan" value="solidorgan"/></td/>
+  <td>Auto immune<input type="checkbox" name="autoimmune" value="autoimmune"/></td/>
+  <td>BV<input type="checkbox" name="bv" value="bv"/></td/></tr>
 </table
 <br><br>
         <h2>Dates</h2>
@@ -77,30 +77,30 @@
     <br>
       <h2>Committee Reviews</h2>
         <table>
-      <td>Radiation Safety Review<input type="checkbox" name="commreviews" value="radsafetyreview"/></td/>
-        <td>FH IBC<input type="checkbox" name="commreviews" value="fhibc"/></td></tr>
-      <td>SRC<input type="checkbox" name="commreviews" value="src"/></td/>
-        <td>UW EH&S<input type="checkbox" name="commreviews" value="uwehs"/></td/></tr>
-  <td>CIM<input type="checkbox" name="commreviews" value="cim"/></td/>
-    <td>PIM<input type="checkbox" name="commreviews" value="pim"/></td/></tr>
+      <td>Radiation Safety Review<input type="checkbox" name="radsafetyreview" value="radsafetyreview"/></td/>
+        <td>FH IBC<input type="checkbox" name="fhibc" value="fhibc"/></td></tr>
+      <td>SRC<input type="checkbox" name="src" value="src"/></td/>
+        <td>UW EH&S<input type="checkbox" name="uwehs" value="uwehs"/></td/></tr>
+  <td>CIM<input type="checkbox" name="cim" value="cim"/></td/>
+    <td>PIM<input type="checkbox" name="pim" value="pim"/></td/></tr>
     <td>Other review</td></tr>
 </table>
     <br>
       <h2>Supplements</h2>
         <table>
-      <td>Consent Waiver<input type="checkbox" name="supplemental" value="consentwaiver"/></td/>
+      <td>Consent Waiver<input type="checkbox" name="consentwaiver" value="consentwaiver"/></td/>
         <td>Type of Consent Waiver:</td></tr>
-      <td>HIPAA Waiver<input type="checkbox" name="supplemental" value="hipaawaiver"/></td>
+      <td>HIPAA Waiver<input type="checkbox" name="hipaawaiver" value="hipaawaiver"/></td>
         <td>Type of HIPAA Waiver:</td></tr>
       <td>HIPAA Authorization</td/>
       <td><select name=hippaaauth>
             <option value="CRDgeneral">CRD General</option>
             <option value="Studyspecific">Study Specfic</option>
         </select></tr>
-        <td>Repository<input type="checkbox" name="supplemental" value="repository"/></td/></tr>
-  <td>NIH Cert of Conf<input type="checkbox" name="supplemental" value="nihcert"/></td/>
-    <td>Sub-studies<input type="checkbox" name="supplemental" value="substudies"/></td/></tr>
-    <td>MTA<input type="checkbox" name="supplemental" value="mta"/></td/></tr>
+        <td>Repository<input type="checkbox" name="repository" value="repository"/></td/></tr>
+  <td>NIH Cert of Conf<input type="checkbox" name="nihcert" value="nihcert"/></td/>
+    <td>Sub-studies<input type="checkbox" name="substudies" value="substudies"/></td/></tr>
+    <td>MTA<input type="checkbox" name="mta" value="mta"/></td/></tr>
 </table>
 	    <br></br>
 	    <td><input type=submit value=Submit>
