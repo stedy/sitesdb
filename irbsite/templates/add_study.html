@@ -49,13 +49,19 @@
     <h2>Study Population Characteristics</h2>
       <table width="600">
 	    <td>Patient Goal:
-        <td><input type=text size=20 name=Pt_total></td></tr>
-      <td>Population:
-      <td>HCT-allo<input type="checkbox" name="sports" value="hctallo"  /></td/></tr>
-  <td>HCT-auto <input type="checkbox" name="sports" value="hctauto"  /></td>
-  <td>IACUC Authorization<input type="checkbox" name="sports" value="iacucauth"  /></td/></tr>
-
+        <td><input type=text size=20 name=Pt_total></td>
+        <td>Age range:</tr>
+        <td><b>Population</b></tr>
+      <td>HCT-allo<input type="checkbox" name="dontype" value="hctallo"/></td/>
+      <td>HCT-auto <input type="checkbox" name="dontype" value="hctauto"/></td>
+      <td>Heme<input type="checkbox" name="dontype" value="heme"/></td/></tr>
+  <td>Solid organ<input type="checkbox" name="dontype" value="solidorgan"/></td/>
+  <td>Auto immune<input type="checkbox" name="dontype" value="autoimmune"/></td/>
+  <td>BV<input type="checkbox" name="dontype" value="bv"/></td/></tr>
+</table
+<br><br>
         <h2>Dates</h2>
+        <table>
         <td>Initial Approval Date:
         <td><input type=text size=20 name=IRB_approved></td></tr>
 	    <td>IRB expires:
@@ -64,10 +70,22 @@
         <td><input type=text size=20 name=FHCRC_renewal></td></tr>
 	    <td>UW Renewal Date:
         <td><input type=text size=20 name=UW_renewal></td></tr>
-      <td>Radiation Safety Review Due Date:</td>
+      <td>Radiation Safety Review Due Date:</td></tr>
 	    <td>Review Type:
-	    <td><input type=text size=20 name=Type></td></tr>
-	    </table>
+        <td><input type=text size=20 name=Type></td></tr>
+    </table>
+    <br>
+      <h2>Committee Reviews</h2>
+        <table>
+      <td>Radiation Safety Review<input type="checkbox" name="commreviews" value="radsafetyreview"/></td/>
+        <td>FH IBC<input type="checkbox" name="commreviews" value="fhibc"/></td></tr>
+      <td>SRC<input type="checkbox" name="commreviews" value="src"/></td/>
+        <td>UW EH&S<input type="checkbox" name="commreviews" value="uwehs"/></td/></tr>
+  <td>CIM<input type="checkbox" name="commreviews" value="cim"/></td/>
+    <td>PIM<input type="checkbox" name="commreviews" value="pim"/></td/></tr>
+    <td>Other review</td></tr>
+</table>
+	    
 	    <br></br>
 	    <td><input type=submit value=Submit>
     </form>
