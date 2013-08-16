@@ -73,7 +73,7 @@ def login():
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
-    print(request.form['radsafetyreview'])
+    print(request.form['pim'])
     error = None
     if request.form['Protocol']:
         g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
