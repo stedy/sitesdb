@@ -37,18 +37,24 @@
 	    <td><input type=text size=20 name=CTE></td></tr>
     <td>Study Status:</td></tr>
   <td>Review Type</td></tr>
-    <td>Full <input type="checkbox" name="sports" value="full"  /></td>
-  <td>Coop <input type="checkbox" name="sports" value="coop"  /></td/></tr>
-    <td>Minimal <input type="checkbox" name="sports" value="minimal"  /></td>
-  <td>IRB Authorization<input type="checkbox" name="sports" value="irbauth"  /></td/></tr>
-  <td>Exempt <input type="checkbox" name="sports" value="exempt"  /></td>
-  <td>IACUC Authorization<input type="checkbox" name="sports" value="iacucauth"  /></td/></tr>
-<td>Non Human Subjects <input type="checkbox" name="sports" value="nothumansubjects"  /></tr>
+    <td>Full <input type="checkbox" name="reviewtype" value="full"  /></td>
+  <td>Coop <input type="checkbox" name="reviewtype" value="coop"  /></td/></tr>
+    <td>Minimal <input type="checkbox" name="reviewtype" value="minimal"  /></td>
+  <td>IRB Authorization<input type="checkbox" name="reviewtype" value="irbauth"  /></td/></tr>
+  <td>Exempt <input type="checkbox" name="reviewtype" value="exempt"  /></td>
+  <td>IACUC Authorization<input type="checkbox" name="reviewtype" value="iacucauth"  /></td/></tr>
+<td>Non Human Subjects <input type="checkbox" name="reviewtype" value="nothumansubjects"  /></tr>
     </table>
     <br><br>
     <h2>Study Population Characteristics</h2>
       <table width="600">
-        
+	    <td>Patient Goal:
+        <td><input type=text size=20 name=Pt_total></td></tr>
+      <td>Population:
+      <td>HCT-allo<input type="checkbox" name="sports" value="hctallo"  /></td/></tr>
+  <td>HCT-auto <input type="checkbox" name="sports" value="hctauto"  /></td>
+  <td>IACUC Authorization<input type="checkbox" name="sports" value="iacucauth"  /></td/></tr>
+
         <h2>Dates</h2>
         <td>Initial Approval Date:
         <td><input type=text size=20 name=IRB_approved></td></tr>
@@ -58,15 +64,7 @@
         <td><input type=text size=20 name=FHCRC_renewal></td></tr>
 	    <td>UW Renewal Date:
         <td><input type=text size=20 name=UW_renewal></td></tr>
-	    <td>Study Status:
-        <td><select name=Accrual_status>
-            <option value="Open">Open</option>
-            <option value="Closed">Closed</option>
-        </select></tr>
-	    <td>IND:
-        <td><input type=text size=20 name=IND></td></tr>
-	    <td>Patient Goal:
-        <td><input type=text size=20 name=Pt_total></td></tr>
+      <td>Radiation Safety Review Due Date:</td>
 	    <td>Review Type:
 	    <td><input type=text size=20 name=Type></td></tr>
 	    </table>
