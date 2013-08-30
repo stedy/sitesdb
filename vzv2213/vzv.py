@@ -52,9 +52,6 @@ def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
 
-
-
-
 @app.route('/', methods = ['GET', 'POST'])
 def login():
     error = None
@@ -276,7 +273,7 @@ def update_form():
                     ])
     g.db.commit()
     cd, exp, chkno, chkdt = [], [], [], []
-    for x in range(1,21):
+    for x in range(1, 21):
         val = 'calldate%s' % x
         expval= 'expcall%s' % x
         checknoval = 'call_check_no%s' % x
@@ -286,7 +283,8 @@ def update_form():
         chkno.append(request.form[checknoval])
         chkdt.append(request.form[chkdtval])
     for a,b,c,d in zip(cd, exp, chkno, chkdt):
-        g.db.execute("""UPDATE calls SET actual_calldate = ?, call_check_no = ?,
+        g.db.execute("""UPDATE calls SET actual_calldate = ?, 
+            call_check_no = ?,
             call_check_amt = ? WHERE expected_calldate = ? AND
             allocation = ?""", [a,c,d,b,request.form['allocation']])
         g.db.commit()
@@ -300,8 +298,8 @@ def update_form():
 
 @app.route('/all_patients')
 def all_patients():
-    entries = query_db("""SELECT allocation, dob, pt_userid, uw_id, initials, txdate, injection1 FROM
-    demo""")
+    entries = query_db("""SELECT allocation, dob, pt_userid, uw_id, 
+    initials, txdate, injection1 FROM demo""")
     return render_template('all_patients.html', entries = entries)
 
 
