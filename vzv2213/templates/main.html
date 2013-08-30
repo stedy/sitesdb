@@ -26,7 +26,7 @@
   {% for entry in entries %}
   <tr><td><a href="{{ url_for('id_edit', id_number=entry.allocation)}}">{{ entry.allocation }}</a></td>
     <td>{{ entry.initials }}</td>
-    <td>{{ entry.mdate }}</td>
+    <td class="date">{{ entry.mdate }}</td>
     <td class="date">{{ entry.expdate }}</td><td>{{ entry.calltype }}</td>
     {% endfor %}
   </table>
