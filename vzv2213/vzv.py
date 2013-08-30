@@ -34,11 +34,6 @@ def query_db(query, args=(), one = False):
 		for idx, value in enumerate(row)) for row in cur.fetchall()]
 	return (rv[0] if rv else None) if one else rv
 
-
-
-#then add some decorators
-
-
 @app.before_request
 def before_request():
     g.db = connect_db()
@@ -73,14 +68,17 @@ def login():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT calls.allocation, calls.expected_calldate_sql,
-            calls.calltype, calls.expected_calldate, calls.initials FROM calls
-            INNER JOIN
-            (SELECT allocation, MIN(expected_calldate_sql) as mindate
-            FROM calls where expected_calldate_sql > date('NOW') 
+    entries = query_db("""SELECT * FROM
+            (SELECT allocation, MIN(expected_calldate_sql),
+            expected_calldate as expdate,
+            initials, calltype
+            FROM calls where expected_calldate_sql > date('NOW')
             GROUP BY allocation) as latest
-            ON calls.allocation = latest.allocation and
-            calls.expected_calldate_sql = latest.mindate;""")
+            INNER JOIN
+            (SELECT allocation, max(actual_calldate) as mdate
+            FROM calls WHERE actual_calldate IS NOT 'None'
+            GROUP BY allocation) as recent
+            ON latest.allocation = recent.allocation;""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
@@ -282,11 +280,11 @@ def update_form():
         exp.append(request.form[expval])
         chkno.append(request.form[checknoval])
         chkdt.append(request.form[chkdtval])
-    for a,b,c,d in zip(cd, exp, chkno, chkdt):
+    for a, b, c, d in zip(cd, exp, chkno, chkdt):
         g.db.execute("""UPDATE calls SET actual_calldate = ?, 
             call_check_no = ?,
             call_check_amt = ? WHERE expected_calldate = ? AND
-            allocation = ?""", [a,c,d,b,request.form['allocation']])
+            allocation = ?""", [a, c, d, b, request.form['allocation']])
         g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
     entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql),
