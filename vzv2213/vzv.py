@@ -71,7 +71,7 @@ def main():
     entries = query_db("""SELECT * FROM
             (SELECT allocation, MIN(expected_calldate_sql),
             expected_calldate as expdate,
-            initials, calltype
+            initials, calltype, phonenumber
             FROM calls where expected_calldate_sql > date('NOW')
             GROUP BY allocation) as latest
             INNER JOIN
@@ -105,8 +105,8 @@ def add_form():
                     injection1, injection2p,
                     injection3p, injection4p,
                     injection5p, injection6p,
-                    injection7p, phonecall) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    injection7p, phonecall, phonenumber) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['upn'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -118,12 +118,13 @@ def add_form():
                     request.form['baseline'], request.form['allocation'],
                     request.form['txdate'], request.form['injection1'],
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4],
-                    fu_days[5], calldate])
+                    fu_days[5], calldate, request.form['phonenumber']])
         for cp, cps, ct in calldays_complete:
             g.db.execute("""INSERT INTO calls (allocation, initials, expected_calldate,
-            expected_calldate_sql, calltype) values
-                    (?,?,?,?,?)""", [request.form['allocation'],
-                    request.form['initials'], cp, cps, ct])
+            expected_calldate_sql, calltype, phonenumber) values
+                    (?,?,?,?,?,?)""", [request.form['allocation'],
+                    request.form['initials'], cp, cps, ct,
+                    request.form['phonenumber']])
         g.db.commit()
         flash('New patient successfully added')
     else:
@@ -148,7 +149,7 @@ def results():
                     check5amt, check5comment, check5date,
                     check6amt, check6date, check6comment, check6no,
                     check7amt, check7date, check7comment, check7no,
-                    phonecall
+                    phonecall, phonenumber
                     from demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT allocation, expected_calldate,
@@ -195,7 +196,7 @@ def id_edit(id_number):
                     check5amt, check5comment, check5date,
                     check6amt, check6date, check6comment, check6no,
                     check7amt, check7date, check7comment, check7no,
-                    phonecall
+                    phonecall, phonenumber
                     from demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT allocation, expected_calldate,
