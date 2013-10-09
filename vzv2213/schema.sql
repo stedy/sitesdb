@@ -29,3 +29,6 @@ DROP TABLE IF EXISTS calls;
 CREATE TABLE calls (allocation text, expected_calldate date, initials text, show_calldate text,
                     expected_calldate_sql date, calltype text, actual_calldate date, phonenumber text,
                     call_check_no text, call_check_amt text);
+
+DROP TABLE IF EXISTS removed;
+CREATE TABLE removed (allocation text, pt_offstudy date, offstudyreason text);

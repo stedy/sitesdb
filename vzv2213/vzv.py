@@ -295,6 +295,17 @@ def update_form():
             calls.allocation""")
     return render_template('main.html', entries=entries)
 
+@app.route('/remove_patient')
+def remove_patient():
+    return render_template('remove_patient.html')
+
+@app.route('/submit_removal')
+def submit_removal():
+    g.db.execute("""INSERT INTO dropped (allocation, pt_offstudy,
+    offstudyreason) values (?,?,?)""", [request.form['allocation'],
+        request.form['pt_offstudy'], request.form['offstudyreason']])
+    return render_template('main.html')
+
 @app.route('/all_patients')
 def all_patients():
     entries = query_db("""SELECT allocation, dob, pt_userid, uw_id, 
