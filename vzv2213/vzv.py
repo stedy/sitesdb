@@ -301,13 +301,19 @@ def remove_patient():
 
 @app.route('/submit_removal', methods = ['GET', 'POST'])
 def submit_removal():
-    g.db.execute("""INSERT INTO dropped_from_study (allocation, pt_offstudy,
-    offstudyreason) values (?,?,?)""", [request.form['allocation'],
-        request.form['pt_offstudy'], request.form['offstudyreason']])
-    g.db.execute("""UPDATE demo SET status = "off" WHERE allocation = ?""",
+    error = None
+    if request.form['allocation']:
+        g.db.execute("""INSERT INTO dropped_from_study (allocation, pt_offstudy,
+            offstudyreason) values (?,?,?)""", [request.form['allocation'],
+            request.form['pt_offstudy'], request.form['offstudyreason']])
+        g.db.execute("""UPDATE demo SET status = "off" WHERE allocation = ?""",
             [request.form['allocation']])
-    g.db.commit()
-    return render_template('main.html')
+        g.db.execute("""DELETE FROM calls where allocation = ?""",
+            [request.form['allocation']])
+        g.db.commit()
+    else:
+        error = "Must have allocation to remove patient"
+    return render_template('main.html', error = error)
 
 @app.route('/all_patients')
 def all_patients():
