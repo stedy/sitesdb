@@ -73,29 +73,29 @@ def login():
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
-    print(request.form['pim'])
     error = None
-    if request.form['Protocol']:
-        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
-        CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
-        FHCRC_renewal, UW_renewal, IRB_expires, Accrual_status, IND, Pt_total,
-        Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                [request.form['Protocol'], request.form['Title'],
-                request.form['PI'], request.form['IR_file'],
-                request.form['UW'], request.form['CTE'],
-                request.form['Funding_source'], request.form['RN_coord'],
-                request.form['IRB_approved'], request.form['Primary_IRB'],
-                request.form['FHCRC_coop'], request.form['FHCRC_renewal'],
-                request.form['UW_renewal'], request.form['IRB_expires'],
-                request.form['Accrual_status'], request.form['IND'],
-                request.form['Pt_total'], request.form['Type']])
-        g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
-                values (?,?,?)""", [request.form['Protocol'],
-                    g.user['username'], int(time.time())])
-        g.db.commit()
-        flash('New study was successfully added by %s' % g.user['username'])
-    else:
-        error = 'Must have Protocol number to add entry'
+#    if request.form['Protocol']:
+#        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
+#        CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
+#        FHCRC_renewal, UW_renewal, IRB_expires, Accrual_status, IND, Pt_total,
+#        Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+#                [request.form['Protocol'], request.form['Title'],
+#                request.form['PI'], request.form['IR_file'],
+#                request.form['UW'], request.form['CTE'],
+#                request.form['Funding_source'], request.form['RN_coord'],
+#                request.form['IRB_approved'], request.form['Primary_IRB'],
+#                request.form['FHCRC_coop'], request.form['FHCRC_renewal'],
+#                request.form['UW_renewal'], request.form['IRB_expires'],
+#                request.form['Accrual_status'], request.form['IND'],
+#                request.form['Pt_total'], request.form['Type']])
+#        g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
+#                values (?,?,?)""", [request.form['Protocol'],
+#                    g.user['username'], int(time.time())])
+#        g.db.commit()
+#        flash('New study was successfully added by %s' % g.user['username'])
+#    else:
+#        error = 'Must have Protocol number to add entry'
+    print request.form['heme']
     return render_template('subj_query.html', error = error)
 
 @app.route('/add_funding', methods=['GET', 'POST'])
