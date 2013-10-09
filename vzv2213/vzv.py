@@ -105,8 +105,8 @@ def add_form():
                     injection1, injection2p,
                     injection3p, injection4p,
                     injection5p, injection6p,
-                    injection7p, phonecall, phonenumber) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    injection7p, phonecall, phonenumber, status) values
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['upn'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -118,7 +118,7 @@ def add_form():
                     request.form['baseline'], request.form['allocation'],
                     request.form['txdate'], request.form['injection1'],
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4],
-                    fu_days[5], calldate, request.form['phonenumber']])
+                    fu_days[5], calldate, request.form['phonenumber'], "on"])
         for cp, cps, ct in calldays_complete:
             g.db.execute("""INSERT INTO calls (allocation, initials, expected_calldate,
             expected_calldate_sql, calltype, phonenumber) values
@@ -304,6 +304,9 @@ def submit_removal():
     g.db.execute("""INSERT INTO dropped_from_study (allocation, pt_offstudy,
     offstudyreason) values (?,?,?)""", [request.form['allocation'],
         request.form['pt_offstudy'], request.form['offstudyreason']])
+    g.db.execute("""UPDATE demo SET status = "off" WHERE allocation = ?""",
+            [request.form['allocation']])
+    g.db.commit()
     return render_template('main.html')
 
 @app.route('/all_patients')
