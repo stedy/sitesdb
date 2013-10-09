@@ -299,9 +299,9 @@ def update_form():
 def remove_patient():
     return render_template('remove_patient.html')
 
-@app.route('/submit_removal')
+@app.route('/submit_removal', methods = ['GET', 'POST'])
 def submit_removal():
-    g.db.execute("""INSERT INTO dropped (allocation, pt_offstudy,
+    g.db.execute("""INSERT INTO dropped_from_study (allocation, pt_offstudy,
     offstudyreason) values (?,?,?)""", [request.form['allocation'],
         request.form['pt_offstudy'], request.form['offstudyreason']])
     return render_template('main.html')
