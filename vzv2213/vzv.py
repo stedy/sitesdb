@@ -318,7 +318,7 @@ def submit_removal():
 @app.route('/all_patients')
 def all_patients():
     entries = query_db("""SELECT allocation, dob, pt_userid, uw_id, 
-    initials, txdate, injection1 FROM demo""")
+    initials, txdate, injection1, status FROM demo""")
     return render_template('all_patients.html', entries = entries)
 
 
