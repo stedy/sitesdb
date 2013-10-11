@@ -12,11 +12,14 @@
   <h2>Progress of all patients on study as of <span id="Date"></span></h2><br>
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
   <table>
-    <tr><td>Visit</td><td>count</td><td>UW ID</td><td>Initials</td><td>DOB</td><td>Tx date</td><td>Injection Date</td><td>Status</td></tr>
-    {% for entry in entries %}
-    <tr><td>{{ entry.allocation }}</td><td>{{ entry.upn }}</td><td>{{ entry.uw_id }}</td><td>{{ entry.initials }}</td><td>{{ entry.dob }}</td>
-      <td>{{ entry.txdate }}</td><td>{{ entry.injection1 }}</td><td>{{ entry.status }}</td></tr>
-    {% endfor %}
+    <tr><td><b>Visit</b></td><td><b>Count</b></td></tr>
+    <tr><td>Visit 1</td><td>{{ visit1[0]['COUNT(check1no)'] }}</td></tr>
+    <tr><td>Visit 2</td><td>{{ visit2[0]['COUNT(check2no)']}}</td></tr>
+    <tr><td>Visit 3</td><td>{{ visit3[0]['COUNT(check3no)']}}</td></tr>
+    <tr><td>Visit 4</td><td>{{ visit4[0]['COUNT(check4no)']}}</td></tr>
+    <tr><td>Visit 5</td><td>{{ visit5[0]['COUNT(check5no)']}}</td></tr>
+    <tr><td>Visit 6</td><td>{{ visit6[0]['COUNT(check6no)']}}</td></tr>
+    <tr><td>Visit 7</td><td>{{ visit7[0]['COUNT(check7no)']}}</td></tr>
   </table>
   {% endif %}
 {% endblock %}

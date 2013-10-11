@@ -323,7 +323,23 @@ def all_patients():
 
 @app.route('/summary_stats')
 def summary_stats():
-    return render_template('summary_statistics.html')
+    visit1 = query_db("""SELECT COUNT(check1no) FROM demo WHERE check1no !=
+                'None'""")
+    visit2 = query_db("""SELECT COUNT(check2no) FROM demo WHERE check2no !=
+                'None'""")
+    visit3 = query_db("""SELECT COUNT(check3no) FROM demo WHERE check3no !=
+                'None'""")
+    visit4 = query_db("""SELECT COUNT(check4no) FROM demo WHERE check4no !=
+                'None'""")
+    visit5 = query_db("""SELECT COUNT(check5no) FROM demo WHERE check5no !=
+                'None'""")
+    visit6 = query_db("""SELECT COUNT(check6no) FROM demo WHERE check6no !=
+                'None'""")
+    visit7 = query_db("""SELECT COUNT(check7no) FROM demo WHERE check7no !=
+                'None'""")
+    return render_template('summary_statistics.html', visit1=visit1,
+            visit2=visit2, visit3=visit3, visit4=visit4, visit5=visit5, visit6=visit6,
+            visit7=visit7)
 
 @app.before_request
 def before_request():
