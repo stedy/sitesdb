@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+{% block script %}
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/static/sorttable.js"></script>
+<script type="text/javascript" src="/static/add_date.js"></script>
+
+  {% endblock %}
+  {% if g.user %}
+  <ul class=metanav>
+  </ul>
+  <h2>Progress of all patients on study as of <span id="Date"></span></h2><br>
+  {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+  <table>
+    <tr><td>Visit</td><td>count</td><td>UW ID</td><td>Initials</td><td>DOB</td><td>Tx date</td><td>Injection Date</td><td>Status</td></tr>
+    {% for entry in entries %}
+    <tr><td>{{ entry.allocation }}</td><td>{{ entry.upn }}</td><td>{{ entry.uw_id }}</td><td>{{ entry.initials }}</td><td>{{ entry.dob }}</td>
+      <td>{{ entry.txdate }}</td><td>{{ entry.injection1 }}</td><td>{{ entry.status }}</td></tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+{% endblock %}

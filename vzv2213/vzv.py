@@ -321,6 +321,9 @@ def all_patients():
     initials, txdate, injection1, status FROM demo""")
     return render_template('all_patients.html', entries = entries)
 
+@app.route('/summary_stats')
+def summary_stats():
+    return render_template('summary_statistics.html')
 
 @app.before_request
 def before_request():
