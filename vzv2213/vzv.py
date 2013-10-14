@@ -200,11 +200,16 @@ def id_edit(id_number):
                     from demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT allocation, expected_calldate,
-                    actual_calldate, call_check_no, call_check_amt 
-                    from calls where allocation = ?""",
+                    actual_calldate, call_check_no, call_check_amt
+                    from calls WHERE allocation = ? AND calltype = "monthly" 
+                    AND expected_calldate_sql < "2014-06-01" """,
+                    [ids])
+    phonecalls3 = query_db("""SELECT allocation, expected_calldate,
+                    actual_calldate, call_check_no, call_check_amt
+                    from calls WHERE allocation = ? AND calltype = "3 month" """,
                     [ids])
     return render_template('edit_patient.html', entries=entries,
-            phonecalls=phonecalls)
+            phonecalls=phonecalls, phonecalls3=phonecalls3)
 
 @app.route('/query')
 def query():

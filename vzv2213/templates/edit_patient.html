@@ -148,14 +148,25 @@
   {% endfor %}
 </table>
 <br>
-<h2>Call Info</h2>
-<table>
-  <tr><td><b>Expected Call Date</td><td><b>Actual Call Date</td><td><b>Check Number</td><td><b>Check Amount</td></tr>
+<h2>Monthly Call Info</h2>
+<table id="call" class="inlineTable">
+  <tr><td><h2>Monthly calls</h2></td></tr>
+  <tr><td><b>Expected Date</td><td><b>Actual Date</td><td><b>Check #</td><td><b>Check Amount</td></tr>
   {% for call in phonecalls %}
-  <tr><td><input type=text size=20 name=expcall{{ loop.index }} value="{{ call.expected_calldate }}"></td>
-    <td><input type=text size=20 name=calldate{{ loop.index }} value="{{ call.actual_calldate }}"></td>
-    <td><input type=text size=20 name=call_check_no{{ loop.index }} value="{{ call.call_check_no }}"</tr>
-    <td><input type=text size=20 name=call_check_amt{{ loop.index }} value="{{ call.call_check_amt }}"</tr>
+  <tr><td><input type=text size=15 name=expcall{{ loop.index }} value="{{ call.expected_calldate }}"></td>
+    <td><input type=text size=15 name=calldate{{ loop.index }} value="{{ call.actual_calldate }}"></td>
+    <td><input type=text size=15 name=call_check_no{{ loop.index }} value="{{ call.call_check_no }}"</td>
+    <td><input type=text size=15 name=call_check_amt{{ loop.index }} value="{{ call.call_check_amt }}"</td></tr>
+{% endfor %}
+</table>
+<table id="call3" class="inlineTable">
+  <tr><td>3 month calls</td></tr>
+  <tr><td><b>Expected Date</td><td><b>Actual Date</td><td><b>Check #</td><td><b>Check Amount</td></tr>
+  {% for call3 in phonecalls3 %}
+  <tr><td><input type=text size=15 name=expcall{{ loop.index }} value="{{ call3.expected_calldate }}"></td>
+    <td><input type=text size=15 name=calldate{{ loop.index }} value="{{ call3.actual_calldate }}"></td>
+    <td><input type=text size=15 name=call_check_no{{ loop.index }} value="{{ call3.call_check_no }}"</td>
+    <td><input type=text size=15 name=call_check_amt{{ loop.index }} value="{{ call3.call_check_amt }}"</td></tr>
 {% endfor %}
 </table>
 	    <br></br>

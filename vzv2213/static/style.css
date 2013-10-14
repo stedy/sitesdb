@@ -35,6 +35,11 @@ table {
   width: "550px"; text-align: left; border: 1px solid;
   }
 
+.inlineTable {
+  display:inline-block;
+  
+}
+
 td {
    padding: 2px 2px 2px 5px;
    }
