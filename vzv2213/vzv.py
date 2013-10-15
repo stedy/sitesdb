@@ -199,13 +199,14 @@ def id_edit(id_number):
                     phonecall, phonenumber
                     from demo WHERE allocation = ?""",
                     [ids])
-    phonecalls = query_db("""SELECT allocation, expected_calldate,
+    phonecalls = query_db("""SELECT expected_calldate,
                     actual_calldate, call_check_no, call_check_amt
                     from calls WHERE allocation = ? AND calltype = "monthly" 
                     AND expected_calldate_sql < "2014-06-01" """,
                     [ids])
-    phonecalls3 = query_db("""SELECT allocation, expected_calldate,
-                    actual_calldate, call_check_no, call_check_amt
+    phonecalls3 = query_db("""SELECT expected_calldate AS ec3,
+                    actual_calldate AS ac3, call_check_no AS ccn3,
+                    call_check_amt AS cca3
                     from calls WHERE allocation = ? AND calltype = "3 month" """,
                     [ids])
     return render_template('edit_patient.html', entries=entries,
@@ -234,7 +235,8 @@ def update_form():
                     injection1, injection2p, injection2a,
                     injection3p, injection3a, injection4p, injection4a,
                     injection5p, injection5a, injection6p, injection6a,
-                    injection7p, injection7a, check1no, check1amt, check1date,
+                    injection7p, injection7a,
+                    check1no, check1amt, check1date,
                     check1comment, check2no, check2amt, check2date,
                     check2comment, check3no, check3amt,
                     check3date, check3comment, check4no, check4amt, check4date,
@@ -277,15 +279,23 @@ def update_form():
                     ])
     g.db.commit()
     cd, exp, chkno, chkdt = [], [], [], []
-    for x in range(1, 21):
+    for x in range(1, 19):
         val = 'calldate%s' % x
         expval= 'expcall%s' % x
         checknoval = 'call_check_no%s' % x
         chkdtval = 'call_check_amt%s' % x
+        val3 = 'call3date%s' % x
+        expval3= 'exp3call%s' % x
+        checknoval3 = 'call3_check_no%s' % x
+        chkdtval3 = 'call3_check_amt%s' % x
         cd.append(request.form[val])
         exp.append(request.form[expval])
         chkno.append(request.form[checknoval])
         chkdt.append(request.form[chkdtval])
+        cd.append(request.form[val3])
+        exp.append(request.form[expval3])
+        chkno.append(request.form[checknoval3])
+        chkdt.append(request.form[chkdtval3])
     for a, b, c, d in zip(cd, exp, chkno, chkdt):
         g.db.execute("""UPDATE calls SET actual_calldate = ?, 
             call_check_no = ?,
