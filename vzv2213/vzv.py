@@ -196,7 +196,7 @@ def id_edit(id_number):
                     check5amt, check5comment, check5date,
                     check6amt, check6date, check6comment, check6no,
                     check7amt, check7date, check7comment, check7no,
-                    phonecall, phonenumber
+                    phonecall, phonenumber, hzdate
                     from demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT expected_calldate,
@@ -243,9 +243,10 @@ def update_form():
                     check4comment, offstudy,
                     check5no, check5amt, check5date, check5comment,
                     check6no, check6amt, check6date, check6comment,
-                    check7no, check7amt, check7date, check7comment) values
+                    check7no, check7amt, check7date, check7comment,
+                    hzdate) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
@@ -275,7 +276,8 @@ def update_form():
                     request.form['check6no'], request.form['check6amt'],
                     request.form['check6date'], request.form['check6comment'],
                     request.form['check7no'], request.form['check7amt'],
-                    request.form['check7date'], request.form['check7comment']
+                    request.form['check7date'], request.form['check7comment'],
+                    request.form['hzdate']
                     ])
     g.db.commit()
     cd, exp, chkno, chkdt = [], [], [], []
