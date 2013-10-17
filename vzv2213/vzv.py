@@ -79,7 +79,7 @@ def main():
             GROUP BY allocation
             ) as earliest
             ON calls.allocation = earliest.allocation AND
-            calls.expected_calldate_sql - earliest.expected_calldate_sql) as
+            calls.expected_calldate_sql = earliest.expected_calldate_sql) as
             latest
             INNER JOIN
             (SELECT allocation, max(actual_calldate) as mdate
