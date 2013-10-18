@@ -35,8 +35,12 @@ table {
   width: "550px"; text-align: left; border: 1px solid;
   }
 
+.buttonTable {
+  border: 0px;
+  
+}
 .inlineTable {
-  display:inline-block;
+  width:50%; float:left;
   
 }
 

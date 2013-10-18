@@ -56,7 +56,7 @@
     </table>
     <br>
     <h2>Transplant Info and Infection Dates</h2>
-    <table>
+    <table style="width:60%;float:left">
     <tr><td>Tx type</td>
       <td><input type=text size=20 name=txtype value={{ entry.txtype }}></td></tr>
     <tr><td>Tx Date</td>
@@ -88,8 +88,18 @@
       <td>Actual Visit 7</td>
       <td><input type=text size=20 name=injection7a value={{ entry.injection7a }}></td></tr>
   </table>
-  <br>
-  <h2>Check info</h2>
+<table border="0" style="width:40%; float:left" class="buttonTable">
+  <tr><td>
+      <input type=submit value="Click here to save changes">
+</td></tr></table>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<h2>Check Info</h2>
   <table>
   <tr><td>Visit 1 Check #</td>
     <td><input type=text size=20 name=check1no value={{ entry.check1no }}></td>
@@ -150,7 +160,7 @@
   {% endfor %}
 </table>
 <br>
-<h2>Monthly Call Info</h2>
+      <h2>Monthly Call Info</h2>
 <table id="call" class="inlineTable">
   <tr><td><h2>Monthly calls</h2></td></tr>
   <tr><td><b>Expected Date</td><td><b>Actual Date</td><td><b>Check #</td><td><b>Check Amount</td></tr>
@@ -172,11 +182,9 @@
   {% endfor %}
 </table>
 	    <br></br>
-      <input type=submit value=Submit>
 	</dl>
     </form>
-    <ul class=entries>
-        <em>All fields optional except txdate and allocation.  Add dates in the form MM/DD/YYYY</em>
+    <em>Email Zach if any questions </em>
     </ul>
 {% endif %}
     {% endblock %}
