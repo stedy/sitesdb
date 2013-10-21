@@ -28,7 +28,7 @@ CREATE TABLE user (username text, password text);
 DROP TABLE IF EXISTS calls;
 CREATE TABLE calls (allocation text, expected_calldate date, initials text, show_calldate text,
                     expected_calldate_sql date, calltype text, actual_calldate date, phonenumber text,
-                    call_check_no text, call_check_amt text);
+                    call_check_no text, call_check_amt text, email text);
 
 DROP TABLE IF EXISTS dropped_from_study;
 CREATE TABLE dropped_from_study (allocation text, pt_offstudy date, offstudyreason text);

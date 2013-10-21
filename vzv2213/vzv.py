@@ -71,7 +71,7 @@ def main():
     entries = query_db("""SELECT * FROM
             (SELECT calls.allocation, calls.expected_calldate_sql,
             expected_calldate as expdate,
-            initials, calltype, phonenumber
+            initials, calltype, phonenumber, email
             FROM calls
             JOIN(SELECT allocation,
                 MIN(expected_calldate_sql) as expected_calldate_sql

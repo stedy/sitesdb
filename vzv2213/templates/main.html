@@ -24,12 +24,12 @@
 <h2>Does anyone need to be called today?</h2>
 <br>
 <table id="dates_table" class="sortable">
-  <tr><td>Study ID</td><td>Initials</td><td>Last Call Date</td><td>Next Call Date</td><td>Next Call Type</td><td>Phone Number</td></tr>
+  <tr><td>Study ID</td><td>Initials</td><td>Last Call Date</td><td>Next Call Date</td><td>Next Call Type</td><td>Phone Number</td><td>Email</td></tr>
   {% for entry in entries %}
   <tr><td><a href="{{ url_for('id_edit', id_number=entry.allocation)}}">{{ entry.allocation }}</a></td>
     <td>{{ entry.initials }}</td>
     <td class="date">{{ entry.mdate }}</td>
-    <td class="date">{{ entry.expdate }}</td><td>{{ entry.calltype }}</td><td>{{ entry.phonenumber }}</td>
+    <td class="date">{{ entry.expdate }}</td><td>{{ entry.calltype }}</td><td>{{ entry.phonenumber }}</td><td>{{ entry.email }}</td></tr>
     {% endfor %}
   </table>
   {% endif %}
