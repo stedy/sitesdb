@@ -29,7 +29,7 @@
   <tr><td><a href="{{ url_for('id_edit', id_number=entry.allocation)}}">{{ entry.allocation }}</a></td>
     <td>{{ entry.initials }}</td>
     <td class="date">{{ entry.mdate }}</td>
-    <td class="date">{{ entry.expdate }}</td><td>{{ entry.calltype }}</td><td>{{ entry.phonenumber }}</td><td>{{ entry.email }}</td></tr>
+    <td class="date">{{ entry.expdate }}</td><td>{{ entry.calltype }}</td><td>{{ entry.phonenumber }}</td><td><a href="mailto:{{ entry.email }}">{{ entry.email}}</a></td></tr>
     {% endfor %}
   </table>
   {% endif %}
