@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
+    <form action="{{ url_for('results') }}" method=post class=test>
+      <dl>
+        <input type=text size=10 name=subject_ID>
+        <input type=submit value="Search by Subject ID">
+      </dl>
+    </form>
+    <ul class = results>
+      <em>Seach based on Subject ID</em>
+    </ul>
+    {% endblock %}
+
+
+

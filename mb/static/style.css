@@ -1,0 +1,49 @@
+body        { font-family: 'Verdana'; background: #9bad42; }
+a, h1, h2   { colorL #377BA8; }
+h1, h2      { font-family: 'Century Gothic', serif; margin: 0; }
+h1          { border-bottom: 2px solid #DDECEF; }
+h2          { font-size: 1.2em; }
+
+.page       { margin: 2em auto; width: 70em; border: 5px solid #ce8942; 
+                padding: 0.8em; background: white; }
+.entries li   { list-style: none; margin: 0; padding: 0; font: 'Elena'; width: 200px; }
+.binder li   { margin: 0; padding: 0; font: 'Elena'; width: 100px;}
+.addstudy dt { margin: 0.8em 1.2em; width: 100px; display: block }
+.test dt { margin: 0.8em 1.2em; width: 120px; display: inline-block }
+.entries li { margin: 0.8em 1.2em; width: 200px; display: inline-block; }
+.funding_entries li { margin: 0.8em 1.2em; width: 90px; display: inline-block; }
+.mod_entries li { margin: 0.8em 1.2em; width: 170px; display: inline-block; }
+.entries li h2 { margin-left: -1em; }
+#dates_table td.date { color : #000000; } 
+#dates_table td.past { color : #E01B6A; }
+#dates_table td.call { color : #FF0000; } 
+td.td5 { font-size: 1.2em; }
+.results li { margin: 0.8em 1.2em; }
+.add-entry  { font-size: 0.9em; border-bottom: 1px solid #ccc; }
+.add-entry dl { font-weight: bold; }
+.metanav    { text-align: right; font-size: 0.8em; padding: 0.3em;
+                margin-bottom: 1em; background: #fafafa; }
+.flash      { background: #CEE5F5; padding: 0.5em;
+                border: 1px solid #AACBE2; }
+.error      { background: #F0D6D6; padding: 0.5em; }
+
+div.page div.footer  {
+		background:  #DDECEF;	
+		color: #888;
+		padding: 5px 10px;
+		font-size: 12px;
+}
+table {
+  width: "550px"; text-align: left; border: 1px solid;
+  }
+
+td {
+   padding: 2px 2px 2px 5px;
+   }
+
+table.sortable thead {
+  background-color: #eee;
+  color:#666666;
+  font-weight: bold;
+  cursor: default;
+}

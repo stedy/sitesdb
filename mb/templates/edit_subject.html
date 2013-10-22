@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+<ul class=metanav>
+</ul>
+{% endif %}
+  {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('update_form') }}" method=post class=addstudy>
+      {% for entry in entries %}
+      <dl>
+        <h2>Screening and Randomization</h2>
+        <table>
+          <tr><td>Subject ID</td>
+            <td><input type=text size=20 name=subject_ID value="{{ entry.subject_ID }}"></td>
+            <td>UW ID</td>
+            <td><input type=text size=20 name=uwid value="{{ entry.uwid }}"></td></tr>
+          <tr><td>Name</td>
+            <td><input type=text size=20 name=Name value="{{ entry.Name }}"></td>
+          <tr><td>Initials</td>
+            <td><input type=text size=20 name=pt_init value="{{ entry.pt_init }}"></td>
+            <td>Status</td>
+            <td><input type=text size=20 name=Status value="{{ entry.Status }}"></td></tr>
+          <tr><td>Donor/Recipient</td>
+            <td><input type=text size=20 name=Donrep value="{{ entry.Donrep }}"></td>
+              </table>
+        <br>
+    <h2>Swab Info and Collection Dates</h2>
+    <table>
+    <tr><td>Tx Date</td>
+      <td><input type=text size=20 name=txdate value="{{ entry.txdate }}"></td></tr>
+    <tr><td>Expected Pre tx</td>
+      <td><input type=text size=20 name=Expected_pre_tx value="{{ entry.Expected_pre_tx }}"></td>
+      <td>Received Pre tx</td>
+      <td><input type=text size=20 name=Received_pre_tx value="{{entry.Received_pre_tx }}"></td></tr>
+    <tr><td>Expected Week 1</td>
+      <td><input type=text size=20 name=Expected_week1 value="{{ entry.Expected_week1 }}"></td>
+      <td>Received Week 1</td>
+      <td><input type=text size=20 name=Received_week1 value="{{ entry.Received_week1 }}"></td></tr>
+    <tr><td>Expected Week 2</td>
+      <td><input type=text size=20 name=Expected_week2 value="{{ entry.Expected_week2 }}"></td>
+      <td>Received Week 2</td>
+      <td><input type=text size=20 name=Received_week2 value="{{entry.Received_week2 }}"></td></tr>
+    <tr><td>Expected Week 3</td>
+      <td><input type=text size=20 name=Expected_week3 value="{{ entry.Expected_week3 }}"></td>
+      <td>Received Week 3</td>
+      <td><input type=text size=20 name=Received_week3 value="{{ entry.Received_week3 }}"></td></tr>
+    <tr><td>Expected Week 4</td>
+      <td><input type=text size=20 name=Expected_week4 value="{{ entry.Expected_week4 }}"></td>
+      <td>Received Week 4</td>
+      <td><input type=text size=20 name=Received_week4 value="{{ entry.Received_week4 }}"></td></tr>
+    <tr><td>Expected Week 5</td>
+      <td><input type=text size=20 name=Expected_week5 value="{{ entry.Expected_week5 }}"></td>
+      <td>Received Week 5</td>
+      <td><input type=text size=20 name=Received_week5 value="{{ entry.Received_week5 }}"></td></tr>
+    <tr><td>Expected Week 6</td>
+      <td><input type=text size=20 name=Expected_week6 value="{{ entry.Expected_week6 }}"></td>
+      <td>Received Week 6</td>
+      <td><input type=text size=20 name=Received_week6 value="{{ entry.Received_week6 }}"></td></tr>
+    <tr><td>Expected Week 7</td>
+      <td><input type=text size=20 name=Expected_week7 value="{{ entry.Expected_week7 }}"></td>
+      <td>Received Week 7</td>
+      <td><input type=text size=20 name=Received_week7 value="{{ entry.Received_week7 }}"></td></tr>
+    <tr><td>Expected Week 8</td>
+      <td><input type=text size=20 name=Expected_week8 value="{{ entry.Expected_week8 }}"></td>
+      <td>Received Week 8</td>
+      <td><input type=text size=20 name=Received_week8 value="{{ entry.Received_week8 }}"></td></tr>
+    <tr><td>Expected Week 9</td>
+      <td><input type=text size=20 name=Expected_week9 value="{{ entry.Expected_week9 }}"></td>
+      <td>Received Week 9</td>
+      <td><input type=text size=20 name=Received_week9 value="{{ entry.Received_week9 }}"></td></tr>
+    <tr><td>Expected Week 10</td>
+      <td><input type=text size=20 name=Expected_week10 value="{{ entry.Expected_week10 }}"></td>
+      <td>Received Week 10</td>
+      <td><input type=text size=20 name=Received_week10 value="{{ entry.Received_week10 }}"></td></tr>
+    <tr><td>Expected Week 11</td>
+      <td><input type=text size=20 name=Expected_week11 value="{{ entry.Expected_week11 }}"></td>
+      <td>Received Week 11</td>
+      <td><input type=text size=20 name=Received_week11 value="{{ entry.Received_week11 }}"></td></tr>
+    <tr><td>Expected Week 12</td>
+      <td><input type=text size=20 name=Expected_week12 value="{{ entry.Expected_week12 }}"></td>
+      <td>Received Week 12</td>
+      <td><input type=text size=20 name=Received_week12 value="{{ entry.Received_week12 }}"></td></tr>
+    <tr><td>Expected Week 13</td>
+      <td><input type=text size=20 name=Expected_week13 value="{{ entry.Expected_week13 }}"></td>
+      <td>Received Week 13</td>
+      <td><input type=text size=20 name=Received_week13 value="{{ entry.Received_week13 }}"></td></tr>
+    <tr><td>Expected Week 14</td>
+      <td><input type=text size=20 name=Expected_week14 value="{{ entry.Expected_week14 }}"></td>
+      <td>Received Week 14</td>
+      <td><input type=text size=20 name=Received_week14 value="{{ entry.Received_week14 }}"></td></tr>
+  </table>
+  <br>
+    <h2>Blood Draw Info and Collection Dates</h2>
+  <table>
+    <tr><td>Tx Date</td>
+      <td><input type=text size=20 name=txdate value="{{ entry.txdate }}"></td></tr>
+    <tr><td>Pre Tx blood draw</td>
+      <td><input type=text size=20 name=Blood_draw_pre_tx value="{{ entry.Blood_draw_pre_tx }}"></td>
+    <td>Pre Tx blood Received</td>
+    <td><input type=text size=20 name=Blood_received_pre_tx value="{{ entry.Blood_received_pre_tx }}"></td></tr>
+    <td>Pre Tx Time Drawn</td>
+      <td><input type=text size=20 name=Pre_tx_time_drawn value="{{ entry.Pre_tx_time_drawn }}"></td>
+    <td>Pre Tx blood Processed</td>
+      <td><input type=text size=20 name=Pre_tx_time_processed value="{{ entry.Pre_tx_time_processed }}"></td>
+    <tr><td>Week 1 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week1 value="{{ entry.Blood_expected_week1 }}"></td>
+      <td>Week 1 Received</td>
+      <td><input type=text size=20 name=Blood_received_week1 value="{{ entry.Blood_received_week1 }}"></td></tr>
+    <tr><td>Week 1 Time Drawn</td>
+      <td><input type=text size=20 name=Week1_time_drawn value="{{ entry.Week1_time_drawn }}"></td>
+      <td>Week 1 Time Processed</td>
+      <td><input type=text size=20 name=Week1_time_processed value="{{ entry.Week1_time_processed }}"></td></tr>
+    <tr><td>Week 2 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week2 value="{{ entry.Blood_expected_week2 }}"></td>
+      <td>Week 2 Received</td>
+      <td><input type=text size=20 name=Blood_received_week2 value="{{ entry.Blood_received_week2 }}"></td></tr>
+    <tr><td>Week 2 Time Drawn</td>
+      <td><input type=text size=20 name=Week2_time_drawn value="{{ entry.Week2_time_drawn }}"></td>
+      <td>Week 2 Time Processed</td>
+      <td><input type=text size=20 name=Week2_time_processed value="{{ entry.Week2_time_processed }}"></td></tr>
+    <tr><td>Week 3 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week3 value="{{ entry.Blood_expected_week2 }}"></td>
+      <td>Week 3 Received</td>
+      <td><input type=text size=20 name=Blood_received_week3 value="{{ entry.Blood_received_week2 }}"></td></tr>
+    <tr><td>Week 3 Time Drawn</td>
+      <td><input type=text size=20 name=Week3_time_drawn value="{{ entry.Week3_time_drawn }}"></td>
+      <td>Week 3 Time Processed</td>
+      <td><input type=text size=20 name=Week3_time_processed value="{{ entry.Week3_time_processed }}"></td></tr>
+    <tr><td>Week 4 Blood Draw</td>
+      <td><input type=text size=20 name=Blood_expected_week4 value="{{ entry.Blood_expected_week4 }}"></td>
+      <td>Week 4 Received</td>
+      <td><input type=text size=20 name=Blood_received_week4 value="{{ entry.Blood_received_week4 }}"></td></tr>
+    <tr><td>Week 4 Time Drawn</td>
+      <td><input type=text size=20 name=Week4_time_drawn value="{{ entry.Week4_time_drawn }}"></td>
+      <td>Week 4 Time Processed</td>
+      <td><input type=text size=20 name=Week4_time_processed value="{{ entry.Week4_time_processed }}"></td></tr>
+  </table>
+  <br>
+    <input type=submit value=Submit>
+      {% else %}
+      <h2>Sorry, that value does not exist in the database</h2>
+  {% endfor %}
+	</dl>
+    </form>
+    <ul class=entries>
+        <em>Update accordingly</em>
+    </ul>
+    {% endblock %}
