@@ -108,11 +108,8 @@ def add_funding():
                 request.form['notes']]
     if request.form['PI']:
         g.db.execute("""INSERT INTO funding (Protocol, Funding_Title,
-        Award_type, PI, 
-        Institution, 
-        Source, start, 
-        end, NCE, FVAF, 
-        notes) values (?,?,?,?,?,?,?,?,?,?,?)""",
+                Award_type, PI, Institution, Source, start,
+                end, NCE, FVAF, notes) values (?,?,?,?,?,?,?,?,?,?,?)""",
                 [request.form['Protocol'], request.form['Funding_Title'],
                 request.form['Award_type'], request.form['PI'],
                 request.form['Institution'],
@@ -177,6 +174,10 @@ def add_ae():
                         = ? order by ae.Date_report ASC""",
                         [request.form['Protocol']])
     return render_template('ae.html', entries = entries)
+
+@app.route('/add_safety', methods = ['GET', 'POST'])
+def add_safety():
+    return render_template('add_safety.html')
 
 #search based on ID number
 

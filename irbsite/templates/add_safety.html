@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+<div class=metanav>
+</div>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('add_safety') }}" method=post class=addstudy>
+    <h2>VIDD Study Database - Safety Reporting</h2>
+      <table width="600">
+        <td> Title:</td>
+        <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
+      <td>Protocol:
+	    <td><input type=text size=20 name=Protocol></td></tr>
+	    <td>IRB Number:
+	    <td><input type=text size=20 name=IR_file></td></tr>
+        <td>IACUC Number:</td>
+        <td><input type=text size=20 name=iacuc></td></tr>
+        <td>Study PI:</td>
+        <td><input type=text size=20 name=PI></td></tr>
+	    <td>Date of Submission:
+	    <td><input type=text size=20 name=submit_date></td></tr>
+      <tr><td>Submission Type</td>
+      <td><select name=Primary_IRB>
+            <option value="Third_party_safety-notmeeting">Third Party Safety Report - Not Meeting</option>
+            <option value="Third_party_safety-expedited">Third Party Safety Report - Expedited</option>
+            <option value="Serious_adverseventr">Serious Adverse Event - Local</option>
+            <option value="Noncompliance">Noncompliance</option>
+            <option value="Unanticipated_event">Unanticipated Event</option>
+          </select>
+          <tr><td>Report ID</td>
+      <td><input type=text size=10 name=Report_ID></td>
+      <tr><td>Type of Report</td>
+      <td><select name=Report_type>
+          <option value="Initial">Initial</option>
+          <option value="Follow-up">Follow-up</option>
+          </select>
+          <tr><td>Followup Report Number:</td>
+	    <td><input type=text size=20 name=FU_report_no></td></tr>
+	    <br></br>
+	    <td><input type=submit value=Submit>
+    </form>
+    {% endif %}   
+    <ul class=entries>
+        <li><em>All fields optional except Protocol</em>
+    </ul>
+    {% endblock %}
