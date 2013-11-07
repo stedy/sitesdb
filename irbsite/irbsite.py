@@ -178,7 +178,7 @@ def add_ae():
 @app.route('/<id_number>')
 def id_results(id_number):
     ids = str(id_number)
-    """Display all results and info for a given IR number """    
+    """Display all results and info for a given IR number """
     idnum = query_db('select Protocol from docs where Protocol = ?', [ids], one =
         True)
     entries = query_db("""select base.Protocol, base.IR_file, base.Title,
@@ -187,13 +187,11 @@ def id_results(id_number):
                         and base.Protocol = ? order by docs.doc_date ASC""",
                         [ids])
     if entries:
-        return render_template('study.html', entries = entries)    
+        return render_template('study.html', entries = entries)
     else:
         entries = query_db("""select base.Protocol, base.IR_file, base.Title
             from base where base.Protocol = ?""", [ids])
-        return render_template('study_none.html', entries = entries)    
-    
-
+        return render_template('study_none.html', entries = entries)
 
 #Add new docs
 @app.route('/add_docs', methods = ['GET', 'POST'])
