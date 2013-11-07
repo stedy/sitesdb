@@ -438,7 +438,8 @@ def funding_query():
 def results():
     error = None
     if request.form['id']:
-        entries = query_db("""SELECT base.Title, base.PI, base.Comments, base.IR_file, base.rn_coord, base.IRB_expires,
+        entries = query_db("""SELECT base.Title, base.PI, base.Comments, 
+                        base.IR_file, base.rn_coord, base.IRB_expires,
                         base.IRB_approved, base.Funding_source, base.Type,
                         base.CTE, base.Accrual_status, createdby.user_id
                         FROM base, createdby WHERE base.Protocol =
@@ -461,7 +462,7 @@ def results():
 def pi_results():
     error = None
     if request.form['PI']:
-        entries = query_db("""SELECT Title, Protocol, UW, Comments, IR_file, rn_coord, IRB_expires, 
+        entries = query_db("""SELECT Title, Protocol, UW, Comments, IR_file, rn_coord, IRB_expires,
                         IRB_approved, Funding_source, Type, CTE, Accrual_status 
                          FROM base WHERE PI = ?""",
                         [request.form['PI']], one = False ) 
@@ -508,21 +509,21 @@ def register():
             error = 'you have to enter a username'
         elif not request.form['email'] or \
                     '@' not in request.form['email']:
-                error = 'You have to enter a valid email address'
+            error = 'You have to enter a valid email address'
         elif not request.form['password']:
-                error = 'You have to enter a password'
+            error = 'You have to enter a password'
         elif request.form['password'] != request.form['password2']:
-                error = 'The two passwords do not match'
+            error = 'The two passwords do not match'
         elif get_user_id(request.form['username']) is not None:
-                error = 'The username is already taken'
+            error = 'The username is already taken'
         else:
-                g.db.execute('''insert into user (
+            g.db.execute('''insert into user (
                     username, email, pw_hash) values (?, ?, ?)''',
                     [request.form['username'], request.form['email'],
                     generate_password_hash(request.form['password'])])
-                g.db.commit()
-                flash('You were successfully registered and can login now')
-                return redirect(url_for('login'))
+            g.db.commit()
+            flash('You were successfully registered and can login now')
+            return redirect(url_for('login'))
     return render_template('register.html', error=error)
 
 @app.errorhandler(404)
@@ -534,7 +535,7 @@ def page_not_found(e):
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('login'))    
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
