@@ -95,16 +95,20 @@ def add_form():
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         days = [30, 60, 90, 118, 180, 455]
-        fu_days = [(txdate + dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in days]
+        fu_days = [(txdate + dt.timedelta(days=day)).strftime("%m/%d/%Y")
+                for day in days]
         calldate = (txdate + dt.timedelta(days=30+118)).strftime("%m/%d/%Y")
         calldate_time = dt.datetime.strptime(calldate, "%m/%d/%Y")
         calldays = [x * 30 for x in range(60)]
         calltype = ['monthly', 'monthly', '3 month'] * 20
         calldays_projected = [(calldate_time +
-                    dt.timedelta(days=callday)).strftime("%m/%d/%Y") for callday in calldays]
+                    dt.timedelta(days=callday)).strftime("%m/%d/%Y")
+                    for callday in calldays]
         calldays_projected_sql = [(calldate_time +
-                    dt.timedelta(days=callday)).strftime("%Y-%m-%d") for callday in calldays]
-        calldays_complete = zip(calldays_projected, calldays_projected_sql, calltype)
+                    dt.timedelta(days=callday)).strftime("%Y-%m-%d")
+                    for callday in calldays]
+        calldays_complete = zip(calldays_projected, calldays_projected_sql,
+                calltype)
         g.db.execute("""INSERT INTO demo (upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
@@ -127,7 +131,8 @@ def add_form():
                     fu_days[0], fu_days[1], fu_days[2], fu_days[3], fu_days[4],
                     fu_days[5], calldate, request.form['phonenumber'], "on"])
         for cp, cps, ct in calldays_complete:
-            g.db.execute("""INSERT INTO calls (allocation, initials, expected_calldate,
+            g.db.execute("""INSERT INTO calls (allocation, initials,
+            expected_calldate,
             expected_calldate_sql, calltype, phonenumber) values
                     (?,?,?,?,?,?)""", [request.form['allocation'],
                     request.form['initials'], cp, cps, ct,
@@ -160,7 +165,7 @@ def results():
                     from demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT allocation, expected_calldate,
-                    actual_calldate, call_check_no, call_check_amt 
+                    actual_calldate, call_check_no, call_check_amt
                     from calls where allocation = ?""",
                     [ids])
     return render_template('edit_patient.html', entries=entries,
@@ -196,8 +201,8 @@ def id_edit(id_number):
                     injection3p, injection3a, injection4p, injection4a,
                     injection5p, injection5a, injection6p, injection6a,
                     injection7p, injection7a, check1no, check1amt,
-                    check1date, check1comment, check2no, check2amt, check2date,
-                    check2comment,
+                    check1date, check1comment, check2no, check2amt, 
+                    check2date, check2comment,
                     check3no, check3amt, check3date, check3comment, check4no,
                     check4amt, check4date, check4comment, check5no,
                     check5amt, check5comment, check5date,
@@ -208,7 +213,7 @@ def id_edit(id_number):
                     [ids])
     phonecalls = query_db("""SELECT expected_calldate,
                     actual_calldate, call_check_no, call_check_amt, email
-                    from calls WHERE allocation = ? AND calltype = "monthly" 
+                    from calls WHERE allocation = ? AND calltype = "monthly"
                     AND expected_calldate_sql < "2014-06-01" """,
                     [ids])
     email = query_db("""SELECT DISTINCT email from calls WHERE allocation = ?""", [ids])
@@ -236,8 +241,8 @@ def add_patient():
 def update_form():
     allocation = request.form['allocation']
     g.db.execute("""DELETE FROM demo WHERE allocation = ?""", [allocation])
-    g.db.execute("""INSERT INTO demo (allocation, uw_id, initials, dob, hispanic, 
-                    gender, ethnicity, pt_userid, txtype,
+    g.db.execute("""INSERT INTO demo (allocation, uw_id, initials, dob,
+                    hispanic, gender, ethnicity, pt_userid, txtype,
                     consent, consent_reason,
                     randomize, baseline, upn, txdate,
                     injection1, injection2p, injection2a,
@@ -247,22 +252,25 @@ def update_form():
                     check1no, check1amt, check1date,
                     check1comment, check2no, check2amt, check2date,
                     check2comment, check3no, check3amt,
-                    check3date, check3comment, check4no, check4amt, check4date,
-                    check4comment, offstudy,
+                    check3date, check3comment, check4no, check4amt,
+                    check4date, check4comment, offstudy,
                     check5no, check5amt, check5date, check5comment,
                     check6no, check6amt, check6date, check6comment,
                     check7no, check7amt, check7date, check7comment,
                     hzdate) values
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
+                    ?,?)""",
                     [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
                     request.form['ethnicity'],
                     request.form['pt_userid'],
                     request.form['txtype'], request.form['consent'],
-                    request.form['consent_reason'], request.form['randomize'],
-                    request.form['baseline'], request.form['allocation'],
+                    request.form['consent_reason'],
+                    request.form['randomize'],
+                    request.form['baseline'],
+                    request.form['allocation'],
                     request.form['txdate'], request.form['injection1'],
                     request.form['injection2p'], request.form['injection2a'],
                     request.form['injection3p'], request.form['injection3a'],
@@ -314,7 +322,7 @@ def update_form():
         g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
     entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql),
-            calltype, expected_calldate, calls.initials FROM calls, demo 
+            calltype, expected_calldate, calls.initials FROM calls, demo
             WHERE calls.allocation = demo.allocation and
             expected_calldate_sql > date('NOW') GROUP BY
             calls.allocation""")
@@ -342,7 +350,7 @@ def submit_removal():
 
 @app.route('/all_patients')
 def all_patients():
-    entries = query_db("""SELECT allocation, dob, pt_userid, uw_id, 
+    entries = query_db("""SELECT allocation, dob, pt_userid, uw_id,
     initials, txdate, injection1, status FROM demo""")
     return render_template('all_patients.html', entries = entries)
 
@@ -363,8 +371,8 @@ def summary_stats():
     visit7 = query_db("""SELECT COUNT(check7no) FROM demo WHERE check7no !=
                 'None'""")
     return render_template('summary_statistics.html', visit1=visit1,
-            visit2=visit2, visit3=visit3, visit4=visit4, visit5=visit5, visit6=visit6,
-            visit7=visit7)
+            visit2=visit2, visit3=visit3, visit4=visit4, visit5=visit5,
+            visit6=visit6, visit7=visit7)
 
 @app.before_request
 def before_request():
@@ -373,7 +381,6 @@ def before_request():
 @app.teardown_request
 def teardown_request(exception):
     g.db.close()
-
 
 @app.errorhandler(404)
 def page_not_found(e):
