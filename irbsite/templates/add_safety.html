@@ -18,7 +18,7 @@
         <td>Study PI:</td>
         <td><input type=text size=20 name=PI></td></tr>
 	    <td>Date of Submission:
-	    <td><input type=text size=20 name=submit_date></td></tr>
+	    <td><input type=text id="datepicker" name=submit_date></td></tr>
       <tr><td>Submission Type</td>
       <td><select name=Primary_IRB>
             <option value="Third_party_safety-notmeeting">Third Party Safety Report - Not Meeting</option>
@@ -35,9 +35,41 @@
           <option value="Follow-up">Follow-up</option>
           </select>
           <tr><td>Followup Report Number:</td>
-	    <td><input type=text size=20 name=FU_report_no></td></tr>
+            <td><input type=text size=20 name=FU_report_no></td></tr>
+          <tr><td>Report Date</td>
+            <td><input type="text" size=20 name=reportdate></tr>
+            <tr><td>Investigator of Review</td>
+              <td><select name="Investigator">
+                  <option value="Boeckh">Boeckh</option>
+                  <option value="Casper">Casper</option>
+                  <option value="Corey">Corey</option>
+                  <option value="Fisher">Fisher</option>
+                  <option value="Fredricks">Fredricks</option>
+                  <option value="Green">Green</option>
+                  <option value="Hill">Hill</option>
+                  <option value="Jerome">Jerome</option>
+                  <option value="Koelle">Koelle</option>
+                  <option value="Morrow">Morrow</option>
+                  <option value="Pergam">Pergam</option>
+                  <option value="Posavad">Posavad</option>
+                  <option value="Sahoo">Sahoo</option>
+                  <option value="Schiffer">Schiffer</option>
+                  <option value="Sedlak">Sedlak</option>
+                  <option value="Seo">Seo</option>
+                  <option value="Waghmare">Waghmare</option>
+                  <option value="Wald">Wald</option>
+                </select>
+        <tr><td>Investigator Determination Date</td>
+          <td><input type="text" size="20" name=investigator_det_date></td></tr>
+        <tr><td>Date of IRB Review</td>
+          <td><input type="text" size="20" name=date_IRB_review></td></tr>
+        <tr><td>Date back from IRB</td>
+          <td><input type="text" size="20" name=date_back_IRB></td></tr>
+        <td> Comments:</td>
+        <td><textarea rows="2" cols="40" name=comments></textarea></td></tr>
+    </table>
 	    <br></br>
-	    <td><input type=submit value=Submit>
+      <td><input type=submit value=Submit>
     </form>
     {% endif %}   
     <ul class=entries>
