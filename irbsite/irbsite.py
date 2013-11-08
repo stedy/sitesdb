@@ -548,7 +548,9 @@ def register():
 def page_not_found(e):
     return render_template('404.html'), 404
 
+@app.route('/logout')
 def logout():
+    """Logs the user out"""
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('login'))
