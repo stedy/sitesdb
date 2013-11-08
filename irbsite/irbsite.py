@@ -6,7 +6,6 @@ from flask import Flask, request, session, g, redirect, url_for \
 from werkzeug import check_password_hash, generate_password_hash
 from contextlib import closing
 
-
 DATABASE = 'irb_db.db'
 DEBUG = True
 SECRET_KEY = 'development key'
@@ -184,8 +183,8 @@ def add_safety():
 @app.route('/<id_number>')
 def id_results(id_number):
     """Display all results and info for a given IR number """
-    idnum = query_db('SELECT Protocol FROM docs WHERE Protocol = ?', [id_number],
-            one = True)
+    idnum = query_db('SELECT Protocol FROM docs WHERE Protocol = ?',
+                    [id_number],one = True)
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
                         docs.aprvd_date, docs.doc_name, docs.Version,
                         docs.Type, base.PI,
@@ -258,7 +257,7 @@ def submit_ae_edits(ae_id):
 def funding_edit(funding_id):
     """Line item editing functionality for funding"""
     entries = query_db("""SELECT Protocol, PI, id, Source, Source_ID, start,
-                            end, notes FROM funding WHERE id = ?""", 
+                            end, notes FROM funding WHERE id = ?""",
                             [funding_id])
     return render_template('funding_edit.html', entries = entries)
 
@@ -320,17 +319,18 @@ def mods_edit(mods_id):
 @app.route('/<mods_id>/submit_mods_edits', methods = ['GET', 'POST'])
 def submit_mods_edits(mods_id):
     g.db.execute("""DELETE FROM mods WHERE id = ?""", [mods_id])
-    g.db.execute("""INSERT INTO mods (Protocol, date_received, 
+    g.db.execute("""INSERT INTO mods (Protocol, date_received,
                                       date_due, Date_to_IRB, exp_review_date,
                                       date_back, aprvd_date, Description,
-                                      submitted, Comments) values 
+                                      submitted, Comments) values
                                       (?,?,?,?,?,?,?,?,?,?)""",
                             [request.form['Protocol'],
                             request.form['date_received'],
                             request.form['date_due'],
                             request.form['Date_to_IRB'],
                             request.form['exp_review_date'],
-                            request.form['date_back'], request.form['aprvd_date'],
+                            request.form['date_back'],
+                            request.form['aprvd_date'],
                             request.form['Description'],
                             request.form['submitted'],
                             request.form['Comments']])
@@ -414,23 +414,23 @@ def binder_template(id_number):
                         WHERE base.Protocol = ?""", [ids])
     return render_template('binder_template.html', entries=entries)
 
-#Search queries and results
 
 @app.route('/query')
 def query():
-            return render_template('subj_query.html')
+    """Main search query based on ID numbers """
+    return render_template('subj_query.html')
 
 @app.route('/title_query')
 def title_query():
-            return render_template('title_query.html')
+    return render_template('title_query.html')
 
 @app.route('/pi_query')
 def pi_query():
-            return render_template('pi_query.html')
+    return render_template('pi_query.html')
 
 @app.route('/funding_query')
 def funding_query():
-            return render_template('funding_query.html')
+    return render_template('funding_query.html')
 
 @app.route('/results', methods = ['GET', 'POST'])
 def results():
@@ -442,7 +442,7 @@ def results():
                         base.CTE, base.Accrual_status, createdby.user_id
                         FROM base, createdby WHERE base.Protocol =
                         createdby.Protocol and base.Protocol = ?""",
-                        [request.form['id']], one = False ) 
+                        [request.form['id']], one = False )
         return render_template('get_results.html', id = request.form['id'],
                 entries = entries)
     if request.form['ir']:
@@ -464,7 +464,7 @@ def pi_results():
                         rn_coord, IRB_expires,
                         IRB_approved, Funding_source, Type, CTE, Accrual_status
                          FROM base WHERE PI = ?""",
-                        [request.form['PI']], one = False ) 
+                        [request.form['PI']], one = False )
         return render_template('pi_results.html', PI = request.form['PI'],
                 entries = entries)
     else:
@@ -548,13 +548,10 @@ def register():
 def page_not_found(e):
     return render_template('404.html'), 404
 
-
-@app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('login'))
-
 
 if __name__ == '__main__':
     app.run()
