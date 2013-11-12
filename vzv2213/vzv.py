@@ -1,7 +1,6 @@
 import sqlite3
 import subprocess as sp
-from flask import Flask, request, session, g, redirect, url_for \
-        , abort, render_template, flash, send_from_directory
+from flask import Flask, request, session, g, redirect, url_for, render_template, flash
 
 from contextlib import closing
 from werkzeug import check_password_hash, generate_password_hash
@@ -213,8 +212,7 @@ def id_edit(id_number):
                     [ids])
     phonecalls = query_db("""SELECT expected_calldate,
                     actual_calldate, call_check_no, call_check_amt, email
-                    from calls WHERE allocation = ? AND calltype = "monthly"
-                    AND expected_calldate_sql < "2014-06-01" """,
+                    from calls WHERE allocation = ? AND calltype = "monthly" """,
                     [ids])
     email = query_db("""SELECT DISTINCT email from calls WHERE allocation = ?""", [ids])
     phonecalls3 = query_db("""SELECT expected_calldate AS ec3,
@@ -299,11 +297,11 @@ def update_form():
     cd, exp, chkno, chkdt = [], [], [], []
     for x in range(1, 19):
         val = 'calldate%s' % x
-        expval= 'expcall%s' % x
+        expval = 'expcall%s' % x
         checknoval = 'call_check_no%s' % x
         chkdtval = 'call_check_amt%s' % x
         val3 = 'call3date%s' % x
-        expval3= 'exp3call%s' % x
+        expval3 = 'exp3call%s' % x
         checknoval3 = 'call3_check_no%s' % x
         chkdtval3 = 'call3_check_amt%s' % x
         cd.append(request.form[val])
@@ -315,7 +313,8 @@ def update_form():
         chkno.append(request.form[checknoval3])
         chkdt.append(request.form[chkdtval3])
     for a, b, c, d in zip(cd, exp, chkno, chkdt):
-        g.db.execute("""UPDATE calls SET actual_calldate = ?, 
+        print a
+        g.db.execute("""UPDATE calls SET actual_calldate = ?,
             call_check_no = ?,
             call_check_amt = ? WHERE expected_calldate = ? AND
             allocation = ?""", [a, c, d, b, request.form['allocation']])
