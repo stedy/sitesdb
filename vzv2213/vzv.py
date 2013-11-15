@@ -1,6 +1,7 @@
 import sqlite3
 import subprocess as sp
-from flask import Flask, request, session, g, redirect, url_for, render_template, flash
+from flask import Flask, request, session, g, \
+        redirect, url_for, render_template, flash
 
 from contextlib import closing
 from werkzeug import check_password_hash, generate_password_hash
@@ -27,11 +28,11 @@ def init_db():
         db.commit()
 
 def query_db(query, args=(), one = False):
-	"""Queries the database and returns a list of dictionaries"""
-	cur = g.db.execute(query, args)
-	rv = [dict((cur.description[idx][0], value)
-		for idx, value in enumerate(row)) for row in cur.fetchall()]
-	return (rv[0] if rv else None) if one else rv
+    """Queries the database and returns a list of dictionaries"""
+    cur = g.db.execute(query, args)
+    rv = [dict((cur.description[idx][0], value)
+        for idx, value in enumerate(row)) for row in cur.fetchall()]
+    return (rv[0] if rv else None) if one else rv
 
 @app.before_request
 def before_request():
@@ -212,14 +213,15 @@ def id_edit(id_number):
                     [ids])
     phonecalls = query_db("""SELECT expected_calldate,
                     actual_calldate, call_check_no, call_check_amt, email
-                    from calls WHERE allocation = ? AND calltype = "monthly" """,
-                    [ids])
-    email = query_db("""SELECT DISTINCT email from calls WHERE allocation = ?""", [ids])
+                    from calls WHERE allocation = ? AND
+                    calltype = 'monthly'""", [ids])
+    email = query_db("""SELECT DISTINCT email from calls WHERE allocation =
+                    ?""", [ids])
     phonecalls3 = query_db("""SELECT expected_calldate AS ec3,
                     actual_calldate AS ac3, call_check_no AS ccn3,
                     call_check_amt AS cca3
-                    from calls WHERE allocation = ? AND calltype = "3 month" """,
-                    [ids])
+                    from calls WHERE allocation = ? AND calltype =
+                    "3 month" """, [ids])
     return render_template('edit_patient.html', entries=entries,
             phonecalls=phonecalls, phonecalls3=phonecalls3, email=email)
 
@@ -335,8 +337,9 @@ def remove_patient():
 def submit_removal():
     error = None
     if request.form['allocation']:
-        g.db.execute("""INSERT INTO dropped_from_study (allocation, pt_offstudy,
-            offstudyreason) values (?,?,?)""", [request.form['allocation'],
+        g.db.execute("""INSERT INTO dropped_from_study (allocation,
+        pt_offstudy, offstudyreason) values (?,?,?)""",
+            [request.form['allocation'],
             request.form['pt_offstudy'], request.form['offstudyreason']])
         g.db.execute("""UPDATE demo SET status = "off" WHERE allocation = ?""",
             [request.form['allocation']])
@@ -383,7 +386,7 @@ def teardown_request(exception):
 
 @app.errorhandler(404)
 def page_not_found(e):
-	return render_template('404.html'), 404
+    return render_template('404.html'), 404
 
 @app.route('/logout')
 def logout():
