@@ -6,7 +6,6 @@
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
   <form action="{{ url_for('update_form') }}" method=post class=addstudy>
       {% for entry in entries %}
-      <dl>
         <h2>Registration</h2>
         <table>
         <tr><td>Allocation #</td>
@@ -163,7 +162,7 @@
     <td><input type=text size=30 name=check7comment value="{{ entry.check7comment }}"></td></tr>
   {% endfor %}
 </table>
-<br>
+<br></br>
       <h2>Monthly Call Info</h2>
 <table id="call" class="inlineTable">
   <tr><td><h2>Monthly calls</h2></td></tr>
@@ -186,7 +185,6 @@
   {% endfor %}
 </table>
 	    <br></br>
-	</dl>
     </form>
     <em>Email Zach if any questions </em>
     </ul>
