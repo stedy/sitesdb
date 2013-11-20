@@ -1,8 +1,6 @@
 import sqlite3
-import time
-import datetime as dt
-from flask import Flask, request, session, g, redirect, url_for \
-        , abort, render_template, flash, jsonify
+from flask import Flask, request, session, g, redirect, url_for, \
+        abort, render_template, flash
 from werkzeug import check_password_hash, generate_password_hash
 from contextlib import closing
 
@@ -129,7 +127,6 @@ def add_funding():
 
 @app.route('/add_mod', methods=['GET', 'POST'])
 def add_mod():
-    error = None
     g.db.execute("""INSERT into mods (Protocol, exp_review_date, date_back,
                     date_received, date_due, Date_to_IRB, Description, 
                     submitted, aprvd_date, Comments)
@@ -202,8 +199,6 @@ def id_results(id_number):
 @app.route('/add_docs', methods = ['GET', 'POST'])
 def add_docs():
     """Add new documents"""
-    error = None
-    #if request.form['doc_name']:
     g.db.execute("""INSERT INTO docs (Protocol, doc_name, Version, doc_date,
             aprvd_date, Type) values (?,?,?,?,?,?)""",
             [request.form['Protocol'], request.form['doc_name'],
@@ -216,8 +211,6 @@ def add_docs():
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
     ids = str(id_number)
-    idnum = query_db("""SELECT Protocol FROM ae WHERE
-                        Protocol = ?""", [ids], one = True)
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
                         ae.PI, ae.Protocol, ae.id,
                         ae.Report_ID, ae.Reported_RXN,
