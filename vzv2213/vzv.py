@@ -33,6 +33,13 @@ def query_db(query, args=(), one = False):
         for idx, value in enumerate(row)) for row in cur.fetchall()]
     return (rv[0] if rv else None) if one else rv
 
+def convertsql(date):
+    """Checks id date in %m/%d/%Y then converts to SQL for db insert"""
+    try:
+        return dt.datetime.strptime(date, "%m/%d/%Y").strftime("%Y-%m-%d")
+    except ValueError:
+        return None
+
 @app.before_request
 def before_request():
     g.db = connect_db()
@@ -43,6 +50,7 @@ def before_request():
 
 @app.teardown_request
 def teardown_request(exception):
+    """Tears down the database after use"""
     if hasattr(g, 'db'):
         g.db.close()
 
@@ -81,7 +89,7 @@ def main():
             calls.expected_calldate_sql = earliest.expected_calldate_sql) as
             latest
             INNER JOIN
-            (SELECT allocation, max(actual_calldate) as mdate
+            (SELECT allocation, max(actual_calldate_sql) as mdate
             FROM calls WHERE actual_calldate IS NOT 'None'
             GROUP BY allocation) as recent
             ON latest.allocation = recent.allocation;""")
@@ -295,7 +303,8 @@ def update_form():
                     request.form['hzdate']
                     ])
     g.db.commit()
-    cd, exp, chkno, chkdt = [], [], [], []
+    actual_call_date, expected_call_date, chkno, chkdt = [], [], [], []
+    expected_call_date_sql = []
     for x in range(1, 19):
         val = 'calldate%s' % x
         expval = 'expcall%s' % x
@@ -305,20 +314,22 @@ def update_form():
         expval3 = 'exp3call%s' % x
         checknoval3 = 'call3_check_no%s' % x
         chkdtval3 = 'call3_check_amt%s' % x
-        cd.append(request.form[val])
-        exp.append(request.form[expval])
+        actual_call_date.append(request.form[val])
+        expected_call_date.append(request.form[expval])
+        expected_call_date_sql.append(convertsql(request.form[expval]))
         chkno.append(request.form[checknoval])
         chkdt.append(request.form[chkdtval])
-        cd.append(request.form[val3])
-        exp.append(request.form[expval3])
+        actual_call_date.append(request.form[val3])
+        expected_call_date.append(request.form[expval3])
         chkno.append(request.form[checknoval3])
         chkdt.append(request.form[chkdtval3])
-    for a, b, c, d in zip(cd, exp, chkno, chkdt):
-        print a
+    for a, b, c, d, e in zip(actual_call_date, expected_call_date,
+            chkno, chkdt, expected_call_date_sql):
         g.db.execute("""UPDATE calls SET actual_calldate = ?,
             call_check_no = ?,
-            call_check_amt = ? WHERE expected_calldate = ? AND
-            allocation = ?""", [a, c, d, b, request.form['allocation']])
+            call_check_amt = ?, expected_calldate_sql = ?
+            WHERE expected_calldate = ? AND
+            allocation = ?""", [a, c, d, e, b, request.form['allocation']])
         g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
     entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql),
