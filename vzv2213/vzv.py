@@ -1,10 +1,9 @@
 import sqlite3
-import subprocess as sp
 from flask import Flask, request, session, g, \
         redirect, url_for, render_template, flash
 
 from contextlib import closing
-from werkzeug import check_password_hash, generate_password_hash
+from werkzeug import check_password_hash
 import datetime as dt
 
 DATABASE = 'vzv.db'
@@ -58,7 +57,7 @@ def login():
             error = "Invalid Username"
         elif not check_password_hash(user['password'],
                 request.form['password']):
-                    error = "Invalid Password"
+            error = "Invalid Password"
         else:
             flash('You were logged in')
             session['username'] = user['username']
