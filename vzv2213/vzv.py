@@ -332,8 +332,9 @@ def update_form():
             allocation = ?""", [a, c, d, e, b, request.form['allocation']])
         g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
-    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql),
-            calltype, expected_calldate, calls.initials FROM calls, demo
+    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql)
+            as mdate, calls.calltype, calls.expected_calldate as expdate,
+            demo.initials, demo.phonenumber, demo.email FROM calls, demo
             WHERE calls.allocation = demo.allocation and
             expected_calldate_sql > date('NOW') GROUP BY
             calls.allocation""")
