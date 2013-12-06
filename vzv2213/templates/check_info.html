@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+<ul class=metanav>
+</ul>
+  {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+  <form action={{ url_for('update_form') }} method=post class=addstudy>
+      {% for entry in entries %}
+        <h2>Registration</h2>
+        <table>
+        <tr><td>Allocation #</td>
+          <td>{{ entry.allocation }}</td>
+            </table>
+        <br>
+<h2>Check Info</h2>
+  <table>
+  <tr><td>Visit 1 Check #</td>
+    <td>{{ entry.check1no }}</td>
+    <td>Amount</td>
+    <td>{{ entry.check1amt }}</td>
+    <td>Date</td>
+    <td>{{ entry.check1date }}</td>
+    <td>Comments</td>
+    <td>{{ entry.check1comment }}</td></tr>
+  <tr><td>Visit 2 Check #</td>
+    <td>{{ entry.check2no }}</td>
+    <td>Amount</td>
+    <td>{{ entry.check2amt }}</td>
+    <td>Date</td>
+    <td>{{ entry.check2date }}</td>
+    <td>Comments</td>
+    <td>{{ entry.check2comment }}</td></tr>
+  <tr><td>Visit 3 Check #</td>
+    <td>{{ entry.check3no }}</td>
+    <td>Amount</td>
+    <td>{{ entry.check3amt }}</td>
+    <td>Date</td>
+    <td>{{ entry.check3date }}</td>
+    <td>Comments</td>
+    <td>{{ entry.check3comment }}</td></tr>
+  <tr><td>Visit 4 Check #</td>
+    <td>{{ entry.check4no }}</td>
+    <td>Amount</td>
+    <td>{{ entry.check4amt }}</td>
+    <td>Date</td>
+    <td>{{ entry.check4date }}</td>
+    <td>Comments</td>
+    <td>{{ entry.check4comment }}</td></tr>
+  <tr><td>Visit 5 Check #</td>
+    <td>{{ entry.check5no }}</td>
+    <td>Amount</td>
+    <td>{{ entry.check5amt }}</td>
+    <td>Date</td>
+    <td>{{ entry.check5date }}</td>
+    <td>Comments</td>
+    <td>{{ entry.check5comment }}</td></tr>
+  <tr><td>Visit 6 Check #</td>
+    <td>{{ entry.check6no }}</td>
+    <td>Amount</td>
+    <td>{{ entry.check6amt }}</td>
+    <td>Date</td>
+    <td>{{ entry.check6date }}</td>
+    <td>Comments</td>
+    <td>{{ entry.check6comment }}</td></tr>
+  <tr><td>Visit 7 Check #</td>
+    <td>{{ entry.check7no }}</td>
+    <td>Amount</td>
+    <td>{{ entry.check7amt }}</td>
+    <td>Date</td>
+    <td>{{ entry.check7date }}</td>
+    <td>Comments</td>
+    <td>{{ entry.check7comment }}</td></tr>
+  {% endfor %}
+    </form>
+    <em>Email Zach if any questions </em>
+    </ul>
+{% endif %}
+    {% endblock %}

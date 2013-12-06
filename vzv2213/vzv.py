@@ -202,7 +202,7 @@ def check_results():
                     check2no = ? OR check3no = ? OR check4no= ? OR
                     check5no = ?""",
                     [checknum, checknum, checknum, checknum, checknum])
-    return render_template('edit_patient.html', entries=entries)
+    return render_template('check_info.html', entries=entries)
 
 @app.route('/<id_number>')
 def id_edit(id_number):
