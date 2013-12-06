@@ -4,13 +4,8 @@
 <ul class=metanav>
 </ul>
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
-  <form action={{ url_for('update_form') }} method=post class=addstudy>
       {% for entry in entries %}
-        <h2>Registration</h2>
-        <table>
-        <tr><td>Allocation #</td>
-          <td>{{ entry.allocation }}</td>
-            </table>
+        <h2>Allocation # {{ entry.allocation }}</h2>
         <br>
 <h2>Check Info</h2>
   <table>
@@ -70,9 +65,8 @@
     <td>{{ entry.check7date }}</td>
     <td>Comments</td>
     <td>{{ entry.check7comment }}</td></tr>
+</table>
   {% endfor %}
-    </form>
-    <em>Email Zach if any questions </em>
     </ul>
 {% endif %}
     {% endblock %}
