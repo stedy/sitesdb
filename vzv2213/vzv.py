@@ -145,10 +145,17 @@ def add_form():
                     request.form['initials'], cp, cps, ct,
                     request.form['phonenumber']])
         g.db.commit()
+        entries = query_db("""SELECT calls.allocation,
+            MIN(expected_calldate_sql) as mdate, calls.calltype,
+            calls.expected_calldate as expdate,
+            demo.initials, demo.phonenumber, demo.email FROM calls, demo
+            WHERE calls.allocation = demo.allocation and
+            expected_calldate_sql > date('NOW') GROUP BY
+            calls.allocation""")
         flash('New patient successfully added')
     else:
         error = "Must have txdate and allocation to enter new patient"
-    return render_template('main.html', error = error)
+    return render_template('main.html', error = error, entries = entries)
 
 @app.route('/edit', methods = ['GET', 'POST'])
 def results():
@@ -357,9 +364,16 @@ def submit_removal():
         g.db.execute("""DELETE FROM calls where allocation = ?""",
             [request.form['allocation']])
         g.db.commit()
+        entries = query_db("""SELECT calls.allocation,
+            MIN(expected_calldate_sql) as mdate, calls.calltype,
+            calls.expected_calldate as expdate,
+            demo.initials, demo.phonenumber, demo.email FROM calls, demo
+            WHERE calls.allocation = demo.allocation and
+            expected_calldate_sql > date('NOW') GROUP BY
+            calls.allocation""")
     else:
         error = "Must have allocation to remove patient"
-    return render_template('main.html', error = error)
+    return render_template('main.html', error = error, entries = entries)
 
 @app.route('/all_patients')
 def all_patients():
