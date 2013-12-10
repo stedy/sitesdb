@@ -187,6 +187,7 @@ def results():
 
 @app.route('/checkedit', methods = ['GET', 'POST'])
 def check_results():
+    error = None
     checknum = str(request.form['check_no'])
     entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
@@ -202,7 +203,18 @@ def check_results():
                     check2no = ? OR check3no = ? OR check4no= ? OR
                     check5no = ?""",
                     [checknum, checknum, checknum, checknum, checknum])
-    return render_template('check_info.html', entries=entries)
+    if entries:
+        return render_template('check_info.html', entries=entries)
+    else:
+        entries = query_db("""SELECT calls.allocation,
+            MIN(expected_calldate_sql) as mdate, calls.calltype,
+            calls.expected_calldate as expdate,
+            demo.initials, demo.phonenumber, demo.email FROM calls, demo
+            WHERE calls.allocation = demo.allocation and
+            expected_calldate_sql > date('NOW') GROUP BY
+            calls.allocation""")
+        error = 'Check %s was not found' % checknum
+        return render_template('main.html', entries=entries, error = error)
 
 @app.route('/<id_number>')
 def id_edit(id_number):
