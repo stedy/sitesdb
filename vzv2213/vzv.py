@@ -75,24 +75,10 @@ def login():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT * FROM
-            (SELECT calls.allocation, calls.expected_calldate_sql,
-            expected_calldate as expdate,
-            initials, calltype, phonenumber, email
-            FROM calls
-            JOIN(SELECT allocation,
-                MIN(expected_calldate_sql) as expected_calldate_sql
-            FROM calls WHERE expected_calldate_sql > date('NOW')
-            GROUP BY allocation
-            ) as earliest
-            ON calls.allocation = earliest.allocation AND
-            calls.expected_calldate_sql = earliest.expected_calldate_sql) as
-            latest
-            INNER JOIN
-            (SELECT allocation, max(actual_calldate_sql) as mdate
-            FROM calls WHERE actual_calldate IS NOT 'None'
-            GROUP BY allocation) as recent
-            ON latest.allocation = recent.allocation;""")
+    entries = query_db("""SELECT calls.allocation, initials, phonenumber, email,
+    nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+    nextcall.allocation = lastcall.allocation AND lastcall.allocation =
+    calls.allocation GROUP BY calls.allocation;""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
