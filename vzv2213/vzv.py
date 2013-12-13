@@ -75,10 +75,12 @@ def login():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT calls.allocation, initials, phonenumber, email,
+    entries = query_db("""SELECT calls.allocation, initials, calltype,
+    phonenumber, email,
     nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
     nextcall.allocation = lastcall.allocation AND lastcall.allocation =
-    calls.allocation GROUP BY calls.allocation;""")
+    calls.allocation AND calls.expected_calldate = nextcalldate_text
+    GROUP BY calls.allocation;""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods = ['GET', 'POST'])
@@ -131,13 +133,11 @@ def add_form():
                     request.form['initials'], cp, cps, ct,
                     request.form['phonenumber']])
         g.db.commit()
-        entries = query_db("""SELECT calls.allocation,
-            MIN(expected_calldate_sql) as mdate, calls.calltype,
-            calls.expected_calldate as expdate,
-            demo.initials, demo.phonenumber, demo.email FROM calls, demo
-            WHERE calls.allocation = demo.allocation and
-            expected_calldate_sql > date('NOW') GROUP BY
-            calls.allocation""")
+        entries = query_db("""SELECT calls.allocation, initials, phonenumber, email,
+            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+            nextcall.allocation = lastcall.allocation AND lastcall.allocation =
+            calls.allocation GROUP BY calls.allocation;""")
+        return render_template('main.html', entries=entries)
         flash('New patient successfully added')
     else:
         error = "Must have txdate and allocation to enter new patient"
