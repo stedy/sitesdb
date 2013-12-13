@@ -290,13 +290,10 @@ def update_form():
                     [request.form['allocation'], request.form['uw_id'],
                     request.form['initials'], request.form['dob'],
                     request.form['hispanic'], request.form['gender'],
-                    request.form['ethnicity'],
-                    request.form['pt_userid'],
+                    request.form['ethnicity'], request.form['pt_userid'],
                     request.form['txtype'], request.form['consent'],
-                    request.form['consent_reason'],
-                    request.form['randomize'],
-                    request.form['baseline'],
-                    request.form['allocation'],
+                    request.form['consent_reason'], request.form['randomize'],
+                    request.form['baseline'], request.form['allocation'],
                     request.form['txdate'], request.form['injection1'],
                     request.form['injection2p'], request.form['injection2a'],
                     request.form['injection3p'], request.form['injection3a'],
@@ -342,8 +339,24 @@ def update_form():
         expected_call_date.append(request.form[expval3])
         chkno.append(request.form[checknoval3])
         chkdt.append(request.form[chkdtval3])
+    calldate_raw = query_db("""SELECT calldate from lastcall where allocation =
+        ?""", [request.form['allocation']])
+    calldate = calldate_raw[0]['calldate']
+    calldate = dt.datetime.strptime(calldate, "%Y-%m-%d")
     for a, b, c, d, e in zip(actual_call_date, expected_call_date,
             chkno, chkdt, expected_call_date_sql):
+        try:
+            calldate_a = dt.datetime.strptime(str(a), "%m/%d/%Y")
+            if calldate_a > calldate:
+                g.db.execute("""DELETE FROM lastcall WHERE allocation = ?""",
+                        [allocation])
+                g.db.execute("""INSERT INTO lastcall (calldate, calldate_text,
+                allocation) VALUES (?,?,?)""",
+                [str(calldate_a.strftime("%Y-%m-%d")), a,
+                    allocation])
+                g.db.commit()
+        except ValueError:
+            pass
         g.db.execute("""UPDATE calls SET actual_calldate = ?,
             call_check_no = ?,
             call_check_amt = ?, expected_calldate_sql = ?
