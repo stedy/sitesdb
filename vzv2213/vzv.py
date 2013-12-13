@@ -339,12 +339,13 @@ def update_form():
         expected_call_date.append(request.form[expval3])
         chkno.append(request.form[checknoval3])
         chkdt.append(request.form[chkdtval3])
+
     calldate_raw = query_db("""SELECT calldate from lastcall where allocation =
         ?""", [request.form['allocation']])
     calldate = calldate_raw[0]['calldate']
     calldate = dt.datetime.strptime(calldate, "%Y-%m-%d")
-    for a, b, c, d, e in zip(actual_call_date, expected_call_date,
-            chkno, chkdt, expected_call_date_sql):
+    for a, b, c, d in zip(actual_call_date, expected_call_date,
+            chkno, chkdt):
         try:
             calldate_a = dt.datetime.strptime(str(a), "%m/%d/%Y")
             if calldate_a > calldate:
@@ -359,9 +360,9 @@ def update_form():
             pass
         g.db.execute("""UPDATE calls SET actual_calldate = ?,
             call_check_no = ?,
-            call_check_amt = ?, expected_calldate_sql = ?
+            call_check_amt = ?
             WHERE expected_calldate = ? AND
-            allocation = ?""", [a, c, d, e, b, request.form['allocation']])
+            allocation = ?""", [a, c, d, b, request.form['allocation']])
         g.db.commit()
     flash('Entry for allocation %s edited' % allocation)
     entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql)
