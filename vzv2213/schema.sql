@@ -36,3 +36,6 @@ CREATE TABLE dropped_from_study (allocation text, pt_offstudy date, offstudyreas
 
 DROP TABLE IF EXISTS lastcall;
 CREATE TABLE lastcall (allocation text, calldate date, calldate_text text);
+
+DROP TABLE IF EXISTS nextcall;
+CREATE TABLE nextcall (allocation text, nextcalldate date, nextcalldate_text text);

@@ -344,6 +344,11 @@ def update_form():
         ?""", [request.form['allocation']])
     calldate = calldate_raw[0]['calldate']
     calldate = dt.datetime.strptime(calldate, "%Y-%m-%d")
+    nextcall_raw = query_db("""SELECT nextcalldate from nextcall where
+    allocation = ?""", [request.form['allocation']])
+    nextcall = nextcall_raw[0]['nextcalldate']
+    nextcall = dt.datetime.strptime(nextcall, "%Y-%m-%d")
+    nextcall_list = []
     for a, b, c, d in zip(actual_call_date, expected_call_date,
             chkno, chkdt):
         try:
@@ -358,12 +363,22 @@ def update_form():
                 g.db.commit()
         except ValueError:
             pass
+        nextcall_b = dt.datetime.strptime(str(b), "%m/%d/%Y")
+        
+        if nextcall_b > dt.datetime.now():
+            nextcall_list.append(nextcall_b)
         g.db.execute("""UPDATE calls SET actual_calldate = ?,
             call_check_no = ?,
             call_check_amt = ?
             WHERE expected_calldate = ? AND
             allocation = ?""", [a, c, d, b, request.form['allocation']])
         g.db.commit()
+    g.db.execute("""DELETE FROM nextcall WHERE allocation = ?""", [allocation])
+    g.db.execute("""INSERT INTO nextcall (nextcalldate, nextcalldate_text,
+    allocation) VALUES (?,?,?)""", [min(nextcall_list).strftime("%Y-%m-%d"),
+        min(nextcall_list).strftime("%m/%d/%Y"), allocation])
+    g.db.commit()
+
     flash('Entry for allocation %s edited' % allocation)
     entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql)
             as mdate, calls.calltype, calls.expected_calldate as expdate,
