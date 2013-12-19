@@ -192,13 +192,12 @@ def check_results():
     if entries:
         return render_template('check_info.html', entries=entries)
     else:
-        entries = query_db("""SELECT calls.allocation,
-            MIN(expected_calldate_sql) as mdate, calls.calltype,
-            calls.expected_calldate as expdate,
-            demo.initials, demo.phonenumber, demo.email FROM calls, demo
-            WHERE calls.allocation = demo.allocation and
-            expected_calldate_sql > date('NOW') GROUP BY
-            calls.allocation""")
+        entries = query_db("""SELECT calls.allocation, initials, calltype,
+            phonenumber, email,
+            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+            nextcall.allocation = lastcall.allocation AND lastcall.allocation =
+            calls.allocation AND calls.expected_calldate = nextcalldate_text
+            GROUP BY calls.allocation;""")
         error = 'Check %s was not found' % checknum
         return render_template('main.html', entries=entries, error = error)
 
@@ -338,7 +337,7 @@ def update_form():
     for a, b, c, d in zip(actual_call_date, expected_call_date,
             chkno, chkdt):
         try:
-            calldate_a = dt.datetime.strptime(str(a), "%m/%d/%Y")
+            calldate_a = dt.datetime.strptime(str(a), "%m/%d/%y")
             if calldate_a > calldate:
                 g.db.execute("""DELETE FROM lastcall WHERE allocation = ?""",
                         [allocation])
@@ -349,7 +348,7 @@ def update_form():
                 g.db.commit()
         except ValueError:
             pass
-        nextcall_b = dt.datetime.strptime(str(b), "%m/%d/%Y")
+        nextcall_b = dt.datetime.strptime(str(b), "%m/%d/%y")
         
         if nextcall_b > dt.datetime.now():
             nextcall_list.append(nextcall_b)
@@ -362,16 +361,16 @@ def update_form():
     g.db.execute("""DELETE FROM nextcall WHERE allocation = ?""", [allocation])
     g.db.execute("""INSERT INTO nextcall (nextcalldate, nextcalldate_text,
     allocation) VALUES (?,?,?)""", [min(nextcall_list).strftime("%Y-%m-%d"),
-        min(nextcall_list).strftime("%m/%d/%Y"), allocation])
+        min(nextcall_list).strftime("%m/%d/%y"), allocation])
     g.db.commit()
 
     flash('Entry for allocation %s edited' % allocation)
-    entries = query_db("""SELECT calls.allocation, MIN(expected_calldate_sql)
-            as mdate, calls.calltype, calls.expected_calldate as expdate,
-            demo.initials, demo.phonenumber, demo.email FROM calls, demo
-            WHERE calls.allocation = demo.allocation and
-            expected_calldate_sql > date('NOW') GROUP BY
-            calls.allocation""")
+    entries = query_db("""SELECT calls.allocation, initials, calltype,
+            phonenumber, email,
+            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+            nextcall.allocation = lastcall.allocation AND lastcall.allocation =
+            calls.allocation AND calls.expected_calldate = nextcalldate_text
+            GROUP BY calls.allocation;""")
     return render_template('main.html', entries=entries)
 
 @app.route('/remove_patient')
@@ -391,13 +390,12 @@ def submit_removal():
         g.db.execute("""DELETE FROM calls where allocation = ?""",
             [request.form['allocation']])
         g.db.commit()
-        entries = query_db("""SELECT calls.allocation,
-            MIN(expected_calldate_sql) as mdate, calls.calltype,
-            calls.expected_calldate as expdate,
-            demo.initials, demo.phonenumber, demo.email FROM calls, demo
-            WHERE calls.allocation = demo.allocation and
-            expected_calldate_sql > date('NOW') GROUP BY
-            calls.allocation""")
+        entries = query_db("""SELECT calls.allocation, initials, calltype,
+            phonenumber, email,
+            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+            nextcall.allocation = lastcall.allocation AND lastcall.allocation =
+            calls.allocation AND calls.expected_calldate = nextcalldate_text
+            GROUP BY calls.allocation;""")
     else:
         error = "Must have allocation to remove patient"
     return render_template('main.html', error = error, entries = entries)
