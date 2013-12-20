@@ -7,17 +7,20 @@
   <h3>Add New Data</h3>
   <a href="{{ url_for('add_ae') }}">Add AE</a>
   <br>
-  <a href="{{ url_for('add_study') }}">Add New Study</a>
-  <br>
   <a href="{{ url_for('add_safety') }}">Add safety</a>
   <br>
+  <a href="{{ url_for('add_study') }}">Add new study</a>
+  <br>
   <h3>Perform a query</h3>
-  <a href="{{ url_for('query') }}">Look Up Specific Study</a>
+  <a href="{{ url_for('query') }}">Query by study ID</a>
   <br>
   <a href="{{ url_for('title_query') }}">Query by title keywords</a>
   <br>
   <a href="{{ url_for('pi_query') }}">Query by PI last name</a>
   <br>
   <a href="{{ url_for('funding_query') }}">Query by funding keywords</a>
+  <br>
+  <h3>View summary tables</h3>
+  <a href="{{ url_for('safety_results') }}">View all safety reports</a>
   {% endif %}
     {% endblock %}

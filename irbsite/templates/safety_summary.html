@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    {% block script %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
+    <script type="text/javascript" src="/static/datefun.js"></script>
+    {% endblock %}
+    <ul class=metanav>
+    </ul>
+    <ul class=funding_entries>
+	<h2>Summary of all safety reports</h2>
+  <br>
+  <table>
+    <tr><td><b>Protocol</td>
+      <td><b>Submit Date</td>
+       <td><b>Submission Type</td>
+        <td><b>Report Type</td>
+        <td><b>Report ID</td>
+          <td><b>FU Report #</td>
+            <td><b>Report Date</td>
+              <td><b>Investigator</td>
+                <td><b>Date IRB Review</td>
+                <td><b>Date back from IRB</td>
+                    <td><b>Comments</b></td></tr>
+	{% for entry in entries %}
+  <tr><td>{{ entry.Protocol }}</td>
+	<td>{{ entry.submit_date }}</td>
+	<td>{{ entry.Submission_type }}</td>
+	<td>{{ entry.Report_ID }}</td>
+	<td>{{ entry.Report_type }}</td>
+	<td>{{ entry.FU_report_no }}</td>
+	<td>{{ entry.reportdate }}</td>
+	<td>{{ entry.investigator }}</td>
+	<td>{{ entry.date_IRB_review }}</td>
+	<td>{{ entry.date_back_IRB }}</td>
+  <td>{{ entry.comments }}"</td></tr>
+  {% endfor %}
+  {% endif %}
+    {% endblock %}

@@ -454,6 +454,14 @@ def results():
         error = "Must have either ID number to search"
         return render_template('subj_query.html', error=error)
 
+@app.route('/safety_results', methods = ['GET', 'POST'])
+def safety_results():
+    entries = query_db("""SELECT Protocol, submit_date, Submission_type,
+    Report_ID, Report_type, FU_report_no, reportdate, investigator,
+    investigator_det_date, date_IRB_review, date_back_IRB, comments FROM
+    safety;""")
+    return render_template('safety_summary.html', entries=entries)
+
 @app.route('/pi_results', methods = ['GET', 'POST'])
 def pi_results():
     error = None
