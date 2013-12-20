@@ -64,7 +64,7 @@ def login():
         else:
             flash('You were logged in')
             session['user_id'] = user['user_id']
-            return redirect(url_for('query'))
+            return redirect(url_for('main'))
     return render_template('login.html', error = error)
 
 
@@ -93,7 +93,7 @@ def add_form():
 #    else:
 #        error = 'Must have Protocol number to add entry'
     print request.form['heme']
-    return render_template('subj_query.html', error = error)
+    return render_template('main.html', error = error)
 
 @app.route('/add_funding', methods=['GET', 'POST'])
 def add_funding():
@@ -206,7 +206,7 @@ def add_docs():
                 request.form['aprvd_date'], request.form['Type']])
     g.db.commit()
     flash('New doc was successfully added')
-    return render_template('subj_query.html')
+    return render_template('main.html')
 
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
@@ -412,6 +412,11 @@ def binder_template(id_number):
 def query():
     """Main search query based on ID numbers """
     return render_template('subj_query.html')
+
+@app.route('/main')
+def main():
+    """Main Landing page"""
+    return render_template('main.html')
 
 @app.route('/title_query')
 def title_query():

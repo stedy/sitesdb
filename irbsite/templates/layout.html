@@ -11,14 +11,9 @@
   });
 </script>
 <div class=page>
-  <a href="{{ url_for('query') }}" style="text-decoration:none"><h1>VIDD IRB DB</h1></a>
+  <a href="{{ url_for('main') }}" style="text-decoration:none"><h1>VIDD IRB DB</h1></a>
     <div class=metanav>
     {% if g.user %}
-	<a href="{{ url_for('add_safety') }}">Add safety</a> |
-	<a href="{{ url_for('title_query') }}">Title query</a> |
-	<a href="{{ url_for('pi_query') }}">PI query</a> |
-	<a href="{{ url_for('funding_query') }}">Funding query</a> |
-	<a href="{{ url_for('query') }}">ID query</a> |
 	<a href="{{ url_for('logout') }}">log out</a>
     {% else %}
 	<a href="{{ url_for('login') }}">log in</a>
