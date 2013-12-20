@@ -97,7 +97,7 @@ def add_form():
         calldays = [x * 30 for x in range(60)]
         calltype = ['monthly', 'monthly', '3 month'] * 20
         calldays_projected = [(calldate_time +
-                    dt.timedelta(days=callday)).strftime("%m/%d/%Y")
+                    dt.timedelta(days=callday)).strftime("%m/%d/%y")
                     for callday in calldays]
         calldays_projected_sql = [(calldate_time +
                     dt.timedelta(days=callday)).strftime("%Y-%m-%d")
@@ -132,6 +132,12 @@ def add_form():
                     (?,?,?,?,?,?)""", [request.form['allocation'],
                     request.form['initials'], cp, cps, ct,
                     request.form['phonenumber']])
+        g.db.execute("""INSERT INTO lastcall (allocation, calldate,
+        calldate_text) values (?,?,?)""", [request.form['allocation'],
+            calldays_projected_sql[0], calldays_projected[0]])
+        g.db.execute("""INSERT INTO nextcall (allocation, nextcalldate,
+        nextcalldate_text) values (?,?,?)""", [request.form['allocation'],
+            calldays_projected_sql[0], calldays_projected[0]])
         g.db.commit()
         entries = query_db("""SELECT calls.allocation, initials, phonenumber, email,
             nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
@@ -396,6 +402,7 @@ def submit_removal():
             nextcall.allocation = lastcall.allocation AND lastcall.allocation =
             calls.allocation AND calls.expected_calldate = nextcalldate_text
             GROUP BY calls.allocation;""")
+        flash('Entry for allocation %s removed' % request.form['allocation'])
     else:
         error = "Must have allocation to remove patient"
     return render_template('main.html', error = error, entries = entries)
