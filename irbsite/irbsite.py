@@ -71,6 +71,7 @@ def login():
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
     error = None
+    radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, None, None
 #    if request.form['Protocol']:
 #        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
 #        CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
@@ -92,7 +93,14 @@ def add_form():
 #        flash('New study was successfully added by %s' % g.user['username'])
 #    else:
 #        error = 'Must have Protocol number to add entry'
-    print request.form['heme']
+    if request.form.getlist('radsafetyreview'):
+        radsafetyreview = "Y"
+    if request.form.getlist('fhibc'):
+        fhibc = "Y"
+    g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview, fhibc,
+        src, uwehs, cim, pim) values (?,?,?,?,?,?,?)""", [request.form['Protocol'],
+        radsafetyreview, fhibc, src, uwehs, cim, pim])
+    g.db.commit()
     return render_template('main.html', error = error)
 
 @app.route('/add_funding', methods=['GET', 'POST'])
@@ -243,7 +251,7 @@ def submit_ae_edits(ae_id):
                             request.form['Date_report']])
     g.db.commit()
     flash('AE for %s successfully edited' % request.form['Protocol'])
-    return render_template('subj_query.html')
+    return render_template('main.html')
 
 
 @app.route('/<funding_id>/funding_edit', methods = ['GET', 'POST'])
@@ -271,7 +279,6 @@ def submit_funding_edits(funding_id):
                             request.form['notes']])
     g.db.commit()
     flash('funding for %s successfully edited' % request.form['Protocol'])
-#    return render_template('subj_query.html')
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
                         funding.PI, funding.Funding_Title, 
                         funding.source, funding.Source_ID, funding.Award_type,
@@ -452,7 +459,7 @@ def results():
                 entries = entries)
     else:
         error = "Must have either ID number to search"
-        return render_template('subj_query.html', error=error)
+        return render_template('main.html', error=error)
 
 @app.route('/safety_results', methods = ['GET', 'POST'])
 def safety_results():
