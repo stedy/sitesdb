@@ -485,8 +485,9 @@ def title_results():
                         IRB_approved, Funding_source, Type, CTE, Accrual_status,
                         Title, IR_file, Comments FROM base WHERE Title
                         LIKE ?""", [titlestr], one = False)
-    return render_template('title_results.html', entries
-                            = entries)
+    return render_template('title_results.html',
+                Title = request.form['title'],
+                entries = entries)
 
 @app.route('/funding_results', methods = ['GET', 'POST'])
 def funding_results():

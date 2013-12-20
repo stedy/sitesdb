@@ -2,10 +2,10 @@
 {% block body %}
   {% if g.user %}
     <ul class=metanav>
-    </ul>    
+    </ul>
     {% endif %}
     <ul class=results>
-	<h3>Studies funded by {{ Funding }} </h3>
+      <h3>Studies matching the keyword <i>{{ Funding }}</i> </h3>
         {% for entry in entries %}
 	<h2>{{ entry.Title }}</h2> 
 	<h2>FHCRC Protocol # <a href="{{ url_for('id_results', id_number= entry.Protocol)}}">{{ entry.Protocol }}</a></h2>

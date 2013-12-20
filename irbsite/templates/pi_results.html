@@ -4,10 +4,10 @@
     <ul class=metanav>
     </ul>
     {% endif %}
-	<h3>Current Studies for {{ PI }} </h3>
+    <h3>Current Studies for <i>{{ PI }}</i> </h3>
     <ul class=results>
         {% for entry in entries %}
-	<h2>{{ entry.Title }}</h2><br> 
+	<h2>{{ entry.Title }}</h2><br>
 	<b>Protocol Number:</b> <a href="{{ url_for('id_results', id_number= entry.Protocol)}}">{{ entry.Protocol }}</a><br>
 	<b>IR Number:</b> {{ entry.IR_file }}<br>
 	<b>UW Number:</b> {{ entry.UW }}<br>
@@ -21,7 +21,7 @@
 	<b>Committee:</b> {{ entry.CTE }}
 	<br></br>
 	<b>Comments:</b> {{entry.COMMENTS }}<br>
-	<br> 
+	<br>
 	{% else %}
 	<h2>This otter is disappointed because {{ PI }} does not have any studies</h2>
 	<br>
