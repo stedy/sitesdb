@@ -72,6 +72,8 @@ def login():
 def add_form():
     error = None
     radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, None, None
+    full, coop, minimal, irbauth, exempt, iacucauth, nothumansujects = None,
+    None, None, None, None, None, None
 #    if request.form['Protocol']:
 #        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
 #        CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
@@ -90,17 +92,28 @@ def add_form():
 #                values (?,?,?)""", [request.form['Protocol'],
 #                    g.user['username'], int(time.time())])
 #        g.db.commit()
-#        flash('New study was successfully added by %s' % g.user['username'])
 #    else:
 #        error = 'Must have Protocol number to add entry'
+    if request.form.getlist('full'):
+        full = 'Y'
+    #TODO start here
     if request.form.getlist('radsafetyreview'):
         radsafetyreview = "Y"
     if request.form.getlist('fhibc'):
         fhibc = "Y"
+    if request.form.getlist('src'):
+        src = "Y"
+    if request.form.getlist('uwehs'):
+        uwehs = "Y"
+    if request.form.getlist('cim'):
+        cim = 'Y'
+    if request.form.getlist('pim'):
+        pim = 'Y'
     g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview, fhibc,
         src, uwehs, cim, pim) values (?,?,?,?,?,?,?)""", [request.form['Protocol'],
         radsafetyreview, fhibc, src, uwehs, cim, pim])
     g.db.commit()
+    flash('New study was successfully added by %s' % g.user['username'])
     return render_template('main.html', error = error)
 
 @app.route('/add_funding', methods=['GET', 'POST'])
