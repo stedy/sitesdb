@@ -1,5 +1,5 @@
 import sqlite3
-import time
+import datetime as dt
 from flask import Flask, request, session, g, redirect, url_for, \
         abort, render_template, flash
 from werkzeug import check_password_hash, generate_password_hash
@@ -68,7 +68,6 @@ def login():
             return redirect(url_for('main'))
     return render_template('login.html', error = error)
 
-
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
     error = None
@@ -132,7 +131,8 @@ def add_form():
     if request.form.getlist('pim'):
         pim = 'Y'
     g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview, fhibc,
-        src, uwehs, cim, pim) values (?,?,?,?,?,?,?)""", [request.form['Protocol'],
+        src, uwehs, cim, pim) values (?,?,?,?,?,?,?)""",
+        [request.form['Protocol'],
         radsafetyreview, fhibc, src, uwehs, cim, pim])
     g.db.commit()
 
@@ -154,12 +154,26 @@ def add_form():
     hipaawaiver, hipaaauth, repository, nihcert, substudies, mta) VALUES
     (?,?,?,?,?,?,?,?)""", [request.form['Protocol'], consentwaiver,
         hipaawaiver, hipaaauth, repository, nihcert, substudies, mta])
+    g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file,
+                CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB,
+            FHCRC_renewal, UW_renewal, IRB_expires, IND,
+    Pt_total, Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                   [request.form['Protocol'], request.form['Title'],
+                   request.form['PI'], request.form['IR_file'],
+                   request.form['CTE'],
+                   request.form['Funding_source'], request.form['RN_coord'],
+                   request.form['IRB_approved'], request.form['Primary_IRB'],
+                   request.form['FHCRC_renewal'],
+                   request.form['UW_renewal'], request.form['IRB_expires'],
+                   request.form['IND'],
+                   request.form['Pt_total'], request.form['Type']])
     g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                 values (?,?,?)""", [request.form['Protocol'],
-                    g.user['username'], int(time.time())])
+                    g.user['username'], dt.datetime.now().strftime("%m/%d/%Y")])
     g.db.commit()
 
-    flash('New study was successfully added by %s' % g.user['username'])
+    flash('Study %s was successfully added by %s' % (request.form['Protocol'],
+        g.user['username']))
     return render_template('main.html', error = error)
 
 @app.route('/add_funding', methods=['GET', 'POST'])
