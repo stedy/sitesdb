@@ -6,12 +6,12 @@
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form action="{{ url_for('new_safety') }}" method=post class=addstudy>
     <h2>VIDD Study Database - Safety Reporting</h2>
-    {{ entries }}
+    {% for entry in  entries %}
       <table width="600">
         <td> Title:</td>
-        <td><textarea rows="4" cols="40" name=Title value="{{ entries[0].Title }}"></textarea></td></tr>
+        <td>{{ entry.Title }}</td></tr>
       <td>Protocol:
-        <td><input type=text size=20 name=Protocol value="{{ entries[0].Protocol }}"></td></tr>
+        <td><input type=text size=20 name=Protocol value="{{ entry.Protocol }}"></td></tr>
 	    <td>IRB Number:
 	    <td><input type=text size=20 name=IR_file></td></tr>
         <td>IACUC Number:</td>
@@ -40,26 +40,7 @@
           <tr><td>Report Date</td>
             <td><input type="text" size=20 name=reportdate></tr>
             <tr><td>Investigator of Review</td>
-              <td><select name="investigator">
-                  <option value="Boeckh">Boeckh</option>
-                  <option value="Casper">Casper</option>
-                  <option value="Corey">Corey</option>
-                  <option value="Fisher">Fisher</option>
-                  <option value="Fredricks">Fredricks</option>
-                  <option value="Green">Green</option>
-                  <option value="Hill">Hill</option>
-                  <option value="Jerome">Jerome</option>
-                  <option value="Koelle">Koelle</option>
-                  <option value="Morrow">Morrow</option>
-                  <option value="Pergam">Pergam</option>
-                  <option value="Posavad">Posavad</option>
-                  <option value="Sahoo">Sahoo</option>
-                  <option value="Schiffer">Schiffer</option>
-                  <option value="Sedlak">Sedlak</option>
-                  <option value="Seo">Seo</option>
-                  <option value="Waghmare">Waghmare</option>
-                  <option value="Wald">Wald</option>
-                </select>
+              <td>{{ entry.investigator }}</td>
         <tr><td>Investigator Determination Date</td>
           <td><input type="text" size="20" name=investigator_det_date></td></tr>
         <tr><td>Date of IRB Review</td>
@@ -69,6 +50,7 @@
         <td> Comments:</td>
         <td><textarea rows="2" cols="40" name=comments></textarea></td></tr>
     </table>
+    {% endfor %}
 	    <br></br>
       <td><input type=submit value=Submit>
     </form>

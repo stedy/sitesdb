@@ -260,7 +260,8 @@ def pre_safety():
 @app.route('/add_safety', methods = ['GET', 'POST'])
 def add_safety():
     error = None
-    entries = query_db("""SELECT Title, safety.Protocol FROM base,
+    entries = query_db("""SELECT Title, safety.Protocol, min(submit_date),
+            investigator FROM base,
             safety WHERE
             base.Protocol = safety.Protocol AND safety.Protocol = ?""",
             [request.form['Protocol']])

@@ -6,10 +6,9 @@
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form action="{{ url_for('new_safety') }}" method=post class=addstudy>
     <h2>VIDD Study Database - Safety Reporting</h2>
-    {{ entries }}
       <table width="600">
         <td> Title:</td>
-        <td><textarea rows="4" cols="40" name=Title value="{{ entries[0].Title }}"></textarea></td></tr>
+        <td><textarea rows="4" cols="40" name=Title value="{{ entries.Title }}"></textarea></td></tr>
       <td>Protocol:
         <td><input type=text size=20 name=Protocol value="{{ entries[0].Protocol }}"></td></tr>
 	    <td>IRB Number:
