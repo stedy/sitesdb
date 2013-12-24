@@ -1,4 +1,5 @@
 import sqlite3
+import time
 from flask import Flask, request, session, g, redirect, url_for, \
         abort, render_template, flash
 from werkzeug import check_password_hash, generate_password_hash
@@ -73,29 +74,11 @@ def add_form():
     error = None
     radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, None, None
     full, coop, minimal, irbauth, exempt, iacucauth, nothumansubjects = None, \
-    None, None, None, None, None, None
+        None, None, None, None, None, None
     hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, None, \
-    None, None, None
-#    if request.form['Protocol']:
-#        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
-#        CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
-#        FHCRC_renewal, UW_renewal, IRB_expires, Accrual_status, IND, Pt_total,
-#        Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-#                [request.form['Protocol'], request.form['Title'],
-#                request.form['PI'], request.form['IR_file'],
-#                request.form['UW'], request.form['CTE'],
-#                request.form['Funding_source'], request.form['RN_coord'],
-#                request.form['IRB_approved'], request.form['Primary_IRB'],
-#                request.form['FHCRC_coop'], request.form['FHCRC_renewal'],
-#                request.form['UW_renewal'], request.form['IRB_expires'],
-#                request.form['Accrual_status'], request.form['IND'],
-#                request.form['Pt_total'], request.form['Type']])
-#        g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
-#                values (?,?,?)""", [request.form['Protocol'],
-#                    g.user['username'], int(time.time())])
-#        g.db.commit()
-#    else:
-#        error = 'Must have Protocol number to add entry'
+        None, None, None
+    consentwaiver, hipaawaiver, hipaaauth, repository, nihcert, substudies, \
+        mta = None, None, None, None, None, None, None
     if request.form.getlist('full'):
         full = 'Y'
     if request.form.getlist('coop'):
@@ -111,8 +94,10 @@ def add_form():
     if request.form.getlist('nothumansubjects'):
         notnumhansubjects = 'Y'
     g.db.execute("""INSERT INTO commreviews (Protocol, full, coop, minimal,
-    irbauth, exempt, iacucauth, nothumansubjects) VALUES (?,?,?,?,?,?,?,?)""",
-    [request.form['Protocol'], full, coop, minimal, irbauth, exempt, iacucauth,
+        irbauth, exempt, iacucauth, nothumansubjects) VALUES
+        (?,?,?,?,?,?,?,?)""",
+        [request.form['Protocol'], full, coop, minimal,
+            irbauth, exempt, iacucauth,
         nothumansubjects])
     g.db.commit()
 
@@ -150,6 +135,30 @@ def add_form():
         src, uwehs, cim, pim) values (?,?,?,?,?,?,?)""", [request.form['Protocol'],
         radsafetyreview, fhibc, src, uwehs, cim, pim])
     g.db.commit()
+
+    if request.form.getlist('consentwaiver'):
+        consentwaiver = 'Y'
+    if request.form.getlist('hipaawaiver'):
+        hipaawaiver = 'Y'
+    if request.form.getlist('hipaaauth'):
+        hipaaauth = 'Y'
+    if request.form.getlist('repository'):
+        repository = 'Y'
+    if request.form.getlist('nihcert'):
+        nihcert = 'Y'
+    if request.form.getlist('substudies'):
+        substudies = 'Y'
+    if request.form.getlist('mta'):
+        mta = 'Y'
+    g.db.execute("""INSERT INTO supplemental (Protocol, consentwaiver,
+    hipaawaiver, hipaaauth, repository, nihcert, substudies, mta) VALUES
+    (?,?,?,?,?,?,?,?)""", [request.form['Protocol'], consentwaiver,
+        hipaawaiver, hipaaauth, repository, nihcert, substudies, mta])
+    g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
+                values (?,?,?)""", [request.form['Protocol'],
+                    g.user['username'], int(time.time())])
+    g.db.commit()
+
     flash('New study was successfully added by %s' % g.user['username'])
     return render_template('main.html', error = error)
 
@@ -174,10 +183,10 @@ def add_funding():
         g.db.commit()
         flash('New funding was successfully added')
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
-                        funding.PI, funding.Funding_Title, 
+                        funding.PI, funding.Funding_Title,
                         funding.source, funding.Source_ID, funding.Award_type,
                         funding.Institution, funding.NCE, funding.FVAF,
-                        funding.start, funding.id, funding.end, funding.notes 
+                        funding.start, funding.id, funding.end, funding.notes
                         FROM base, funding WHERE
                         funding.Protocol = base.Protocol and base.Protocol
                         = ?""", [request.form['Protocol']])
