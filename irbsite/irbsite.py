@@ -72,8 +72,10 @@ def login():
 def add_form():
     error = None
     radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, None, None
-    full, coop, minimal, irbauth, exempt, iacucauth, nothumansujects = None,
+    full, coop, minimal, irbauth, exempt, iacucauth, nothumansubjects = None, \
     None, None, None, None, None, None
+    hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, None, \
+    None, None, None
 #    if request.form['Protocol']:
 #        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file, UW,
 #        CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB, FHCRC_coop,
@@ -96,7 +98,42 @@ def add_form():
 #        error = 'Must have Protocol number to add entry'
     if request.form.getlist('full'):
         full = 'Y'
-    #TODO start here
+    if request.form.getlist('coop'):
+        coop = 'Y'
+    if request.form.getlist('minimal'):
+        minimal = 'Y'
+    if request.form.getlist('irbauth'):
+        irbauth = 'Y'
+    if request.form.getlist('exempt'):
+        exempt = 'Y'
+    if request.form.getlist('iacucauth'):
+        iacucauth = 'Y'
+    if request.form.getlist('nothumansubjects'):
+        notnumhansubjects = 'Y'
+    g.db.execute("""INSERT INTO commreviews (Protocol, full, coop, minimal,
+    irbauth, exempt, iacucauth, nothumansubjects) VALUES (?,?,?,?,?,?,?,?)""",
+    [request.form['Protocol'], full, coop, minimal, irbauth, exempt, iacucauth,
+        nothumansubjects])
+    g.db.commit()
+
+    if request.form.getlist('hctallo'):
+        hctallo = 'Y'
+    if request.form.getlist('hctauto'):
+        hctauto = 'Y'
+    if request.form.getlist('heme'):
+        heme = 'Y'
+    if request.form.getlist('solidorgan'):
+        solidorgan = 'Y'
+    if request.form.getlist('autoimmune'):
+        autoimmune = 'Y'
+    if request.form.getlist('bv'):
+        bv = 'Y'
+    g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
+    solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
+    [request.form['Protocol'], hctallo, hctauto, heme, solidorgan, autoimmune,
+        bv])
+    g.db.commit()
+
     if request.form.getlist('radsafetyreview'):
         radsafetyreview = "Y"
     if request.form.getlist('fhibc'):
