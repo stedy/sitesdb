@@ -252,9 +252,22 @@ def add_ae():
                         [request.form['Protocol']])
     return render_template('ae.html', entries = entries)
 
+
+@app.route('/pre_safety', methods = ['GET', 'POST'])
+def pre_safety():
+    return render_template('pre_safety.html')
+
 @app.route('/add_safety', methods = ['GET', 'POST'])
 def add_safety():
-    return render_template('add_safety.html')
+    entries = query_db("""SELECT Title, safety.Protocol FROM base,
+            safety WHERE
+            base.Protocol = safety.Protocol AND safety.Protocol = ?""",
+            [request.form['Protocol']])
+    if entries:
+        return render_template('add_safety.html', entries=entries)
+    else:
+        #return render_template('new_safety.html', entries = entries)
+        return render_template('main.html')
 
 #search based on ID number
 
@@ -479,7 +492,6 @@ def binder_template(id_number):
     ids = str(id_number)
     bnum = query_db("""SELECT Protocol FROM base WHERE
                         Protocol = ? """, [ids], one = True)
-    print bnum
     if bnum is None:
         abort(404)
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
