@@ -50,7 +50,6 @@ def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
 
-
 @app.route('/', methods = ['GET', 'POST'])
 def login():
     error = None
@@ -71,7 +70,8 @@ def login():
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
     error = None
-    radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, None, None
+    radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, \
+            None, None
     full, coop, minimal, irbauth, exempt, iacucauth, nothumansubjects = None, \
         None, None, None, None, None, None
     hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, None, \
@@ -91,7 +91,7 @@ def add_form():
     if request.form.getlist('iacucauth'):
         iacucauth = 'Y'
     if request.form.getlist('nothumansubjects'):
-        notnumhansubjects = 'Y'
+        nothumansubjects = 'Y'
     g.db.execute("""INSERT INTO commreviews (Protocol, full, coop, minimal,
         irbauth, exempt, iacucauth, nothumansubjects) VALUES
         (?,?,?,?,?,?,?,?)""",
@@ -590,11 +590,13 @@ def funding_results():
 @app.route('/new_safety', methods = ['GET', 'POST'])
 def new_safety():
     """Add new safety report form to db"""
+    submit = str(request.form['submit_date'])
     g.db.execute("""INSERT INTO safety (Protocol, submit_date, Submission_type,
     Report_ID, Report_type, FU_report_no, reportdate, investigator,
     investigator_det_date, date_IRB_review, date_back_IRB, comments) values
     (?,?,?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
-    request.form['submit_date'], request.form['Submission_type'],
+    dt.datetime.strptime(submit, "%m/%d/%Y").strftime("%Y-%m-%d"),
+    request.form['Submission_type'],
     request.form['Report_ID'], request.form['Report_type'],
     request.form['FU_report_no'], request.form['reportdate'],
     request.form['investigator'], request.form['investigator_det_date'],
@@ -603,7 +605,7 @@ def new_safety():
     g.db.commit()
     flash('New safety form for %s successfully entered' % \
     str(request.form['Protocol']))
-    return redirect(url_for('query'))
+    return redirect(url_for('main'))
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
