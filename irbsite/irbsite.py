@@ -259,6 +259,7 @@ def pre_safety():
 
 @app.route('/add_safety', methods = ['GET', 'POST'])
 def add_safety():
+    error = None
     entries = query_db("""SELECT Title, safety.Protocol FROM base,
             safety WHERE
             base.Protocol = safety.Protocol AND safety.Protocol = ?""",
@@ -266,8 +267,14 @@ def add_safety():
     if entries:
         return render_template('add_safety.html', entries=entries)
     else:
-        #return render_template('new_safety.html', entries = entries)
-        return render_template('main.html')
+        entries = query_db("""SELECT Title, Protocol FROM base WHERE Protocol
+        =?""", [request.form['Protocol']])
+        if entries:
+            return render_template('new_safety.html', entries = entries)
+        else:
+            error = "Study %s does not currently exist" % \
+            request.form['Protocol']
+            return render_template('main.html' , error = error)
 
 #search based on ID number
 
