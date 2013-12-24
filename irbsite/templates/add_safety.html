@@ -6,28 +6,28 @@
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form action="{{ url_for('new_safety') }}" method=post class=addstudy>
     <h2>VIDD Study Database - Safety Reporting</h2>
-    {% for entry in  entries %}
+    {% for entry in entries %}
       <table width="600">
         <td> Title:</td>
         <td>{{ entry.Title }}</td></tr>
       <td>Protocol:
-        <td><input type=text size=20 name=Protocol value="{{ entry.Protocol }}"></td></tr>
+        <td><input type=text size=20 name=Protocol value="{{ entry.Protocol }}"</td></tr>
 	    <td>IRB Number:
-	    <td><input type=text size=20 name=IR_file></td></tr>
+        <td>{{ entry.IR_file }}</td></tr>
         <td>IACUC Number:</td>
         <td><input type=text size=20 name=iacuc></td></tr>
         <td>Study PI:</td>
         <td><input type=text size=20 name=PI></td></tr>
 	    <td>Date of Submission:
 	    <td><input type=text id="datepicker" name=submit_date></td></tr>
-      <tr><td>Submission Type</td>
-      <td><select name=Submission_type>
-            <option value="Third party safety - Not Meeting">Third Party Safety Report - Not Meeting</option>
-            <option value="Third party safety - Expedited">Third Party Safety Report - Expedited</option>
-            <option value="Serious Adverse Event - Local">Serious Adverse Event - Local</option>
-            <option value="Noncompliance">Noncompliance</option>
-            <option value="Unanticipated Event">Unanticipated Event</option>
-          </select>
+    <tr><td>Submission Type</td>
+            <td><select name=Submission_type>
+                      <option value="Third party safety - Not Meeting">Third Party Safety Report - Not Meeting</option>
+                      <option value="Third party safety - Expedited">Third Party Safety Report - Expedited</option>
+                      <option value="Serious Adverse Event - Local">Serious Adverse Event - Local</option>
+                      <option value="Noncompliance">Noncompliance</option>
+                      <option value="Unanticipated Event">Unanticipated Event</option>
+                    </select>
           <tr><td>Report ID</td>
       <td><input type=text size=10 name=Report_ID></td>
       <tr><td>Type of Report</td>
@@ -40,7 +40,7 @@
           <tr><td>Report Date</td>
             <td><input type="text" size=20 name=reportdate></tr>
             <tr><td>Investigator of Review</td>
-              <td>{{ entry.investigator }}</td>
+              <td><input type="text" size=20 name=investigator value="{{ entry.investigator }}"</td>
         <tr><td>Investigator Determination Date</td>
           <td><input type="text" size="20" name=investigator_det_date></td></tr>
         <tr><td>Date of IRB Review</td>
