@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS reviewtype;
 CREATE TABLE reviewtype (
   Protocol text,
   radsafetyreview text,
+  radsafetyreview_date text,
   fhibc text,
   src text,
   uwehs text,
@@ -51,7 +52,9 @@ DROP TABLE IF EXISTS supplemental;
 CREATE TABLE supplemental (
   Protocol text,
   consentwaiver text,
+  consentwaiver_type text,
   hipaawaiver text,
+  hipaawaiver_type text,
   hipaaauth text,
   repository text,
   nihcert text,

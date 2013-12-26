@@ -114,8 +114,8 @@ def add_form():
         bv = 'Y'
     g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
         solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
-        [request.form['Protocol'], hctallo, hctauto, heme, solidorgan, autoimmune,
-        bv])
+        [request.form['Protocol'], hctallo, hctauto, heme, solidorgan,
+            autoimmune, bv])
     g.db.commit()
 
     if request.form.getlist('radsafetyreview'):
@@ -151,13 +151,16 @@ def add_form():
     if request.form.getlist('mta'):
         mta = 'Y'
     g.db.execute("""INSERT INTO supplemental (Protocol, consentwaiver,
-    hipaawaiver, hipaaauth, repository, nihcert, substudies, mta) VALUES
-    (?,?,?,?,?,?,?,?)""", [request.form['Protocol'], consentwaiver,
-        hipaawaiver, hipaaauth, repository, nihcert, substudies, mta])
+                consentwaiver_text, hipaawaiver, hipaawaiver_text,
+                hipaaauth, repository, nihcert, substudies, mta) VALUES
+                (?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'], consentwaiver,
+                request.form['consentwaiver_text'], hipaawaiver,
+                request.form['hipaawaiver_text'],
+                hipaaauth, repository, nihcert, substudies, mta])
     g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file,
-                CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB,
-            FHCRC_renewal, UW_renewal, IRB_expires, IND,
-    Pt_total, Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB,
+                    FHCRC_renewal, UW_renewal, IRB_expires, IND, Min_age,
+                    Pt_total, Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                    [request.form['Protocol'], request.form['Title'],
                    request.form['PI'], request.form['IR_file'],
                    request.form['CTE'],
@@ -165,7 +168,7 @@ def add_form():
                    request.form['IRB_approved'], request.form['Primary_IRB'],
                    request.form['FHCRC_renewal'],
                    request.form['UW_renewal'], request.form['IRB_expires'],
-                   request.form['IND'],
+                   request.form['IND'], request.form['Min_age'],
                    request.form['Pt_total'], request.form['Type']])
     g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                 values (?,?,?)""", [request.form['Protocol'],

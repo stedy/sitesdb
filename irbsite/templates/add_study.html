@@ -20,9 +20,10 @@
             <option value="FH">FH</option>
             <option value="UW">UW</option>
           </select>
+      </td></tr>
 	    <td>Sponsor:
-      <td><input type=text size=30 name=Funding_source></td>
-	    <td>IND:
+        <td><input type=text size=30 name=Funding_source></td></tr>
+      <tr><td>IND:
       <td><select name=IND>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
@@ -36,7 +37,7 @@
 	    <td>Review Committee:
 	    <td><input type=text size=20 name=CTE></td></tr>
     <td>Study Status:</td></tr>
-  <td>Review Type</td></tr>
+  <td><b>Review Type</b></td></tr>
     <td>Full <input type="checkbox" name="full" value="full"  /></td>
   <td>Coop <input type="checkbox" name="coop" value="coop"  /></td/></tr>
     <td>Minimal <input type="checkbox" name="minimal" value="minimal"  /></td>
@@ -50,7 +51,8 @@
       <table width="600">
 	    <td>Patient Goal:
         <td><input type=text size=20 name=Pt_total></td>
-        <td>Age range:</tr>
+        <td>Age range:
+          <td><input type=text size=20 name=Min_age></td></tr>
         <td><b>Population</b></tr>
       <td>HCT-allo<input type="checkbox" name="hctallo" value="hctallo"/></td/>
       <td>HCT-auto <input type="checkbox" name="hctauto" value="hctauto"/></td>
@@ -89,17 +91,19 @@
       <h2>Supplements</h2>
         <table>
       <td>Consent Waiver<input type="checkbox" name="consentwaiver" value="consentwaiver"/></td/>
-        <td>Type of Consent Waiver:</td></tr>
+        <td>Type of Consent Waiver:</td>
+        <td><input type=text size=20 name=consentwaiver_text></td></tr>
       <td>HIPAA Waiver<input type="checkbox" name="hipaawaiver" value="hipaawaiver"/></td>
-        <td>Type of HIPAA Waiver:</td></tr>
+        <td>Type of HIPAA Waiver:</td>
+        <td><input type=text size=20 name=hipaawaiver_text></td></tr>
       <td>HIPAA Authorization</td/>
       <td><select name=hippaaauth>
             <option value="CRDgeneral">CRD General</option>
             <option value="Studyspecific">Study Specfic</option>
         </select></tr>
-        <td>Repository<input type="checkbox" name="repository" value="repository"/></td/></tr>
-  <td>NIH Cert of Conf<input type="checkbox" name="nihcert" value="nihcert"/></td/>
-    <td>Sub-studies<input type="checkbox" name="substudies" value="substudies"/></td/></tr>
+        <td>Repository<input type="checkbox" name="repository" value="repository"/></td/>
+        <td>NIH Cert of Conf<input type="checkbox" name="nihcert" value="nihcert"/></td/></tr>
+    <td>Sub-studies<input type="checkbox" name="substudies" value="substudies"/></td/>
     <td>MTA<input type="checkbox" name="mta" value="mta"/></td/></tr>
 </table>
 	    <br></br>
