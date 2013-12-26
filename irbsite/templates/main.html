@@ -20,5 +20,12 @@
   <br>
   <h3>View summary tables</h3>
   <a href="{{ url_for('safety_results') }}">View all safety reports</a>
+  <br></br>
+  <table>
+    <tr><td>Protocol</td><td>Date to IRB</td></tr>
+  {% for entry in entries %}
+    <tr><td>{{ entry.Protocol }}</td><td>{{ entry.Date_to_IRB }}</td></tr>
+    {% endfor %}
+  </table>
   {% endif %}
     {% endblock %}

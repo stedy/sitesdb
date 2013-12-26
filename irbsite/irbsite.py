@@ -54,7 +54,7 @@ def teardown_request(exception):
 def login():
     error = None
     if request.method == 'POST':
-        user = query_db( '''SELECT * FROM user WHERE username = ?''',
+        user = query_db( """SELECT * FROM user WHERE username = ?""",
                 [request.form['username']], one = True)
         if user is None:
             error = "Invalid Username"
@@ -64,7 +64,9 @@ def login():
         else:
             flash('You were logged in')
             session['user_id'] = user['user_id']
-            return redirect(url_for('main'))
+            entries = query_db("""SELECT Protocol, Date_to_IRB, date_back FROM
+                mods WHERE date_back = '';""")
+            return render_template('main.html', entries=entries)
     return render_template('login.html', error = error)
 
 @app.route('/add_form', methods=['GET', 'POST'])
@@ -262,6 +264,11 @@ def add_ae():
                         [request.form['Protocol']])
     return render_template('ae.html', entries = entries)
 
+@app.route('/main')
+def main():
+    entries = query_db("""SELECT Protocol, Date_to_IRB, date_back FROM
+        mods WHERE date_back = '';""")
+    return render_template('main.html', entries=entries)
 
 @app.route('/pre_safety', methods = ['GET', 'POST'])
 def pre_safety():
@@ -525,11 +532,6 @@ def query():
     """Main search query based on ID numbers """
     return render_template('subj_query.html')
 
-@app.route('/main')
-def main():
-    """Main Landing page"""
-    return render_template('main.html')
-
 @app.route('/title_query')
 def title_query():
     return render_template('title_query.html')
@@ -637,7 +639,7 @@ def new_safety():
     g.db.commit()
     flash('New safety form for %s successfully entered' % \
     str(request.form['Protocol']))
-    return redirect(url_for('main'))
+    return render_template('main')
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
