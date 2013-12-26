@@ -93,10 +93,10 @@ def add_form():
     if request.form.getlist('nothumansubjects'):
         nothumansubjects = 'Y'
     g.db.execute("""INSERT INTO commreviews (Protocol, full, coop, minimal,
-        irbauth, exempt, iacucauth, nothumansubjects) VALUES
-        (?,?,?,?,?,?,?,?)""",
+        irbauth, exempt, iacucauth, iacuc_number, nothumansubjects) VALUES
+        (?,?,?,?,?,?,?,?,?)""",
         [request.form['Protocol'], full, coop, minimal,
-            irbauth, exempt, iacucauth,
+            irbauth, exempt, iacucauth, request.form['iacuc_number'],
         nothumansubjects])
     g.db.commit()
 
@@ -131,9 +131,10 @@ def add_form():
     if request.form.getlist('pim'):
         pim = 'Y'
     g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview, fhibc,
-        src, uwehs, cim, pim) values (?,?,?,?,?,?,?)""",
+        src, uwehs, cim, pim, radsafetyreview_date) values (?,?,?,?,?,?,?,?)""",
         [request.form['Protocol'],
-        radsafetyreview, fhibc, src, uwehs, cim, pim])
+        radsafetyreview, fhibc, src, uwehs, cim, pim,
+        request.form['radsafetyreview_date']])
     g.db.commit()
 
     if request.form.getlist('consentwaiver'):
@@ -151,16 +152,17 @@ def add_form():
     if request.form.getlist('mta'):
         mta = 'Y'
     g.db.execute("""INSERT INTO supplemental (Protocol, consentwaiver,
-                consentwaiver_text, hipaawaiver, hipaawaiver_text,
+                consentwaiver_type, hipaawaiver, hipaawaiver_type,
                 hipaaauth, repository, nihcert, substudies, mta) VALUES
-                (?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'], consentwaiver,
-                request.form['consentwaiver_text'], hipaawaiver,
-                request.form['hipaawaiver_text'],
+                (?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
+                consentwaiver, request.form['consentwaiver_text'],
+                hipaawaiver, request.form['hipaawaiver_text'],
                 hipaaauth, repository, nihcert, substudies, mta])
     g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file,
                     CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB,
                     FHCRC_renewal, UW_renewal, IRB_expires, IND, Min_age,
-                    Pt_total, Type) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    Pt_total, Type, FH_coord) VALUES
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                    [request.form['Protocol'], request.form['Title'],
                    request.form['PI'], request.form['IR_file'],
                    request.form['CTE'],
@@ -169,7 +171,8 @@ def add_form():
                    request.form['FHCRC_renewal'],
                    request.form['UW_renewal'], request.form['IRB_expires'],
                    request.form['IND'], request.form['Min_age'],
-                   request.form['Pt_total'], request.form['Type']])
+                   request.form['Pt_total'], request.form['Type'],
+                   request.form['FH_coord']])
     g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                 values (?,?,?)""", [request.form['Protocol'],
                     g.user['username'], dt.datetime.now().strftime("%m/%d/%Y")])

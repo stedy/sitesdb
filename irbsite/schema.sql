@@ -45,6 +45,7 @@ CREATE TABLE commreviews (
   irbauth text,
   exempt text,
   iacucauth text,
+  iacuc_number text,
   nothumansubjects text
 );
 
