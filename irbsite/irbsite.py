@@ -113,8 +113,8 @@ def add_form():
     if request.form.getlist('bv'):
         bv = 'Y'
     g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
-    solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
-    [request.form['Protocol'], hctallo, hctauto, heme, solidorgan, autoimmune,
+        solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
+        [request.form['Protocol'], hctallo, hctauto, heme, solidorgan, autoimmune,
         bv])
     g.db.commit()
 
@@ -260,12 +260,14 @@ def pre_safety():
 @app.route('/add_safety', methods = ['GET', 'POST'])
 def add_safety():
     error = None
-    entries = query_db("""SELECT Title, safety.Protocol, min(submit_date),
+    check = query_db("""SELECT Protocol from safety WHERE Protocol = ?""",
+            [request.form['Protocol']])
+    if check:
+        entries = query_db("""SELECT Title, safety.Protocol, min(submit_date),
             investigator, IR_file FROM base,
             safety WHERE
             base.Protocol = safety.Protocol AND safety.Protocol = ?""",
             [request.form['Protocol']])
-    if entries:
         return render_template('add_safety.html', entries=entries)
     else:
         entries = query_db("""SELECT Title, Protocol FROM base WHERE Protocol
@@ -612,16 +614,16 @@ def new_safety():
     """Add new safety report form to db"""
     submit = str(request.form['submit_date'])
     g.db.execute("""INSERT INTO safety (Protocol, submit_date, Submission_type,
-    Report_ID, Report_type, FU_report_no, reportdate,
-    investigator_det_date, date_IRB_review, date_back_IRB, comments) values
-    (?,?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
-    dt.datetime.strptime(submit, "%m/%d/%Y").strftime("%Y-%m-%d"),
-    request.form['Submission_type'],
-    request.form['Report_ID'], request.form['Report_type'],
-    request.form['FU_report_no'], request.form['reportdate'],
-    request.form['investigator_det_date'],
-    request.form['date_IRB_review'], request.form['date_back_IRB'],
-    request.form['comments']])
+        Report_ID, Report_type, FU_report_no, reportdate,
+        investigator_det_date, date_IRB_review, date_back_IRB, comments) values
+        (?,?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
+        dt.datetime.strptime(submit, "%m/%d/%Y").strftime("%Y-%m-%d"),
+        request.form['Submission_type'],
+        request.form['Report_ID'], request.form['Report_type'],
+        request.form['FU_report_no'], request.form['reportdate'],
+        request.form['investigator_det_date'],
+        request.form['date_IRB_review'], request.form['date_back_IRB'],
+        request.form['comments']])
     g.db.commit()
     flash('New safety form for %s successfully entered' % \
     str(request.form['Protocol']))
