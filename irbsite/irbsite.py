@@ -69,96 +69,97 @@ def login():
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
-    error = None
-    radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, \
+    if request.form['Protocol']:
+        error = None
+        radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, \
             None, None
-    full, coop, minimal, irbauth, exempt, iacucauth, nothumansubjects = None, \
-        None, None, None, None, None, None
-    hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, None, \
-        None, None, None
-    consentwaiver, hipaawaiver, hipaaauth, repository, nihcert, substudies, \
-        mta = None, None, None, None, None, None, None
-    if request.form.getlist('full'):
-        full = 'Y'
-    if request.form.getlist('coop'):
-        coop = 'Y'
-    if request.form.getlist('minimal'):
-        minimal = 'Y'
-    if request.form.getlist('irbauth'):
-        irbauth = 'Y'
-    if request.form.getlist('exempt'):
-        exempt = 'Y'
-    if request.form.getlist('iacucauth'):
-        iacucauth = 'Y'
-    if request.form.getlist('nothumansubjects'):
-        nothumansubjects = 'Y'
-    g.db.execute("""INSERT INTO commreviews (Protocol, full, coop, minimal,
-        irbauth, exempt, iacucauth, iacuc_number, nothumansubjects) VALUES
-        (?,?,?,?,?,?,?,?,?)""",
-        [request.form['Protocol'], full, coop, minimal,
-            irbauth, exempt, iacucauth, request.form['iacuc_number'],
-        nothumansubjects])
-    g.db.commit()
+        full, coop, minimal, irbauth, exempt, iacucauth, nothumansubjects = None, \
+            None, None, None, None, None, None
+        hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, None, \
+            None, None, None
+        consentwaiver, hipaawaiver, hipaaauth, repository, nihcert, substudies, \
+            mta = None, None, None, None, None, None, None
+        if request.form.getlist('full'):
+            full = 'Y'
+        if request.form.getlist('coop'):
+            coop = 'Y'
+        if request.form.getlist('minimal'):
+            minimal = 'Y'
+        if request.form.getlist('irbauth'):
+            irbauth = 'Y'
+        if request.form.getlist('exempt'):
+            exempt = 'Y'
+        if request.form.getlist('iacucauth'):
+            iacucauth = 'Y'
+        if request.form.getlist('nothumansubjects'):
+            nothumansubjects = 'Y'
+        g.db.execute("""INSERT INTO commreviews (Protocol, full, coop, minimal,
+            irbauth, exempt, iacucauth, iacuc_number, nothumansubjects) VALUES
+            (?,?,?,?,?,?,?,?,?)""",
+            [request.form['Protocol'], full, coop, minimal,
+                irbauth, exempt, iacucauth, request.form['iacuc_number'],
+                nothumansubjects])
+        g.db.commit()
 
-    if request.form.getlist('hctallo'):
-        hctallo = 'Y'
-    if request.form.getlist('hctauto'):
-        hctauto = 'Y'
-    if request.form.getlist('heme'):
-        heme = 'Y'
-    if request.form.getlist('solidorgan'):
-        solidorgan = 'Y'
-    if request.form.getlist('autoimmune'):
-        autoimmune = 'Y'
-    if request.form.getlist('bv'):
-        bv = 'Y'
-    g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
-        solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
-        [request.form['Protocol'], hctallo, hctauto, heme, solidorgan,
+        if request.form.getlist('hctallo'):
+            hctallo = 'Y'
+        if request.form.getlist('hctauto'):
+            hctauto = 'Y'
+        if request.form.getlist('heme'):
+            heme = 'Y'
+        if request.form.getlist('solidorgan'):
+            solidorgan = 'Y'
+        if request.form.getlist('autoimmune'):
+            autoimmune = 'Y'
+        if request.form.getlist('bv'):
+            bv = 'Y'
+        g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
+            solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
+            [request.form['Protocol'], hctallo, hctauto, heme, solidorgan,
             autoimmune, bv])
-    g.db.commit()
+        g.db.commit()
 
-    if request.form.getlist('radsafetyreview'):
-        radsafetyreview = "Y"
-    if request.form.getlist('fhibc'):
-        fhibc = "Y"
-    if request.form.getlist('src'):
-        src = "Y"
-    if request.form.getlist('uwehs'):
-        uwehs = "Y"
-    if request.form.getlist('cim'):
-        cim = 'Y'
-    if request.form.getlist('pim'):
-        pim = 'Y'
-    g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview, fhibc,
-        src, uwehs, cim, pim, radsafetyreview_date) values (?,?,?,?,?,?,?,?)""",
-        [request.form['Protocol'],
-        radsafetyreview, fhibc, src, uwehs, cim, pim,
-        request.form['radsafetyreview_date']])
-    g.db.commit()
+        if request.form.getlist('radsafetyreview'):
+            radsafetyreview = "Y"
+        if request.form.getlist('fhibc'):
+            fhibc = "Y"
+        if request.form.getlist('src'):
+            src = "Y"
+        if request.form.getlist('uwehs'):
+            uwehs = "Y"
+        if request.form.getlist('cim'):
+            cim = 'Y'
+        if request.form.getlist('pim'):
+            pim = 'Y'
+        g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview, fhibc,
+            src, uwehs, cim, pim, radsafetyreview_date) values (?,?,?,?,?,?,?,?)""",
+            [request.form['Protocol'],
+            radsafetyreview, fhibc, src, uwehs, cim, pim,
+            request.form['radsafetyreview_date']])
+        g.db.commit()
 
-    if request.form.getlist('consentwaiver'):
-        consentwaiver = 'Y'
-    if request.form.getlist('hipaawaiver'):
-        hipaawaiver = 'Y'
-    if request.form.getlist('hipaaauth'):
-        hipaaauth = 'Y'
-    if request.form.getlist('repository'):
-        repository = 'Y'
-    if request.form.getlist('nihcert'):
-        nihcert = 'Y'
-    if request.form.getlist('substudies'):
-        substudies = 'Y'
-    if request.form.getlist('mta'):
-        mta = 'Y'
-    g.db.execute("""INSERT INTO supplemental (Protocol, consentwaiver,
+        if request.form.getlist('consentwaiver'):
+            consentwaiver = 'Y'
+        if request.form.getlist('hipaawaiver'):
+            hipaawaiver = 'Y'
+        if request.form.getlist('hipaaauth'):
+            hipaaauth = 'Y'
+        if request.form.getlist('repository'):
+            repository = 'Y'
+        if request.form.getlist('nihcert'):
+            nihcert = 'Y'
+        if request.form.getlist('substudies'):
+            substudies = 'Y'
+        if request.form.getlist('mta'):
+            mta = 'Y'
+        g.db.execute("""INSERT INTO supplemental (Protocol, consentwaiver,
                 consentwaiver_type, hipaawaiver, hipaawaiver_type,
                 hipaaauth, repository, nihcert, substudies, mta) VALUES
                 (?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
                 consentwaiver, request.form['consentwaiver_text'],
                 hipaawaiver, request.form['hipaawaiver_text'],
                 hipaaauth, repository, nihcert, substudies, mta])
-    g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file,
+        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file,
                     CTE, Funding_source, RN_coord, IRB_approved, Primary_IRB,
                     FHCRC_renewal, UW_renewal, IRB_expires, IND, Min_age,
                     Pt_total, Type, FH_coord) VALUES
@@ -173,14 +174,17 @@ def add_form():
                    request.form['IND'], request.form['Min_age'],
                    request.form['Pt_total'], request.form['Type'],
                    request.form['FH_coord']])
-    g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
-                values (?,?,?)""", [request.form['Protocol'],
+        g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
+                    values (?,?,?)""", [request.form['Protocol'],
                     g.user['username'], dt.datetime.now().strftime("%m/%d/%Y")])
-    g.db.commit()
+        g.db.commit()
 
-    flash('Study %s was successfully added by %s' % (request.form['Protocol'],
-        g.user['username']))
-    return render_template('main.html', error = error)
+        flash('Study %s was successfully added by %s' % (request.form['Protocol'],
+            g.user['username']))
+        return render_template('main.html')
+    else:
+        error = "You must enter a Protocol Number to proceed"
+        return render_template('main.html', error = error)
 
 @app.route('/add_funding', methods=['GET', 'POST'])
 def add_funding():
