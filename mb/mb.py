@@ -300,15 +300,6 @@ def id_edit(id_number):
                     [id_number])
     return render_template('edit_subject.html', entries=entries)
 
-@app.before_request
-def before_request():
-    g.db = connect_db()
-
-@app.teardown_request
-def teardown_request(exception):
-    g.db.close()
-
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
