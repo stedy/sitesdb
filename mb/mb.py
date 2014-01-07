@@ -1,7 +1,7 @@
 import sqlite3
 import subprocess as sp
-from flask import Flask, request, session, g, redirect, url_for \
-        , abort, render_template, flash, send_from_directory
+from flask import Flask, request, session, g, redirect, url_for, \
+        abort, render_template, flash, send_from_directory
 
 from contextlib import closing
 from werkzeug import check_password_hash, generate_password_hash
@@ -28,11 +28,11 @@ def init_db():
         db.commit()
 
 def query_db(query, args=(), one = False):
-	"""Queries the database and returns a list of dictionaries"""
-	cur = g.db.execute(query, args)
-	rv = [dict((cur.description[idx][0], value)
-		for idx, value in enumerate(row)) for row in cur.fetchall()]
-	return (rv[0] if rv else None) if one else rv
+    """Queries the database and returns a list of dictionaries"""
+    cur = g.db.execute(query, args)
+    rv = [dict((cur.description[idx][0], value)
+        for idx, value in enumerate(row)) for row in cur.fetchall()]
+    return (rv[0] if rv else None) if one else rv
 
 def next_weekday(d, weekday):
     days_ahead = weekday - d.weekday()
@@ -47,7 +47,7 @@ def before_request():
     g.db = connect_db()
     g.user = None
     if 'user_id' in session:
-        g.user = query_db('select * from user where user_id = XXX',
+        g.user = query_db('select * from user where user_id = ?',
                         [session['user_id']], one = True)
 
 @app.teardown_request
@@ -68,9 +68,9 @@ def add_form():
         swabs = [7 * x for x in range(14)]
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
-        expected_week1 = next_weekday(txdate,0).strftime("%m/%d/%Y")
-        fu_days = [(next_weekday(txdate,0) + dt.timedelta(days=day)).strftime("%m/%d/%Y") for
-                day in swabs]
+        expected_week1 = next_weekday(txdate, 0).strftime("%m/%d/%Y")
+        fu_days = [(next_weekday(txdate, 0) +
+            dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in swabs]
         outvals = [raw_id]
         for x in range(14):
             outvals.append(fu_days[x])
@@ -91,16 +91,17 @@ def add_form():
                         Expected_week9, Expected_week10,
                         Expected_week11, Expected_week12,
                         Expected_week13,
-                        Expected_week14) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                        Expected_week14) VALUES
+                        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                         outvals)
-            g.db.execute("""INSERT INTO recipient_blood (Subject_ID) values (?)""",
-                        [raw_id])
+            g.db.execute("""INSERT INTO recipient_blood (Subject_ID) VALUES
+                        (?)""", [raw_id])
         if request.form['Donrep'] == "Donor":
             g.db.execute("""INSERT INTO donor_swabs (subject_ID,
-                        Expected_pre_tx, Received_pre_tx) values (?,?,?)""",
+                        Expected_pre_tx, Received_pre_tx) VALUES (?,?,?)""",
                         [raw_id, request.form['Expected_pre_tx'],
                         request.form['Received_pre_tx']])
-            g.db.execute("""INSERT INTO donor_blood (Subject_ID) values (?)""",
+            g.db.execute("""INSERT INTO donor_blood (Subject_ID) VALUES (?)""",
                         [raw_id])
         g.db.commit()
         flash('New patient successfully added')
@@ -167,9 +168,10 @@ def update_form():
                     request.form['Name'], request.form['uwid'],
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep']])
-    g.db.execute("""DELETE FROM recipient_swabs WHERE subject_ID = ?""", [subject_ID])
-    g.db.execute("""INSERT INTO recipient_swabs (subject_ID, Expected_pre_tx, 
-                    Received_pre_tx, 
+    g.db.execute("""DELETE FROM recipient_swabs WHERE subject_ID = ?""",
+            [subject_ID])
+    g.db.execute("""INSERT INTO recipient_swabs (subject_ID, Expected_pre_tx,
+                    Received_pre_tx,
                     Expected_week1, Received_week1,
                     Expected_week2, Received_week2,
                     Expected_week3, Received_week3,
@@ -189,22 +191,37 @@ def update_form():
                     [request.form['subject_ID'],
                     request.form['Expected_pre_tx'],
                     request.form['Received_pre_tx'],
-                    request.form['Expected_week1'], request.form['Received_week1'],
-                    request.form['Expected_week2'], request.form['Received_week2'],
-                    request.form['Expected_week3'], request.form['Received_week3'],
-                    request.form['Expected_week4'], request.form['Received_week4'],
-                    request.form['Expected_week5'], request.form['Received_week5'],
-                    request.form['Expected_week6'], request.form['Received_week6'],
-                    request.form['Expected_week7'], request.form['Received_week7'],
-                    request.form['Expected_week8'], request.form['Received_week8'],
-                    request.form['Expected_week9'], request.form['Received_week9'],
-                    request.form['Expected_week10'], request.form['Received_week10'],
-                    request.form['Expected_week11'], request.form['Received_week11'],
-                    request.form['Expected_week12'], request.form['Received_week12'],
-                    request.form['Expected_week13'], request.form['Received_week13'],
-                    request.form['Expected_week14'], request.form['Received_week14']
+                    request.form['Expected_week1'],
+                    request.form['Received_week1'],
+                    request.form['Expected_week2'],
+                    request.form['Received_week2'],
+                    request.form['Expected_week3'],
+                    request.form['Received_week3'],
+                    request.form['Expected_week4'],
+                    request.form['Received_week4'],
+                    request.form['Expected_week5'],
+                    request.form['Received_week5'],
+                    request.form['Expected_week6'],
+                    request.form['Received_week6'],
+                    request.form['Expected_week7'],
+                    request.form['Received_week7'],
+                    request.form['Expected_week8'],
+                    request.form['Received_week8'],
+                    request.form['Expected_week9'],
+                    request.form['Received_week9'],
+                    request.form['Expected_week10'],
+                    request.form['Received_week10'],
+                    request.form['Expected_week11'],
+                    request.form['Received_week11'],
+                    request.form['Expected_week12'],
+                    request.form['Received_week12'],
+                    request.form['Expected_week13'],
+                    request.form['Received_week13'],
+                    request.form['Expected_week14'],
+                    request.form['Received_week14']
                     ])
-    g.db.execute("""DELETE FROM recipient_blood WHERE subject_ID = ?""", [subject_ID])
+    g.db.execute("""DELETE FROM recipient_blood WHERE
+            subject_ID = ?""", [subject_ID])
     g.db.execute("""INSERT INTO recipient_blood (subject_ID,
                     Blood_draw_pre_tx, Blood_received_pre_tx,
                     Pre_tx_time_drawn, Pre_tx_time_processed,
@@ -248,6 +265,40 @@ def all_subjects():
                     txdate, Donrep FROM demo""")
     return render_template('all_subjects.html', entries = entries)
 
+@app.route('/<id_number>', methods = ['GET', 'POST'])
+def id_edit(id_number):
+    #ids = str(request.form['subject_ID'])
+    entries = query_db("""SELECT demo.subject_ID, pt_init, Name, uwid,
+                    Status, txdate, Donrep, Expected_week1, Expected_week2,
+                    Expected_week1, Received_week1,
+                    Expected_week2, Received_week2,
+                    Expected_week3, Received_week3,
+                    Expected_week4, Received_week4,
+                    Expected_week5, Received_week5,
+                    Expected_week6, Received_week6,
+                    Expected_week7, Received_week7,
+                    Expected_week8, Received_week8,
+                    Expected_week9, Received_week9,
+                    Expected_week10, Received_week10,
+                    Expected_week11, Received_week11,
+                    Expected_week12, Received_week12,
+                    Expected_week13, Received_week13,
+                    Expected_week14, Received_week14,
+                    Blood_expected_week1, Blood_received_week1,
+                    Week1_time_drawn, Week1_time_processed,
+                    Blood_expected_week2, Blood_received_week2,
+                    Week2_time_drawn, Week2_time_processed,
+                    Blood_expected_week3, Blood_received_week3,
+                    Week3_time_drawn, Week3_time_processed,
+                    Blood_expected_week4, Blood_received_week4,
+                    Week4_time_drawn, Week4_time_processed
+                    from demo, recipient_swabs,
+                    recipient_blood WHERE demo.subject_ID =
+                    recipient_swabs.subject_ID AND demo.subject_ID =
+                    recipient_blood.subject_ID AND
+                    demo.subject_ID = ?""",
+                    [id_number])
+    return render_template('edit_subject.html', entries=entries)
 
 @app.before_request
 def before_request():
@@ -260,7 +311,7 @@ def teardown_request(exception):
 
 @app.errorhandler(404)
 def page_not_found(e):
-	return render_template('404.html'), 404
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
