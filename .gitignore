@@ -3,6 +3,7 @@
 *.csv
 *.swp
 *.pyc
+*.zip
 vzv2213/vzv.db
 original/
 mksql/
