@@ -3,10 +3,11 @@ import glob
 import datetime as dt
 import sqlite3
 import csv
+import os
 
 def main():
     with sqlite3.connect('mb.db') as connection:
-        csvWriter = csv.writer(open("demo.csv", "w"))
+        csvWriter = csv.writer(open("archives/demo.csv", "w"))
         c = connection.cursor()
         code = c.execute("SELECT * from demo")
         rows = code.fetchall()
@@ -16,7 +17,7 @@ def main():
         csvWriter.writerow(headers_demo)
         csvWriter.writerows(rows)
 
-        csvWriter2 = csv.writer(open("recipient_blood.csv", "w"))
+        csvWriter2 = csv.writer(open("archives/recipient_blood.csv", "w"))
         c = connection.cursor()
         code = c.execute("SELECT * from recipient_blood")
         rows = code.fetchall()
@@ -26,7 +27,7 @@ def main():
         csvWriter2.writerow(headers_rb)
         csvWriter2.writerows(rows)
 
-        csvWriter3 = csv.writer(open("recipient_swabs.csv", "w"))
+        csvWriter3 = csv.writer(open("archives/recipient_swabs.csv", "w"))
         c = connection.cursor()
         code = c.execute("SELECT * from recipient_swabs")
         rows = code.fetchall()
@@ -36,7 +37,7 @@ def main():
         csvWriter3.writerow(headers_rs)
         csvWriter3.writerows(rows)
 
-        csvWriter4 = csv.writer(open("donor_blood.csv", "w"))
+        csvWriter4 = csv.writer(open("archives/donor_blood.csv", "w"))
         c = connection.cursor()
         code = c.execute("SELECT * from donor_blood")
         rows = code.fetchall()
@@ -46,7 +47,7 @@ def main():
         csvWriter4.writerow(headers_db)
         csvWriter4.writerows(rows)
 
-        csvWriter5 = csv.writer(open("donor_swabs.csv", "w"))
+        csvWriter5 = csv.writer(open("archives/donor_swabs.csv", "w"))
         c = connection.cursor()
         code = c.execute("SELECT * from donor_swabs")
         rows = code.fetchall()
@@ -58,10 +59,10 @@ def main():
 
     files = glob.glob('*.csv')
     now = dt.datetime.now().strftime('%Y-%m-%d')
-    z = zipfile.ZipFile(now + "_database.zip", 'w')
+    z = zipfile.ZipFile(os.path.join('archives', now + "_database.zip"), 'w')
 
     for x in files:
-        z.write(x)
+        z.write(os.path.join('archives', x))
     z.close()
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ import zip_database as zd
 DATABASE = 'mb.db'
 DEBUG = True
 SECRET_KEY = 'development key'
-DOWNLOAD_FOLDER = 'downloads'
+FILE_FOLDER = 'archives'
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -300,6 +300,13 @@ def id_edit(id_number):
                     demo.subject_ID = ?""",
                     [id_number])
     return render_template('edit_subject.html', entries=entries)
+
+@app.route('/get_archives', methods = ['GET', 'POST'])
+def get_archives():
+    zd.main()
+    now = dt.datetime.now().strftime('%Y-%m-%d')
+    filename = now + "_database.zip"
+    return send_from_directory(app.config['FILE_FOLDER'], filename, as_attachment = True)
 
 @app.errorhandler(404)
 def page_not_found(e):
