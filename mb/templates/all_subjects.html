@@ -12,7 +12,7 @@
       {% for entry in entries %}
       <tr><td><a href="{{ url_for('id_edit', id_number=entry.subject_ID)}}">{{ entry.subject_ID }}</a>
       </td></td><td>{{ entry.uwid }}</td><td>{{ entry.pt_init }}</td>
-      <td>{{ entry.txdate }}</td><td>{{ entry.status }}</td></tr>
+      <td>{{ entry.txdate }}</td><td>{{ entry.Status }}</td></tr>
     {% endfor %}
       </table>
 {% endblock %}
