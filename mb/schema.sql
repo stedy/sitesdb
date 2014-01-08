@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS demo;
 CREATE TABLE demo (subject_ID text, pt_init text, Name text, uwid text,
-                    Status text, txdate text, Donrep text, conditioning_start_date text);
+                    Status text, txdate text);
 
 DROP TABLE IF EXISTS recipient_swabs;
 CREATE TABLE recipient_swabs (subject_ID text, Expected_pre_tx date, Received_pre_tx date,
