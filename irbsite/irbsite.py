@@ -638,7 +638,7 @@ def new_safety():
     g.db.commit()
     flash('New safety form for %s successfully entered' % \
     str(request.form['Protocol']))
-    return render_template('main')
+    return render_template('main.html')
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
