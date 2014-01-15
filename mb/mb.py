@@ -1,10 +1,8 @@
 import sqlite3
-import subprocess as sp
-from flask import Flask, request, session, g, redirect, url_for, \
-        abort, render_template, flash, send_from_directory
+from flask import Flask, request, session, g, url_for, \
+        render_template, flash, send_from_directory
 
 from contextlib import closing
-from werkzeug import check_password_hash, generate_password_hash
 import datetime as dt
 import zip_database as zd
 
@@ -69,7 +67,6 @@ def add_form():
         swabs = [7 * x for x in range(14)]
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
-        expected_week1 = next_weekday(txdate, 0).strftime("%m/%d/%Y")
         fu_days = [(next_weekday(txdate, 0) +
             dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in swabs]
         outvals = [raw_id]
@@ -306,7 +303,8 @@ def get_archives():
     zd.main()
     now = dt.datetime.now().strftime('%Y-%m-%d')
     filename = now + "_database.zip"
-    return send_from_directory(app.config['FILE_FOLDER'], filename, as_attachment = True)
+    return send_from_directory(app.config['FILE_FOLDER'],
+            filename, as_attachment = True)
 
 @app.errorhandler(404)
 def page_not_found(e):
