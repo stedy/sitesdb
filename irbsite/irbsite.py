@@ -73,14 +73,14 @@ def login():
 def add_form():
     if request.form['Protocol']:
         error = None
-        radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, None, None, \
-            None, None
-        full, coop, minimal, irbauth, exempt, iacucauth, nothumansubjects = None, \
-            None, None, None, None, None, None
-        hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, None, \
-            None, None, None
-        consentwaiver, hipaawaiver, hipaaauth, repository, nihcert, substudies, \
-            mta = None, None, None, None, None, None, None
+        radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, \
+            None, None, None, None
+        full, coop, minimal, irbauth, exempt, iacucauth, \
+            nothumansubjects = None, None, None, None, None, None, None
+        hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, \
+            None, None, None, None
+        consentwaiver, hipaawaiver, hipaaauth, repository, nihcert, \
+            substudies, mta = None, None, None, None, None, None, None
         if request.form.getlist('full'):
             full = 'Y'
         if request.form.getlist('coop'):
@@ -133,8 +133,9 @@ def add_form():
             cim = 'Y'
         if request.form.getlist('pim'):
             pim = 'Y'
-        g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview, fhibc,
-            src, uwehs, cim, pim, radsafetyreview_date) values (?,?,?,?,?,?,?,?)""",
+        g.db.execute("""INSERT INTO reviewtype (Protocol, radsafetyreview,
+                        fhibc, src, uwehs, cim, pim, radsafetyreview_date)
+                        VALUES (?,?,?,?,?,?,?,?)""",
             [request.form['Protocol'],
             radsafetyreview, fhibc, src, uwehs, cim, pim,
             request.form['radsafetyreview_date']])
@@ -301,8 +302,6 @@ def add_safety():
 @app.route('/<id_number>')
 def id_results(id_number):
     """Display all results and info for a given IR number """
-    idnum = query_db('SELECT Protocol FROM docs WHERE Protocol = ?',
-                    [id_number],one = True)
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
                         docs.aprvd_date, docs.doc_name, docs.Version,
                         docs.Type, base.PI,
