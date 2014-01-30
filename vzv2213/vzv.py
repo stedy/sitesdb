@@ -437,10 +437,17 @@ def summary_stats():
                 dropped_from_study WHERE offstudyreason = 'death'""")
     withdraw = query_db("""SELECT COUNT(offstudyreason) FROM
                 dropped_from_study WHERE offstudyreason = 'unwilling'""")
+    monthly = query_db("""select COUNT(calltype) from calls where calltype =
+                'monthly' AND actual_calldate != "" AND actual_calldate !=
+                'None'""")
+    month3 = query_db("""select COUNT(calltype) from calls where calltype =
+                '3 month' AND actual_calldate != "" AND actual_calldate !=
+                'None'""")
     return render_template('summary_statistics.html', visit1=visit1,
             visit2=visit2, visit3=visit3, visit4=visit4, visit5=visit5,
             visit6=visit6, visit7=visit7, active=active,
-            screenfail=screenfail, death = death, withdraw = withdraw)
+            screenfail=screenfail, death = death, withdraw = withdraw, monthly
+            = monthly, month3 = month3)
 
 @app.before_request
 def before_request():
