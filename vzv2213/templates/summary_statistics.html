@@ -19,5 +19,18 @@
     <tr class="d2"><td>Visit 6</td><td>{{ visit6[0]['COUNT(check6no)']}}</td></tr>
     <tr class="d1"><td>Visit 7</td><td>{{ visit7[0]['COUNT(check7no)']}}</td></tr>
   </table>
+  <br><br>
+  <h2>Summary of patients on study</h2>
+  <table>
+    <tr class="d0"><td><b>Status</td><td><b>Count</td></tr>
+    <tr class="d1"><td># Active</td>
+        <td>{{ active[0]['COUNT(status)'] }}</td></tr>
+    <tr class="d2"><td># Screen failure</td>
+        <td>{{ screenfail[0]['COUNT(offstudyreason)'] }}</td></tr>
+    <tr class="d1"><td># Deceased</td>
+        <td>{{ death[0]['COUNT(offstudyreason)'] }}</td></tr>
+    <tr class="d2"><td># Withdrawal / Early Termination</td>
+        <td>{{ withdraw[0]['COUNT(offstudyreason)'] }}</td></tr>
+  </table>
   {% endif %}
 {% endblock %}

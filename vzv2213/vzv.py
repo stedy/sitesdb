@@ -429,9 +429,18 @@ def summary_stats():
                 'None'""")
     visit7 = query_db("""SELECT COUNT(check7no) FROM demo WHERE check7no !=
                 'None'""")
+    active = query_db("""SELECT COUNT(status) FROM demo WHERE status !=
+                'off'""")
+    screenfail = query_db("""SELECT COUNT(offstudyreason) FROM
+                dropped_from_study WHERE offstudyreason = 'screenfail'""")
+    death = query_db("""SELECT COUNT(offstudyreason) FROM
+                dropped_from_study WHERE offstudyreason = 'death'""")
+    withdraw = query_db("""SELECT COUNT(offstudyreason) FROM
+                dropped_from_study WHERE offstudyreason = 'unwilling'""")
     return render_template('summary_statistics.html', visit1=visit1,
             visit2=visit2, visit3=visit3, visit4=visit4, visit5=visit5,
-            visit6=visit6, visit7=visit7)
+            visit6=visit6, visit7=visit7, active=active,
+            screenfail=screenfail, death = death, withdraw = withdraw)
 
 @app.before_request
 def before_request():
