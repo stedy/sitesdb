@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
 {% block script %}
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="/static/sorttable.js"></script>
-  {% endblock %}
-  {% if g.user %}
+  <script type="text/javascript" src="/static/makezebra.js"></script>
+{% endblock %}
+{% if g.user %}
   <h2>Summary of all patients on study</h2><br>
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
   <i>(Click on table header to sort)</i>
