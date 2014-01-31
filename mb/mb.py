@@ -298,6 +298,22 @@ def id_edit(id_number):
                     [id_number])
     return render_template('edit_subject.html', entries=entries)
 
+@app.route('/send_kits_form')
+def send_kits_form():
+    return render_template('send_kits.html')
+
+@app.route('/send_kits', methods = ['GET', 'POST'])
+def send_kits():
+    error = None
+    now = dt.datetime.now().strftime('%Y-%m-%d')
+    number_of_kits = request.form['count']
+    for kit in range(int(number_of_kits)):
+        g.db.execute("""INSERT INTO kit (subject_ID, eventdate, event) VALUES
+                    (?,?,?)""", [request.form['subject_ID'], now, 'shipped'])
+        g.db.commit()
+        
+    return render_template('main.html')
+
 @app.route('/get_archives', methods = ['GET', 'POST'])
 def get_archives():
     zd.main()
