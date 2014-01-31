@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
+  <form action="{{ url_for('receive_kits') }}" method=post class=test>
+    <h2>Receive kits</h2>
+    <table>
+      <tr><td><b>Subject ID</td></tr>
+          <tr><td><input type=text size=10 name=subject_ID></td>
+  </table>
+  <br>
+    <input type=submit value="Click to Recieve!">
+    </form>
+    {% endblock %}

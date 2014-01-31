@@ -304,14 +304,28 @@ def send_kits_form():
 
 @app.route('/send_kits', methods = ['GET', 'POST'])
 def send_kits():
-    error = None
     now = dt.datetime.now().strftime('%Y-%m-%d')
     number_of_kits = request.form['count']
     for kit in range(int(number_of_kits)):
         g.db.execute("""INSERT INTO kit (subject_ID, eventdate, event) VALUES
                     (?,?,?)""", [request.form['subject_ID'], now, 'shipped'])
         g.db.commit()
-        
+    flash('Kits for subject ID %s shipped' % request.form['subject_ID'])
+    return render_template('main.html')
+
+
+@app.route('/receive_kits_form')
+def receive_kits_form():
+    return render_template('receive_kits.html')
+
+@app.route('/receive_kits', methods = ['GET', 'POST'])
+def receive_kits():
+    now = dt.datetime.now().strftime('%Y-%m-%d')
+    g.db.execute("""UPDATE kit SET event = ?, eventdate = ? WHERE subject_ID =
+                ? AND eventdate = (SELECT MAX(eventdate) FROM kit)""",
+                ['received', now, request.form['subject_ID']])
+    g.db.commit()
+    flash('Kit for subject ID %s received' % request.form['subject_ID'])
     return render_template('main.html')
 
 @app.route('/get_archives', methods = ['GET', 'POST'])
