@@ -41,3 +41,6 @@ CREATE TABLE donor_blood (subject_ID text, Blood_draw_pre_tx date, Received_pre_
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (name text, user_id text);
+
+DROP TABLE IF EXISTS kit;
+CREATE TABLE kit (subject_ID text, kit_number text, event text, eventdate date);
