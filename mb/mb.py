@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, request, session, g, url_for, \
+from flask import Flask, request, session, g, \
         render_template, flash, send_from_directory
 
 from contextlib import closing
@@ -21,6 +21,7 @@ def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
 
 def init_db():
+    """Initializes a new database"""
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql') as f:
             db.cursor().executescript(f.read())
@@ -34,12 +35,13 @@ def query_db(query, args=(), one = False):
     return (rv[0] if rv else None) if one else rv
 
 def next_weekday(d, weekday):
+    """Calculates the next weekday in case tx on weekend"""
     days_ahead = weekday - d.weekday()
     if days_ahead <= 0:
         days_ahead += 7
     return d + dt.timedelta(days_ahead)
 
-#then add some decorators
+#start with some decorators
 
 @app.before_request
 def before_request():
@@ -53,7 +55,6 @@ def before_request():
 def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
-
 
 @app.route('/', methods = ['GET', 'POST'])
 def main():
@@ -109,6 +110,7 @@ def add_form():
 
 @app.route('/edit', methods = ['GET', 'POST'])
 def results():
+    """Main functionality to edit and update sample data"""
     ids = str(request.form['subject_ID'])
     entries = query_db("""SELECT demo.subject_ID, pt_init, Name, uwid,
                     Status, txdate, Donrep, Expected_week1, Expected_week2,
@@ -146,7 +148,6 @@ def results():
 def query():
     return render_template('subj_lookup.html')
 
-
 @app.route('/check_query')
 def check_query():
     return render_template('check_lookup.html')
@@ -157,8 +158,8 @@ def add_subject():
 
 @app.route('/update_form', methods= ['GET', 'POST'])
 def update_form():
-    subject_ID = request.form['subject_ID']
-    g.db.execute("""DELETE FROM demo WHERE subject_ID = ?""", [subject_ID])
+    subject_id = request.form['subject_ID']
+    g.db.execute("""DELETE FROM demo WHERE subject_ID = ?""", [subject_id])
     g.db.execute("""INSERT INTO demo (subject_ID, pt_init, Name, uwid, Status,
                     txdate, Donrep) values
                     (?,?,?,?,?,?,?)""",
@@ -167,7 +168,7 @@ def update_form():
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep']])
     g.db.execute("""DELETE FROM recipient_swabs WHERE subject_ID = ?""",
-            [subject_ID])
+            [subject_id])
     g.db.execute("""INSERT INTO recipient_swabs (subject_ID, Expected_pre_tx,
                     Received_pre_tx,
                     Expected_week1, Received_week1,
@@ -219,7 +220,7 @@ def update_form():
                     request.form['Received_week14']
                     ])
     g.db.execute("""DELETE FROM recipient_blood WHERE
-            subject_ID = ?""", [subject_ID])
+            subject_ID = ?""", [subject_id])
     g.db.execute("""INSERT INTO recipient_blood (subject_ID,
                     Blood_draw_pre_tx, Blood_received_pre_tx,
                     Pre_tx_time_drawn, Pre_tx_time_processed,
@@ -254,7 +255,7 @@ def update_form():
                     request.form['Week4_time_drawn'],
                     request.form['Week4_time_processed']])
     g.db.commit()
-    flash('Entry for subject ID %s edited' % subject_ID)
+    flash('Entry for subject ID %s edited' % subject_id)
     return render_template('main.html')
 
 @app.route('/all_subjects')
@@ -313,7 +314,6 @@ def send_kits():
     flash('Kits for subject ID %s shipped' % request.form['subject_ID'])
     return render_template('main.html')
 
-
 @app.route('/receive_kits_form')
 def receive_kits_form():
     return render_template('receive_kits.html')
@@ -330,6 +330,8 @@ def receive_kits():
 
 @app.route('/get_archives', methods = ['GET', 'POST'])
 def get_archives():
+    """Pull all tables from all db and convert into zip file for
+    exporting"""
     zd.main()
     now = dt.datetime.now().strftime('%Y-%m-%d')
     filename = now + "_database.zip"
@@ -339,7 +341,6 @@ def get_archives():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
 
 if __name__ == '__main__':
     app.run()
