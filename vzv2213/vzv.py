@@ -56,10 +56,11 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
+    """Main login function"""
     error = None
     if request.method == "POST":
         name = request.form['username']
-        user = query_db("""SELECT * from user where username = ?""", [name],
+        user = query_db("""SELECT * FROM user where username = ?""", [name],
                 one = True)
         if user is None:
             error = "Invalid Username"
@@ -77,7 +78,7 @@ def login():
 def main():
     entries = query_db("""SELECT calls.allocation, initials, calltype,
     phonenumber, email,
-    nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+    nextcalldate_text, calldate_text FROM calls, nextcall, lastcall WHERE
     nextcall.allocation = lastcall.allocation AND lastcall.allocation =
     calls.allocation AND calls.expected_calldate = nextcalldate_text
     GROUP BY calls.allocation;""")
@@ -139,9 +140,10 @@ def add_form():
         nextcalldate_text) values (?,?,?)""", [request.form['allocation'],
             calldays_projected_sql[0], calldays_projected[0]])
         g.db.commit()
-        entries = query_db("""SELECT calls.allocation, initials, phonenumber, email,
-            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
-            nextcall.allocation = lastcall.allocation AND lastcall.allocation =
+        entries = query_db("""SELECT calls.allocation, initials, phonenumber,
+            email, nextcalldate_text, calldate_text FROM calls, nextcall,
+            lastcall WHERE nextcall.allocation = lastcall.allocation
+            AND lastcall.allocation =
             calls.allocation GROUP BY calls.allocation;""")
         return render_template('main.html', entries=entries)
         flash('New patient successfully added')
@@ -191,7 +193,7 @@ def check_results():
                     injection7p, injection7a, check1no, check1amt,
                     check1date, check2no, check2amt, check2date,
                     check3no, check3amt, check3date, check4no, check4amt,
-                    check4date from demo WHERE check1no = ? OR
+                    check4date FROM demo WHERE check1no = ? OR
                     check2no = ? OR check3no = ? OR check4no= ? OR
                     check5no = ?""",
                     [checknum, checknum, checknum, checknum, checknum])
@@ -200,7 +202,7 @@ def check_results():
     else:
         entries = query_db("""SELECT calls.allocation, initials, calltype,
             phonenumber, email,
-            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+            nextcalldate_text, calldate_text FROM calls, nextcall, lastcall WHERE
             nextcall.allocation = lastcall.allocation AND lastcall.allocation =
             calls.allocation AND calls.expected_calldate = nextcalldate_text
             GROUP BY calls.allocation;""")
@@ -226,18 +228,18 @@ def id_edit(id_number):
                     check6amt, check6date, check6comment, check6no,
                     check7amt, check7date, check7comment, check7no,
                     phonecall, phonenumber, hzdate
-                    from demo WHERE allocation = ?""",
+                    FROM demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT expected_calldate,
                     actual_calldate, call_check_no, call_check_amt, email
-                    from calls WHERE allocation = ? AND
+                    FROM calls WHERE allocation = ? AND
                     calltype = 'monthly'""", [ids])
-    email = query_db("""SELECT DISTINCT email from calls WHERE allocation =
+    email = query_db("""SELECT DISTINCT email FROM calls WHERE allocation =
                     ?""", [ids])
     phonecalls3 = query_db("""SELECT expected_calldate AS ec3,
                     actual_calldate AS ac3, call_check_no AS ccn3,
                     call_check_amt AS cca3
-                    from calls WHERE allocation = ? AND calltype =
+                    FROM calls WHERE allocation = ? AND calltype =
                     "3 month" """, [ids])
     return render_template('edit_patient.html', entries=entries,
             phonecalls=phonecalls, phonecalls3=phonecalls3, email=email)
@@ -331,11 +333,11 @@ def update_form():
         chkno.append(request.form[checknoval3])
         chkdt.append(request.form[chkdtval3])
 
-    calldate_raw = query_db("""SELECT calldate from lastcall where allocation =
+    calldate_raw = query_db("""SELECT calldate FROM lastcall where allocation =
         ?""", [request.form['allocation']])
     calldate = calldate_raw[0]['calldate']
     calldate = dt.datetime.strptime(calldate, "%Y-%m-%d")
-    nextcall_raw = query_db("""SELECT nextcalldate from nextcall where
+    nextcall_raw = query_db("""SELECT nextcalldate FROM nextcall where
     allocation = ?""", [request.form['allocation']])
     nextcall = nextcall_raw[0]['nextcalldate']
     nextcall = dt.datetime.strptime(nextcall, "%Y-%m-%d")
@@ -355,7 +357,6 @@ def update_form():
         except ValueError:
             pass
         nextcall_b = dt.datetime.strptime(str(b), "%m/%d/%y")
-        
         if nextcall_b > dt.datetime.now():
             nextcall_list.append(nextcall_b)
         g.db.execute("""UPDATE calls SET actual_calldate = ?,
@@ -373,7 +374,7 @@ def update_form():
     flash('Entry for allocation %s edited' % allocation)
     entries = query_db("""SELECT calls.allocation, initials, calltype,
             phonenumber, email,
-            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+            nextcalldate_text, calldate_text FROM calls, nextcall, lastcall WHERE
             nextcall.allocation = lastcall.allocation AND lastcall.allocation =
             calls.allocation AND calls.expected_calldate = nextcalldate_text
             GROUP BY calls.allocation;""")
@@ -398,7 +399,7 @@ def submit_removal():
         g.db.commit()
         entries = query_db("""SELECT calls.allocation, initials, calltype,
             phonenumber, email,
-            nextcalldate_text, calldate_text from calls, nextcall, lastcall WHERE
+            nextcalldate_text, calldate_text FROM calls, nextcall, lastcall WHERE
             nextcall.allocation = lastcall.allocation AND lastcall.allocation =
             calls.allocation AND calls.expected_calldate = nextcalldate_text
             GROUP BY calls.allocation;""")
@@ -437,10 +438,10 @@ def summary_stats():
                 dropped_from_study WHERE offstudyreason = 'death'""")
     withdraw = query_db("""SELECT COUNT(offstudyreason) FROM
                 dropped_from_study WHERE offstudyreason = 'unwilling'""")
-    monthly = query_db("""select COUNT(calltype) from calls where calltype =
+    monthly = query_db("""select COUNT(calltype) FROM calls where calltype =
                 'monthly' AND actual_calldate != "" AND actual_calldate !=
                 'None'""")
-    month3 = query_db("""select COUNT(calltype) from calls where calltype =
+    month3 = query_db("""select COUNT(calltype) FROM calls where calltype =
                 '3 month' AND actual_calldate != "" AND actual_calldate !=
                 'None'""")
     return render_template('summary_statistics.html', visit1=visit1,
