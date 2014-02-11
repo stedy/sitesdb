@@ -231,18 +231,13 @@ def id_edit(id_number):
                     FROM demo WHERE allocation = ?""",
                     [ids])
     phonecalls = query_db("""SELECT expected_calldate,
-                    actual_calldate, call_check_no, call_check_amt, email
-                    FROM calls WHERE allocation = ? AND
-                    calltype = 'monthly'""", [ids])
+                    actual_calldate, call_check_no, call_check_amt,
+                    email, calltype
+                    FROM calls WHERE allocation = ?""", [ids])
     email = query_db("""SELECT DISTINCT email FROM calls WHERE allocation =
                     ?""", [ids])
-    phonecalls3 = query_db("""SELECT expected_calldate AS ec3,
-                    actual_calldate AS ac3, call_check_no AS ccn3,
-                    call_check_amt AS cca3
-                    FROM calls WHERE allocation = ? AND calltype =
-                    "3 month" """, [ids])
     return render_template('edit_patient.html', entries=entries,
-            phonecalls=phonecalls, phonecalls3=phonecalls3, email=email)
+            phonecalls=phonecalls, email=email)
 
 @app.route('/query')
 def query():
