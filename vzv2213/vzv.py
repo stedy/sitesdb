@@ -445,14 +445,6 @@ def summary_stats():
             screenfail=screenfail, death = death, withdraw = withdraw, monthly
             = monthly, month3 = month3)
 
-@app.before_request
-def before_request():
-    g.db = connect_db()
-
-@app.teardown_request
-def teardown_request(exception):
-    g.db.close()
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
