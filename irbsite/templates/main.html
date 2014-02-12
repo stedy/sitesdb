@@ -22,12 +22,21 @@
   <a href="{{ url_for('safety_results') }}">View all safety reports</a>
   <br></br>
   <h3>All current studies</h3>
-  <table>
-    <tr><td><b>Protocol</td><td><b>Study title</td></tr>
-  {% for entry in entries %}
-  <tr><td><a href="{{ url_for('id_results', id_number=entry.Protocol) }}">{{ entry.Protocol }}</a>
-  </td><td>{{ entry.Title }}</td></tr>
+  <table id="basic">
+   <thead>
+     <tr>
+       <th><b>Protocol</th>
+       <th><b>Study title</th>
+     </tr>
+   </thead>
+   <tbody>
+   {% for entry in entries %}
+    <tr>
+     <td><a href="{{ url_for('id_results', id_number=entry.Protocol) }}">{{ entry.Protocol }}</a></td>
+     <td>{{ entry.Title }}</td>
+    </tr>
     {% endfor %}
+   </tbody>
   </table>
   {% endif %}
     {% endblock %}
