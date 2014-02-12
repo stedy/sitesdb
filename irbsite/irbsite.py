@@ -18,6 +18,7 @@ def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
 
 def init_db():
+    """Initializes database at start of each session"""
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql') as f:
             db.cursor().executescript(f.read())
@@ -52,6 +53,7 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def login():
+    """Main login feature"""
     error = None
     if request.method == 'POST':
         user = query_db( """SELECT * FROM user WHERE username = ?""",
@@ -64,13 +66,14 @@ def login():
         else:
             flash('You were logged in')
             session['user_id'] = user['user_id']
-            entries = query_db("""SELECT Protocol, Date_to_IRB, date_back FROM
-                mods WHERE date_back = '';""")
+            entries = query_db("""SELECT Protocol, Title FROM
+                base WHERE Protocol != ''""")
             return render_template('main.html', entries=entries)
     return render_template('login.html', error = error)
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
+    """For for adding new study"""
     if request.form['Protocol']:
         error = None
         radsafetyreview, fhibc, src, uwehs, cim, pim = None, None, \
@@ -102,7 +105,6 @@ def add_form():
                 irbauth, exempt, iacucauth, request.form['iacuc_number'],
                 nothumansubjects])
         g.db.commit()
-
         if request.form.getlist('hctallo'):
             hctallo = 'Y'
         if request.form.getlist('hctauto'):
@@ -182,8 +184,8 @@ def add_form():
                     g.user['username'], dt.datetime.now().strftime("%m/%d/%Y")])
         g.db.commit()
 
-        flash('Study %s was successfully added by %s' % (request.form['Protocol'],
-            g.user['username']))
+        flash('Study %s was successfully added by %s' %
+                (request.form['Protocol'], g.user['username']))
         return render_template('main.html')
     else:
         error = "You must enter a Protocol Number to proceed"
@@ -267,8 +269,8 @@ def add_ae():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT Protocol, Date_to_IRB, date_back FROM
-        mods WHERE date_back = '';""")
+    entries = query_db("""SELECT Protocol, Title FROM
+        base WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
 
 @app.route('/pre_safety', methods = ['GET', 'POST'])
