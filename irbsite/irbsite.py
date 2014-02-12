@@ -223,6 +223,7 @@ def add_funding():
 
 @app.route('/add_mod', methods=['GET', 'POST'])
 def add_mod():
+    """Add new study modification to exisiting study"""
     g.db.execute("""INSERT into mods (Protocol, exp_review_date, date_back,
                     date_received, date_due, Date_to_IRB, Description, 
                     submitted, aprvd_date, Comments)
@@ -238,7 +239,7 @@ def add_mod():
     g.db.commit()
     flash('New modification for %s was successfully added' \
             % request.form['Protocol'])
-    entries = query_db("""select base.Protocol, base.IR_file, base.Title,
+    entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
                         mods.PI, mods.Protocol, mods.id, mods.date_due,
                         mods.exp_review_date, mods.date_back,
                         mods.submitted, mods.Comments, mods.Description,

@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-  {% if g.user %}
+{% if g.user %}
     <ul class=metanav>
-    </ul>    
-    {% endif %}   
+    </ul>
+    {% endif %}
     <ul class=entries>
       <h1>Study Documents</h1>
       <h2>Title: {{ entries[0].Title }}</h2>
@@ -15,29 +15,28 @@
   <table id="basic">
     <thead>
       <tr>
-        <th><b>Document Name</th>
-      <th><b>Sub Study</th>
-      <th><b>Version</th>
-    <th><b>Document Date</th>
-      <th><b>Approved Date</th>
-        <th><b>Document Type</th>
-          <th><b>Edit</th>
+       <th><b>Document Name</th>
+       <th><b>Sub Study</th>
+       <th><b>Version</th>
+       <th><b>Document Date</th>
+       <th><b>Approved Date</th>
+       <th><b>Document Type</th>
+       <th><b>Edit</th>
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+   <tbody>
 	{% for entry in entries %}
-	<tr>
-	<td>{{ entry.doc_name }}</td>
-	<td>{{ entry.substudy }}</td>
-	<td>{{ entry.Version }}</td>
-	
-	<td>{{entry.doc_date}}</td>
-  <td>{{ entry.aprvd_date }}</td>
-<td>{{ entry.Type }}</td>
-  <td><a href="{{ url_for('docs_edit', docs_id = entry.id )}}">edit</a></td></tr>
-{% endfor %}
-  </tbody>
-</table>
+	 <tr>
+	 <td>{{ entry.doc_name }}</td>
+	 <td>{{ entry.substudy }}</td>
+	 <td>{{ entry.Version }}</td>
+	 <td>{{entry.doc_date}}</td>
+   <td>{{ entry.aprvd_date }}</td>
+   <td>{{ entry.Type }}</td>
+   <td><a href="{{ url_for('docs_edit', docs_id = entry.id )}}">edit</a></td></tr>
+  {% endfor %}
+   </tbody>
+  </table>
 
 <br>
 <h2>Add new study document</h2>
