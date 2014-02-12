@@ -9,110 +9,109 @@
       <table width="600">
         <td> Title:</td>
         <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
-
-      <td><b>Contacts</b></td></tr>
+        <td><b>Contacts</b></td></tr>
         <td>Study PI:</td>
         <td><input type=text size=30 name=PI></td></tr>
-	    <td>RN/Coordinator:
-	    <td><input type=text size=30 name=RN_coord></td></tr>
-      <tr><td>Primary IRB</td>
-      <td><select name=Primary_IRB>
-            <option value="FH">FH</option>
-            <option value="UW">UW</option>
-          </select>
-      </td></tr>
-	    <td>Sponsor:
-        <td><input type=text size=30 name=Funding_source></td></tr>
-      <tr><td>IND:
-      <td><select name=IND>
+	      <td>RN/Coordinator:
+	      <td><input type=text size=30 name=RN_coord></td></tr>
+        <td>Primary IRB</td>
+        <td><select name=Primary_IRB>
+             <option value="FH">FH</option>
+             <option value="UW">UW</option>
+            </select>
+       </td></tr>
+	     <td>Sponsor:
+       <td><input type=text size=30 name=Funding_source></td></tr>
+       <tr><td>IND:
+       <td><select name=IND>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
-        </select></tr>
-      <td>Protocol:
-	    <td><input type=text size=20 name=Protocol></td></tr>
-	    <td>IRB Number:
-	    <td><input type=text size=20 name=IR_file></td></tr>
-    <td>IACUC Number:</td>
-	    <td><input type=text size=20 name=iacuc_number></td></tr>
-    <td>Regulatory Coordinator:</td>
-	    <td><input type=text size=20 name=FH_coord></td></tr>
-	    <td>Review Committee:
-	    <td><input type=text size=20 name=CTE></td></tr>
-    <td>Study Status:</td></tr>
-  <td><b>Review Type</b></td></tr>
-    <td>Full <input type="checkbox" name="full" value="full"  /></td>
-  <td>Coop <input type="checkbox" name="coop" value="coop"  /></td/></tr>
-    <td>Minimal <input type="checkbox" name="minimal" value="minimal"  /></td>
-  <td>IRB Authorization<input type="checkbox" name="irbauth" value="irbauth"  /></td/></tr>
-  <td>Exempt <input type="checkbox" name="exempt" value="exempt"  /></td>
-  <td>IACUC Authorization<input type="checkbox" name="iacucauth" value="iacucauth"  /></td/></tr>
-<td>Non Human Subjects <input type="checkbox" name="nothumansubjects" value="nothumansubjects"  /></tr>
+           </select></tr>
+       <td>Protocol:
+	     <td><input type=text size=20 name=Protocol></td></tr>
+	     <td>IRB Number:
+	     <td><input type=text size=20 name=IR_file></td></tr>
+       <td>IACUC Number:</td>
+	     <td><input type=text size=20 name=iacuc_number></td></tr>
+       <td>Regulatory Coordinator:</td>
+	     <td><input type=text size=20 name=FH_coord></td></tr>
+	     <td>Review Committee:
+	     <td><input type=text size=20 name=CTE></td></tr>
+       <td>Study Status:</td></tr>
+       <td><b>Review Type</b></td></tr>
+       <td>Full <input type="checkbox" name="full" value="full"  /></td>
+       <td>Coop <input type="checkbox" name="coop" value="coop"  /></td/></tr>
+       <td>Minimal <input type="checkbox" name="minimal" value="minimal"  /></td>
+       <td>IRB Authorization<input type="checkbox" name="irbauth" value="irbauth"  /></td/></tr>
+       <td>Exempt <input type="checkbox" name="exempt" value="exempt"  /></td>
+       <td>IACUC Authorization<input type="checkbox" name="iacucauth" value="iacucauth"  /></td/></tr>
+       <td>Non Human Subjects <input type="checkbox" name="nothumansubjects" value="nothumansubjects"  /></tr>
     </table>
     <br><br>
     <h2>Study Population Characteristics</h2>
-      <table width="600">
-	    <td>Patient Goal:
-        <td><input type=text size=20 name=Pt_total></td>
-        <td>Age range:
-          <td><input type=text size=20 name=Min_age></td></tr>
-        <td><b>Population</b></tr>
-      <td>HCT-allo<input type="checkbox" name="hctallo" value="hctallo"/></td/>
-      <td>HCT-auto <input type="checkbox" name="hctauto" value="hctauto"/></td>
-      <td>Heme<input type="checkbox" name="heme" value="heme"/></td/></tr>
-  <td>Solid organ<input type="checkbox" name="solidorgan" value="solidorgan"/></td/>
-  <td>Auto immune<input type="checkbox" name="autoimmune" value="autoimmune"/></td/>
-  <td>BV<input type="checkbox" name="bv" value="bv"/></td/></tr>
-</table
+    <table width="600">
+	   <td>Patient Goal:
+     <td><input type=text size=20 name=Pt_total></td>
+     <td>Age range:
+     <td><input type=text size=20 name=Min_age></td></tr>
+     <td><b>Population</b></tr>
+     <td>HCT-allo<input type="checkbox" name="hctallo" value="hctallo"/></td/>
+     <td>HCT-auto <input type="checkbox" name="hctauto" value="hctauto"/></td>
+     <td>Heme<input type="checkbox" name="heme" value="heme"/></td/></tr>
+     <td>Solid organ<input type="checkbox" name="solidorgan" value="solidorgan"/></td/>
+     <td>Auto immune<input type="checkbox" name="autoimmune" value="autoimmune"/></td/>
+     <td>BV<input type="checkbox" name="bv" value="bv"/></td/></tr>
+    </table
 <br><br>
         <h2>Dates</h2>
-        <table>
-        <td>Initial Approval Date:
-        <td><input type=text size=20 name=IRB_approved></td></tr>
-	    <td>IRB expires:
-        <td><input type=text size=20 name=IRB_expires></td></tr>
-        <tr><td>FHCRC Renewal Date:
-        <td><input type=text size=20 name=FHCRC_renewal></td></tr>
-	    <td>UW Renewal Date:
-        <td><input type=text size=20 name=UW_renewal></td></tr>
-      <td>Radiation Safety Review Due Date:</td>
-        <td><input type=text size=20 name=radsafetyreview_date></td></tr>
-	    <td>Review Type:
-        <td><input type=text size=20 name=Type></td></tr>
+    <table>
+     <td>Initial Approval Date:
+     <td><input type=text size=20 name=IRB_approved></td></tr>
+     <td>IRB expires:
+     <td><input type=text size=20 name=IRB_expires></td></tr>
+     <tr><td>FHCRC Renewal Date:
+     <td><input type=text size=20 name=FHCRC_renewal></td></tr>
+     <td>UW Renewal Date:
+     <td><input type=text size=20 name=UW_renewal></td></tr>
+     <td>Radiation Safety Review Due Date:</td>
+     <td><input type=text size=20 name=radsafetyreview_date></td></tr>
+     <td>Review Type:
+     <td><input type=text size=20 name=Type></td></tr>
     </table>
     <br>
       <h2>Committee Reviews</h2>
-        <table>
-      <td>Radiation Safety Review<input type="checkbox" name="radsafetyreview" value="radsafetyreview"/></td/>
-        <td>FH IBC<input type="checkbox" name="fhibc" value="fhibc"/></td></tr>
-      <td>SRC<input type="checkbox" name="src" value="src"/></td/>
-        <td>UW EH&S<input type="checkbox" name="uwehs" value="uwehs"/></td/></tr>
-  <td>CIM<input type="checkbox" name="cim" value="cim"/></td/>
+   <table>
+    <td>Radiation Safety Review<input type="checkbox" name="radsafetyreview" value="radsafetyreview"/></td/>
+    <td>FH IBC<input type="checkbox" name="fhibc" value="fhibc"/></td></tr>
+    <td>SRC<input type="checkbox" name="src" value="src"/></td/>
+    <td>UW EH&S<input type="checkbox" name="uwehs" value="uwehs"/></td/></tr>
+    <td>CIM<input type="checkbox" name="cim" value="cim"/></td/>
     <td>PIM<input type="checkbox" name="pim" value="pim"/></td/></tr>
     <td>Other review</td></tr>
-</table>
+   </table>
     <br>
-      <h2>Supplements</h2>
-        <table>
+     <h2>Supplements</h2>
+   <table>
       <td>Consent Waiver<input type="checkbox" name="consentwaiver" value="consentwaiver"/></td/>
-        <td>Type of Consent Waiver:</td>
-        <td><input type=text size=20 name=consentwaiver_text></td></tr>
+      <td>Type of Consent Waiver:</td>
+      <td><input type=text size=20 name=consentwaiver_text></td></tr>
       <td>HIPAA Waiver<input type="checkbox" name="hipaawaiver" value="hipaawaiver"/></td>
-        <td>Type of HIPAA Waiver:</td>
-        <td><input type=text size=20 name=hipaawaiver_text></td></tr>
+      <td>Type of HIPAA Waiver:</td>
+      <td><input type=text size=20 name=hipaawaiver_text></td></tr>
       <td>HIPAA Authorization</td/>
       <td><select name=hippaaauth>
             <option value="CRDgeneral">CRD General</option>
             <option value="Studyspecific">Study Specfic</option>
-        </select></tr>
-        <td>Repository<input type="checkbox" name="repository" value="repository"/></td/>
-        <td>NIH Cert of Conf<input type="checkbox" name="nihcert" value="nihcert"/></td/></tr>
-    <td>Sub-studies<input type="checkbox" name="substudies" value="substudies"/></td/>
-    <td>MTA<input type="checkbox" name="mta" value="mta"/></td/></tr>
-</table>
-	    <br></br>
-	    <td><input type=submit value=Submit>
+          </select></tr>
+      <td>Repository<input type="checkbox" name="repository" value="repository"/></td/>
+      <td>NIH Cert of Conf<input type="checkbox" name="nihcert" value="nihcert"/></td/></tr>
+      <td>Sub-studies<input type="checkbox" name="substudies" value="substudies"/></td/>
+      <td>MTA<input type="checkbox" name="mta" value="mta"/></td/></tr>
+    </table>
+	   <br></br>
+	   <td><input type=submit value=Submit>
     </form>
-    {% endif %}   
+    {% endif %}
     <ul class=entries>
         <li><em>All fields optional except Protocol</em>
     </ul>

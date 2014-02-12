@@ -312,8 +312,11 @@ def id_results(id_number):
                         docs.Protocol = base.Protocol
                         and base.Protocol = ? order by docs.doc_date ASC""",
                         [id_number])
+    personnel = query_db("""SELECT name, role, added_date FROM personnel WHERE
+                        Protocol = ?""", [id_number])
     if entries:
-        return render_template('study.html', entries = entries)
+        return render_template('study.html', entries = entries,
+                personnel=personnel)
     else:
         entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title
             FROM base WHERE base.Protocol = ?""", [id_number])
