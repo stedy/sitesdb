@@ -76,6 +76,7 @@ def login():
 
 @app.route('/main')
 def main():
+    """Main function to display basic stats about the study"""
     entries = query_db("""SELECT calls.allocation, initials, calltype,
     phonenumber, email,
     nextcalldate_text, calldate_text FROM calls, nextcall, lastcall WHERE
@@ -86,6 +87,7 @@ def main():
 
 @app.route('/add_form', methods = ['GET', 'POST'])
 def add_form():
+    """Add new study participant"""
     error = None
     if request.form['txdate'] and request.form['allocation']:
         txdate_raw = request.form['txdate']
@@ -153,6 +155,7 @@ def add_form():
 
 @app.route('/edit', methods = ['GET', 'POST'])
 def results():
+    """Edit and update study participants"""
     ids = str(request.form['allocation'])
     entries = query_db("""SELECT upn, uw_id, initials, dob, hispanic,
                     gender, ethnicity, pt_userid, txtype,
