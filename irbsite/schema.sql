@@ -78,3 +78,11 @@ CREATE TABLE safety (
   date_back_IRB text,
   comments text
 );
+
+DROP TABLE IF EXISTS personnel;
+CREATE TABLE personnel (
+  Protocol text,
+  added_date date,
+  name text,
+  role text
+);

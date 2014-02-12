@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+<div class=metanav>
+</div>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('new_personnel') }}" method=post class=addstudy>
+    <h2>Add new personnel</h2>
+      <table width="600">
+       <td> Name:</td>
+       <td><input type=text id="name" name=name></td>
+       <td>Protocol:
+       <td><input type=text size=20 name=Protocol></td></tr>
+	     <td>Date Added:
+	     <td><input type=text id="datepicker" name=date_added></td>
+       <td>Role of individual</td>
+       <td><select name=role>
+        <option value="PI">PI</option>
+        <option value="Sub-I">Sub-I</option>
+        <option value="RN_coord">RN/coord</option>
+        <option value="Unanticipated Person">Unanticipated Person</option>
+       </select>
+      </table>
+      <td><input type=submit value=Submit>
+    </form>
+    {% endif %}
+    <ul class=entries>
+        <li><em>All fields optional except Protocol</em>
+    </ul>
+    {% endblock %}

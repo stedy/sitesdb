@@ -68,7 +68,7 @@ def login():
             session['user_id'] = user['user_id']
             entries = query_db("""SELECT Protocol, Title FROM
                 base WHERE Protocol != ''""")
-            return render_template('main.html', entries=entries)
+            return redirect(url_for('main'))
     return render_template('login.html', error = error)
 
 @app.route('/add_form', methods=['GET', 'POST'])
@@ -331,6 +331,11 @@ def add_docs():
     flash('New doc was successfully added')
     return render_template('main.html')
 
+@app.route('/add_study')
+def add_study():
+    """create new entries"""
+    return render_template('add_study.html')
+
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
     ids = str(id_number)
@@ -493,19 +498,50 @@ def submit_docs_edits(docs_id):
             [request.form['Protocol']])
     return render_template('study.html', entries=entries)
 
-@app.route('/add_study')
-def add_study():
-    """create new entries"""
-    return render_template('add_study.html')
+@app.route('/new_safety', methods = ['GET', 'POST'])
+def new_safety():
+    """Add new safety report form to db"""
+    submit = str(request.form['submit_date'])
+    g.db.execute("""INSERT INTO safety (Protocol, submit_date, Submission_type,
+        Report_ID, Report_type, FU_report_no, reportdate,
+        investigator_det_date, date_IRB_review, date_back_IRB, comments) values
+        (?,?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
+        dt.datetime.strptime(submit, "%m/%d/%Y").strftime("%Y-%m-%d"),
+        request.form['Submission_type'],
+        request.form['Report_ID'], request.form['Report_type'],
+        request.form['FU_report_no'], request.form['reportdate'],
+        request.form['investigator_det_date'],
+        request.form['date_IRB_review'], request.form['date_back_IRB'],
+        request.form['comments']])
+    g.db.commit()
+    flash('New safety form for %s successfully entered' % \
+    str(request.form['Protocol']))
+    return render_template('main.html')
+
+@app.route('/new_personnel', methods = ['GET', 'POST'])
+def new_personnel():
+    """Add new personnel to study"""
+    g.db.execute("""INSERT INTO personnel (Protocol, added_date, name, role)
+    values (?,?,?,?)""", [request.form['Protocol'], request.form['date_added'],
+        request.form['name'], request.form['role']])
+    g.db.commit()
+    flash('%s added to Protocol %s' % (request.form['name'], \
+        request.form['Protocol']))
+    return render_template('main.html')
+
+@app.route('/add_personnel')
+def add_personnel():
+    """Add new personnel to existing study"""
+    return render_template('add_personnel.html')
 
 @app.route('/<id_number>/study_funding')
 def id_results_sn(id_number):
     ids = str(id_number)
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
-                        funding.PI, funding.Funding_Title, 
+                        funding.PI, funding.Funding_Title,
                         funding.source, funding.Source_ID, funding.Award_type,
                         funding.Institution, funding.NCE, funding.FVAF,
-                        funding.start, funding.id, funding.end, 
+                        funding.start, funding.id, funding.end,
                         funding.notes FROM base,funding WHERE
                         funding.Protocol = base.Protocol and base.Protocol
                         = ?""", [ids])
@@ -570,6 +606,8 @@ def results():
         error = "Must have either ID number to search"
         return render_template('main.html', error=error)
 
+#results views
+
 @app.route('/safety_results', methods = ['GET', 'POST'])
 def safety_results():
     entries = query_db("""SELECT Protocol, submit_date, Submission_type,
@@ -623,25 +661,8 @@ def funding_results():
         error = "Must enter funding info to search"
         return render_template('funding_query.html', error=error)
 
-@app.route('/new_safety', methods = ['GET', 'POST'])
-def new_safety():
-    """Add new safety report form to db"""
-    submit = str(request.form['submit_date'])
-    g.db.execute("""INSERT INTO safety (Protocol, submit_date, Submission_type,
-        Report_ID, Report_type, FU_report_no, reportdate,
-        investigator_det_date, date_IRB_review, date_back_IRB, comments) values
-        (?,?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
-        dt.datetime.strptime(submit, "%m/%d/%Y").strftime("%Y-%m-%d"),
-        request.form['Submission_type'],
-        request.form['Report_ID'], request.form['Report_type'],
-        request.form['FU_report_no'], request.form['reportdate'],
-        request.form['investigator_det_date'],
-        request.form['date_IRB_review'], request.form['date_back_IRB'],
-        request.form['comments']])
-    g.db.commit()
-    flash('New safety form for %s successfully entered' % \
-    str(request.form['Protocol']))
-    return render_template('main.html')
+
+#utility functions
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
