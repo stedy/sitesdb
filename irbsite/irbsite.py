@@ -1,3 +1,4 @@
+import os
 import sqlite3
 import datetime as dt
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -5,17 +6,20 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from werkzeug import check_password_hash, generate_password_hash
 from contextlib import closing
 
-DATABASE = 'irb_db.db'
-DEBUG = True
-SECRET_KEY = 'development key'
-
 app = Flask(__name__)
-app.config.from_object(__name__)
+
+app.config.update(dict(
+    DATABASE = os.path.join(app.root_path,'irb_db.db'),
+    DEBUG = True,
+    SECRET_KEY = 'development key'))
+
 app.config.from_envvar('IRB_DB_SETTINGS', silent = True)
 
 def connect_db():
     """Returns a new connection to the database"""
-    return sqlite3.connect(app.config['DATABASE'])
+    rv = sqlite3.connect(app.config['DATABASE'])
+    rv.row_factory = sqlite3.Row
+    return rv
 
 def init_db():
     """Initializes database at start of each session"""
