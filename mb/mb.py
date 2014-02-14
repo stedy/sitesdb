@@ -14,7 +14,7 @@ FILE_FOLDER = 'archives'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-app.config.from_envvar('DF_DB_SETTINGS', silent = True)
+app.config.from_envvar('DF_DB_SETTINGS', silent=True)
 
 def connect_db():
     """Returns a new connection to the database"""
@@ -27,7 +27,7 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-def query_db(query, args=(), one = False):
+def query_db(query, args=(), one=False):
     """Queries the database and returns a list of dictionaries"""
     cur = g.db.execute(query, args)
     rv = [dict((cur.description[idx][0], value)
@@ -49,18 +49,18 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = query_db('select * from user where user_id = ?',
-                        [session['user_id']], one = True)
+                        [session['user_id']], one=True)
 
 @app.teardown_request
 def teardown_request(exception):
     if hasattr(g, 'db'):
         g.db.close()
 
-@app.route('/', methods = ['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def main():
     return render_template('main.html')
 
-@app.route('/add_form', methods = ['GET', 'POST'])
+@app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
     error = None
     if request.form['txdate'] and request.form['subject_ID']:
@@ -106,9 +106,9 @@ def add_form():
         flash('New patient successfully added')
     else:
         error = "Must have txdate and subject ID to enter new patient"
-    return render_template('main.html', error = error)
+    return render_template('main.html', error=error)
 
-@app.route('/edit', methods = ['GET', 'POST'])
+@app.route('/edit', methods=['GET', 'POST'])
 def results():
     """Main functionality to edit and update sample data"""
     ids = str(request.form['subject_ID'])
@@ -156,7 +156,7 @@ def check_query():
 def add_subject():
     return render_template('add_subject.html')
 
-@app.route('/update_form', methods= ['GET', 'POST'])
+@app.route('/update_form', methods=['GET', 'POST'])
 def update_form():
     subject_id = request.form['subject_ID']
     g.db.execute("""DELETE FROM demo WHERE subject_ID = ?""", [subject_id])
@@ -262,11 +262,10 @@ def update_form():
 def all_subjects():
     entries = query_db("""SELECT subject_ID, pt_init, Name, uwid, Status,
                     txdate, Donrep FROM demo""")
-    return render_template('all_subjects.html', entries = entries)
+    return render_template('all_subjects.html', entries=entries)
 
-@app.route('/<id_number>', methods = ['GET', 'POST'])
+@app.route('/<id_number>', methods=['GET', 'POST'])
 def id_edit(id_number):
-    #ids = str(request.form['subject_ID'])
     entries = query_db("""SELECT demo.subject_ID, pt_init, Name, uwid,
                     Status, txdate, Donrep, Expected_week1, Expected_week2,
                     Expected_week1, Received_week1,
@@ -303,7 +302,7 @@ def id_edit(id_number):
 def send_kits_form():
     return render_template('send_kits.html')
 
-@app.route('/send_kits', methods = ['GET', 'POST'])
+@app.route('/send_kits', methods=['GET', 'POST'])
 def send_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
     number_of_kits = request.form['count']
@@ -318,7 +317,7 @@ def send_kits():
 def receive_kits_form():
     return render_template('receive_kits.html')
 
-@app.route('/receive_kits', methods = ['GET', 'POST'])
+@app.route('/receive_kits', methods=['GET', 'POST'])
 def receive_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
     g.db.execute("""UPDATE kit SET event = ?, eventdate = ? WHERE subject_ID =
@@ -328,7 +327,7 @@ def receive_kits():
     flash('Kit for subject ID %s received' % request.form['subject_ID'])
     return render_template('main.html')
 
-@app.route('/get_archives', methods = ['GET', 'POST'])
+@app.route('/get_archives', methods=['GET', 'POST'])
 def get_archives():
     """Pull all tables from all db and convert into zip file for
     exporting"""
@@ -336,7 +335,7 @@ def get_archives():
     now = dt.datetime.now().strftime('%Y-%m-%d')
     filename = now + "_database.zip"
     return send_from_directory(app.config['FILE_FOLDER'],
-            filename, as_attachment = True)
+            filename, as_attachment=True)
 
 @app.errorhandler(404)
 def page_not_found(e):
