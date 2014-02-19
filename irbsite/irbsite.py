@@ -528,9 +528,11 @@ def new_safety():
 @app.route('/new_personnel', methods = ['GET', 'POST'])
 def new_personnel():
     """Add new personnel to study"""
-    g.db.execute("""INSERT INTO personnel (Protocol, added_date, name, role)
-    values (?,?,?,?)""", [request.form['Protocol'], request.form['date_added'],
-        request.form['name'], request.form['role']])
+    g.db.execute("""INSERT INTO personnel (Protocol, added_date, name, role,
+                removed_date, responsibility) values (?,?,?,?),?,?""",
+                [request.form['Protocol'], request.form['date_added'],
+        request.form['name'], request.form['role'],
+        request.form['date_removed'], request.form['responsibility']])
     g.db.commit()
     flash('%s added to Protocol %s' % (request.form['name'], \
         request.form['Protocol']))

@@ -76,5 +76,7 @@ CREATE TABLE personnel (
   Protocol text,
   added_date date,
   name text,
-  role text
+  role text,
+  removed_date date,
+  responsibility text
 );
