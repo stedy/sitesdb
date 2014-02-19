@@ -11,20 +11,35 @@
        <td><input type=text id="name" name=name></td>
        <td>Protocol:
        <td><input type=text size=20 name=Protocol></td></tr>
-	     <td>Date Added:
-	     <td><input type=text id="datepicker" name=date_added></td>
        <td>Role of individual</td>
        <td><select name=role>
         <option value="PI">PI</option>
         <option value="Sub-I">Sub-I</option>
         <option value="RN_coord">RN/coord</option>
         <option value="Unanticipated Person">Unanticipated Person</option>
-       </select>
+      </select>
+      <td>Full name/title:
+        <td><input type=text id="fullname" name=fullname></td></tr>
+      <tr>
+      <td>Responsibility</td>
+      <td><select name=responsibility>
+        <option value=1>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+      </select>
+      </tr>
+      <td>Date Added:
+         <td><input type=text id="datepicker" name=date_added></td>
+	     <td>Date Removed:
+         <td><input type=text id="removed" name=date_removed></td></tr>
       </table>
       <td><input type=submit value=Submit>
     </form>
     {% endif %}
     <ul class=entries>
-        <li><em>All fields optional except Protocol</em>
+        <li><em>All fields optional except Protocol. Use Full name field to add full name and degrees</em>
     </ul>
     {% endblock %}
