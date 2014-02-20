@@ -10,7 +10,7 @@ h2          { font-size: 1.2em; }
 .binder li   { margin: 0; padding: 0; font: 'Elena'; width: 100px;}
 .addstudy dt { margin: 0.8em 1.2em; width: 100px; display: block }
 .test dt { margin: 0.8em 1.2em; width: 125px; display: inline-block }
-.entries li { margin: 0.8em 1.2em; width: 400px; display: inline-block; }
+.entries li { margin: 0.8em 1.2em; width: 600px; display: inline-block; }
 .funding_entries li { margin: 0.8em 1.2em; width: 90px; display: inline-block; }
 .mod_entries li { margin: 0.8em 1.2em; width: 170px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }

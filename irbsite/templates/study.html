@@ -5,12 +5,13 @@
     </ul>
     {% endif %}
     <ul class=entries>
-      <h1>Study Documents</h1>
+      <h1>Study Summary</h1>
       <h2>Title: {{ entries[0].Title }}</h2>
 	<br>
   <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
   <h2>Committee:  | Correspondence:  </h2>
   <br>
+  <h2>Study Personnel</h2>
   <table>
     <tr>
       <td><b>Name</td>
@@ -26,6 +27,7 @@
     {% endfor %}
   </table>
   <br></br>
+  <h2>Study Documents</h2>
   <table id="basic">
     <thead>
       <tr>

@@ -529,7 +529,7 @@ def new_safety():
 def new_personnel():
     """Add new personnel to study"""
     g.db.execute("""INSERT INTO personnel (Protocol, added_date, name, role,
-                removed_date, responsibility) values (?,?,?,?),?,?""",
+                removed_date, responsibility) values (?,?,?,?,?,?)""",
                 [request.form['Protocol'], request.form['date_added'],
         request.form['name'], request.form['role'],
         request.form['date_removed'], request.form['responsibility']])
