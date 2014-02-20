@@ -4,15 +4,15 @@ import unittest
 import tempfile
 
 class IRBDBTestCase(unittest.TestCase):
-#	def setUp(self):
-#		self.db_fd, irbsite.app.config['DATABASE'] = tempfile.mkstemp()
-#		irbsite.app.config['TESTING'] = True
-#		self.app = irbsite.app.test_client()
-#		irbsite.init_db()
-#
-#	def tearDown(self):
-#		os.close(self.db_fd)
-#		os.unlink(irbsite.app.config['DATABASE'])
+	def setUp(self):
+		self.db_fd, irbsite.app.config['DATABASE'] = tempfile.mkstemp()
+        irbsite.app.config['TESTING'] = True
+        self.app = irbsite.app.test_client()
+        irbsite.init_db()
+
+	def tearDown(self):
+		os.close(self.db_fd)
+		os.unlink(irbsite.DATABASE)
 
 	def login(self, username, password):
 		return self.app.post('/', data = dict(
