@@ -8,15 +8,15 @@
     <h2>VIDD Study Database - Safety Reporting</h2>
       <table width="600">
         <td> Title:</td>
-        <td><textarea rows="4" cols="40" name=Title value="{{ entries.Title }}"></textarea></td></tr>
+        <td>{{ entries[0].Title }}</td></tr>
       <td>Protocol:
-        <td><input type=text size=20 name=Protocol value="{{ entries[0].Protocol }}"></td></tr>
+        <td><input type=text size=20 name=Protocol value="{{ entries[0].Protocol }}"</td></tr>
 	    <td>IRB Number:
-	    <td><input type=text size=20 name=IR_file></td></tr>
+        <td>{{ entries[0].IR_file }}</td></tr>
         <td>IACUC Number:</td>
-        <td><input type=text size=20 name=iacuc></td></tr>
+        <td></td></tr>
         <td>Study PI:</td>
-        <td><input type=text size=20 name=PI></td></tr>
+        <td>{{ entries[0].PI }}</td></tr>
 	    <td>Date of Submission:
 	    <td><input type=text id="datepicker" name=submit_date></td></tr>
       <tr><td>Submission Type</td>

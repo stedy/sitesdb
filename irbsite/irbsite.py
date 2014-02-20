@@ -295,8 +295,8 @@ def add_safety():
             [request.form['Protocol']])
         return render_template('add_safety.html', entries=entries)
     else:
-        entries = query_db("""SELECT Title, Protocol FROM base WHERE Protocol
-        =?""", [request.form['Protocol']])
+        entries = query_db("""SELECT Title, Protocol, PI, IR_file
+        FROM base WHERE Protocol=?""", [request.form['Protocol']])
         if entries:
             return render_template('new_safety.html', entries = entries)
         else:
@@ -310,8 +310,8 @@ def add_safety():
 def id_results(id_number):
     """Display all results and info for a given IR number """
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
-                        docs.aprvd_date, docs.doc_name, docs.Version,
-                        docs.Type, base.PI,
+                        base.CTE, base.RN_coord, docs.aprvd_date,
+                        docs.doc_name, docs.Version, docs.Type, base.PI,
                         docs.doc_date, docs.id FROM base, docs WHERE
                         docs.Protocol = base.Protocol
                         and base.Protocol = ? order by docs.doc_date ASC""",

@@ -5,11 +5,10 @@
     </ul>
     {% endif %}
     <ul class=entries>
-      <h1>Study Summary</h1>
-      <h2>Title: {{ entries[0].Title }}</h2>
+      <h1>{{ entries[0].Title }}</h1>
 	<br>
   <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
-  <h2>Committee:  | Correspondence:  </h2>
+  <h2>Committee: {{ entries[0].CTE }}  | Correspondence: {{ entries[0].RN_coord }} </h2>
   <br>
   <h2>Study Personnel</h2>
   <table>
