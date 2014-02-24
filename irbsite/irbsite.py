@@ -197,12 +197,6 @@ def add_form():
 
 @app.route('/add_funding', methods=['GET', 'POST'])
 def add_funding():
-    print [request.form['Protocol'], request.form['Funding_Title'],
-                request.form['Award_type'], request.form['PI'],
-                request.form['Institution'],
-                request.form['Source'], request.form['start'],
-                request.form['end'], request.form['NCE'], request.form['FVAF'],
-                request.form['notes']]
     if request.form['PI']:
         g.db.execute("""INSERT INTO funding (Protocol, Funding_Title,
                 Award_type, PI, Institution, Source, start,
