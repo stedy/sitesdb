@@ -62,6 +62,7 @@ def main():
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
+    """Setting up adding new user"""
     error = None
     if request.form['txdate'] and request.form['subject_ID']:
         raw_id = "M-" + request.form['subject_ID'] + "-S001"
@@ -158,6 +159,7 @@ def add_subject():
 
 @app.route('/update_form', methods=['GET', 'POST'])
 def update_form():
+    """Submit update form for individual participant"""
     subject_id = request.form['subject_ID']
     g.db.execute("""DELETE FROM demo WHERE subject_ID = ?""", [subject_id])
     g.db.execute("""INSERT INTO demo (subject_ID, pt_init, Name, uwid, Status,
