@@ -7,10 +7,10 @@
   </ul>
     {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
     <table class="sortable">
-      <tr><td>Study ID</td><td>Blood Sample Count</td></tr>
+      <tr><td>Study ID</td><td>Blood Sample Count</td><td>Swab Sample Count</td></tr>
       {% for entry in entries %}
       <tr><td><a href="{{ url_for('id_edit', id_number=entry.subject_ID)}}">{{ entry.subject_ID }}</a>
-                </td><td>{{ entry.count }}</td></tr>
+      </td><td>{{ entry.bloodcount }}</td><td>{{ entry.swabcount }}</td></tr>
     {% endfor %}
       </table>
     <i>(Click on table header to sort)</i>

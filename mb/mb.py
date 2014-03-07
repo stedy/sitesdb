@@ -331,8 +331,10 @@ def receive_kits():
 
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
 def summarize_indivs():
-    entries = query_db("""SELECT subject_ID, COUNT(value) AS count FROM
-    blood_events GROUP BY subject_ID""")
+    entries = query_db("""SELECT blood_events.subject_ID AS subject_ID, COUNT(blood_events.value) AS
+    bloodcount, COUNT(swabs_events.value) AS swabcount FROM
+    blood_events, swabs_events WHERE blood_events.subject_ID =
+    swabs_events.subject_ID GROUP BY subject_ID""")
     return render_template('summarize_indivs.html', entries=entries)
 
 
