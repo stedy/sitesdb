@@ -329,6 +329,13 @@ def receive_kits():
     flash('Kit for subject ID %s received' % request.form['subject_ID'])
     return render_template('main.html')
 
+@app.route('/summarize_indivs', methods = ['GET', 'POST'])
+def summarize_indivs():
+    entries = query_db("""SELECT subject_ID, COUNT(value) AS count FROM
+    blood_events GROUP BY subject_ID""")
+    return render_template('summarize_indivs.html', entries=entries)
+
+
 @app.route('/get_archives', methods=['GET', 'POST'])
 def get_archives():
     """Pull all tables from all db and convert into zip file for
