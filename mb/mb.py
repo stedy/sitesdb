@@ -58,8 +58,8 @@ def teardown_request(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    entries = query_db("""SELECT Subject_ID, COUNT(event) as count FROM kit
-            WHERE event = "shipped" """)
+    entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
+            WHERE kit_event = "shipped" """)
     return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods=['GET', 'POST'])
@@ -158,109 +158,6 @@ def check_query():
 @app.route('/add_subject')
 def add_subject():
     return render_template('add_subject.html')
-
-@app.route('/update_form', methods=['GET', 'POST'])
-def update_form():
-    """Submit update form for individual participant"""
-    subject_id = request.form['subject_ID']
-    g.db.execute("""DELETE FROM demo WHERE subject_ID = ?""", [subject_id])
-    g.db.execute("""INSERT INTO demo (subject_ID, pt_init, Name, uwid, Status,
-                    txdate, Donrep) values
-                    (?,?,?,?,?,?,?)""",
-                    [request.form['subject_ID'], request.form['pt_init'],
-                    request.form['Name'], request.form['uwid'],
-                    request.form['Status'], request.form['txdate'],
-                    request.form['Donrep']])
-    g.db.execute("""DELETE FROM recipient_swabs WHERE subject_ID = ?""",
-            [subject_id])
-    g.db.execute("""INSERT INTO recipient_swabs (subject_ID, Expected_pre_tx,
-                    Received_pre_tx,
-                    Expected_week1, Received_week1,
-                    Expected_week2, Received_week2,
-                    Expected_week3, Received_week3,
-                    Expected_week4, Received_week4,
-                    Expected_week5, Received_week5,
-                    Expected_week6, Received_week6,
-                    Expected_week7, Received_week7,
-                    Expected_week8, Received_week8,
-                    Expected_week9, Received_week9,
-                    Expected_week10, Received_week10,
-                    Expected_week11, Received_week11,
-                    Expected_week12, Received_week12,
-                    Expected_week13, Received_week13,
-                    Expected_week14, Received_week14) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,
-                    ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                    [request.form['subject_ID'],
-                    request.form['Expected_pre_tx'],
-                    request.form['Received_pre_tx'],
-                    request.form['Expected_week1'],
-                    request.form['Received_week1'],
-                    request.form['Expected_week2'],
-                    request.form['Received_week2'],
-                    request.form['Expected_week3'],
-                    request.form['Received_week3'],
-                    request.form['Expected_week4'],
-                    request.form['Received_week4'],
-                    request.form['Expected_week5'],
-                    request.form['Received_week5'],
-                    request.form['Expected_week6'],
-                    request.form['Received_week6'],
-                    request.form['Expected_week7'],
-                    request.form['Received_week7'],
-                    request.form['Expected_week8'],
-                    request.form['Received_week8'],
-                    request.form['Expected_week9'],
-                    request.form['Received_week9'],
-                    request.form['Expected_week10'],
-                    request.form['Received_week10'],
-                    request.form['Expected_week11'],
-                    request.form['Received_week11'],
-                    request.form['Expected_week12'],
-                    request.form['Received_week12'],
-                    request.form['Expected_week13'],
-                    request.form['Received_week13'],
-                    request.form['Expected_week14'],
-                    request.form['Received_week14']
-                    ])
-    g.db.execute("""DELETE FROM recipient_blood WHERE
-            subject_ID = ?""", [subject_id])
-    g.db.execute("""INSERT INTO recipient_blood (subject_ID,
-                    Blood_draw_pre_tx, Blood_received_pre_tx,
-                    Pre_tx_time_drawn, Pre_tx_time_processed,
-                    Blood_expected_week1, Blood_received_week1,
-                    Week1_time_drawn, Week1_time_processed,
-                    Blood_expected_week2, Blood_received_week2,
-                    Week2_time_drawn, Week2_time_processed,
-                    Blood_expected_week3, Blood_received_week3,
-                    Week3_time_drawn, Week3_time_processed,
-                    Blood_expected_week4, Blood_received_week4,
-                    Week4_time_drawn, Week4_time_processed) values
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                    [request.form['subject_ID'],
-                    request.form['Blood_draw_pre_tx'],
-                    request.form['Blood_received_pre_tx'],
-                    request.form['Pre_tx_time_drawn'],
-                    request.form['Pre_tx_time_processed'],
-                    request.form['Blood_expected_week1'],
-                    request.form['Blood_received_week1'],
-                    request.form['Week1_time_drawn'],
-                    request.form['Week1_time_processed'],
-                    request.form['Blood_expected_week2'],
-                    request.form['Blood_received_week2'],
-                    request.form['Week2_time_drawn'],
-                    request.form['Week2_time_processed'],
-                    request.form['Blood_expected_week3'],
-                    request.form['Blood_received_week3'],
-                    request.form['Week3_time_drawn'],
-                    request.form['Week3_time_processed'],
-                    request.form['Blood_expected_week4'],
-                    request.form['Blood_received_week4'],
-                    request.form['Week4_time_drawn'],
-                    request.form['Week4_time_processed']])
-    g.db.commit()
-    flash('Entry for subject ID %s edited' % subject_id)
-    return render_template('main.html')
 
 @app.route('/all_subjects')
 def all_subjects():
