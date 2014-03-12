@@ -66,17 +66,17 @@ def main():
 def add_form():
     """Setting up adding new user"""
     error = None
-    if request.form['txdate'] and request.form['subject_ID']:
-        raw_id = "M-" + request.form['subject_ID'] + "-S001"
+    if request.form['txdate'] and request.form['Subject_ID']:
+        raw_id = "M-" + request.form['Subject_ID'] + "-S001"
         swabs = [7 * x for x in range(14)]
         txdate_raw = request.form['txdate']
         txdate = dt.datetime.strptime(txdate_raw, "%m/%d/%Y")
         fu_days = [(next_weekday(txdate, 0) +
             dt.timedelta(days=day)).strftime("%m/%d/%Y") for day in swabs]
-        outvals = [raw_id]
+        outvals = []
         for x in range(14):
             outvals.append(fu_days[x])
-        g.db.execute("""INSERT INTO demo (subject_ID, uwid, pt_init, Name,
+        g.db.execute("""INSERT INTO demo (Subject_ID, uwid, pt_init, Name,
                     Status, txdate, Donrep, conditioning_start_date) values
                     (?,?,?,?,?,?,?,?)""",
                     [raw_id, request.form['uwid'],
@@ -84,28 +84,11 @@ def add_form():
                     request.form['Status'], request.form['txdate'],
                     request.form['Donrep'],
                     request.form['conditioning_start_date']])
-        if request.form['Donrep'] == "Recipient":
-            g.db.execute("""INSERT INTO recipient_swabs (subject_ID,
-                        Expected_week1, Expected_week2,
-                        Expected_week3, Expected_week4,
-                        Expected_week5, Expected_week6,
-                        Expected_week7, Expected_week8,
-                        Expected_week9, Expected_week10,
-                        Expected_week11, Expected_week12,
-                        Expected_week13,
-                        Expected_week14) VALUES
-                        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-                        outvals)
-            g.db.execute("""INSERT INTO recipient_blood (Subject_ID) VALUES
-                        (?)""", [raw_id])
-        if request.form['Donrep'] == "Donor":
-            g.db.execute("""INSERT INTO donor_swabs (subject_ID,
-                        Expected_pre_tx, Received_pre_tx) VALUES (?,?,?)""",
-                        [raw_id, request.form['Expected_pre_tx'],
-                        request.form['Received_pre_tx']])
-            g.db.execute("""INSERT INTO donor_blood (Subject_ID) VALUES (?)""",
-                        [raw_id])
-        g.db.commit()
+        for x in outvals:
+            g.db.execute("""INSERT INTO events (Subject_ID, event,
+                            eventdate) VALUES (?,?,?)""",
+                            [raw_id,"Expected", x])
+            g.db.commit()
         flash('New patient successfully added')
     else:
         error = "Must have txdate and subject ID to enter new patient"
@@ -114,8 +97,8 @@ def add_form():
 @app.route('/edit', methods=['GET', 'POST'])
 def results():
     """Main functionality to edit and update sample data"""
-    ids = str(request.form['subject_ID'])
-    entries = query_db("""SELECT demo.subject_ID, pt_init, Name, uwid,
+    ids = str(request.form['Subject_ID'])
+    entries = query_db("""SELECT demo.Subject_ID, pt_init, Name, uwid,
                     Status, txdate, Donrep, Expected_week1, Expected_week2,
                     Expected_week1, Received_week1,
                     Expected_week2, Received_week2,
@@ -140,10 +123,10 @@ def results():
                     Blood_expected_week4, Blood_received_week4,
                     Week4_time_drawn, Week4_time_processed
                     from demo, recipient_swabs,
-                    recipient_blood WHERE demo.subject_ID =
-                    recipient_swabs.subject_ID AND demo.subject_ID =
-                    recipient_blood.subject_ID AND
-                    demo.subject_ID = ?""",
+                    recipient_blood WHERE demo.Subject_ID =
+                    recipient_swabs.Subject_ID AND demo.Subject_ID =
+                    recipient_blood.Subject_ID AND
+                    demo.Subject_ID = ?""",
                     [ids])
     return render_template('edit_subject.html', entries=entries)
 
@@ -161,41 +144,14 @@ def add_subject():
 
 @app.route('/all_subjects')
 def all_subjects():
-    entries = query_db("""SELECT subject_ID, pt_init, Name, uwid, Status,
+    entries = query_db("""SELECT Subject_ID, pt_init, Name, uwid, Status,
                     txdate, Donrep FROM demo""")
     return render_template('all_subjects.html', entries=entries)
 
 @app.route('/<id_number>', methods=['GET', 'POST'])
 def id_edit(id_number):
-    entries = query_db("""SELECT demo.subject_ID, pt_init, Name, uwid,
-                    Status, txdate, Donrep, Expected_week1, Expected_week2,
-                    Expected_week1, Received_week1,
-                    Expected_week2, Received_week2,
-                    Expected_week3, Received_week3,
-                    Expected_week4, Received_week4,
-                    Expected_week5, Received_week5,
-                    Expected_week6, Received_week6,
-                    Expected_week7, Received_week7,
-                    Expected_week8, Received_week8,
-                    Expected_week9, Received_week9,
-                    Expected_week10, Received_week10,
-                    Expected_week11, Received_week11,
-                    Expected_week12, Received_week12,
-                    Expected_week13, Received_week13,
-                    Expected_week14, Received_week14,
-                    Blood_expected_week1, Blood_received_week1,
-                    Week1_time_drawn, Week1_time_processed,
-                    Blood_expected_week2, Blood_received_week2,
-                    Week2_time_drawn, Week2_time_processed,
-                    Blood_expected_week3, Blood_received_week3,
-                    Week3_time_drawn, Week3_time_processed,
-                    Blood_expected_week4, Blood_received_week4,
-                    Week4_time_drawn, Week4_time_processed
-                    from demo, recipient_swabs,
-                    recipient_blood WHERE demo.subject_ID =
-                    recipient_swabs.subject_ID AND demo.subject_ID =
-                    recipient_blood.subject_ID AND
-                    demo.subject_ID = ?""",
+    entries = query_db("""SELECT event, eventtime FROM events WHERE
+                    Subject_ID = ?""",
                     [id_number])
     return render_template('edit_subject.html', entries=entries)
 
@@ -208,10 +164,10 @@ def send_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
     number_of_kits = request.form['count']
     for kit in range(int(number_of_kits)):
-        g.db.execute("""INSERT INTO kit (subject_ID, eventdate, event) VALUES
-                    (?,?,?)""", [request.form['subject_ID'], now, 'shipped'])
+        g.db.execute("""INSERT INTO kit (Subject_ID, eventdate, event) VALUES
+                    (?,?,?)""", [request.form['Subject_ID'], now, 'shipped'])
         g.db.commit()
-    flash('Kits for subject ID %s shipped' % request.form['subject_ID'])
+    flash('Kits for subject ID %s shipped' % request.form['Subject_ID'])
     return render_template('main.html')
 
 @app.route('/receive_kits_form')
@@ -221,22 +177,22 @@ def receive_kits_form():
 @app.route('/receive_kits', methods=['GET', 'POST'])
 def receive_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
-    g.db.execute("""UPDATE kit SET event = ?, eventdate = ? WHERE subject_ID =
+    g.db.execute("""UPDATE kit SET event = ?, eventdate = ? WHERE Subject_ID =
                 ? AND eventdate = (SELECT MAX(eventdate) FROM kit)""",
-                ['received', now, request.form['subject_ID']])
+                ['received', now, request.form['Subject_ID']])
     g.db.commit()
-    flash('Kit for subject ID %s received' % request.form['subject_ID'])
+    flash('Kit for subject ID %s received' % request.form['Subject_ID'])
     entries = query_db("""SELECT Subject_ID, COUNT(event) as count FROM kit
             WHERE event = "shipped" """)
     return render_template('main.html', entries=entries)
 
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
 def summarize_indivs():
-    entries = query_db("""SELECT blood_events.subject_ID AS subject_ID,
+    entries = query_db("""SELECT blood_events.Subject_ID AS Subject_ID,
         COUNT(blood_events.value) AS
         bloodcount, COUNT(swabs_events.value) AS swabcount FROM
-        blood_events, swabs_events WHERE blood_events.subject_ID =
-        swabs_events.subject_ID GROUP BY subject_ID""")
+        blood_events, swabs_events WHERE blood_events.Subject_ID =
+        swabs_events.Subject_ID GROUP BY Subject_ID""")
     return render_template('summarize_indivs.html', entries=entries)
 
 @app.route('/get_archives', methods=['GET', 'POST'])

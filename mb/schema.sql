@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS demo;
-CREATE TABLE demo (subject_ID text, pt_init text, Name text, uwid text,
+CREATE TABLE demo (Subject_ID text, pt_init text, Name text,
+                    uwid text, conditioning_start_date text,
                     Status text, txdate text, Donrep text);
 
 DROP TABLE IF EXISTS events;

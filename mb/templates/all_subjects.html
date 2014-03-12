@@ -11,7 +11,7 @@
     <table class="sortable">
       <tr><td>Study ID</td><td>UW ID</td><td>Initials</td><td>Tx date</td><td>Status</td></tr>
       {% for entry in entries %}
-      <tr><td><a href="{{ url_for('id_edit', id_number=entry.subject_ID)}}">{{ entry.subject_ID }}</a>
+      <tr><td><a href="{{ url_for('id_edit', id_number=entry.Subject_ID)}}">{{ entry.Subject_ID }}</a>
       </td></td><td>{{ entry.uwid }}</td><td>{{ entry.pt_init }}</td>
       <td>{{ entry.txdate }}</td><td>{{ entry.Status }}</td></tr>
     {% endfor %}
