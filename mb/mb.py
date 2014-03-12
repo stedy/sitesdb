@@ -150,10 +150,14 @@ def all_subjects():
 
 @app.route('/<id_number>', methods=['GET', 'POST'])
 def id_edit(id_number):
-    entries = query_db("""SELECT event, eventtime FROM events WHERE
+    evententries = query_db("""SELECT event, eventdate FROM events WHERE
                     Subject_ID = ?""",
                     [id_number])
-    return render_template('edit_subject.html', entries=entries)
+    entries = query_db("""SELECT Subject_ID, pt_init, Name, uwid,
+                    conditioning_start_date, Status, txdate, Donrep FROM
+                    demo where Subject_ID = ?""", [id_number])
+    return render_template('edit_subject.html', evententries = evententries,
+                            entries=entries)
 
 @app.route('/send_kits_form')
 def send_kits_form():
