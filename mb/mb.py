@@ -192,6 +192,20 @@ def receive_kits():
             WHERE kit_event = "shipped" """)
     return render_template('main.html', entries=entries)
 
+@app.route('/add_event_form')
+def add_event_form():
+    return render_template('add_event.html')
+
+@app.route('/add_event')
+def add_event():
+    g.db.execute("""INSERT INTO events (Subject_ID, event, eventdate,
+    blooddraw, bloodprocessed, comments) VALUES
+    (?,?,?,?,?,?)""", [request.form['Subject_ID'], request.form['event'],
+        request.form['eventdate'], request.form['blooddraw'],
+        request.form['bloodprocessed'], request.form['comments']])
+    g.db.commit()
+    return render_template('main.html')
+
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
 def summarize_indivs():
     entries = query_db("""SELECT blood_events.Subject_ID AS Subject_ID,

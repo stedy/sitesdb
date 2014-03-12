@@ -7,6 +7,8 @@
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 <h2>What would you like to do today?</h2>
 <br>
+<a href="{{ url_for('add_event_form') }}">Add New Event</a>
+<br>
 <a href="{{ url_for('add_subject') }}">Enroll New Subject</a>
 <br>
 <a href="{{ url_for('query') }}">Edit Enrolled Subject</a>

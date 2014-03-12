@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+<ul class=metanav>
+</ul>
+{% endif %}
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('add_event') }}" method=post>
+    <h2>Add new event</h2>
+    <table>
+      <tr><td>Subject ID</td><td>Event</td><td>Event Date</td><td>Blood Draw Time</td>
+      <td>Blood Processed Time</td><td>Comments</td></tr>
+      <td><input type=text size=20 name=Subject_ID></td>
+      <td><input type=text size=20 name=event></td>
+      <td><input type=text size=20 name=eventdate></td>
+      <td><input type=text size=20 name=blooddraw></td>
+      <td><input type=text size=20 name=bloodprocessed></td>
+      <td><input type=text size=20 name=comments></td></tr>
+</table>
+	    <br>
+	    <input type=submit value=Submit>
+	</dl>
+    </form>
+    <ul class=entries>
+      <em>All fields optional except Subject ID.  Enter dates in form MM/DD/YYYY</em>
+    </ul>
+    {% endblock %}

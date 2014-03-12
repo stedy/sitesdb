@@ -4,7 +4,9 @@ CREATE TABLE demo (Subject_ID text, pt_init text, Name text,
                     Status text, txdate text, Donrep text);
 
 DROP TABLE IF EXISTS events;
-CREATE TABLE events (Subject_ID text, event text, eventdate date);
+CREATE TABLE events (Subject_ID text, event text,
+                     eventdate date, blooddraw text,
+                     bloodprocessed, comments text);
 
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (name text, user_id text);
