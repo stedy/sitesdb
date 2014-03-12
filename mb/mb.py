@@ -168,11 +168,13 @@ def send_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
     number_of_kits = request.form['count']
     for kit in range(int(number_of_kits)):
-        g.db.execute("""INSERT INTO kit (Subject_ID, eventdate, event) VALUES
+        g.db.execute("""INSERT INTO kit (Subject_ID, kit_eventdate, kit_event) VALUES
                     (?,?,?)""", [request.form['Subject_ID'], now, 'shipped'])
         g.db.commit()
     flash('Kits for subject ID %s shipped' % request.form['Subject_ID'])
-    return render_template('main.html')
+    entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
+            WHERE kit_event = "shipped" """)
+    return render_template('main.html', entries=entries)
 
 @app.route('/receive_kits_form')
 def receive_kits_form():
@@ -181,13 +183,13 @@ def receive_kits_form():
 @app.route('/receive_kits', methods=['GET', 'POST'])
 def receive_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
-    g.db.execute("""UPDATE kit SET event = ?, eventdate = ? WHERE Subject_ID =
-                ? AND eventdate = (SELECT MAX(eventdate) FROM kit)""",
+    g.db.execute("""UPDATE kit SET kit_event = ?, kit_eventdate = ? WHERE Subject_ID =
+                ? AND kit_eventdate = (SELECT MAX(kit_eventdate) FROM kit)""",
                 ['received', now, request.form['Subject_ID']])
     g.db.commit()
     flash('Kit for subject ID %s received' % request.form['Subject_ID'])
-    entries = query_db("""SELECT Subject_ID, COUNT(event) as count FROM kit
-            WHERE event = "shipped" """)
+    entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
+            WHERE kit_event = "shipped" """)
     return render_template('main.html', entries=entries)
 
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
