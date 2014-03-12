@@ -48,7 +48,7 @@ def before_request():
     g.db = connect_db()
     g.user = None
     if 'user_id' in session:
-        g.user = query_db('select * from user where user_id = ?',
+        g.user = query_db('SELECT * FROM user WHERE user_id = ?',
                         [session['user_id']], one=True)
 
 @app.teardown_request
@@ -58,7 +58,9 @@ def teardown_request(exception):
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    return render_template('main.html')
+    entries = query_db("""SELECT Subject_ID, COUNT(event) as count FROM kit
+            WHERE event = "shipped" """)
+    return render_template('main.html', entries=entries)
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
@@ -327,16 +329,18 @@ def receive_kits():
                 ['received', now, request.form['subject_ID']])
     g.db.commit()
     flash('Kit for subject ID %s received' % request.form['subject_ID'])
-    return render_template('main.html')
+    entries = query_db("""SELECT Subject_ID, COUNT(event) as count FROM kit
+            WHERE event = "shipped" """)
+    return render_template('main.html', entries=entries)
 
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
 def summarize_indivs():
-    entries = query_db("""SELECT blood_events.subject_ID AS subject_ID, COUNT(blood_events.value) AS
-    bloodcount, COUNT(swabs_events.value) AS swabcount FROM
-    blood_events, swabs_events WHERE blood_events.subject_ID =
-    swabs_events.subject_ID GROUP BY subject_ID""")
+    entries = query_db("""SELECT blood_events.subject_ID AS subject_ID,
+        COUNT(blood_events.value) AS
+        bloodcount, COUNT(swabs_events.value) AS swabcount FROM
+        blood_events, swabs_events WHERE blood_events.subject_ID =
+        swabs_events.subject_ID GROUP BY subject_ID""")
     return render_template('summarize_indivs.html', entries=entries)
-
 
 @app.route('/get_archives', methods=['GET', 'POST'])
 def get_archives():

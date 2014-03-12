@@ -43,4 +43,4 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (name text, user_id text);
 
 DROP TABLE IF EXISTS kit;
-CREATE TABLE kit (subject_ID text, event text, eventdate date);
+CREATE TABLE kit (Subject_ID text, event text, eventdate date);
