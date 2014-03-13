@@ -196,7 +196,7 @@ def receive_kits():
 def add_event_form():
     return render_template('add_event.html')
 
-@app.route('/add_event')
+@app.route('/add_event', methods = ['GET', 'POST'])
 def add_event():
     g.db.execute("""INSERT INTO events (Subject_ID, event, eventdate,
     blooddraw, bloodprocessed, comments) VALUES
