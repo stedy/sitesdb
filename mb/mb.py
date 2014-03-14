@@ -149,8 +149,8 @@ def all_subjects():
 
 @app.route('/<id_number>', methods=['GET', 'POST'])
 def id_edit(id_number):
-    evententries = query_db("""SELECT event, eventdate FROM events WHERE
-                    Subject_ID = ?""",
+    evententries = query_db("""SELECT event, eventdate, week FROM events WHERE
+                    Subject_ID = ? AND event = "Received" """,
                     [id_number])
     entries = query_db("""SELECT Subject_ID, pt_init, Name, uwid,
                     Status, txdate, Donrep FROM

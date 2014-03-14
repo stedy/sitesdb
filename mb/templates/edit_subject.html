@@ -26,9 +26,9 @@
         <br>
         <h2>Sample Info and Collection Dates</h2>
         <table>
-          <tr><td>Event</td><td>Event Date</td></tr>
+          <tr><td>Event</td><td>Event Date</td><td>Week</td></tr>
           {% for entry in evententries %}
-          <tr><td>{{ entry.event }}</td><td>{{ entry.eventdate }}</td></tr>
+          <tr><td>{{ entry.event }}</td><td>{{ entry.eventdate }}</td><td>{{ entry.week }}</td></tr>
       {% endfor %}
       </table>
   <br>
