@@ -9,8 +9,8 @@
     <table class="sortable">
       <tr><td>Study ID</td><td>Blood Sample Count</td><td>Swab Sample Count</td></tr>
       {% for entry in entries %}
-      <tr><td><a href="{{ url_for('id_edit', id_number=entry.subject_ID)}}">{{ entry.subject_ID }}</a>
-      </td><td>{{ entry.bloodcount }}</td><td>{{ entry.swabcount }}</td></tr>
+      <tr><td><a href="{{ url_for('id_edit', id_number=entry.Subject_ID)}}">{{ entry.Subject_ID }}</a>
+      </td><td>{{ entry.e }}</td><td>{{ entry.swabcount }}</td></tr>
     {% endfor %}
       </table>
     <i>(Click on table header to sort)</i>

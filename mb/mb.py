@@ -208,11 +208,9 @@ def add_event():
 
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
 def summarize_indivs():
-    entries = query_db("""SELECT blood_events.Subject_ID AS Subject_ID,
-        COUNT(blood_events.value) AS
-        bloodcount, COUNT(swabs_events.value) AS swabcount FROM
-        blood_events, swabs_events WHERE blood_events.Subject_ID =
-        swabs_events.Subject_ID GROUP BY Subject_ID""")
+    entries = query_db("""SELECT Subject_ID,
+        COUNT(event) as e FROM events
+        WHERE event = "Received" AND sample = "Blood" GROUP BY Subject_ID""")
     return render_template('summarize_indivs.html', entries=entries)
 
 @app.route('/get_archives', methods=['GET', 'POST'])
