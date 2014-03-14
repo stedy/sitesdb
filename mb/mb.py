@@ -77,13 +77,12 @@ def add_form():
         for x in range(14):
             outvals.append(fu_days[x])
         g.db.execute("""INSERT INTO demo (Subject_ID, uwid, pt_init, Name,
-                    Status, txdate, Donrep, conditioning_start_date) values
+                    Status, txdate, Donrep) VALUES
                     (?,?,?,?,?,?,?,?)""",
                     [raw_id, request.form['uwid'],
                     request.form['pt_init'], request.form['Name'],
                     request.form['Status'], request.form['txdate'],
-                    request.form['Donrep'],
-                    request.form['conditioning_start_date']])
+                    request.form['Donrep']])
         for x in outvals:
             g.db.execute("""INSERT INTO events (Subject_ID, event,
                             eventdate) VALUES (?,?,?)""",
@@ -154,7 +153,7 @@ def id_edit(id_number):
                     Subject_ID = ?""",
                     [id_number])
     entries = query_db("""SELECT Subject_ID, pt_init, Name, uwid,
-                    conditioning_start_date, Status, txdate, Donrep FROM
+                    Status, txdate, Donrep FROM
                     demo where Subject_ID = ?""", [id_number])
     return render_template('edit_subject.html', evententries = evententries,
                             entries=entries)
