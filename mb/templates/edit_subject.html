@@ -5,40 +5,48 @@
 </ul>
 {% endif %}
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
-    <form action="{{ url_for('id_edit', id_number=Subject_ID) }}" method=post class=addstudy>
       {% for entry in entries %}
       <dl>
         <h2>Screening and Randomization</h2>
         <table>
-          <tr><td>Subject ID</td>
-            <td><input type=text size=20 name=Subject_ID value="{{ entry.Subject_ID }}"></td>
-            <td>UW ID</td>
-            <td><input type=text size=20 name=uwid value="{{ entry.uwid }}"></td></tr>
-          <tr><td>Name</td>
-            <td><input type=text size=20 name=Name value="{{ entry.Name }}"></td>
-          <tr><td>Initials</td>
-            <td><input type=text size=20 name=pt_init value="{{ entry.pt_init }}"></td>
-            <td>Status</td>
-            <td><input type=text size=20 name=Status value="{{ entry.Status }}"></td></tr>
-          <tr><td>Donor/Recipient</td>
-            <td><input type=text size=20 name=Donrep value="{{ entry.Donrep }}"></td>
+          <tr><td><b>Subject ID</td>
+            <td>{{ entry.Subject_ID }}</td>
+            <td><b>UW ID</td>
+            <td>{{ entry.uwid }}</td></tr>
+          <tr><td><b>Name</td>
+            <td>{{ entry.Name }}</td>
+          <tr><td><b>Initials</td>
+            <td>{{ entry.pt_init }}</td>
+            <td><b>Status</td>
+            <td>{{ entry.Status }}</td></tr>
+          <tr><td><b>Donor/Recipient</td>
+            <td>{{ entry.Donrep }}</td>
               </table>
         <br>
         <h2>Sample Info and Collection Dates</h2>
-        <table>
-          <tr><td>Event</td><td>Event Date</td><td>Week</td><td>Sample Type</td></tr>
+        <table id="indiv">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Event Date</th>
+              <th>Week</th>
+              <th>Sample Type</th>
+            </tr>
+          </thead>
+          <tbody>
           {% for entry in evententries %}
-          <tr><td>{{ entry.event }}</td><td>{{ entry.eventdate }}</td><td>{{ entry.week }}</td><td>{{ entry.sample }}</td></tr>
-      {% endfor %}
+          <tr>
+            <td>{{ entry.event }}</td>
+            <td>{{ entry.eventdate }}</td>
+            <td>{{ entry.week }}</td>
+            <td>{{ entry.sample }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
       </table>
   <br>
-    <input type=submit value=Submit>
       {% else %}
       <h2>Sorry, that value does not exist in the database</h2>
   {% endfor %}
 	</dl>
-    </form>
-    <ul class=entries>
-        <em>Update accordingly</em>
-    </ul>
     {% endblock %}
