@@ -17,9 +17,9 @@ def main():
         csvWriter.writerow(headers_demo)
         csvWriter.writerows(rows)
 
-        csvWriter2 = csv.writer(open("archives/recipient_blood.csv", "w"))
+        csvWriter2 = csv.writer(open("archives/events.csv", "w"))
         c = connection.cursor()
-        code = c.execute("SELECT * from recipient_blood")
+        code = c.execute("SELECT * from events")
         rows = code.fetchall()
         headers_rb = []
         for colinfo in c.description:
@@ -27,35 +27,6 @@ def main():
         csvWriter2.writerow(headers_rb)
         csvWriter2.writerows(rows)
 
-        csvWriter3 = csv.writer(open("archives/recipient_swabs.csv", "w"))
-        c = connection.cursor()
-        code = c.execute("SELECT * from recipient_swabs")
-        rows = code.fetchall()
-        headers_rs = []
-        for colinfo in c.description:
-            headers_rs.append(colinfo[0])
-        csvWriter3.writerow(headers_rs)
-        csvWriter3.writerows(rows)
-
-        csvWriter4 = csv.writer(open("archives/donor_blood.csv", "w"))
-        c = connection.cursor()
-        code = c.execute("SELECT * from donor_blood")
-        rows = code.fetchall()
-        headers_db = []
-        for colinfo in c.description:
-            headers_db.append(colinfo[0])
-        csvWriter4.writerow(headers_db)
-        csvWriter4.writerows(rows)
-
-        csvWriter5 = csv.writer(open("archives/donor_swabs.csv", "w"))
-        c = connection.cursor()
-        code = c.execute("SELECT * from donor_swabs")
-        rows = code.fetchall()
-        headers_ds = []
-        for colinfo in c.description:
-            headers_ds.append(colinfo[0])
-        csvWriter5.writerow(headers_ds)
-        csvWriter5.writerows(rows)
 
     files = glob.glob('*.csv')
     now = dt.datetime.now().strftime('%Y-%m-%d')
