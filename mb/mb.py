@@ -178,7 +178,9 @@ def send_kits():
 
 @app.route('/receive_kits_form')
 def receive_kits_form():
-    return render_template('receive_kits.html')
+    entries = query_db("""SELECT Subject_ID FROM kit WHERE kit_event =
+                        "shipped" GROUP BY Subject_ID""")
+    return render_template('receive_kits.html', entries=entries)
 
 @app.route('/receive_kits', methods=['GET', 'POST'])
 def receive_kits():
@@ -190,7 +192,7 @@ def receive_kits():
     g.db.commit()
     flash('Kit for subject ID %s received' % request.form['Subject_ID'])
     entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
-            WHERE kit_event = "shipped" """)
+            WHERE kit_event = "shipped" GROUP BY Subject_ID""")
     return render_template('main.html', entries=entries)
 
 @app.route('/add_event_form')
@@ -202,12 +204,14 @@ def add_event_form():
 @app.route('/add_event', methods = ['GET', 'POST'])
 def add_event():
     g.db.execute("""INSERT INTO events (Subject_ID, sample, event, eventdate,
-                comments) VALUES
-    (?,?,?,?,?)""", [request.form['Subject_ID'], request.form['sample'],
-                    "Received", request.form['eventdate'],
-                    request.form['comments']])
+                comments) VALUES (?,?,?,?,?)""", [request.form['Subject_ID'],
+                    request.form['sample'], "Received",
+                    request.form['eventdate'], request.form['comments']])
     g.db.commit()
-    return render_template('main.html')
+    flash('Event added for subject ID %s' % request.form['Subject_ID'])
+    entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
+            WHERE kit_event = "shipped" GROUP By Subject_ID""")
+    return render_template('main.html', entries=entries)
 
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
 def summarize_indivs():

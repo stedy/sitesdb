@@ -5,7 +5,11 @@
     <h2>Receive kits</h2>
     <table>
       <tr><td><b>Subject ID</td></tr>
-          <tr><td><input type=text size=10 name=Subject_ID></td>
+        <td><select name=Subject_ID>
+        {% for entry in entries %}
+        <option value="{{ entry.Subject_ID }}"> {{ entry.Subject_ID }}</option>
+        {% endfor %}
+      </select>
   </table>
   <br>
     <input type=submit value="Click to Recieve!">
