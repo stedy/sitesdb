@@ -2,6 +2,17 @@
 <title>Microbiome Study</title>
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js"></script>
+<script>
+  $(document).ready(function() {
+      $('#basic').dataTable();
+   } );
+</script>
+
+
 <div class=page>
   <a href="{{ url_for('main') }}" style="text-decoration:none"><h1>Microbiome Study Tracking Form</h1></a>
   <div class=metanav>
