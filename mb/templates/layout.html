@@ -3,13 +3,13 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link href="http://datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.js"></script>
 <script>
   $(document).ready(function() {
     $('#basic').dataTable( {
-      "bFilter": true
     } );
    } );
   $(document).ready(function() {

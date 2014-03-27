@@ -8,13 +8,17 @@
     <form action="{{ url_for('add_event') }}" method=post>
     <h2>Add new event</h2>
     <table>
-      <tr><td>Subject ID</td><td>Event</td><td>Event Date</td><td>Blood Draw Time</td>
-      <td>Blood Processed Time</td><td>Comments</td></tr>
-      <td><input type=text size=20 name=Subject_ID></td>
-      <td><input type=text size=20 name=event></td>
+      <tr><td>Subject ID</td><td>Event</td><td>Event Date</td><td>Comments</td></tr>
+    <td><select name=Subject_ID>
+        {% for entry in entries %}
+        <option value ="{{ entry.Subject_ID }}"> {{ entry.Subject_ID }}</option>
+        {% endfor %}
+      </select>
+      <td><select name=sample>
+          <option value="Blood"> Blood </option>
+          <option value="Swab"> Swab</option>
+        </select>
       <td><input type=text size=20 name=eventdate></td>
-      <td><input type=text size=20 name=blooddraw></td>
-      <td><input type=text size=20 name=bloodprocessed></td>
       <td><input type=text size=20 name=comments></td></tr>
 </table>
 	    <br>

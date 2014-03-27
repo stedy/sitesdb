@@ -7,7 +7,8 @@
     {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
     <h2>All individuals currently on study</h2>
     <br>
-    <table id="basic">
+    <div class="container">
+    <table id="basic" class="display">
       <thead>
         <tr>
           <th><b>Study ID</th>
@@ -28,6 +29,6 @@
       </tr>
     {% endfor %}
   </tbody>
-      </table>
-    <i>(Click on table header to sort)</i>
+</table>
+</div>
 {% endblock %}

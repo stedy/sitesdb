@@ -78,7 +78,7 @@ def add_form():
             outvals.append(fu_days[x])
         g.db.execute("""INSERT INTO demo (Subject_ID, uwid, pt_init, Name,
                     Status, txdate, Donrep) VALUES
-                    (?,?,?,?,?,?,?,?)""",
+                    (?,?,?,?,?,?,?)""",
                     [raw_id, request.form['uwid'],
                     request.form['pt_init'], request.form['Name'],
                     request.form['Status'], request.form['txdate'],
@@ -195,15 +195,17 @@ def receive_kits():
 
 @app.route('/add_event_form')
 def add_event_form():
-    return render_template('add_event.html')
+    entries = query_db("""SELECT Subject_ID FROM demo ORDER BY Subject_ID
+                        ASC""")
+    return render_template('add_event.html', entries=entries)
 
 @app.route('/add_event', methods = ['GET', 'POST'])
 def add_event():
-    g.db.execute("""INSERT INTO events (Subject_ID, event, eventdate,
-    blooddraw, bloodprocessed, comments) VALUES
-    (?,?,?,?,?,?)""", [request.form['Subject_ID'], request.form['event'],
-        request.form['eventdate'], request.form['blooddraw'],
-        request.form['bloodprocessed'], request.form['comments']])
+    g.db.execute("""INSERT INTO events (Subject_ID, sample, event, eventdate,
+                comments) VALUES
+    (?,?,?,?,?)""", [request.form['Subject_ID'], request.form['sample'],
+                    "Received", request.form['eventdate'],
+                    request.form['comments']])
     g.db.commit()
     return render_template('main.html')
 
