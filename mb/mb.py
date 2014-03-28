@@ -237,6 +237,23 @@ def drop_subject():
             WHERE kit_event = "shipped" GROUP By Subject_ID""")
     return render_template('main.html', entries=entries)
 
+@app.route('/send_check_form')
+def send_check_form():
+    entries = query_db("""SELECT Subject_ID FROM demo WHERE onoff = "on"
+                        ORDER BY Subject_ID ASC""")
+    return render_template('write_check.html', entries=entries)
+
+@app.route('/send_check', methods = ['GET', 'POST'])
+def send_check():
+    g.db.execute("""INSERT into checks VALUES (?,?,?,?)""",
+            [request.form['Subject_ID'], request.form['amount'],
+            request.form['purpose'], request.form['eventdate']])
+    g.db.commit()
+    flash('Check written for %s' % request.form['Subject_ID'])
+    entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
+            WHERE kit_event = "shipped" GROUP By Subject_ID""")
+    return render_template('main.html', entries=entries)
+
 @app.route('/get_archives', methods=['GET', 'POST'])
 def get_archives():
     """Pull all tables from all db and convert into zip file for

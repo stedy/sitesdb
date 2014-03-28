@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if error %}<p class=error><strong>Error:</strong>{{ error }}{% endif %}
+  <form action="{{ url_for('send_check') }}" method=post class=test>
+    <h2>Send Check</h2>
+    <table>
+      <tr><td><b>Subject ID</td><td><b>Amount</td><td><b>Purpose</td><td><b>Date</td></tr>
+          <td><select name=Subject_ID>
+              {% for entry in entries %}
+              <option value="{{ entry.Subject_ID }}"> {{ entry.Subject_ID }}</option>
+              {% endfor %}
+              <td><input type=text size=5 name=amount></td>
+              <td><select name=purpose>
+                  <option value="Initiation"> Initiation</option>
+                  <option value="Completion"> Completion</option>
+                  <option value="Kits returned">Kits returned</option>
+                </select>
+                <td><input type=text id="datepicker" name=eventdate></td>
+            </tr>
+  </table>
+  <br>
+    <input type=submit value="Submit">
+    </form>
+    {% endblock %}
