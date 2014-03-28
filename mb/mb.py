@@ -161,7 +161,8 @@ def id_edit(id_number):
 
 @app.route('/send_kits_form')
 def send_kits_form():
-    return render_template('send_kits.html')
+    entries = query_db("""SELECT Subject_ID FROM demo ORDER BY Subject_ID ASC""")
+    return render_template('send_kits.html', entries=entries)
 
 @app.route('/send_kits', methods=['GET', 'POST'])
 def send_kits():

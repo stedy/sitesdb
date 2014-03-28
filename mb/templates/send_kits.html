@@ -5,7 +5,10 @@
     <h2>Send out kits</h2>
     <table>
       <tr><td><b>Subject ID</td><td><b>Count</td></tr>
-          <tr><td><input type=text size=10 name=Subject_ID></td>
+          <td><select name=Subject_ID>
+              {% for entry in entries %}
+              <option value="{{ entry.Subject_ID }}"> {{ entry.Subject_ID }}</option>
+              {% endfor %}
       <td><input type=text size=5 name=count></td></tr>
   </table>
   <br>
