@@ -77,12 +77,12 @@ def add_form():
         for x in range(14):
             outvals.append(fu_days[x])
         g.db.execute("""INSERT INTO demo (Subject_ID, uwid, pt_init, Name,
-                    Status, txdate, Donrep) VALUES
-                    (?,?,?,?,?,?,?)""",
+                    Status, txdate, Donrep, onoff) VALUES
+                    (?,?,?,?,?,?,?,?)""",
                     [raw_id, request.form['uwid'],
                     request.form['pt_init'], request.form['Name'],
                     request.form['Status'], request.form['txdate'],
-                    request.form['Donrep']])
+                    request.form['Donrep'], "on"])
         for x in outvals:
             g.db.execute("""INSERT INTO events (Subject_ID, event,
                             eventdate) VALUES (?,?,?)""",
@@ -220,6 +220,22 @@ def summarize_indivs():
         COUNT(event) as e FROM events
         WHERE event = "Received" AND sample = "Blood" GROUP BY Subject_ID""")
     return render_template('summarize_indivs.html', entries=entries)
+
+@app.route('/drop_subject_form')
+def drop_subject_form():
+    entries = query_db("""SELECT Subject_ID FROM demo WHERE onoff = "on"
+                        ORDER BY Subject_ID ASC""")
+    return render_template('drop_subject.html', entries=entries)
+
+@app.route('/drop_subject', methods = ['GET', 'POST'])
+def drop_subject():
+    g.db.execute("""UPDATE demo SET onoff = "off" WHERE Subject_ID = ?""",
+            [request.form['Subject_ID']])
+    g.db.commit()
+    flash('Subject ID %s dropped from study' % request.form['Subject_ID'])
+    entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
+            WHERE kit_event = "shipped" GROUP By Subject_ID""")
+    return render_template('main.html', entries=entries)
 
 @app.route('/get_archives', methods=['GET', 'POST'])
 def get_archives():
