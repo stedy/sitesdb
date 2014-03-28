@@ -5,6 +5,7 @@ from flask import Flask, request, session, g, \
 from contextlib import closing
 import datetime as dt
 import zip_database as zd
+import update_counts as uc
 
 DATABASE = 'mb.db'
 DEBUG = True
@@ -216,9 +217,9 @@ def add_event():
 
 @app.route('/summarize_indivs', methods = ['GET', 'POST'])
 def summarize_indivs():
-    entries = query_db("""SELECT Subject_ID,
-        COUNT(event) as e FROM events
-        WHERE event = "Received" AND sample = "Blood" GROUP BY Subject_ID""")
+    uc.main()
+    entries = query_db("""SELECT Subject_ID, bloodevents, swabevents FROM
+            samplecounts""")
     return render_template('summarize_indivs.html', entries=entries)
 
 @app.route('/drop_subject_form')
