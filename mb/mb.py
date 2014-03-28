@@ -144,7 +144,7 @@ def add_subject():
 @app.route('/all_subjects')
 def all_subjects():
     entries = query_db("""SELECT Subject_ID, pt_init, Name, uwid, Status,
-                    txdate, Donrep FROM demo""")
+                    txdate, Donrep, onoff FROM demo""")
     return render_template('all_subjects.html', entries=entries)
 
 @app.route('/<id_number>', methods=['GET', 'POST'])
