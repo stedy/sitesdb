@@ -9,6 +9,8 @@
   {% if g.user %}
   <h2>Progress of all patients on study as of <span id="Date"></span></h2><br>
   {% if error %}<p class=error><strong>Error</strong> {{ error }}{% endif %}
+  <br>
+  <h2>Summary of visits</h2>
   <table>
     <tr class="d0"><td><b>Visit</b></td><td><b>Count</b></td></tr>
     <tr class="d1"><td>Visit 1</td><td>{{ visit1[0]['COUNT(check1no)'] }}</td></tr>
