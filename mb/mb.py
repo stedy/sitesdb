@@ -255,6 +255,25 @@ def send_check():
             WHERE kit_event = "shipped" GROUP By Subject_ID""")
     return render_template('main.html', entries=entries)
 
+@app.route('/schedule_blood_form')
+def schedule_blood_form():
+    entries = query_db("""SELECT Subject_ID FROM demo WHERE onoff = "on" ORDER
+                        BY Subject_ID ASC""")
+    return render_template('schedule_blood.html', entries=entries)
+
+@app.route('/schedule_blood', methods = ['GET', 'POST'])
+def schedule_blood():
+    blood = request.form['blooddraw_date']
+    sql_date = dt.datetime.strptime(blood, "%m/%d/%Y").strftime("%Y-%m-%d")
+    g.db.execute("""INSERT into events (Subject_ID, eventdate, sample, event,
+            sql_date) VALUES (?,?,?,?,?)""", [request.form['Subject_ID'],
+                blood, "Blood", "Scheduled", sql_date])
+    g.db.commit()
+    flash('Blood draw scheduled for %s' % request.form['Subject_ID'])
+    entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
+            WHERE kit_event = "shipped" GROUP By Subject_ID""")
+    return render_template('main.html', entries=entries)
+
 @app.route('/get_archives', methods=['GET', 'POST'])
 def get_archives():
     """Pull all tables from all db and convert into zip file for
