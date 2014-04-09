@@ -61,7 +61,9 @@ def teardown_request(exception):
 def main():
     entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
             WHERE kit_event = "shipped" GROUP By Subject_ID""")
-    return render_template('main.html', entries=entries)
+    blood = query_db("""SELECT Subject_ID, eventdate FROM events
+            WHERE event = "Scheduled" """)
+    return render_template('main.html', entries=entries, blood=blood)
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():

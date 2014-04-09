@@ -33,6 +33,14 @@
     {% endfor %}
   </table>
 <br>
+<h2>Upcoming blood draws</h2>
+<table>
+  <tr><td><b>Subject ID</td><td><b>Blood Draw Date</td></tr>
+      {% for entry in blood %}
+      <td>{{ entry.Subject_ID }}</td><td>{{ entry.eventdate }}</td></tr>
+    {% endfor %}
+  </table>
+<br>
 <h2>Summarize data</h2>
 <a href="{{ url_for('all_subjects') }}">View All Enrolled Subjects</a>
 <br>
