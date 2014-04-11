@@ -524,7 +524,7 @@ def new_safety():
 def new_personnel():
     """Add new personnel to study"""
     g.db.execute("""INSERT INTO personnel (Protocol, added_date, name, role,
-                removed_date, responsibility) values (?,?,?,?,?,?)""",
+                removed_date, responsibility) VALUES (?,?,?,?,?,?)""",
                 [request.form['Protocol'], request.form['date_added'],
         request.form['name'], request.form['role'],
         request.form['date_removed'], request.form['responsibility']])
@@ -542,6 +542,26 @@ def add_personnel():
 def add_review_committee():
     """Add review committee information"""
     return render_template('add_review_committee.html')
+
+@app.route('/new_review_committee', methods = ['GET', 'POST'])
+def new_review_committee():
+    """Add new review committee info to database"""
+    g.db.execute("""INSERT INTO reviewcomm (Protocol, Title, IR, PI,
+        Primary_IRB, Committee, Review_Type, cim, FH_IBC, pim, UW_ehs, src,
+        rad_safety, other, init_approval_date, irb_expires, fhcrc_renewal,
+        uw_renewal, rad_safety_renewal) VALUES
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
+        request.form['Title'], request.form['IR'], request.form['PI'],
+        request.form['Primary_IRB'], request.form['Committee'],
+        request.form['Review_type'], request.form['cim'],
+        request.form['FH_IBC'], request.form['pim'], request.form['UW_ehs'],
+        request.form['src'], request.form['rad_safety'], request.form['other'],
+        request.form['init_approval_date'], request.form['irb_expires'],
+        request.form['fhcrc_renewal'], request.form['uw_renewal'],
+        request.form['rad_safety_renewal']])
+    g.db.commit()
+    flash('Committee Review added for Protocol %s' % request.form['Protocol'])
+    return render_template('main.html')
 
 @app.route('/<id_number>/study_funding')
 def id_results_sn(id_number):

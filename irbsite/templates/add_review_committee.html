@@ -4,8 +4,8 @@
 <div class=metanav>
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('add_form') }}" method=post class=addstudy>
-    <h2>Review Information</h2>
+  <form action="{{ url_for('new_review_committee') }}" method=post>
+    <h2>Add Safety Committee Information</h2>
       <table width="600">
         <td><b>Title:</td>
         <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
@@ -73,6 +73,8 @@
       <td><input type="text" id="dt3" name="uw_renewal"></td>
       <td>Rad Safety Renewal Due Date</td>
       <td><input type="text" id="dt4" name="rad_safety_renewal"></td></tr>
+  </table>
+  <td><input type=submit value=Submit>
     </form>
     {% endif %}
     <ul class=entries>
