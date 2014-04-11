@@ -22,6 +22,32 @@
         $('#safety').dataTable();
       } );
 </script>
+<script>
+  $(document).ready(function () {
+        $("#dt1").datepicker({
+          minDate: 0,
+          onSelect: function (date) {
+          var date2 = $('#dt1').datepicker('getDate');
+          date2.setDate(date2.getDate() - 42);
+          $('#dt2').datepicker('setDate', date2);
+          //sets minDate to dt1 date + 1
+          $('#dt2').datepicker('option', 'minDate', date2);
+         }
+       });
+        $('#dt2').datepicker({
+        onClose: function () {
+        var dt1 = $('#dt1').datepicker('getDate');
+        console.log(dt1);
+        var dt2 = $('#dt2').datepicker('getDate');
+        if (dt2 <= dt1) {
+          var minDate = $('#dt2').datepicker('option', 'minDate');
+          $('#dt2').datepicker('setDate', minDate);
+        }
+     }
+  });
+});
+</script>
+
 <div class=page>
   <a href="{{ url_for('main') }}" style="text-decoration:none"><h1>VIDD IRB DB</h1></a>
     <div class=metanav>
