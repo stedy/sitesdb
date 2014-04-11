@@ -411,7 +411,7 @@ def submit_funding_edits(funding_id):
                         = ?""", [study_id])
     return render_template('study_funding.html', entries = entries)
 
-@app.route('/<id_number>/mods')
+@app.route('/<id_number>/mods', methods = ['GET', 'POST'])
 def id_results_mods(id_number):
     ids = str(id_number)
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
@@ -546,19 +546,23 @@ def add_review_committee():
 @app.route('/new_review_committee', methods = ['GET', 'POST'])
 def new_review_committee():
     """Add new review committee info to database"""
-    g.db.execute("""INSERT INTO reviewcomm (Protocol, Title, IR, PI,
-        Primary_IRB, Committee, Review_Type, cim, FH_IBC, pim, UW_ehs, src,
-        rad_safety, other, init_approval_date, irb_expires, fhcrc_renewal,
-        uw_renewal, rad_safety_renewal) VALUES
-        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
-        request.form['Title'], request.form['IR'], request.form['PI'],
-        request.form['Primary_IRB'], request.form['Committee'],
-        request.form['Review_type'], request.form['cim'],
-        request.form['FH_IBC'], request.form['pim'], request.form['UW_ehs'],
-        request.form['src'], request.form['rad_safety'], request.form['other'],
-        request.form['init_approval_date'], request.form['irb_expires'],
-        request.form['fhcrc_renewal'], request.form['uw_renewal'],
-        request.form['rad_safety_renewal']])
+    g.db.execute("""INSERT INTO reviewcomm (Title, Protocol, IR, PI,
+            Primary_IRB, fhcrc_renewal,
+            init_approval_date, Committee, Review_Type,
+            rad_safety_renewal, cim, FH_IBC, UW_ehs, uw_renewal, irb_expires,
+            pim, src, rad_safety, other)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            [request.form['Title'], request.form['Protocol'],
+                request.form['IR'], request.form['PI'],
+                request.form['Primary_IRB'], request.form['fhcrc_renewal'],
+                request.form['init_approval_date'],
+                request.form['Committee'], request.form['Review_Type'],
+                request.form['rad_safety_renewal'], request.form['cim'],
+                request.form['FH_IBC'], request.form['UW_ehs'],
+                request.form['uw_renewal'], request.form['irb_expires'],
+                request.form['pim'], request.form['src'],
+                request.form['rad_safety'], request.form['other']
+                ])
     g.db.commit()
     flash('Committee Review added for Protocol %s' % request.form['Protocol'])
     return render_template('main.html')
