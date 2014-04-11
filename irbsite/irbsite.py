@@ -538,6 +538,11 @@ def add_personnel():
     """Add new personnel to existing study"""
     return render_template('add_personnel.html')
 
+@app.route('/add_review_committee')
+def add_review_committee():
+    """Add review committee information"""
+    return render_template('add_review_committee.html')
+
 @app.route('/<id_number>/study_funding')
 def id_results_sn(id_number):
     ids = str(id_number)
@@ -568,6 +573,7 @@ def binder_template(id_number):
                         WHERE base.Protocol = ?""", [ids])
     return render_template('binder_template.html', entries=entries)
 
+#queries
 
 @app.route('/query')
 def query():

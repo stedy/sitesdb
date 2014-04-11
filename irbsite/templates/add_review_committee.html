@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+<div class=metanav>
+</div>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('add_form') }}" method=post class=addstudy>
+    <h2>Review Information</h2>
+      <table width="600">
+        <td><b>Title:</td>
+        <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
+        <td><b>Protocol:</td>
+	      <td><input type=text size=30 name=Protocol></td></tr>
+        <td><b>IR:</td>
+        <td><input type=text size=30 name=IR></td></tr>
+        <td><b>Study PI:</td>
+        <td><input type=text size=30 name=PI></td></tr>
+    </table>
+    <br></ br>
+    <h2>Committee Reviews</h2>
+    <table>
+      <tr><td>Primary IRB</td>
+        <td><select name=Primary_IRB>
+             <option value="FH">FH</option>
+             <option value="UW">UW</option>
+           </select>
+        <td>Review Committee</td>
+        <td><select name=Committee>
+            <option value="FH A">FH A</option>
+            <option value="FH B">FH B</option>
+            <option value="FH C">FH C</option>
+            <option value="UW A">UW A</option>
+            <option value="UW B">UW B</option>
+            <option value="UW C">UW C</option>
+            <option value="UW D">UW D</option>
+            <option value="UW G">UW G</option>
+            <option value="UW J">UW J</option>
+            <option value="UW K">UW K</option>
+            <option value="UW E/A">UW E/A</option>
+            <option value="UW E/B">UW E/B</option>
+            <option value="UW E/C">UW E/C</option>
+            <option value="UW E/J">UW E/J</option>
+          </select>
+        </tr>
+        <tr><td>Review Type:</td>
+	      <td><input type=text size=30 name=Review_Type></td></tr>
+        </td></tr>
+        <tr><td>CIM:</td>
+        <td><input type=text id="datepicker" name=cim></td>
+        <td>FH IBC:</td>
+        <td><input type=text id="datepicker2" name=FH_IBC></td></tr>
+        <tr><td>PIM:</td>
+        <td><input type=text id="datepicker3" name=pim></td>
+        <td>UW EH&S:</td>
+        <td><input type=text id="datepicker4" name=UW_ehs></td></tr>
+        <tr><td>SRC:</td>
+        <td><input type=text id="datepicker5" name=src></td>
+        <td>Radiation Safety:</td>
+        <td><input type=text id="datepicker6" name=rad_safety></td></tr>
+        <tr><td>Other:</td>
+          <td><input type=text id="datepicker7" name=other></td></tr>
+    </table>
+    <br><br>
+    </form>
+    {% endif %}
+    <ul class=entries>
+        <li><em>All fields optional except Protocol</em>
+    </ul>
+    {% endblock %}
