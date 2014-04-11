@@ -30,8 +30,18 @@
           var date2 = $('#dt1').datepicker('getDate');
           date2.setDate(date2.getDate() - 42);
           $('#dt2').datepicker('setDate', date2);
-          //sets minDate to dt1 date + 1
+          //sets minDate to dt1 date - 42
           $('#dt2').datepicker('option', 'minDate', date2);
+          var date3 = $('#dt1').datepicker('getDate');
+          date3.setDate(date3.getDate() - 70);
+          $('#dt3').datepicker('setDate', date3);
+          //sets minDate to dt1 date - 70
+          $('#dt3').datepicker('option', 'minDate', date3);
+          var date4 = $('#dt1').datepicker('getDate');
+          date4.setDate(date4.getDate());
+          $('#dt4').datepicker('setDate', date4);
+          //sets minDate to dt1 date
+          $('#dt4').datepicker('option', 'minDate', date4);
          }
        });
         $('#dt2').datepicker({
@@ -42,6 +52,28 @@
         if (dt2 <= dt1) {
           var minDate = $('#dt2').datepicker('option', 'minDate');
           $('#dt2').datepicker('setDate', minDate);
+        }
+     }
+  });
+        $('#dt3').datepicker({
+        onClose: function () {
+        var dt1 = $('#dt1').datepicker('getDate');
+        console.log(dt1);
+        var dt3 = $('#dt3').datepicker('getDate');
+        if (dt3 <= dt1) {
+          var minDate = $('#dt3').datepicker('option', 'minDate');
+          $('#dt3').datepicker('setDate', minDate);
+        }
+     }
+  });
+        $('#dt4').datepicker({
+        onClose: function () {
+        var dt1 = $('#dt1').datepicker('getDate');
+        console.log(dt1);
+        var dt4 = $('#dt4').datepicker('getDate');
+        if (dt4 <= dt1) {
+          var minDate = $('#dt4').datepicker('option', 'minDate');
+          $('#dt4').datepicker('setDate', minDate);
         }
      }
   });
