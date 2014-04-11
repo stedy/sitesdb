@@ -274,7 +274,8 @@ def main():
 
 @app.route('/pre_safety', methods = ['GET', 'POST'])
 def pre_safety():
-    return render_template('pre_safety.html')
+    entries = query_db("""SELECT Protocol FROM base WHERE Protocol != "" ORDER BY Protocol ASC""")
+    return render_template('pre_safety.html', entries=entries)
 
 @app.route('/add_safety', methods = ['GET', 'POST'])
 def add_safety():

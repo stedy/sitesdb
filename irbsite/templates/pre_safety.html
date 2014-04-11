@@ -7,8 +7,11 @@
       <h2>Submit Safety Report</h2>
         <br>
       <tr>Protocol Number:
-	    <input type=text size=20 name=Protocol>
-	    </textarea>
+        <select name=Protocol>
+          {% for entry in entries %}
+          <option value ="{{ entry.Protocol }}"> {{ entry.Protocol }}</option>
+          {% endfor %}
+	    </select>
 	    <input type=submit value="Search">
     </form>
     {% endif %}
