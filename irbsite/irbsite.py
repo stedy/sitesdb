@@ -219,6 +219,11 @@ def add_funding():
                         = ?""", [request.form['Protocol']])
     return render_template('study_funding.html', entries = entries)
 
+@app.route('/add_mods_front')
+def add_mods_front():
+    entries = query_db("""SELECT Protocol FROM base WHERE Protocol != "" ORDER BY Protocol ASC""")
+    return render_template('add_mods_front.html', entries=entries)
+
 @app.route('/add_mod', methods=['GET', 'POST'])
 def add_mod():
     """Add new study modification to exisiting study"""

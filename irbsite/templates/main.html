@@ -5,13 +5,17 @@
   <h2>What would you like to do today?</h2>
   <br>
   <h3>Add New Data</h3>
-  <a href="{{ url_for('pre_safety') }}">Add new safety report</a>
-  <br>
   <a href="{{ url_for('add_study') }}">Add new study</a>
   <br>
-  <a href="{{ url_for('add_review_committee') }}">Add Review Committee Information</a>
+  <a href="{{ url_for('add_review_committee') }}">Add Review Committee(s) Information</a>
   <br>
   <a href="{{ url_for('add_personnel') }}">Add new study personnel</a>
+  <br>
+  <a href="{{ url_for('pre_safety') }}">Add new safety report</a>
+  <br>
+  <a href="{{ url_for('add_mods_front') }}">Add new modification</a>
+  <br>
+  Add new CRR (annual review)
   <br>
   <h3>Perform a query</h3>
   <a href="{{ url_for('query') }}">Query by study ID</a>

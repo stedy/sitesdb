@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+    <ul class=metanav>
+    </ul>
+    {% endif %}
+      <h2>Add New Study Modification</h2>
+  <form action="{{ url_for('add_mod') }}" method=post class=addmod>
+    <table>
+      <tr><td><b>Protocol</td>
+          <td><select name=Protocol>
+          {% for entry in entries %}
+          <option value="{{ entry.Protocol }}"> {{ entry.Protocol }} </option>
+          {% endfor %}
+      </select></td>
+      <tr><td><b>Description</td><td><input type=text size=14 name=Description></td></tr>
+      <tr><td><b>Submitted by</td><td><input type=text size=14 name=submitted></td></tr>
+    </table>
+    <br>
+    <table>
+      <tr><td><b>Date Received</td><td><input type=text size=14 name=date_received></td></tr>
+      <tr><td><b>Due Date</td><td><input type=text size=14 name=date_due></td></tr>
+      <tr><td><b>Date Submitted</td><td><input type=text size=14 name=Date_to_IRB></td></tr>
+      <tr><td><b>Date of Expected Review</td><td><input type=text size=14 name=exp_review_date></td></tr>
+      <tr><td><b>Date back from IRO</td><td><input type=text size=14 name=date_back></td></tr>
+      <tr><td><b>Approved Date</td><td><input type=text size=14 name=aprvd_date></td></tr>
+    </table>
+      <br>
+    <table>
+    <tr><td><b>Comments</td></tr>
+      <td><textarea rows="4" cols="80" name=Comments></textarea></td>
+</table>
+<br>
+<input type=submit value="Add mod">
+	<br>
+
+  {% endblock %}
