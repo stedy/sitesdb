@@ -82,8 +82,6 @@ def add_form():
         error = None
         hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, \
             None, None, None, None
-        consentwaiver, hipaawaiver, hipaaauth, repository, nihcert, \
-            substudies, mta = None, None, None, None, None, None, None
         if request.form.getlist('hctallo'):
             hctallo = 'Y'
         if request.form.getlist('hctauto'):
@@ -102,20 +100,6 @@ def add_form():
             autoimmune, bv])
         g.db.commit()
 
-        if request.form.getlist('consentwaiver'):
-            consentwaiver = 'Y'
-        if request.form.getlist('hipaawaiver'):
-            hipaawaiver = 'Y'
-        if request.form.getlist('hipaaauth'):
-            hipaaauth = 'Y'
-        if request.form.getlist('repository'):
-            repository = 'Y'
-        if request.form.getlist('nihcert'):
-            nihcert = 'Y'
-        if request.form.getlist('substudies'):
-            substudies = 'Y'
-        if request.form.getlist('mta'):
-            mta = 'Y'
         g.db.execute("""INSERT INTO supplemental (Protocol, consentwaiver,
                 consentwaiver_type, hipaawaiver, hipaawaiver_type,
                 hipaaauth, repository, nihcert, substudies, mta) VALUES
@@ -123,20 +107,25 @@ def add_form():
                 consentwaiver, request.form['consentwaiver_text'],
                 hipaawaiver, request.form['hipaawaiver_text'],
                 hipaaauth, repository, nihcert, substudies, mta])
-        g.db.execute("""INSERT INTO base (Protocol, Title, PI, IR_file,
-                    Funding_source, RN_coord, IRB_approved, Primary_IRB,
-                    FHCRC_renewal, UW_renewal, IRB_expires, IND, Min_age,
-                    Pt_total, Type, FH_coord) VALUES
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+        g.db.execute("""INSERT INTO base (Protocol, Title, IR_file,
+                    Funding_source, IRB_approved, Primary_IRB,
+                    FHCRC_renewal, UW_renewal, IRB_expires, IND,
+                    Min_age_controls, Pt_total_controls,
+                    Min_age_cases, Min_age_controls,
+                    Type) VALUES
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                    [request.form['Protocol'], request.form['Title'],
-                   request.form['PI'], request.form['IR_file'],
-                   request.form['Funding_source'], request.form['RN_coord'],
+                   request.form['IR_file'],
+                   request.form['Funding_source'],
                    request.form['IRB_approved'], request.form['Primary_IRB'],
                    request.form['FHCRC_renewal'],
                    request.form['UW_renewal'], request.form['IRB_expires'],
-                   request.form['IND'], request.form['Min_age'],
-                   request.form['Pt_total'], request.form['Type'],
-                   request.form['FH_coord']])
+                   request.form['IND'],
+                   request.form['Min_age_controls'],
+                   request.form['Pt_total_controls'],
+                   request.form['Min_age_cases'],
+                   request.form['Pt_total_cases'],
+                   request.form['Type']])
         g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                     values (?,?,?)""", [request.form['Protocol'],
                     g.user['username'], dt.datetime.now().strftime("%m/%d/%Y")])

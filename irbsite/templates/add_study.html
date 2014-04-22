@@ -9,11 +9,13 @@
       <table width="600">
         <td> Title:</td>
         <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
-        <td><b>Contacts</b></td></tr>
-        <td>Study PI:</td>
-        <td><input type=text size=30 name=PI></td></tr>
-	      <td>RN/Coordinator:
-	      <td><input type=text size=30 name=RN_coord></td></tr>
+        <td>Protocol:
+	      <td><input type=text size=20 name=Protocol></td></tr>
+	      <td>IRB Number:
+	      <td><input type=text size=20 name=IR_file></td></tr>
+        <td>IACUC Number:</td>
+	      <td><input type=text size=20 name=iacuc_number></td></tr>
+        <td>Study Status:</td></tr>
         <td>Primary IRB</td>
         <td><select name=Primary_IRB>
              <option value="FH">FH</option>
@@ -27,23 +29,19 @@
             <option value="Yes">Yes</option>
             <option value="No">No</option>
            </select></tr>
-       <td>Protocol:
-	     <td><input type=text size=20 name=Protocol></td></tr>
-	     <td>IRB Number:
-	     <td><input type=text size=20 name=IR_file></td></tr>
-       <td>IACUC Number:</td>
-	     <td><input type=text size=20 name=iacuc_number></td></tr>
-       <td>Regulatory Coordinator:</td>
-	     <td><input type=text size=20 name=FH_coord></td></tr>
-       <td>Study Status:</td></tr>
     </table>
     <br><br>
     <h2>Study Population Characteristics</h2>
     <table width="600">
-	   <td>Patient Goal:
-     <td><input type=text size=20 name=Pt_total></td>
-     <td>Age range:
-     <td><input type=text size=20 name=Min_age></td></tr>
+      <td><b>Enrollment</b></tr>
+	   <td>Cases Goal:
+     <td><input type=text size=20 name=Pt_total_cases></td>
+     <td>Cases age range:
+     <td><input type=text size=20 name=Min_age_cases></td></tr>
+	   <td>Controls Goal:
+     <td><input type=text size=20 name=Pt_total_controls></td>
+     <td>Controls age range:
+     <td><input type=text size=20 name=Min_age_controls></td></tr>
      <td><b>Population</b></tr>
      <td>HCT-allo<input type="checkbox" name="hctallo" value="hctallo"/></td/>
      <td>HCT-auto <input type="checkbox" name="hctauto" value="hctauto"/></td>
@@ -72,21 +70,26 @@
     </br>
      <h2>Supplements</h2>
    <table>
-      <td>Consent Waiver<input type="checkbox" name="consentwaiver" value="consentwaiver"/></td/>
       <td>Type of Consent Waiver:</td>
-      <td><input type=text size=20 name=consentwaiver_text></td></tr>
-      <td>HIPAA Waiver<input type="checkbox" name="hipaawaiver" value="hipaawaiver"/></td>
+      <td><select type=text name=consentwaiver_text>
+          <option value="Partial">Partial</option>
+          <option value="Full">Full</option>
+          <option value="Other">Other</option>
+      </select></tr>
       <td>Type of HIPAA Waiver:</td>
-      <td><input type=text size=20 name=hipaawaiver_text></td></tr>
+      <td><select type=text name=hipaawaiver_text>
+          <option value="Partial">Partial</option>
+          <option value="Full">Full</option>
+          <option value="Other">Other</option>
+        </select>
       <td>HIPAA Authorization</td/>
       <td><select name=hippaaauth>
             <option value="CRDgeneral">CRD General</option>
             <option value="Studyspecific">Study Specfic</option>
+            <option value="UWHIPAA"> UW HIPPA</option>
+            <option value="CRD">CRD</option>
           </select></tr>
-      <td>Repository<input type="checkbox" name="repository" value="repository"/></td/>
-      <td>NIH Cert of Conf<input type="checkbox" name="nihcert" value="nihcert"/></td/></tr>
-      <td>Sub-studies<input type="checkbox" name="substudies" value="substudies"/></td/>
-      <td>MTA<input type="checkbox" name="mta" value="mta"/></td/></tr>
+      <td>Sub-studies<input type="text" name="substudies" value=" substudies?"/></td/>
     </table>
 	   <br></br>
 	   <td><input type=submit value=Submit>
