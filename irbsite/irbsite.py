@@ -252,8 +252,6 @@ def pre_docs():
     entries = query_db("""SELECT Protocol FROM base WHERE Protocol != "" ORDER BY Protocol ASC""")
     return render_template('pre_docs.html', entries=entries)
 
-#search based on ID number
-
 @app.route('/<id_number>')
 def id_results(id_number):
     """Display all results and info for a given IR number """

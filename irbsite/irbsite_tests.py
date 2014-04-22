@@ -32,6 +32,7 @@ class IRBDBTestCase(unittest.TestCase):
 		rv = self.login('admin', 'defaultx')
 		assert 'Invalid password' in rv.data
 
+    def test_add_Study(self):
 
 if __name__ == '__main__':
 	unittest.main()

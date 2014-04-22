@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if g.user %}
+    <ul class=metanav>
+    </ul>
+    {% endif %}
+    <ul class=entries>
+      <h1>{{ entries[0].Title }}</h1>
+	<br>
+  <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
+  <h2>Committee: {{ entries[0].CTE }}  | Correspondence: {{ entries[0].RN_coord }} </h2>
+  <br>
+  <h2>Study Personnel</h2>
+  <table>
+    <tr>
+      <td><b>Name</td>
+      <td><b>Role</td>
+      <td><b>Date added</td>
+    </tr>
+    <tr>
+      {% for person in personnel %}
+      <td>{{ person.name }}</td>
+      <td>{{ person.role }}</td>
+      <td>{{ person.added_date }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br></br>
+  <h2>Study Documents</h2>
+  <table id="basic">
+    <thead>
+      <tr>
+       <th><b>Document Name</th>
+       <th><b>Sub Study</th>
+       <th><b>Version</th>
+       <th><b>Document Date</th>
+       <th><b>Approved Date</th>
+       <th><b>Document Type</th>
+       <th><b>Edit</th>
+      </tr>
+    </thead>
+   <tbody>
+	{% for entry in entries %}
+	 <tr>
+	 <td>{{ entry.doc_name }}</td>
+	 <td>{{ entry.substudy }}</td>
+	 <td>{{ entry.Version }}</td>
+	 <td>{{ entry.doc_date }}</td>
+   <td>{{ entry.aprvd_date }}</td>
+   <td>{{ entry.Type }}</td>
+   <td><a href="{{ url_for('docs_edit', docs_id = entry.id) }}">edit</a></td></tr>
+  {% endfor %}
+   </tbody>
+  </table>
+
+<br>
+<h2>Add new study document</h2>
+<form action="{{ url_for('add_docs') }}" method=post>
+<table>
+  <tr>
+   <td><b>Protocol</td>
+   <td><b>Document Name</td>
+   <td><b>Sub Study</td>
+   <td><b>Version</td>
+   <td><b>Document Date</td>
+   <td><b>Approved Date</td>
+   <td><b>Document Type</td></tr>
+  <tr>
+   <td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }}></td>
+   <td><input type=text size=40 name=doc_name></td>
+   <td><input type=text size=20 name=substudy></td>
+   <td><input type=text size=12 name=Version></td>
+   <td><input type=text size=15 name=doc_date></td>
+   <td><input type=text size=15 name=aprvd_date></td>
+   <td><select name=Type>
+        <option value="Protocol">Protocol</option>
+        <option value="ProtocolSynposis">Protocol Synopsis</option>
+        <option value="IB">IB</option>
+        <option value="DSMB">DSMB Charter</option>
+        <option value="Consent">Consent</option>
+        <option value="Questionnaires">Questionnaires</option>
+        <option value="Scripts">Scripts</option>
+        <option value="Advertisement">Advertisement</option>
+        <option value="Letter">Follow-up Letter</option>
+        <option value="Materials">Patient Materials</option>
+        <option value="Other">Other</option>
+       </select>
+   </td>
+  </tr>
+</table>
+<input type=submit value="Add Document">
+<br><br>
+   {% endblock %}
