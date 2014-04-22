@@ -247,6 +247,11 @@ def add_safety():
             request.form['Protocol']
             return render_template('main.html' , error = error)
 
+@app.route('/pre_docs', methods = ['GET', 'POST'])
+def pre_docs():
+    entries = query_db("""SELECT Protocol FROM base WHERE Protocol != "" ORDER BY Protocol ASC""")
+    return render_template('pre_docs.html', entries=entries)
+
 #search based on ID number
 
 @app.route('/<id_number>')
