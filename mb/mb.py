@@ -89,7 +89,7 @@ def add_form():
         for x in outvals:
             g.db.execute("""INSERT INTO events (Subject_ID, event,
                             eventdate) VALUES (?,?,?)""",
-                            [raw_id,"Expected", x])
+                            [raw_id, "Expected", x])
             g.db.commit()
         flash('New patient successfully added')
     else:
@@ -159,12 +159,13 @@ def id_edit(id_number):
     entries = query_db("""SELECT Subject_ID, pt_init, Name, uwid,
                     Status, txdate, Donrep FROM
                     demo where Subject_ID = ?""", [id_number])
-    return render_template('edit_subject.html', evententries = evententries,
+    return render_template('edit_subject.html', evententries=evententries,
                             entries=entries)
 
 @app.route('/send_kits_form')
 def send_kits_form():
-    entries = query_db("""SELECT Subject_ID FROM demo ORDER BY Subject_ID ASC""")
+    entries = query_db("""SELECT Subject_ID FROM demo ORDER BY
+            Subject_ID ASC""")
     return render_template('send_kits.html', entries=entries)
 
 @app.route('/send_kits', methods=['GET', 'POST'])
@@ -172,8 +173,9 @@ def send_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
     number_of_kits = request.form['count']
     for kit in range(int(number_of_kits)):
-        g.db.execute("""INSERT INTO kit (Subject_ID, kit_eventdate, kit_event) VALUES
-                    (?,?,?)""", [request.form['Subject_ID'], now, 'shipped'])
+        g.db.execute("""INSERT INTO kit (Subject_ID, kit_eventdate,
+                    kit_event) VALUES (?,?,?)""",
+                    [request.form['Subject_ID'], now, 'shipped'])
         g.db.commit()
     flash('Kits for subject ID %s shipped' % request.form['Subject_ID'])
     entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
@@ -189,10 +191,12 @@ def receive_kits_form():
 @app.route('/receive_kits', methods=['GET', 'POST'])
 def receive_kits():
     now = dt.datetime.now().strftime('%Y-%m-%d')
-    g.db.execute("""DELETE FROM kit WHERE id = (SELECT MIN(id) FROM kit) AND Subject_ID = ? AND
-            kit_event = "shipped" """, [request.form['Subject_ID']])
-    g.db.execute("""INSERT INTO kit (Subject_ID, kit_eventdate, kit_event) VALUES
-                (?,?,?)""", [request.form['Subject_ID'], now, 'received'])
+    g.db.execute("""DELETE FROM kit WHERE id = (SELECT MIN(id) FROM kit)
+            AND Subject_ID = ? AND kit_event = "shipped" """,
+            [request.form['Subject_ID']])
+    g.db.execute("""INSERT INTO kit (Subject_ID, kit_eventdate, kit_event)
+                VALUES (?,?,?)""",
+                [request.form['Subject_ID'], now, 'received'])
     g.db.commit()
     flash('Kit for subject ID %s received' % request.form['Subject_ID'])
     entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
@@ -285,10 +289,6 @@ def get_archives():
     filename = now + "_database.zip"
     return send_from_directory(app.config['FILE_FOLDER'],
             filename, as_attachment=True)
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run()
