@@ -150,9 +150,12 @@ def all_subjects():
                     txdate, Donrep, onoff FROM demo""")
     return render_template('all_subjects.html', entries=entries)
 
-#@app.route('/all_checks')
-#def all_checks():
-#    entries = query_db("""SELECT demo.Subject_ID, demo.pt_init, Count(*) aV
+@app.route('/all_checks')
+def all_checks():
+    entries = query_db("""SELECT COUNT(*) as checktotal,
+        checks.Subject_ID, pt_init FROM checks, demo WHERE
+        checks.Subject_ID = demo.Subject_ID GROUP BY checks.Subject_ID""")
+    return render_template('all_checks.html', entries=entries)
 
 @app.route('/<id_number>', methods=['GET', 'POST'])
 def id_edit(id_number):
