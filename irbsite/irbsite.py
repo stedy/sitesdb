@@ -2,16 +2,19 @@ import os
 from sqlite3 import dbapi2 as sqlite3
 import datetime as dt
 from flask import Flask, request, session, g, redirect, url_for, \
-        abort, render_template, flash
+        abort, render_template, flash, send_from_directory
 from werkzeug import check_password_hash, generate_password_hash
 from contextlib import closing
+import zip_database as zd
+
+
+DATABASE = 'irb_db.db'
+DEBUG = True
+FILE_FOLDER = 'archives'
+SECRET_KEY = 'development key'
 
 app = Flask(__name__)
-
-app.config.update(dict(
-    DATABASE = os.path.join(app.root_path,'irb_db.db'),
-    DEBUG = True,
-    SECRET_KEY = 'development key'))
+app.config.from_object(__name__)
 
 app.config.from_envvar('IRB_DB_SETTINGS', silent = True)
 
@@ -646,6 +649,14 @@ def funding_results():
         error = "Must enter funding info to search"
         return render_template('funding_query.html', error=error)
 
+@app.route('/get_safety', methods=['GET'])
+def get_safety():
+    """Pull out all safety archives as they currently area read"""
+    zd.main()
+    now = dt.datetime.now().strftime('%Y-%m-%d')
+    filename = now + "_safety_database.zip"
+    return send_from_directory(app.config['FILE_FOLDER'],
+            filename, as_attachment=True)
 
 #utility functions
 
