@@ -29,24 +29,24 @@
                       <option value="Unanticipated Event">Unanticipated Event</option>
                     </select>
           <tr><td>Report ID</td>
-      <td><input type=text size=10 name=Report_ID></td>
+      <td><input type=text size=20 name=Report_ID></td>
       <tr><td>Type of Report</td>
       <td><select name=Report_type>
           <option value="Initial">Initial</option>
           <option value="Follow-up">Follow-up</option>
           </select>
           <tr><td>Followup Report Number:</td>
-            <td><input type=text size=20 name=FU_report_no></td></tr>
+            <td><input type=text size="15" name=FU_report_no></td></tr>
           <tr><td>Report Date</td>
             <td><input type="text" size=20 name=reportdate></tr>
             <tr><td>Investigator of Review</td>
               <td><input type="text" size=20 name=investigator value="{{ entry.investigator }}"</td>
         <tr><td>Investigator Determination Date</td>
-          <td><input type="text" size="20" name=investigator_det_date></td></tr>
+          <td><input type="text" size="20" id="datepicker5" name=investigator_det_date></td></tr>
         <tr><td>Date of IRB Review</td>
-          <td><input type="text" size="20" name=date_IRB_review></td></tr>
+          <td><input type="text" size="20" id="datepicker6" name=date_IRB_review></td></tr>
         <tr><td>Date back from IRB</td>
-          <td><input type="text" size="20" name=date_back_IRB></td></tr>
+          <td><input type="text" size="20" id="datepicker7" name=date_back_IRB></td></tr>
         <td> Comments:</td>
         <td><textarea rows="2" cols="40" name=comments></textarea></td></tr>
     </table>
