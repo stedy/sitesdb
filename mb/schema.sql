@@ -16,4 +16,5 @@ CREATE TABLE kit (Subject_ID text, kit_event text, kit_eventdate date,
                   id integer PRIMARY KEY AUTOINCREMENT);
 
 DROP TABLE IF EXISTS checks;
-CREATE TABLE checks (Subject_ID text, amount text, purpose text, eventdate date);
+CREATE TABLE checks (Subject_ID text, amount text, purpose text, checkno text,
+                     checkdeliver text, eventdate date);

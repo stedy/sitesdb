@@ -150,6 +150,10 @@ def all_subjects():
                     txdate, Donrep, onoff FROM demo""")
     return render_template('all_subjects.html', entries=entries)
 
+#@app.route('/all_checks')
+#def all_checks():
+#    entries = query_db("""SELECT demo.Subject_ID, demo.pt_init, Count(*) aV
+
 @app.route('/<id_number>', methods=['GET', 'POST'])
 def id_edit(id_number):
     evententries = query_db("""SELECT event, eventdate, week, sample FROM
@@ -252,9 +256,10 @@ def send_check_form():
 
 @app.route('/send_check', methods = ['GET', 'POST'])
 def send_check():
-    g.db.execute("""INSERT into checks VALUES (?,?,?,?)""",
+    g.db.execute("""INSERT into checks VALUES (?,?,?,?,?,?)""",
             [request.form['Subject_ID'], request.form['amount'],
-            request.form['purpose'], request.form['eventdate']])
+            request.form['purpose'], request.form['eventdate'],
+            request.form['checkno'], request.form['checkdeliver']])
     g.db.commit()
     flash('Check written for %s' % request.form['Subject_ID'])
     entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
