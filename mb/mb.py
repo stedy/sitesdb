@@ -96,42 +96,6 @@ def add_form():
         error = "Must have txdate and subject ID to enter new patient"
     return render_template('main.html', error=error)
 
-@app.route('/edit', methods=['GET', 'POST'])
-def results():
-    """Main functionality to edit and update sample data"""
-    ids = str(request.form['Subject_ID'])
-    entries = query_db("""SELECT demo.Subject_ID, pt_init, Name, uwid,
-                    Status, txdate, Donrep, Expected_week1, Expected_week2,
-                    Expected_week1, Received_week1,
-                    Expected_week2, Received_week2,
-                    Expected_week3, Received_week3,
-                    Expected_week4, Received_week4,
-                    Expected_week5, Received_week5,
-                    Expected_week6, Received_week6,
-                    Expected_week7, Received_week7,
-                    Expected_week8, Received_week8,
-                    Expected_week9, Received_week9,
-                    Expected_week10, Received_week10,
-                    Expected_week11, Received_week11,
-                    Expected_week12, Received_week12,
-                    Expected_week13, Received_week13,
-                    Expected_week14, Received_week14,
-                    Blood_expected_week1, Blood_received_week1,
-                    Week1_time_drawn, Week1_time_processed,
-                    Blood_expected_week2, Blood_received_week2,
-                    Week2_time_drawn, Week2_time_processed,
-                    Blood_expected_week3, Blood_received_week3,
-                    Week3_time_drawn, Week3_time_processed,
-                    Blood_expected_week4, Blood_received_week4,
-                    Week4_time_drawn, Week4_time_processed
-                    from demo, recipient_swabs,
-                    recipient_blood WHERE demo.Subject_ID =
-                    recipient_swabs.Subject_ID AND demo.Subject_ID =
-                    recipient_blood.Subject_ID AND
-                    demo.Subject_ID = ?""",
-                    [ids])
-    return render_template('edit_subject.html', entries=entries)
-
 @app.route('/query')
 def query():
     return render_template('subj_lookup.html')
