@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (name text, user_id text);
 
 DROP TABLE IF EXISTS kit;
-CREATE TABLE kit (Subject_ID text, kit_event text, kit_eventdate date,
+CREATE TABLE kit (Subject_ID text, kit_event text, kit_eventdate date, kit_expected date,
                   id integer PRIMARY KEY AUTOINCREMENT);
 
 DROP TABLE IF EXISTS checks;

@@ -141,12 +141,15 @@ def send_kits_form():
 
 @app.route('/send_kits', methods=['GET', 'POST'])
 def send_kits():
-    now = dt.datetime.now().strftime('%Y-%m-%d')
+    now = dt.datetime.now()
     number_of_kits = request.form['count']
     for kit in range(int(number_of_kits)):
+        exp_date = (next_weekday(now, 0) + dt.timedelta(days= 7 *
+            kit)).strftime("%Y-%m-%d")
         g.db.execute("""INSERT INTO kit (Subject_ID, kit_eventdate,
-                    kit_event) VALUES (?,?,?)""",
-                    [request.form['Subject_ID'], now, 'shipped'])
+                    kit_event, kit_expected) VALUES (?,?,?,?)""",
+                    [request.form['Subject_ID'], now.strftime('%Y-%m-%d'),
+                        'shipped', exp_date])
         g.db.commit()
     flash('Kits for subject ID %s shipped' % request.form['Subject_ID'])
     entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
