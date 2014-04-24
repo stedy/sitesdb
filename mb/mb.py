@@ -63,7 +63,12 @@ def main():
             WHERE kit_event = "shipped" GROUP By Subject_ID""")
     blood = query_db("""SELECT Subject_ID, eventdate FROM events
             WHERE event = "Scheduled" """)
-    return render_template('main.html', entries=entries, blood=blood)
+    upcomingkits = query_db("""SELECT Subject_ID, kit_event, kit_eventdate,
+            kit_expected FROM kit WHERE kit_expected >
+            (SELECT date('NOW', '+7 days')) AND kit_expected <
+            (SELECT date('NOW', '+14 days')) AND kit_event = 'shipped'""")
+    return render_template('main.html', entries=entries, blood=blood,
+            upcomingkits=upcomingkits)
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():

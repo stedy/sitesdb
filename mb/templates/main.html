@@ -39,6 +39,14 @@
     {% endfor %}
   </table>
 <br>
+<h2>Expected Kits</h2>
+<table>
+  <tr><td><b>Subject ID</td><td><b>Kit Due Date</td></tr>
+      {% for entry in upcomingkits %}
+      <td>{{ entry.Subject_ID }}</td><td>{{ entry.kit_expected }}</td></tr>
+    {% endfor %}
+  </table>
+  <br></br>
 <h2>Summarize data</h2>
 <a href="{{ url_for('all_subjects') }}">View All Enrolled Subjects</a>
 <br>
