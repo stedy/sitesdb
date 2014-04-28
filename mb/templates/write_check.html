@@ -10,13 +10,13 @@
               {% for entry in entries %}
               <option value="{{ entry.Subject_ID }}"> {{ entry.Subject_ID }}</option>
               {% endfor %}
-              <td><input type=text size=5 name=amount></td>
-              <td><select name=purpose>
+              <td>20</td>
+              <td><select name=event>
                   <option value="Initiation"> Initiation</option>
                   <option value="Completion"> Completion</option>
                   <option value="Kits returned">Kits returned</option>
                 </select>
-                <td><input type=text size=5 name=checkno></td>
+                <td><input type=text size=5 name=checknumber></td>
                 <td><input type=text id="datepicker" name=eventdate></td>
                 <td><input type=text id="datepicker2" name=checkdeliver></td>
             </tr>

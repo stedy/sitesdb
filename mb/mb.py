@@ -231,10 +231,11 @@ def send_check_form():
 
 @app.route('/send_check', methods = ['GET', 'POST'])
 def send_check():
-    g.db.execute("""INSERT into checks VALUES (?,?,?,?,?,?)""",
-            [request.form['Subject_ID'], request.form['amount'],
-            request.form['purpose'], request.form['eventdate'],
-            request.form['checkno'], request.form['checkdeliver']])
+    g.db.execute("""INSERT into checks (Subject_ID, event, eventdate,
+            checknumber, checkdeliver) VALUES (?,?,?,?,?)""",
+            [request.form['Subject_ID'],
+            request.form['event'], request.form['eventdate'],
+            request.form['checknumber'], request.form['checkdeliver']])
     g.db.commit()
     flash('Check written for %s' % request.form['Subject_ID'])
     entries = query_db("""SELECT Subject_ID, COUNT(kit_event) as count FROM kit
