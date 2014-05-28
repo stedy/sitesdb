@@ -46,6 +46,16 @@
     {% endfor %}
     </table>
     <br></br>
+    <h2>Funding</h2>
+    <table>
+      <tr><td><b>Agency Number</td><td><b>Agency Name</td><td><b>Funding Title</td><td><b>PI</td><td><b>Start Date</td>
+                  <td><b>End Date</td></tr>
+    {% for fun in funding %}
+    <tr><td>Agency #??</td><td>{{ fun.Institution }}</td><td>{{ fun.Funding_Title }}</td><td>{{ fun.PI }}</td>
+      <td>{{ fun.start }}</td><td>{{ fun.end }}</td></tr>
+    {% endfor %}
+    </table>
+    <br></br>
   <h2>Study Documents</h2>
   <table id="basic">
     <thead>

@@ -269,9 +269,11 @@ def id_results(id_number):
                         Protocol = ?""", [id_number])
     committee = query_db("""SELECT Primary_IRB, Review_Type, Committee FROM
                         reviewcomm WHERE Protocol = ?""", [id_number])
+    funding = query_db("""SELECT Institution, Funding_Title, PI, start, end
+                        FROM funding WHERE Protocol = ?""", [id_number])
     if entries:
         return render_template('study.html', entries = entries,
-                personnel=personnel, committee=committee)
+                personnel=personnel, committee=committee, funding=funding)
     else:
         entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title
             FROM base WHERE base.Protocol = ?""", [id_number])
