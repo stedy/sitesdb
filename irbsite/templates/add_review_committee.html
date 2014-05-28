@@ -5,16 +5,16 @@
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form action="{{ url_for('new_review_committee') }}" method=post>
-    <h2>Add Safety Committee Information</h2>
+    <h2>Add Committee Information</h2>
       <table width="600">
-        <td><b>Title:</td>
-        <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
-        <td><b>Protocol:</td>
+        <td>Protocol:</td>
 	      <td><input type=text size=30 name=Protocol></td></tr>
-        <td><b>IR:</td>
+        <td>IR:</td>
         <td><input type=text size=30 name=IR></td></tr>
-        <td><b>Study PI:</td>
+        <td>Study PI:</td>
         <td><input type=text size=30 name=PI></td></tr>
+        <td>Title:</td>
+        <td><textarea rows="4" cols="40" name=Title></textarea></td></tr>
     </table>
     <br></ br>
     <h2>Committee Reviews</h2>
@@ -54,17 +54,17 @@
               <option value="IACUC Authorization">IACUC Authorization</option>
               </select>
         </tr>
-        <tr><td>CIM:</td>
+        <tr><td>CIM Date:</td>
         <td><input type=text id="datepicker" name=cim></td>
-        <td>FH IBC:</td>
+        <td>FH IBC Date:</td>
         <td><input type=text id="datepicker2" name=FH_IBC></td></tr>
-        <tr><td>PIM:</td>
+        <tr><td>PIM Date:</td>
         <td><input type=text id="datepicker3" name=pim></td>
-        <td>UW EH&S:</td>
+        <td>UW EH&S Date:</td>
         <td><input type=text id="datepicker4" name=UW_ehs></td></tr>
-        <tr><td>SRC:</td>
+        <tr><td>SRC Date:</td>
         <td><input type=text id="datepicker5" name=src></td>
-        <td>Radiation Safety:</td>
+        <td>Radiation SafetyDate :</td>
         <td><input type=text id="datepicker6" name=rad_safety></td></tr>
         <tr><td>Other:</td>
           <td><input type=text id="datepicker7" name=other></td></tr>
