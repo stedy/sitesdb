@@ -43,8 +43,17 @@
           </select>
         </tr>
         <tr><td>Review Type:</td>
-	      <td><input type=text size=30 name=Review_Type></td></tr>
-        </td></tr>
+          <td><select name=Review_Type>
+              <option value="Research Not Involving Human Subjects">Research Not Involving Human Subjects</option>
+              <option value="Minimal Risk">Minimal Risk</option>
+              <option value="Exempt">Exempt</option>
+              <option value="Full Review/Full Board Committee">Full Review/Full Board Committee</option>
+              <option value="Use of Identifiable Data/Specimens">Use of Identifiable Data/Specimens</option>
+              <option value="Cooperative">Cooperative</option>
+              <option value="IRB Authorization">IRB Authorization</option>
+              <option value="IACUC Authorization">IACUC Authorization</option>
+              </select>
+        </tr>
         <tr><td>CIM:</td>
         <td><input type=text id="datepicker" name=cim></td>
         <td>FH IBC:</td>
