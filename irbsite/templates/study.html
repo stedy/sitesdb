@@ -5,10 +5,13 @@
     </ul>
     {% endif %}
     <ul class=entries>
-      <h1>{{ entries[0].Title }}</h1>
-	<br>
-  <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
-  <h2>Committee: {{ entries[0].CTE }}  | Correspondence: {{ entries[0].RN_coord }} </h2>
+      <h2>{{ entries[0].Title }}</h2>
+      <br>
+  <table>
+    <tr><td><b>Protocol</td><td><b>IR File</td><td><b>PI</td><td><b>Study Status</td><td><b>IND</td></tr>
+    <tr><td>{{ entries[0].Protocol }}</td><td>{{ entries[0].IR_file }}</td>
+      <td>{{ entries[0].PI }}</td><td>status</td><td>IND###</td></tr>
+  </table>
   <br>
   <h2>Study Personnel</h2>
   <table>
@@ -25,7 +28,15 @@
     </tr>
     {% endfor %}
   </table>
+  <br>
+  <b>Sponsor Name:<br>
+    Sponsor Contacts:</b>
   <br></br>
+  <h2>Study Population Info
+    <table>
+      <tr><td>Cases Goal</td><td>###</td></tr>
+      <tr><td>Populations</td><td>pop</td></tr>
+    </table>
   <h2>Study Documents</h2>
   <table id="basic">
     <thead>
