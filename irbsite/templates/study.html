@@ -32,11 +32,20 @@
   <b>Sponsor Name:<br>
     Sponsor Contacts:</b>
   <br></br>
-  <h2>Study Population Info
+  <h2>Study Population Info</h2>
     <table>
-      <tr><td>Cases Goal</td><td>###</td></tr>
-      <tr><td>Populations</td><td>pop</td></tr>
+      <tr><td><b>Cases Goal</td><td>###</td></tr>
+      <tr><td><b>Populations</td><td>pop</td></tr>
     </table>
+    <br></br>
+    <h2>Review Committee Info</h2>
+    <table>
+      <tr><td><b>Primary IRB</td><td><b>Review Type</td><td><b>Review Committee</td></tr>
+    {% for comm in committee %}
+      <tr><td>{{ comm.Primary_IRB }}</td><td>{{ comm.Review_type }}</td><td>{{ comm.Committee }}</td></tr>
+    {% endfor %}
+    </table>
+    <br></br>
   <h2>Study Documents</h2>
   <table id="basic">
     <thead>
