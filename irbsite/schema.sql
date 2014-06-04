@@ -93,3 +93,9 @@ CREATE TABLE reviewcomm (
   irb_expires text, fhcrc_renewal text,
   uw_renewal text, rad_safety_renewal text
 );
+
+DROP TABLE IF EXISTS status_list;
+CREATE TABLE status_list (
+  statustype text
+);
+
