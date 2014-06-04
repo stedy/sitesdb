@@ -18,12 +18,14 @@
     <tr>
       <td><b>Name</td>
       <td><b>Role</td>
+      <td><b>Assignment</td>
       <td><b>Date added</td>
     </tr>
     <tr>
       {% for person in personnel %}
       <td>{{ person.name }}</td>
       <td>{{ person.role }}</td>
+      <td>{{ person.assignment }}</td>
       <td>{{ person.added_date }}</td>
     </tr>
     {% endfor %}

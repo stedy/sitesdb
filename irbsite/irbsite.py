@@ -499,7 +499,8 @@ def add_personnel():
 @app.route('/add_review_committee')
 def add_review_committee():
     """Add review committee information"""
-    return render_template('add_review_committee.html')
+    entries = query_db("""SELECT statustype from status_list""")
+    return render_template('add_review_committee.html', entries=entries)
 
 @app.route('/new_review_committee', methods = ['GET', 'POST'])
 def new_review_committee():
