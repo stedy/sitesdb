@@ -83,13 +83,13 @@ def add_form():
     """For for adding new study"""
     if request.form['Protocol']:
         error = None
-        hctallo, hctauto, heme, solidorgan, autoimmune, bv = None, None, \
+        hctallo, hctauto, hemeonc, solidorgan, autoimmune, bv = None, None, \
             None, None, None, None
         if request.form.getlist('hctallo'):
             hctallo = 'Y'
         if request.form.getlist('hctauto'):
             hctauto = 'Y'
-        if request.form.getlist('heme'):
+        if request.form.getlist('hemeonc'):
             heme = 'Y'
         if request.form.getlist('solidorgan'):
             solidorgan = 'Y'
@@ -97,26 +97,51 @@ def add_form():
             autoimmune = 'Y'
         if request.form.getlist('bv'):
             bv = 'Y'
+        cim, pim, src, ibc, ehs, iacuc, radsafety, other = None, None, None, \
+            None, None, None, None, None
+        if request.form.getlist('cim'):
+            cim = 'Y'
+        if request.form.getlist('pim'):
+            pim = 'Y'
+        if request.form.getlist('src'):
+            src = 'Y'
+        if request.form.getlist('ibc'):
+            ibc = 'Y'
+        if request.form.getlist('ehs'):
+            ehs = 'Y'
+        if request.form.getlist('iacuc'):
+            iacuc = 'Y'
+        if request.form.getlist('radsafety'):
+            radsafety = 'Y'
+        if request.form.getlist('other'):
+            other = 'Y'
+
         g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
             solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
-            [request.form['Protocol'], hctallo, hctauto, heme, solidorgan,
+            [request.form['Protocol'], hctallo, hctauto, hemeonc, solidorgan,
             autoimmune, bv])
-        g.db.commit()
 
-        g.db.execute("""INSERT INTO supplemental (Protocol, consentwaiver,
-                consentwaiver_type, hipaawaiver, hipaawaiver_type,
-                hipaaauth, repository, nihcert, substudies, mta) VALUES
-                (?,?,?,?,?,?,?,?,?,?)""", [request.form['Protocol'],
-                consentwaiver, request.form['consentwaiver_text'],
-                hipaawaiver, request.form['hipaawaiver_text'],
-                hipaaauth, repository, nihcert, substudies, mta])
+        g.db.execute("""INSERT INTO reviewcomm (Protocol, cim, pim, src,
+            FH_IBC, UW_ehs, iacuc, rad_safety, other) VALUES
+            (?,?,?,?,?,?,?,?,?)""",
+            [request.form['Protocol'], cim, pim, src, ibc, ehs, iacuc,
+                radsafety, other])
+
+#        g.db.execute("""INSERT INTO supplemental (Protocol,
+#                consentwaiver_type, hipaawaiver_type, hipaaauth)
+#                VALUES (?,?,?,?)""",
+#                [request.form['Protocol'],
+#                request.form['consentwaiver_type'],
+#                request.form['hipaawaiver_type'],
+#                request.form['hipaaauth']])
+
         g.db.execute("""INSERT INTO base (Protocol, Title, IR_file,
                     Funding_source, IRB_approved, Primary_IRB,
                     FHCRC_renewal, UW_renewal, IRB_expires, IND,
                     Min_age_controls, Pt_total_controls,
                     Min_age_cases, Min_age_controls,
                     Type) VALUES
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                    [request.form['Protocol'], request.form['Title'],
                    request.form['IR_file'],
                    request.form['Funding_source'],
