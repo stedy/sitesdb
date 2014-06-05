@@ -127,13 +127,13 @@ def add_form():
             [request.form['Protocol'], cim, pim, src, ibc, ehs, iacuc,
                 radsafety, other])
 
-#        g.db.execute("""INSERT INTO supplemental (Protocol,
-#                consentwaiver_type, hipaawaiver_type, hipaaauth)
-#                VALUES (?,?,?,?)""",
-#                [request.form['Protocol'],
-#                request.form['consentwaiver_type'],
-#                request.form['hipaawaiver_type'],
-#                request.form['hipaaauth']])
+        g.db.execute("""INSERT INTO supplemental (Protocol,
+                consentwaiver_type, hipaawaiver_type, hipaaauth)
+                VALUES (?,?,?,?)""",
+                [request.form['Protocol'],
+                request.form['consentwaiver_type'],
+                request.form['hipaawaiver_type'],
+                request.form['hipaaauth']])
 
         g.db.execute("""INSERT INTO base (Protocol, Title, IR_file,
                     Funding_source, IRB_approved, Primary_IRB,

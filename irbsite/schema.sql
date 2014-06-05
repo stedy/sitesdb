@@ -88,6 +88,7 @@ CREATE TABLE reviewcomm (
   Primary_IRB text, Committee text,
   Review_Type text, cim text, FH_IBC text,
   pim text, UW_ehs text, src text,
+  iacuc text,
   rad_safety text, other text,
   init_approval_date text,
   irb_expires text, fhcrc_renewal text,
@@ -98,4 +99,3 @@ DROP TABLE IF EXISTS status_list;
 CREATE TABLE status_list (
   statustype text
 );
-
