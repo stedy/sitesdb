@@ -122,7 +122,7 @@ def add_form():
             multi_supp = 'Y'
         if request.form.getlist('mta_dua'):
             mta_dua = 'Y'
-        CRDgeneral, Studyspecific, UWHIPAA, CRD = None, None, None, None
+        CRDGeneral, Studyspecific, UWHIPAA, CRD = None, None, None, None
         if request.form.getlist('CRDGeneral'):
             CRDGeneral = 'Y'
         if request.form.getlist('Studyspecific'):
@@ -145,12 +145,15 @@ def add_form():
                 radsafety, other])
 
         g.db.execute("""INSERT INTO supplemental (Protocol,
-                consentwaiver_type, hipaawaiver_type, hipaaauth)
-                VALUES (?,?,?,?)""",
+                consentwaiver_type, hipaawaiver_type,
+                childrens_supp, multi_supp, mta_dua, CRDGeneral,
+                Studyspecific, UWHIPAA, CRD)
+                VALUES (?,?,?,?,?,?,?,?,?,?)""",
                 [request.form['Protocol'],
                 request.form['consentwaiver_type'],
                 request.form['hipaawaiver_type'],
-                request.form['hipaaauth']])
+                childrens_supp, multi_supp, mta_dua, CRDGeneral, Studyspecific,
+                UWHIPAA, CRD])
 
         g.db.execute("""INSERT INTO base (Protocol, Title, IR_file,
                     Funding_source, IRB_approved, Primary_IRB,

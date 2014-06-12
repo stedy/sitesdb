@@ -48,11 +48,17 @@ CREATE TABLE supplemental (
   consentwaiver_type text,
   hipaawaiver text,
   hipaawaiver_type text,
-  hipaaauth text,
   repository text,
   nihcert text,
   substudies text,
-  mta text
+  mta text,
+  childrens_supp text,
+  multi_supp text,
+  mta_dua text,
+  CRDGeneral text,
+  Studyspecific text,
+  UWHIPAA text,
+  CRD text
 );
 
 DROP TABLE IF EXISTS safety;
