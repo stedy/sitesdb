@@ -115,6 +115,23 @@ def add_form():
             radsafety = 'Y'
         if request.form.getlist('other'):
             other = 'Y'
+        childrens_supp, multi_supp, mta_dua = None, None, None
+        if request.form.getlist('childrens_supp'):
+            childrens_supp = 'Y'
+        if request.form.getlist('multi_supp'):
+            multi_supp = 'Y'
+        if request.form.getlist('mta_dua'):
+            mta_dua = 'Y'
+        CRDgeneral, Studyspecific, UWHIPAA, CRD = None, None, None, None
+        if request.form.getlist('CRDGeneral'):
+            CRDGeneral = 'Y'
+        if request.form.getlist('Studyspecific'):
+            Studyspecific = 'Y'
+        if request.form.getlist('UWHIPAA'):
+            UWHIPAA = 'Y'
+        if request.form.getlist('CRD'):
+            CRD = 'Y'
+
 
         g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
             solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",

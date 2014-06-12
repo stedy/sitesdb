@@ -94,15 +94,28 @@
           <option value="Full">Full</option>
           <option value="Other">Other</option>
       </select></td>
-      <td>HIPAA Authorization</td/>
-      <td><select name=hipaaauth>
-            <option value="CRDgeneral">CRD General</option>
-            <option value="Studyspecific">Study Specfic</option>
-            <option value="UWHIPAA"> UW HIPPA</option>
-            <option value="CRD">CRD</option>
-      </select></td></tr>
+      <tr><td>HIPAA Waiver Date:</td>
+     <td><input type=text size=20 name=hipaawaiver_date></td></tr>
+      <tr><td>Children's</td><td><input type="checkbox" name="childrens_supp"/></td>
+        <tr><td>Multicenter</td><td><input type="checkbox" name="multi_supp"/></td>
+          <tr><td>MTA/DUA</td><td><input type="checkbox" name="mta_dua"/></td>
     </table>
-	   <br></br>
+    <br>
+    <h2>HIPAA Authorization</h2>
+    <table>
+    <tr><td>CRD General</td><td><input type = "checkbox" name="CRDgeneral"></td>
+      <tr><td>Study Specific</td><td><input type = "checkbox" name="Studyspecific"></td>
+        <tr><td>UW HIPAA</td><td><input type = "checkbox" name="UWHIPAA"></td>
+          <tr><td>CRD</td><td><input type = "checkbox" name="CRD"></td>
+        </td></tr>
+      </table>
+      <br>
+      <h2>Coordinating Center</h2>
+      <table>
+        <tr><td>Multicenter Study?</td></tr>
+        <tr><td>Coordinating Center?</td></tr>
+      </table>
+      <br>
 	   <td><input type=submit value=Submit>
     </form>
     {% endif %}
