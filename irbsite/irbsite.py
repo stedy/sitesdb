@@ -159,7 +159,7 @@ def add_form():
                     Funding_source, IRB_approved, Primary_IRB,
                     FHCRC_renewal, UW_renewal, IRB_expires, IND,
                     Min_age_controls, Pt_total_controls,
-                    Min_age_cases, Min_age_controls,
+                    Min_age_cases, Pt_total_cases,
                     Type) VALUES
                     (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                    [request.form['Protocol'], request.form['Title'],
@@ -304,7 +304,8 @@ def pre_docs():
 def id_results(id_number):
     """Display all results and info for a given IR number """
     entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title,
-                        base.CTE, base.RN_coord, docs.aprvd_date,
+                        base.CTE, base.RN_coord, base.Pt_total_controls,
+                        base.Pt_total_cases, base.Min_age_controls, docs.aprvd_date,
                         docs.doc_name, docs.Version, docs.Type, base.PI,
                         docs.doc_date, docs.id FROM base, docs WHERE
                         docs.Protocol = base.Protocol
