@@ -307,9 +307,9 @@ def id_results(id_number):
                         base.CTE, base.RN_coord, base.Pt_total_controls,
                         base.Pt_total_cases, base.Min_age_controls, docs.aprvd_date,
                         docs.doc_name, docs.Version, docs.Type, base.PI,
-                        docs.doc_date, docs.id FROM base, docs WHERE
+                        docs.doc_date, docs.id, docs.substudy FROM base, docs WHERE
                         docs.Protocol = base.Protocol
-                        and base.Protocol = ? order by docs.doc_date ASC""",
+                        and base.Protocol = ?""",
                         [id_number])
     personnel = query_db("""SELECT name, role, added_date FROM personnel WHERE
                         Protocol = ?""", [id_number])
@@ -328,13 +328,14 @@ def id_results(id_number):
 @app.route('/add_docs', methods = ['GET', 'POST'])
 def add_docs():
     """Add new documents"""
-    g.db.execute("""INSERT INTO docs (Protocol, doc_name, Version, doc_date,
-            aprvd_date, Type) values (?,?,?,?,?,?)""",
-            [request.form['Protocol'], request.form['doc_name'],
+    g.db.execute("""INSERT INTO docs (Protocol, doc_name, substudy, Version,
+                doc_date, aprvd_date, Type) values (?,?,?,?,?,?,?)""",
+                [request.form['Protocol'], request.form['doc_name'],
+                request.form['substudy'],
                 request.form['Version'], request.form['doc_date'],
                 request.form['aprvd_date'], request.form['Type']])
     g.db.commit()
-    flash('New doc was successfully added')
+    flash('New doc was successfully added to %s' % request.form['Protocol'])
     return render_template('main.html')
 
 @app.route('/add_study')
@@ -748,7 +749,9 @@ def batch_new_personnel():
 
     g.db.commit()
     flash('Batch upload sucessfully completed')
-    return render_template('main.html')
+    entries = query_db("""SELECT Protocol, Title FROM
+        base WHERE Protocol != ''""")
+    return render_template('main.html', entries=entries)
 
 
 #utility functions
