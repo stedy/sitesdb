@@ -1,4 +1,3 @@
-import os
 from sqlite3 import dbapi2 as sqlite3
 import datetime as dt
 from flask import Flask, request, session, g, redirect, url_for, \
@@ -295,6 +294,18 @@ def add_safety():
             request.form['Protocol']
             return render_template('main.html' , error = error)
 
+@app.route('/add_docs', methods = ['GET', 'POST'])
+def add_docs():
+    """Add new documents"""
+    check = query_db("""SELECT Protocol from docs WHERE Protocol = ?""",
+            [request.form['Protocol']])
+    if check:
+        entries = query_db("""SELECT * from docs where Protocol = ?""",
+            [request.form['Protocol']])
+        return render_template('add_docs.html', entries=entries)
+    else:
+        return render_template('main.html')
+
 @app.route('/pre_docs', methods = ['GET', 'POST'])
 def pre_docs():
     entries = query_db("""SELECT Protocol FROM base WHERE Protocol != "" ORDER BY Protocol ASC""")
@@ -324,19 +335,6 @@ def id_results(id_number):
         entries = query_db("""SELECT base.Protocol, base.IR_file, base.Title
             FROM base WHERE base.Protocol = ?""", [id_number])
         return render_template('study_none.html', entries = entries)
-
-@app.route('/add_docs', methods = ['GET', 'POST'])
-def add_docs():
-    """Add new documents"""
-    g.db.execute("""INSERT INTO docs (Protocol, doc_name, substudy, Version,
-                doc_date, aprvd_date, Type) values (?,?,?,?,?,?,?)""",
-                [request.form['Protocol'], request.form['doc_name'],
-                request.form['substudy'],
-                request.form['Version'], request.form['doc_date'],
-                request.form['aprvd_date'], request.form['Type']])
-    g.db.commit()
-    flash('New doc was successfully added to %s' % request.form['Protocol'])
-    return render_template('main.html')
 
 @app.route('/add_study')
 def add_study():
@@ -523,6 +521,19 @@ def new_safety():
     g.db.commit()
     flash('New safety form for %s successfully entered' % \
     str(request.form['Protocol']))
+    return render_template('main.html')
+
+@app.route('/new_docs', methods = ['GET', 'POST'])
+def new_docs():
+    """Single page add new study documents"""
+    g.db.execute("""INSERT INTO docs (Protocol, doc_name, substudy, Version,
+                doc_date, aprvd_date, Type) values (?,?,?,?,?,?,?)""",
+                [request.form['Protocol'], request.form['doc_name'],
+                request.form['substudy'],
+                request.form['Version'], request.form['doc_date'],
+                request.form['aprvd_date'], request.form['Type']])
+    g.db.commit()
+    flash('New doc was successfully added to %s' % request.form['Protocol'])
     return render_template('main.html')
 
 @app.route('/new_personnel', methods = ['GET', 'POST'])
@@ -752,7 +763,6 @@ def batch_new_personnel():
     entries = query_db("""SELECT Protocol, Title FROM
         base WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
-
 
 #utility functions
 

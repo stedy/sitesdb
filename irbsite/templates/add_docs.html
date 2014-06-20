@@ -10,22 +10,6 @@
   <h2>FHCRC IRB# {{ entries[0].Protocol }} | IR File: {{ entries[0].IR_file }}</h2>
   <h2>Committee: {{ entries[0].CTE }}  | Correspondence: {{ entries[0].RN_coord }} </h2>
   <br>
-  <h2>Study Personnel</h2>
-  <table>
-    <tr>
-      <td><b>Name</td>
-      <td><b>Role</td>
-      <td><b>Date added</td>
-    </tr>
-    <tr>
-      {% for person in personnel %}
-      <td>{{ person.name }}</td>
-      <td>{{ person.role }}</td>
-      <td>{{ person.added_date }}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  <br></br>
   <h2>Study Documents</h2>
   <table id="basic">
     <thead>
@@ -55,7 +39,7 @@
 
 <br>
 <h2>Add new study document</h2>
-<form action="{{ url_for('add_docs') }}" method=post>
+<form action="{{ url_for('new_docs') }}" method=post>
 <table>
   <tr>
    <td><b>Protocol</td>
