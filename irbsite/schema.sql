@@ -58,7 +58,8 @@ CREATE TABLE supplemental (
   CRDGeneral text,
   Studyspecific text,
   UWHIPAA text,
-  CRD text
+  CRD text,
+  uwconf_date text
 );
 
 DROP TABLE IF EXISTS safety;

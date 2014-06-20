@@ -147,13 +147,13 @@ def add_form():
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
                 childrens_supp, multi_supp, mta_dua, CRDGeneral,
-                Studyspecific, UWHIPAA, CRD)
-                VALUES (?,?,?,?,?,?,?,?,?,?)""",
+                Studyspecific, UWHIPAA, CRD, uwconf_date)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
                 [request.form['Protocol'],
                 request.form['consentwaiver_type'],
                 request.form['hipaawaiver_type'],
                 childrens_supp, multi_supp, mta_dua, CRDGeneral, Studyspecific,
-                UWHIPAA, CRD])
+                UWHIPAA, CRD, request.form['uwconf_date']])
 
         g.db.execute("""INSERT INTO base (Protocol, Title, IR_file,
                     Funding_source, IRB_approved, Primary_IRB,
