@@ -1,0 +1,178 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if g.user %}
+<div class=metanav>
+</div>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('batch_new_personnel') }}" method=post class=addstudy>
+    <h2>Multiple add new personnel</h2>
+      <table width="600">
+       <td>Name</td>
+       <td><select name=name1>
+            <option value=""></option>
+         {% for name in names %}
+         <option value="{{ name.name }}">{{ name.name }}</option>
+         {% endfor %}
+       <td>Protocol</td>
+       <td>
+         <select name=Protocol1>
+            <option value=""></option>
+           {% for entry in entries %}
+           <option value="{{ entry.Protocol }}">{{ entry.Protocol }}</option>
+           {% endfor %}
+       <td>Role of individual</td>
+       <td><select name=role1>
+        <option value="PI">PI</option>
+        <option value="Sub-I">Sub-I</option>
+        <option value="Study_coord">Study Coordinator</option>
+        <option value="Research Assistant">Research Assistant</option>
+        <option value="RN_coord">Nurse/Coordinator</option>
+        <option value="Data_coord">Data Coordinator</option>
+        <option value="Reg_coord">Reg Coordinator</option>
+      </select>
+      <td>Role Assignment</td>
+      <td><select name=responsibility1>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select></tr>
+       <td>Name</td>
+       <td><select name=name2>
+            <option value=""></option>
+         {% for name in names %}
+         <option value="{{ name.name }}">{{ name.name }}</option>
+         {% endfor %}
+       <td>Protocol</td>
+       <td>
+         <select name=Protocol2>
+            <option value=""></option>
+           {% for entry in entries %}
+           <option value="{{ entry.Protocol }}">{{ entry.Protocol }}</option>
+           {% endfor %}
+       <td>Role of individual</td>
+       <td><select name=role2>
+        <option value="PI">PI</option>
+        <option value="Sub-I">Sub-I</option>
+        <option value="Study_coord">Study Coordinator</option>
+        <option value="Research Assistant">Research Assistant</option>
+        <option value="RN_coord">Nurse/Coordinator</option>
+        <option value="Data_coord">Data Coordinator</option>
+        <option value="Reg_coord">Reg Coordinator</option>
+      </select>
+      <td>Role Assignment</td>
+      <td><select name=responsibility2>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select></tr>
+       <td>Name</td>
+       <td><select name=name3>
+            <option value=""></option>
+         {% for name in names %}
+         <option value="{{ name.name }}">{{ name.name }}</option>
+         {% endfor %}
+       <td>Protocol</td>
+       <td>
+         <select name=Protocol3>
+            <option value=""></option>
+           {% for entry in entries %}
+           <option value="{{ entry.Protocol }}">{{ entry.Protocol }}</option>
+           {% endfor %}
+       <td>Role of individual</td>
+       <td><select name=role3>
+        <option value="PI">PI</option>
+        <option value="Sub-I">Sub-I</option>
+        <option value="Study_coord">Study Coordinator</option>
+        <option value="Research Assistant">Research Assistant</option>
+        <option value="RN_coord">Nurse/Coordinator</option>
+        <option value="Data_coord">Data Coordinator</option>
+        <option value="Reg_coord">Reg Coordinator</option>
+      </select>
+      <td>Role Assignment</td>
+      <td><select name=responsibility3>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select></tr>
+       <td>Name</td>
+       <td><select name=name4>
+            <option value=""></option>
+         {% for name in names %}
+         <option value="{{ name.name }}">{{ name.name }}</option>
+         {% endfor %}
+       <td>Protocol</td>
+       <td>
+         <select name=Protocol4>
+            <option value=""></option>
+           {% for entry in entries %}
+           <option value="{{ entry.Protocol }}">{{ entry.Protocol }}</option>
+           {% endfor %}
+       <td>Role of individual</td>
+       <td><select name=role4>
+        <option value="PI">PI</option>
+        <option value="Sub-I">Sub-I</option>
+        <option value="Study_coord">Study Coordinator</option>
+        <option value="Research Assistant">Research Assistant</option>
+        <option value="RN_coord">Nurse/Coordinator</option>
+        <option value="Data_coord">Data Coordinator</option>
+        <option value="Reg_coord">Reg Coordinator</option>
+      </select>
+      <td>Role Assignment</td>
+      <td><select name=responsibility4>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select></tr>
+       <td>Name</td>
+       <td><select name=name5>
+            <option value=""></option>
+         {% for name in names %}
+         <option value="{{ name.name }}">{{ name.name }}</option>
+         {% endfor %}
+       <td>Protocol</td>
+       <td>
+         <select name=Protocol5>
+            <option value=""></option>
+           {% for entry in entries %}
+           <option value="{{ entry.Protocol }}">{{ entry.Protocol }}</option>
+           {% endfor %}
+       <td>Role of individual</td>
+       <td><select name=role5>
+        <option value="PI">PI</option>
+        <option value="Sub-I">Sub-I</option>
+        <option value="Study_coord">Study Coordinator</option>
+        <option value="Research Assistant">Research Assistant</option>
+        <option value="RN_coord">Nurse/Coordinator</option>
+        <option value="Data_coord">Data Coordinator</option>
+        <option value="Reg_coord">Reg Coordinator</option>
+      </select>
+      <td>Role Assignment</td>
+      <td><select name=responsibility5>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select></tr>
+    </table>
+    <br>
+      <td><input type=submit value=Submit>
+    </form>
+    {% endif %}
+    <ul class=entries>
+      <i>Don't see the person you want to add? Make sure they are added via <a href="{{ url_for('add_personnel') }}">Add new study personnel</a></i>
+    </ul>
+    {% endblock %}

@@ -40,7 +40,9 @@
          <td><input type=text id="removed" name=date_removed></td></tr>
        <tr><td>Delegation Log Date:
          <td><input type=text id="dellog" name=dellog></td>
-      </table>
+       </table>
+       <br>
+       <a href="{{ url_for('batch_upload') }}">Upload Multiple Individuals</a></br>
       <td><input type=submit value=Submit>
     </form>
     {% endif %}

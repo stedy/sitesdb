@@ -709,6 +709,48 @@ def get_safety():
     return send_from_directory(app.config['FILE_FOLDER'],
             filename, as_attachment=True)
 
+
+@app.route('/batch_upload')
+def batch_upload():
+    entries = query_db("""SELECT Protocol FROM base WHERE Protocol
+            != "" ORDER BY Protocol ASC""")
+    names = query_db("""SELECT name from personnel WHERE name != "" ORDER by
+            name ASC""")
+    return render_template('batch_upload.html', entries=entries, names=names)
+
+@app.route('/batch_new_personnel', methods = ['GET', 'POST'])
+def batch_new_personnel():
+    """Batch new personnel to study"""
+    g.db.execute("""INSERT INTO personnel (Protocol, name, role,
+                responsibility) VALUES (?,?,?,?)""",
+                [request.form['Protocol1'], request.form['name1'],
+                request.form['role1'], request.form['responsibility1']])
+    if request.form['Protocol2'] != "":
+        g.db.execute("""INSERT INTO personnel (Protocol, name, role,
+                responsibility) VALUES (?,?,?,?)""",
+                [request.form['Protocol2'], request.form['name2'],
+                request.form['role2'], request.form['responsibility2']])
+    if request.form['Protocol3'] != "":
+        g.db.execute("""INSERT INTO personnel (Protocol, name, role,
+                responsibility) VALUES (?,?,?,?)""",
+                [request.form['Protocol3'], request.form['name3'],
+                request.form['role3'], request.form['responsibility3']])
+    if request.form['Protocol4'] != "":
+        g.db.execute("""INSERT INTO personnel (Protocol, name, role,
+                responsibility) VALUES (?,?,?,?)""",
+                [request.form['Protocol4'], request.form['name4'],
+                request.form['role4'], request.form['responsibility4']])
+    if request.form['Protocol5'] != "":
+        g.db.execute("""INSERT INTO personnel (Protocol, name, role,
+                responsibility) VALUES (?,?,?,?)""",
+                [request.form['Protocol5'], request.form['name5'],
+                request.form['role5'], request.form['responsibility5']])
+
+    g.db.commit()
+    flash('Batch upload sucessfully completed')
+    return render_template('main.html')
+
+
 #utility functions
 
 @app.route('/register', methods = ['GET', 'POST'])
