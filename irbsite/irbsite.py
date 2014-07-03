@@ -297,14 +297,9 @@ def add_safety():
 @app.route('/add_docs', methods = ['GET', 'POST'])
 def add_docs():
     """Add new documents"""
-    check = query_db("""SELECT Protocol from docs WHERE Protocol = ?""",
+    entries = query_db("""SELECT * from docs where Protocol = ?""",
             [request.form['Protocol']])
-    if check:
-        entries = query_db("""SELECT * from docs where Protocol = ?""",
-            [request.form['Protocol']])
-        return render_template('add_docs.html', entries=entries)
-    else:
-        return render_template('main.html')
+    return render_template('add_docs.html', entries=entries)
 
 @app.route('/pre_docs', methods = ['GET', 'POST'])
 def pre_docs():
