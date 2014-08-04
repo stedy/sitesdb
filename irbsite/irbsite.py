@@ -759,6 +759,28 @@ def batch_new_personnel():
         base WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
 
+@app.route('/upload_file', methods = ['GET', 'POST'])
+def upload_file():
+    """Allow only certain types of uploads"""
+    if request.method == 'POST':
+        file = request.files['file']
+        print file.filename
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash('File sucessfully uploaded, please carry on')
+            return renter_template('index.html')
+    return '''
+     <!doctype html>
+     <title>Upload files</title>
+     <h1>Upload new file of interest</h1>
+     <form action="" method=post enctype=multipart/form-data>
+     <p><input type=file name=file>
+     <input type=submit value=upload>
+     </form>
+     '''
+
+
 #utility functions
 
 @app.route('/register', methods = ['GET', 'POST'])
