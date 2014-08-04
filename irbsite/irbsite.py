@@ -138,10 +138,10 @@ def add_form():
             autoimmune, bv])
 
         g.db.execute("""INSERT INTO reviewcomm (Protocol, cim, pim, src,
-            FH_IBC, UW_ehs, iacuc, rad_safety, other) VALUES
+            FH_IBC, UW_ehs, iacuc, iacucdate, rad_safety, other) VALUES
             (?,?,?,?,?,?,?,?,?)""",
-            [request.form['Protocol'], cim, pim, src, ibc, ehs, iacuc,
-                radsafety, other])
+            [request.form['Protocol'], request.form['iacucdate'], cim, pim,
+                src, ibc, ehs, iacuc, radsafety, other])
 
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
