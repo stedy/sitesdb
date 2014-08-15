@@ -617,11 +617,15 @@ def add_sponsor():
 @app.route('/add_sponsor_info', methods = ['GET', 'POST'])
 def add_sponsor_info():
     """Add new sponsor to study"""
-    g.db.execute("""INSERT INTO sponsor (Protocol, added_date, name, role,
-                removed_date, responsibility) VALUES (?,?,?,?,?,?)""",
+    g.db.execute("""INSERT INTO sponsor (Protocol, added_date, name, telephone,
+                removed_date, company, cellphone, fax, email, address, notes)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
                 [request.form['Protocol'], request.form['date_added'],
-        request.form['name'], request.form['role'],
-        request.form['date_removed'], request.form['responsibility']])
+        request.form['name'], request.form['telephone'],
+        request.form['date_removed'], request.form['company'],
+        request.form['cellphone'], request.form['fax'],
+            request.form['email'], request.form['address'],
+            request.form['notes']])
     g.db.commit()
     flash('%s added to Protocol %s' % (request.form['name'], \
         request.form['Protocol']))

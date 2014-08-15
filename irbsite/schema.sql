@@ -115,5 +115,8 @@ CREATE TABLE sponsor (
   name text,
   role text,
   removed_date date,
-  responsibility text
+  company text, telephone text,
+  cellphone text, fax text,
+  email text, address text,
+  notes text
 );
