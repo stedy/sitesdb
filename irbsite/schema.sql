@@ -107,3 +107,13 @@ DROP TABLE IF EXISTS status_list;
 CREATE TABLE status_list (
   statustype text
 );
+
+DROP TABLE IF EXISTS sponsor;
+CREATE TABLE sponsor (
+  Protocol text,
+  added_date date,
+  name text,
+  role text,
+  removed_date date,
+  responsibility text
+);

@@ -609,6 +609,24 @@ def binder_template(id_number):
                         WHERE base.Protocol = ?""", [ids])
     return render_template('binder_template.html', entries=entries)
 
+@app.route('/add_sponsor')
+def add_sponsor():
+    """Add new personnel to existing study"""
+    return render_template('add_sponsor.html')
+
+@app.route('/add_sponsor_info', methods = ['GET', 'POST'])
+def add_sponsor_info():
+    """Add new sponsor to study"""
+    g.db.execute("""INSERT INTO sponsor (Protocol, added_date, name, role,
+                removed_date, responsibility) VALUES (?,?,?,?,?,?)""",
+                [request.form['Protocol'], request.form['date_added'],
+        request.form['name'], request.form['role'],
+        request.form['date_removed'], request.form['responsibility']])
+    g.db.commit()
+    flash('%s added to Protocol %s' % (request.form['name'], \
+        request.form['Protocol']))
+    return render_template('main.html')
+
 #queries
 
 @app.route('/query')

@@ -4,8 +4,8 @@
 <div class=metanav>
 </div>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('new_personnel') }}" method=post class=addstudy>
-    <h2>Add new personnel</h2>
+  <form action="{{ url_for('add_sponsor_info') }}" method=post class=addstudy>
+    <h2>Add new study sponsor</h2>
       <table width="600">
        <td> Name:</td>
        <td><input type=text id="name" name=name></td>
@@ -44,7 +44,6 @@
          <td><input type=text id="uwconfdate" name=uwconfdate></td>
        </table>
        <br>
-       <a href="{{ url_for('batch_upload') }}">Upload Multiple Individuals</a></br>
       <td><input type=submit value=Submit>
     </form>
     {% endif %}
