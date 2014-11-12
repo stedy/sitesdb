@@ -2,8 +2,10 @@ from sqlite3 import dbapi2 as sqlite3
 import datetime as dt
 from flask import Flask, request, session, g, redirect, url_for, \
         abort, render_template, flash, send_from_directory
-from werkzeug import check_password_hash, generate_password_hash
+from werkzeug import check_password_hash, generate_password_hash, \
+        secure_filename
 from contextlib import closing
+import os
 import zip_database as zd
 
 
@@ -11,11 +13,14 @@ DATABASE = 'irb_db.db'
 DEBUG = True
 FILE_FOLDER = 'archives'
 SECRET_KEY = 'development key'
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = set(['csv', 'txt', 'CSV'])
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 
 app.config.from_envvar('IRB_DB_SETTINGS', silent = True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def connect_db():
     """Returns a new connection to the database"""
@@ -41,6 +46,10 @@ def query_db(query, args=(), one = False):
     rv = [dict((cur.description[idx][0], value)
         for idx, value in enumerate(row)) for row in cur.fetchall()]
     return (rv[0] if rv else None) if one else rv
+
+def allowed_file(filename):
+    return '.' in filename and \
+            filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS
 
 #then decorators
 
@@ -791,11 +800,12 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             flash('File sucessfully uploaded, please carry on')
-            return renter_template('index.html')
+            return redirect(url_for('main'))
     return '''
      <!doctype html>
      <title>Upload files</title>
      <h1>Upload new file of interest</h1>
+     Note: only files of type .csv and .txt currently allowed
      <form action="" method=post enctype=multipart/form-data>
      <p><input type=file name=file>
      <input type=submit value=upload>
