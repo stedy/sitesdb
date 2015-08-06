@@ -1,38 +1,25 @@
 import os
-import irbsite
 import unittest
 import tempfile
+import requests
 
-class IRBDBTestCase(unittest.TestCase):
-	def setUp(self):
-		self.db_fd, irbsite.app.config['DATABASE'] = tempfile.mkstemp()
-        irbsite.app.config['TESTING'] = True
-        self.app = irbsite.app.test_client()
-        irbsite.init_db()
+from irbsite import app
 
-	def tearDown(self):
-		os.close(self.db_fd)
-		os.unlink(irbsite.DATABASE)
+class TestIRBDB(unittest.TestCase):
+    def setUp(self):
+        app.config['SECRET_KEY'] = 'development key'
+        app.testing = True
+        self.username = 'ZJS'
+        self.password = 'pwd_2012'
+        self.app = app.test_client()
 
-	def login(self, username, password):
-		return self.app.post('/', data = dict(
-			username = username,
-			password = password), follow_redirects = True)
+    def test_login(self):
+        r = requests.get("http://127.0.0.1:5000/main", \
+                auth=(self.username, self.password))
+        self.assertTrue(r.ok)
 
-	def logout(self):
-		return self.app.get('/logout', follow_redirects = True)
-
-	def test_login_logout(self):
-		rv = self.login('admin', 'default')
-		assert 'You were logged in' in rv.data
-		rv = self.logout()
-		assert 'You were logged out' in rv.data
-		rv = self.login('adminx', 'default')
-		assert 'Invalid username' in rv.data
-		rv = self.login('admin', 'defaultx')
-		assert 'Invalid password' in rv.data
-
-    def test_add_Study(self):
+    def test_logout(self):
+        return self.app.get('/logout', follow_redirects = True)
 
 if __name__ == '__main__':
 	unittest.main()
