@@ -6,7 +6,7 @@
     <script type="text/javascript" src="/static/datefun.js"></script>
     {% endblock %}
     <ul class=metanav>
-    </ul>    
+    </ul>
     <ul class=funding_entries>
 	{% for entry in entries %}
 	<form action="{{ url_for('submit_funding_edits', funding_id= entry.id) }}" method=post class=addfunding>
@@ -47,5 +47,5 @@
   <br>
 	<input type=submit value="Edit Funding">
   </ul>
-    {% endif %}   
+    {% endif %}
     {% endblock %}

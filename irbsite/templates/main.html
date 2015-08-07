@@ -21,13 +21,7 @@
   <br>
   <a href="{{ url_for('pre_docs') }}">Add new docs</a>
   <br>
-  <h3>Perform a query</h3>
-  <a href="{{ url_for('funding_query') }}">Query by funding keywords</a>
-  <br>
-  <h3>View summary tables</h3>
-  <a href="{{ url_for('safety_results') }}">View all safety reports</a>
-  <br></br>
-  <h3>All current studies</h3>
+  <h3>View current studies</h3>
   <table id="basic">
    <thead>
      <tr>
@@ -49,6 +43,9 @@
    </tbody>
  </table>
  <br></br>
+  <h3>Safety reports</h3>
+  <a href="{{ url_for('safety_results') }}">View all safety reports</a>
+  <br></br>
   <a href="{{ url_for('get_safety') }}">Download Safety Reports</a>
   <br>
 
