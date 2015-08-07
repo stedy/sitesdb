@@ -105,6 +105,7 @@ def add_form():
             autoimmune = 'Y'
         if request.form.getlist('bv'):
             bv = 'Y'
+
         cim, pim, src, ibc, ehs, iacuc, radsafety, other = None, None, None, \
             None, None, None, None, None
         if request.form.getlist('cim'):
@@ -145,11 +146,11 @@ def add_form():
             [request.form['Protocol'], hctallo, hctauto, hemeonc, solidorgan,
             autoimmune, bv])
 
-        g.db.execute("""INSERT INTO reviewcomm (Protocol, cim, pim, src,
-            FH_IBC, UW_ehs, iacuc, iacucdate, rad_safety, other) VALUES
+        g.db.execute("""INSERT INTO reviewcomm (Protocol, iacuc, cim, pim, src,
+            FH_IBC, UW_ehs, rad_safety, other) VALUES
             (?,?,?,?,?,?,?,?,?)""",
-            [request.form['Protocol'], request.form['iacucdate'], cim, pim,
-                src, ibc, ehs, iacuc, radsafety, other])
+            [request.form['Protocol'], request.form['iacuc_date'], cim, pim,
+                src, ibc, ehs, radsafety, other])
 
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
@@ -162,25 +163,17 @@ def add_form():
                 childrens_supp, multi_supp, mta_dua, CRDGeneral, Studyspecific,
                 UWHIPAA, CRD, request.form['uwconf_date']])
 
-        g.db.execute("""INSERT INTO protocols (Protocol, Title, IR_file,
-                    Funding_source, IRB_approved, Primary_IRB,
-                    FHCRC_renewal, UW_renewal, IRB_expires, IND,
-                    Min_age_controls, Pt_total_controls,
-                    Min_age_cases, Pt_total_cases,
-                    Type) VALUES
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+        g.db.execute("""INSERT INTO protocols (Protocol, Title,
+                    IR_file,
+                    IRB_approved,
+                    IRB_expires,
+                    Min_age) VALUES
+                    (?,?,?,?,?,?)""",
                    [request.form['Protocol'], request.form['Title'],
                    request.form['IR_file'],
-                   request.form['Funding_source'],
-                   request.form['IRB_approved'], request.form['Primary_IRB'],
-                   request.form['FHCRC_renewal'],
-                   request.form['UW_renewal'], request.form['IRB_expires'],
-                   request.form['IND'],
-                   request.form['Min_age_controls'],
-                   request.form['Pt_total_controls'],
-                   request.form['Min_age_cases'],
-                   request.form['Pt_total_cases'],
-                   request.form['Type']])
+                   request.form['IRB_approved'],
+                   request.form['IRB_expires'],
+                   request.form['Min_age']])
         g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                     values (?,?,?)""", [request.form['Protocol'],
                     g.user['username'], dt.datetime.now().strftime("%m/%d/%Y")])
@@ -319,11 +312,7 @@ def id_results(id_number):
     """Display all results and info for a given IR number """
     entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title,
                         protocols.CTE, protocols.RN_coord, protocols.Pt_total_controls,
-                        protocols.Pt_total_cases, protocols.Min_age_controls, docs.aprvd_date,
-                        docs.doc_name, docs.Version, docs.Type, protocols.PI,
-                        docs.doc_date, docs.id, docs.substudy FROM protocols, docs WHERE
-                        docs.Protocol = protocols.Protocol
-                        and protocols.Protocol = ?""",
+                        WHERE protocols.Protocol = ?""",
                         [id_number])
     personnel = query_db("""SELECT name, role, added_date FROM personnel WHERE
                         Protocol = ?""", [id_number])
