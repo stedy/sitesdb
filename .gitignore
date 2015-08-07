@@ -4,10 +4,9 @@
 *.swp
 *.pyc
 *.zip
-vzv2213/vzv.db
+.coverage
 original/
 mksql/
-irbsite/irb_db.db
 favicon.ico
 raw_image_files
 uploads

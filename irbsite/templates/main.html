@@ -22,12 +22,6 @@
   <a href="{{ url_for('pre_docs') }}">Add new docs</a>
   <br>
   <h3>Perform a query</h3>
-  <a href="{{ url_for('query') }}">Query by study ID</a>
-  <br>
-  <a href="{{ url_for('title_query') }}">Query by title keywords</a>
-  <br>
-  <a href="{{ url_for('pi_query') }}">Query by PI last name</a>
-  <br>
   <a href="{{ url_for('funding_query') }}">Query by funding keywords</a>
   <br>
   <h3>View summary tables</h3>
@@ -38,6 +32,8 @@
    <thead>
      <tr>
        <th><b>Protocol</th>
+       <th><b>IR</th>
+       <th><b>PI</th>
        <th><b>Study title</th>
      </tr>
    </thead>
@@ -45,6 +41,8 @@
    {% for entry in entries %}
     <tr>
      <td><a href="{{ url_for('id_results', id_number=entry.Protocol) }}">{{ entry.Protocol }}</a></td>
+     <td>{{ entry.IR_file }}</td>
+     <td>{{ entry.PI }}</td>
      <td>{{ entry.Title }}</td>
     </tr>
     {% endfor %}

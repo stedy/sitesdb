@@ -81,7 +81,7 @@ def login():
         else:
             flash('You were logged in')
             session['user_id'] = user['user_id']
-            entries = query_db("""SELECT Protocol, Title FROM
+            entries = query_db("""SELECT Protocol, Title, PI FROM
                 protocols WHERE Protocol != ''""")
             return redirect(url_for('main'))
     return render_template('login.html', error = error)
@@ -264,7 +264,7 @@ def add_ae():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT Protocol, Title FROM
+    entries = query_db("""SELECT Protocol, Title, PI, IR_file FROM
         protocols WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
 
@@ -630,18 +630,6 @@ def add_sponsor_info():
 
 #queries
 
-@app.route('/query')
-def query():
-    """Main search query based on ID numbers """
-    return render_template('subj_query.html')
-
-@app.route('/title_query')
-def title_query():
-    return render_template('title_query.html')
-
-@app.route('/pi_query')
-def pi_query():
-    return render_template('pi_query.html')
 
 @app.route('/funding_query')
 def funding_query():
@@ -681,32 +669,6 @@ def safety_results():
     safety;""")
     return render_template('safety_summary.html', entries=entries)
 
-@app.route('/pi_results', methods = ['GET', 'POST'])
-def pi_results():
-    error = None
-    if request.form['PI']:
-        entries = query_db("""SELECT Title, Protocol, UW, Comments, IR_file,
-                        rn_coord, IRB_expires,
-                        IRB_approved, Funding_source, Type, CTE, Accrual_status
-                         FROM protocols WHERE PI = ?""",
-                        [request.form['PI']], one = False )
-        return render_template('pi_results.html', PI = request.form['PI'],
-                entries = entries)
-    else:
-        error = "Must have PI name to search"
-        return render_template('pi_query.html', error=error)
-
-@app.route('/title_results', methods = ['GET', 'POST'])
-def title_results():
-    if request.form['title']:
-        titlestr = "%" + request.form['title'] + "%"
-        entries = query_db("""SELECT PI, Protocol, RN_coord, IRB_expires,
-                        IRB_approved, Funding_source, Type, CTE, Accrual_status,
-                        Title, IR_file, Comments FROM protocols WHERE Title
-                        LIKE ?""", [titlestr], one = False)
-    return render_template('title_results.html',
-                Title = request.form['title'],
-                entries = entries)
 
 @app.route('/funding_results', methods = ['GET', 'POST'])
 def funding_results():
@@ -774,7 +736,7 @@ def batch_new_personnel():
 
     g.db.commit()
     flash('Batch upload sucessfully completed')
-    entries = query_db("""SELECT Protocol, Title FROM
+    entries = query_db("""SELECT Protocol, Title, PI FROM
         protocols WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
 
