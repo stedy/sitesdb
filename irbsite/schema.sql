@@ -53,4 +53,14 @@ CREATE TABLE createdby (
 	Protocol text,
 	user_id text,
 	pub_date integer
-      );
+);
+
+DROP TABLE IF EXISTS personnel;
+CREATE TABLE personnel (
+  Protocol text,
+  added_date date,
+  name text,
+  role text,
+  removed_date text,
+  responsibility text
+);

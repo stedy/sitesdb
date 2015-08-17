@@ -311,18 +311,19 @@ def pre_docs():
 def id_results(id_number):
     """Display all results and info for a given IR number """
     entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title,
-                        protocols.CTE, protocols.RN_coord, protocols.Pt_total_controls,
+                        protocols.CTE, protocols.RN_coord
+                        FROM protocols
                         WHERE protocols.Protocol = ?""",
                         [id_number])
     personnel = query_db("""SELECT name, role, added_date FROM personnel WHERE
                         Protocol = ?""", [id_number])
-    committee = query_db("""SELECT Primary_IRB, Review_Type, Committee FROM
-                        reviewcomm WHERE Protocol = ?""", [id_number])
-    funding = query_db("""SELECT Institution, Funding_Title, PI, start, end
-                        FROM funding WHERE Protocol = ?""", [id_number])
+#    committee = query_db("""SELECT Primary_IRB, Review_Type, Committee FROM
+#                        reviewcomm WHERE Protocol = ?""", [id_number])
+#    funding = query_db("""SELECT Institution, Funding_Title, PI, start, end
+#                        FROM funding WHERE Protocol = ?""", [id_number])
     if entries:
         return render_template('study.html', entries = entries,
-                personnel=personnel, committee=committee, funding=funding)
+                personnel = personnel)
     else:
         entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title
             FROM protocols WHERE protocols.Protocol = ?""", [id_number])
