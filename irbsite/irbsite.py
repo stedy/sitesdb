@@ -265,8 +265,10 @@ def add_ae():
 @app.route('/main')
 def main():
     entries = query_db("""SELECT Protocol, Title, PI, IR_file, CTE,
-        rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status
-        FROM
+        rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
+        Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
+        Phase, IND, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
+        HIPAA_waiver, UW_agree, Childrens_agree FROM
         protocols WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
 

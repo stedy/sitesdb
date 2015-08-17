@@ -20,10 +20,25 @@
 </script>
 <script>
   $(document).ready(function() {
-      $('#basic').DataTable( {
-          "scrollX": true
-        } );
+      $('#basic tfoot th').each( function () {
+         var title = $('#basic thead th').eq( $(this).index() ).text();
+         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
       } );
+
+      var table = $('#basic').DataTable({
+        "scrollX": true});
+
+      table.columns().every( function () {
+          var that = this;
+
+          $( 'input', this.footer() ).on( 'keyup change', function () {
+              that
+                 .search( this.value )
+                 .draw();
+          } );
+      } );
+  } );
+
   $(document).ready(function() {
         $('#safety').dataTable();
       } );
