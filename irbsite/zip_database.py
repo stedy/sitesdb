@@ -6,10 +6,10 @@ import os
 import stat
 
 def main():
-    with sqlite3.connect('/var/www/html/irbdb/irb_db.db') as connection:
-        csvWriter = csv.writer(open("/var/www/html/irbdb/archives/safety_reports.csv", "w"))
+    with sqlite3.connect('irb_site.db') as connection:
+        csvWriter = csv.writer(open("protocols.csv", "w"))
         c = connection.cursor()
-        code = c.execute("SELECT * from safety")
+        code = c.execute("SELECT * from protocols")
         rows = code.fetchall()
         headers_demo = []
         for colinfo in c.description:
@@ -20,8 +20,7 @@ def main():
     now = dt.datetime.now().strftime('%Y-%m-%d')
     z = zipfile.ZipFile(os.path.join('archives', now + "_database.zip"), 'w')
 
-
-    z.write("/var/www/html/irbdb/archives/safety_reports.csv")
+    z.write("start.csv")
     z.close()
     os.chmod(os.path.join('archives', now + "_database.zip"), 0777)
 

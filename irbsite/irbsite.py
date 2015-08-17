@@ -694,7 +694,7 @@ def get_safety():
     """Pull out all safety archives as they currently are read"""
     zd.main()
     now = dt.datetime.now().strftime('%Y-%m-%d')
-    filename = now + "_safety_database.zip"
+    filename = now + "_database.zip"
     return send_from_directory(app.config['FILE_FOLDER'],
             filename, as_attachment=True)
 
