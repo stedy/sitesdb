@@ -4,7 +4,7 @@ h1, h2      { font-family: 'Century Gothic', serif; margin: 0; }
 h1          { border-bottom: 2px solid #DDECEF; }
 h2          { font-size: 1.2em; }
 
-.page       { margin: 2em auto; width: 70em; border: 5px solid #0191C8; 
+.page       { margin: 2em auto; width: 70em; border: 5px solid #0191C8;
                 padding: 0.8em; background: white; }
 .entries li   { list-style: none; margin: 0; padding: 0; font: 'Elena'; width: 200px; }
 .binder li   { margin: 0; padding: 0; font: 'Elena'; width: 100px;}
@@ -14,8 +14,8 @@ h2          { font-size: 1.2em; }
 .funding_entries li { margin: 0.8em 1.2em; width: 90px; display: inline-block; }
 .mod_entries li { margin: 0.8em 1.2em; width: 170px; display: inline-block; }
 .entries li h2 { margin-left: -1em; }
-td.date { color : #888; } 
-td.past { color : #FF0000; } 
+td.date { color : #888; }
+td.past { color : #FF0000; }
 td.td5 { font-size: 1.2em; }
 .results li { margin: 0.8em 1.2em; }
 .add-entry  { font-size: 0.9em; border-bottom: 1px solid #ccc; }
@@ -27,13 +27,13 @@ td.td5 { font-size: 1.2em; }
 .error      { background: #F0D6D6; padding: 0.5em; }
 
 div.page div.footer  {
-		background:  #DDECEF;	
+		background:  #DDECEF;
 		color: #888;
 		padding: 5px 10px;
 		font-size: 12 px;
 }
 table {
-  width: "550px"; text-align: left; border: 1px solid;
+  width: 1100px; text-align: left; border: 1px solid;
   }
 
 td {
@@ -43,3 +43,8 @@ td {
 tr:nth-child(2n+1) {
    background-color: #DDECEF;
    }
+
+div.dataTables_wrapper {
+   width: 1100px;
+   margin: 0 auto;
+ }

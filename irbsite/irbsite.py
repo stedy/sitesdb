@@ -264,7 +264,9 @@ def add_ae():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT Protocol, Title, PI, IR_file FROM
+    entries = query_db("""SELECT Protocol, Title, PI, IR_file, CTE,
+        rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status
+        FROM
         protocols WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
 

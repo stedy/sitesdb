@@ -20,7 +20,9 @@
 </script>
 <script>
   $(document).ready(function() {
-        $('#basic').dataTable();
+      $('#basic').DataTable( {
+          "scrollX": true
+        } );
       } );
   $(document).ready(function() {
         $('#safety').dataTable();

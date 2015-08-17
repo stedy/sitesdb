@@ -65,6 +65,23 @@ CREATE TABLE personnel (
   responsibility text
 );
 
+
+DROP TABLE IF EXISTS safety;
+CREATE TABLE safety (
+  Protocol text,
+  submit_date date,
+  Submission_type text,
+  Report_ID text,
+  Report_type text,
+  FU_report_no text,
+  reportdate text,
+  investigator text,
+  investigator_det_date text,
+  date_IRB_review text,
+  date_back_IRB text,
+  comments text
+);
+
 DROP TABLE IF EXISTS status_list;
 CREATE TABLE status_list (
     statustype text
