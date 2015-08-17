@@ -64,3 +64,20 @@ CREATE TABLE personnel (
   removed_date text,
   responsibility text
 );
+
+DROP TABLE IF EXISTS status_list;
+CREATE TABLE status_list (
+    statustype text
+  );
+
+INSERT INTO status_list (statustype) VALUES ("Pending");
+INSERT INTO status_list (statustype) VALUES ("Recruitment not yet begun (UW only)");
+INSERT INTO status_list (statustype) VALUES ("Approved, Open to Accrual");
+INSERT INTO status_list (statustype) VALUES ("Approved with minor modifications");
+INSERT INTO status_list (statustype) VALUES ("Disapproved");
+INSERT INTO status_list (statustype) VALUES ("Closed to Accrual - Accrual on hold");
+INSERT INTO status_list (statustype) VALUES ("Closed to Accrual - Activity limited to LTFU collection");
+INSERT INTO status_list (statustype) VALUES ("Closed to Accrual - Limited to Analysis");
+INSERT INTO status_list (statustype) VALUES ("Closed");
+INSERT INTO status_list (statustype) VALUES ("Research never began");
+INSERT INTO status_list (statustype) VALUES ("Other");
