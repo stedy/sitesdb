@@ -88,7 +88,7 @@ def login():
 
 @app.route('/add_form', methods=['GET', 'POST'])
 def add_form():
-    """For for adding new study"""
+    """Form for adding new study"""
     if request.form['Protocol']:
         error = None
         hctallo, hctauto, hemeonc, solidorgan, autoimmune, bv = None, None, \
@@ -720,28 +720,6 @@ def batch_new_personnel():
     entries = query_db("""SELECT Protocol, Title, PI FROM
         protocols WHERE Protocol != ''""")
     return render_template('main.html', entries=entries)
-
-@app.route('/upload_file', methods = ['GET', 'POST'])
-def upload_file():
-    """Allow only certain types of uploads"""
-    if request.method == 'POST':
-        file = request.files['file']
-        print file.filename
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash('File sucessfully uploaded, please carry on')
-            return redirect(url_for('main'))
-    return '''
-     <!doctype html>
-     <title>Upload files</title>
-     <h1>Upload new file of interest</h1>
-     Note: only files of type .csv and .txt currently allowed
-     <form action="" method=post enctype=multipart/form-data>
-     <p><input type=file name=file>
-     <input type=submit value=upload>
-     </form>
-     '''
 
 #utility functions
 
