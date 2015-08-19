@@ -164,13 +164,13 @@ def add_form():
                 UWHIPAA, CRD, request.form['uwconf_date']])
 
         g.db.execute("""INSERT INTO protocols (Protocol, Title,
-                    IR_file,
+                    IR_file, PI,
                     IRB_approved,
                     IRB_expires,
                     Min_age) VALUES
-                    (?,?,?,?,?,?)""",
+                    (?,?,?,?,?,?,?)""",
                    [request.form['Protocol'], request.form['Title'],
-                   request.form['IR_file'],
+                   request.form['IR_file'], request.form['PI'],
                    request.form['IRB_approved'],
                    request.form['IRB_expires'],
                    request.form['Min_age']])
@@ -315,7 +315,7 @@ def pre_docs():
 def id_results(id_number):
     """Display all results and info for a given IR number """
     entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title,
-                        protocols.CTE, protocols.RN_coord
+                        protocols.CTE, protocols.RN_coord, protocols.PI
                         FROM protocols
                         WHERE protocols.Protocol = ?""",
                         [id_number])
@@ -639,30 +639,6 @@ def add_sponsor_info():
 @app.route('/funding_query')
 def funding_query():
     return render_template('funding_query.html')
-
-@app.route('/results', methods = ['GET', 'POST'])
-def results():
-    error = None
-    if request.form['id']:
-        entries = query_db("""SELECT protocols.Title, protocols.PI, protocols.Comments,
-                        protocols.IR_file, protocols.rn_coord, protocols.IRB_expires,
-                        protocols.IRB_approved, protocols.Funding_source, protocols.Type,
-                        protocols.CTE, protocols.Accrual_status, createdby.user_id
-                        FROM protocols, createdby WHERE protocols.Protocol =
-                        createdby.Protocol and protocols.Protocol = ?""",
-                        [request.form['id']], one = False )
-        return render_template('get_results.html', id = request.form['id'],
-                entries = entries)
-    if request.form['ir']:
-        entries = query_db("""SELECT Title, PI, IR_file, Comments, rn_coord,
-                        IRB_expires, IRB_approved, Funding_source, Type,
-                        CTE, Accrual_status FROM protocols WHERE IR_file = ?""",
-                        [request.form['ir']], one = False )
-        return render_template('get_results.html', id = request.form['id'],
-                entries = entries)
-    else:
-        error = "Must have either ID number to search"
-        return render_template('main.html', error=error)
 
 #results views
 

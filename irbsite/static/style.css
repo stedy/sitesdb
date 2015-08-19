@@ -33,7 +33,7 @@ div.page div.footer  {
 		font-size: 12 px;
 }
 table {
-  width: 1100px; text-align: left; border: 1px solid;
+  width: 900px; text-align: left; border: 1px solid;
   }
 
 td {
@@ -41,6 +41,6 @@ td {
    }
 
 div.dataTables_wrapper {
-   width: 1100px;
+   width: 900px;
    margin: 0 auto;
  }
