@@ -669,9 +669,9 @@ def funding_results():
         error = "Must enter funding info to search"
         return render_template('funding_query.html', error=error)
 
-@app.route('/get_safety', methods=['GET'])
-def get_safety():
-    """Pull out all safety archives as they currently are read"""
+@app.route('/db_to_excel', methods=['GET'])
+def db_to_excel():
+    """Pull out all db tables as they currently are read"""
     zd.main()
     now = dt.datetime.now().strftime('%Y-%m-%d')
     filename = now + "_database.zip"

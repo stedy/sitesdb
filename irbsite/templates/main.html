@@ -122,7 +122,8 @@
   <h3>Safety reports</h3>
   <a href="{{ url_for('safety_results') }}">View all safety reports</a>
   <br></br>
-  <a href="{{ url_for('get_safety') }}">Download Safety Reports</a>
+  <h3>Download database</h3>
+  <a href="{{ url_for('db_to_excel') }}">Download copy of database as Excel file</a>
   <br>
 
   {% endif %}
