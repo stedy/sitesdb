@@ -518,24 +518,30 @@ def new_docs():
     flash('New doc was successfully added to %s' % request.form['Protocol'])
     return render_template('main.html')
 
-@app.route('/new_personnel', methods=['GET', 'POST'])
-def new_personnel():
-    """Add new personnel to study"""
-    g.db.execute("""INSERT INTO personnel (Protocol, added_date, name, role,
-                removed_date, responsibility) VALUES (?,?,?,?,?,?)""",
-                 [request.form['Protocol'], request.form['date_added'],
-                  request.form['name'], request.form['role'],
-                  request.form['date_removed'],
-                  request.form['responsibility']])
-    g.db.commit()
-    flash('%s added to Protocol %s' % (request.form['name'], \
-        request.form['Protocol']))
-    return render_template('main.html')
-
 @app.route('/add_personnel')
 def add_personnel():
     """Add new personnel to existing study"""
     return render_template('add_personnel.html')
+
+@app.route('/new_personnel', methods=['GET', 'POST'])
+def new_personnel():
+    """Add new personnel to study"""
+    error = None
+    if request.form['Protocol']:
+        g.db.execute("""INSERT INTO personnel (Protocol, added_date, name,
+                        role, removed_date, responsibility)
+                        VALUES (?,?,?,?,?,?)""",
+                     [request.form['Protocol'], request.form['date_added'],
+                      request.form['name'], request.form['role'],
+                      request.form['date_removed'],
+                      request.form['responsibility']])
+        g.db.commit()
+        flash('%s added to Protocol %s' % (request.form['name'], \
+            request.form['Protocol']))
+        return render_template('main.html')
+    else:
+        error = "You must enter a Protocol number to add personnel"
+        return render_template('add_personnel.html', error=error)
 
 @app.route('/add_review_committee')
 def add_review_committee():
