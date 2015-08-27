@@ -32,12 +32,6 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
-def get_user_id(username):
-    """Select specified used from database for attributing jobs performed"""
-    rv = g.db.execute('SELECT user_id FROM user WHERE username = ?',
-                      [username]).fetchone()
-    return rv[0] if rv else None
-
 def query_db(query, args=(), one=False):
     """Queries the database and returns a list of dictionaries"""
     cur = g.db.execute(query, args)
@@ -701,7 +695,7 @@ def register():
     error = None
     if request.method == 'POST':
         if not request.form['username']:
-            error = 'you have to enter a username'
+            error = 'you have to enter initials only'
         elif not request.form['email'] or \
                     '@' not in request.form['email']:
             error = 'You have to enter a valid email address'
@@ -709,9 +703,9 @@ def register():
             error = 'You have to enter a password'
         elif request.form['password'] != request.form['password2']:
             error = 'The two passwords do not match'
-        elif get_user_id(request.form['username']) is not None:
-            error = 'The username is already taken'
         else:
+            g.db.execute("""DELETE FROM user WHERE username = ?""",
+                         [request.form['username']])
             g.db.execute('''INSERT INTO user (
                     username, email, pw_hash) values (?, ?, ?)''',
                          [request.form['username'], request.form['email'],
