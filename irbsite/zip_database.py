@@ -4,6 +4,7 @@ import sqlite3
 import csv
 import os
 from glob import glob
+from contextlib import closing
 
 def main():
     with sqlite3.connect('irb_site.db') as connection:
@@ -29,7 +30,7 @@ def main():
                 csvWriter.writerows(rows)
 
     now = dt.datetime.now().strftime('%Y-%m-%d')
-    with zipfile.ZipFile(os.path.join('archives', now + "_database.zip"), 'w') as zf:
+    with closing(zipfile.ZipFile(os.path.join('archives', now + "_database.zip"), 'w')) as zf:
         for fn in glob("archives/*.csv"):
             zf.write(fn)
 
