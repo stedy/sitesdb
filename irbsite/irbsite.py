@@ -468,23 +468,30 @@ def submit_docs_edits(docs_id):
 @app.route('/new_safety', methods=['GET', 'POST'])
 def new_safety():
     """Add new safety report form to db"""
-    submit = str(request.form['submit_date'])
-    g.db.execute("""INSERT INTO safety (Protocol, submit_date, Submission_type,
-        Report_ID, Report_type, FU_report_no, reportdate,
-        investigator_det_date, date_IRB_review, date_back_IRB, comments) values
-        (?,?,?,?,?,?,?,?,?,?,?)""",
-                 [request.form['Protocol'],
-                  dt.datetime.strptime(submit, "%m/%d/%Y").strftime("%Y-%m-%d"),
-                  request.form['Submission_type'], request.form['Report_ID'],
-                  request.form['Report_type'], request.form['FU_report_no'],
-                  request.form['reportdate'],
-                  request.form['investigator_det_date'],
-                  request.form['date_IRB_review'], request.form['date_back_IRB'],
-                  request.form['comments']])
-    g.db.commit()
-    flash('New safety form for %s successfully entered' % \
-    str(request.form['Protocol']))
-    return render_template('main.html')
+    error = None
+    if request.form['submit_date']:
+        submit_date = str(request.form['submit_date'])
+        g.db.execute("""INSERT INTO safety (Protocol, submit_date, Submission_type,
+            Report_ID, Report_type, FU_report_no, reportdate,
+            investigator_det_date, date_IRB_review, date_back_IRB, comments) values
+            (?,?,?,?,?,?,?,?,?,?,?)""",
+                     [request.form['Protocol'],
+                      dt.datetime.strptime(submit_date, "%m/%d/%Y").strftime("%Y-%m-%d"),
+                      request.form['Submission_type'], request.form['Report_ID'],
+                      request.form['Report_type'], request.form['FU_report_no'],
+                      request.form['reportdate'],
+                      request.form['investigator_det_date'],
+                      request.form['date_IRB_review'], request.form['date_back_IRB'],
+                      request.form['comments']])
+        g.db.commit()
+        flash('New safety form for %s successfully entered' % str(request.form['Protocol']))
+        return render_template('main.html')
+    else:
+        error = """You must supply a Submission Date"""
+        entries = query_db("""SELECT Protocol FROM protocols WHERE
+                                       Protocol != "" ORDER BY Protocol ASC""")
+        return render_template('pre_safety.html', entries=entries,
+                    error=error)
 
 @app.route('/new_docs', methods=['GET', 'POST'])
 def new_docs():

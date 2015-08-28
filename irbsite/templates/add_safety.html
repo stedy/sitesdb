@@ -11,7 +11,7 @@
         <td> Title:</td>
         <td>{{ entry.Title }}</td></tr>
       <td>Protocol:
-        <td>{{ entry.Protocol }}</td></tr>
+        <td><input type=text size=20 name=Protocol value={{ entry.Protocol }}></td></tr>
 	    <td>IRB Number:
         <td>{{ entry.IR_file }}</td></tr>
         <td>IACUC Number:</td>
@@ -56,6 +56,6 @@
     </form>
     {% endif %}
     <ul class=entries>
-        <li><em>All fields optional except Protocol</em>
+        <li><em>All fields optional except Submission Date</em>
     </ul>
     {% endblock %}
