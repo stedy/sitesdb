@@ -11,13 +11,13 @@
         <td> Title:</td>
         <td>{{ entry.Title }}</td></tr>
       <td>Protocol:
-        <td><input type=text size=20 name=Protocol value="{{ entry.Protocol }}"</td></tr>
+        <td>{{ entry.Protocol }}</td></tr>
 	    <td>IRB Number:
         <td>{{ entry.IR_file }}</td></tr>
         <td>IACUC Number:</td>
         <td><input type=text size=20 name=iacuc></td></tr>
         <td>Study PI:</td>
-        <td><input type=text size=20 name=PI></td></tr>
+        <td>{{ entry.PI }}</td></tr>
 	    <td>Date of Submission:
 	    <td><input type=text id="datepicker" name=submit_date></td></tr>
     <tr><td>Submission Type</td>

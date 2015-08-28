@@ -264,24 +264,11 @@ def pre_safety():
 
 @app.route('/add_safety', methods=['GET', 'POST'])
 def add_safety():
-    error = None
-    check = query_db("""SELECT Protocol from safety WHERE Protocol = ?""",
-                     [request.form['Protocol']])
-    if check:
-        entries = query_db("""SELECT Title, safety.Protocol, min(submit_date),
-            investigator, IR_file FROM protocols, safety WHERE
-            protocols.Protocol = safety.Protocol AND safety.Protocol = ?""",
+    entries = query_db("""SELECT Title, Protocol,
+            PI, IR_file FROM protocols
+            WHERE Protocol = ?""",
                            [request.form['Protocol']])
-        return render_template('add_safety.html', entries=entries)
-    else:
-        entries = query_db("""SELECT Title, Protocol, PI, IR_file
-        FROM protocols WHERE Protocol=?""", [request.form['Protocol']])
-        if entries:
-            return render_template('new_safety.html', entries=entries)
-        else:
-            error = "Study %s does not currently exist" % \
-            request.form['Protocol']
-            return render_template('main.html', error=error)
+    return render_template('add_safety.html', entries=entries)
 
 @app.route('/add_docs', methods=['GET', 'POST'])
 def add_docs():
