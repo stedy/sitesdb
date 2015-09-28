@@ -4,6 +4,12 @@ CREATE TABLE dontype (
     Studypop text
 );
 
+DROP TABLE IF EXISTS reviewtype;
+CREATE TABLE reviewtype (
+    Protocol text,
+    Reviewcomm text
+);
+
 DROP TABLE IF EXISTS reviewcomm;
 CREATE TABLE reviewcomm (
 	Protocol text,

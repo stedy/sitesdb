@@ -92,24 +92,26 @@ def add_form():
         if request.form.getlist('bv'):
             studypop['bv'] = 'Y'
 
-        cim, pim, src, ibc, ehs, iacuc, radsafety, other = None, None, None, \
-            None, None, None, None, None
+        othercomm = {'cim' : 'N', 'pim' : 'N', 'src' : 'N', 'ibc' : 'N',
+                     'ehs' : 'N', 'iacuc' : 'N', 'radsafety' : 'N',
+                     'other' : 'N'}
         if request.form.getlist('cim'):
-            cim = 'Y'
+            othercomm['cim'] = 'Y'
         if request.form.getlist('pim'):
-            pim = 'Y'
+            othercomm['pim'] = 'Y'
         if request.form.getlist('src'):
-            src = 'Y'
+            othercomm['src'] = 'Y'
         if request.form.getlist('ibc'):
-            ibc = 'Y'
+            othercomm['ibc'] = 'Y'
         if request.form.getlist('ehs'):
-            ehs = 'Y'
+            othercomm['ehs'] = 'Y'
         if request.form.getlist('iacuc'):
-            iacuc = 'Y'
+            othercomm['iacuc'] = 'Y'
         if request.form.getlist('radsafety'):
-            radsafety = 'Y'
+            othercomm['radsafety'] = 'Y'
         if request.form.getlist('other'):
-            other = 'Y'
+            othercomm['other'] = 'Y'
+
         childrens_supp, multi_supp, mta_dua = None, None, None
         if request.form.getlist('childrens_supp'):
             childrens_supp = 'Y'
@@ -127,15 +129,18 @@ def add_form():
         if request.form.getlist('CRD'):
             CRD = 'Y'
 
+        inddict = {'IND' : '', "IND_number" : '', "IND_drug" : ''}
+        inddict['IND'] = request.form['IND']
+        inddict['IND_number'] = request.form['IND_number']
+        inddict['IND_drug'] = request.form['IND_drug']
+
         g.db.execute("""INSERT INTO dontype (Protocol, studypop) VALUES (?,?)""",
                      [request.form['Protocol'], ' '.join([key for key in
                          studypop.keys() if studypop[key] == 'Y'])])
 
-        g.db.execute("""INSERT INTO reviewcomm (Protocol, iacuc, cim, pim, src,
-            FH_IBC, UW_ehs, rad_safety, other) VALUES
-            (?,?,?,?,?,?,?,?,?)""",
-                     [request.form['Protocol'], request.form['iacuc_date'], cim,
-                      pim, src, ibc, ehs, radsafety, other])
+        g.db.execute("""INSERT INTO reviewtype (Protocol, Reviewcomm) VALUES (?,?)""",
+                     [request.form['Protocol'], ' '.join([c for c in
+                         reviewcomm.keys() if reviewcomm[key] == 'Y'])])
 
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
@@ -152,12 +157,13 @@ def add_form():
                     IR_file, PI,
                     IRB_approved,
                     IRB_expires,
-                    Min_age) VALUES
-                    (?,?,?,?,?,?,?)""",
+                    Min_age, IND) VALUES
+                    (?,?,?,?,?,?,?,?)""",
                      [request.form['Protocol'], request.form['Title'],
                       request.form['IR_file'], request.form['PI'],
                       request.form['IRB_approved'], request.form['IRB_expires'],
-                      request.form['Min_age']])
+                      request.form['Min_age'],
+                      ' '.join([x for x in inddict.values()])])
         g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                      values (?,?,?)""", [request.form['Protocol'],
                                          g.user['username'],
@@ -252,8 +258,10 @@ def main():
         rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
         Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
         Phase, IND, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
-        HIPAA_waiver, UW_agree, Childrens_agree, Studypop
-        FROM protocols LEFT JOIN dontype ON protocols.Protocol = dontype.Protocol
+        HIPAA_waiver, UW_agree, Childrens_agree, Studypop, Reviewcomm
+        FROM protocols LEFT JOIN dontype ON protocols.Protocol =
+        dontype.Protocol LEFT JOIN reviewtype on protocols.Protocol =
+        reviewtype.Protocol
         """)
     return render_template('main.html', entries=entries)
 

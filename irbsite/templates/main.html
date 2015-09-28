@@ -29,28 +29,13 @@
        <th><b>IR</th>
        <th><b>PI</th>
        <th><b>Population</th>
-       <th><b>CTE</th>
-       <th><b>RN/coord</th>
-       <th><b>IRB coord</th>
-       <th><b>AE coord</th>
-       <th><b>IRB approved</th>
-       <th><b>IRB expires</th>
-       <th><b>IRB status</th>
-       <th><b>Accrual status</th>
-       <th><b>Patient goal</th>
-       <th><b>Patient total</th>
-       <th><b>Min age</th>
-       <th><b>Comments</th>
-       <th><b>Cat</th>
-       <th><b>Phase</th>
-       <th><b>IND</th>
-       <th><b>Multi-site</th>
-       <th><b>FH coord</th>
        <th><b>HIPAA</th>
+       <th><b>Accrual status</th>
+       <th><b>IND</th>
+       <th><b>IRB expires</th>
        <th><b>Waiver of consent</th>
        <th><b>HIPAA waiver</th>
-       <th><b>UW Agreement</th>
-       <th><b>Childrens Agreement</th>
+       <th><b>Type of review</th>
      </tr>
    </thead>
 
@@ -60,28 +45,13 @@
        <th><b>IR</th>
        <th><b>PI</th>
        <th><b>Population</th>
-       <th><b>CTE</th>
-       <th><b>RN/coord</th>
-       <th><b>IRB coord</th>
-       <th><b>AE coord</th>
-       <th><b>IRB approved</th>
-       <th><b>IRB expires</th>
-       <th><b>IRB status</th>
-       <th><b>Accrual status</th>
-       <th><b>Patient goal</th>
-       <th><b>Patient total</th>
-       <th><b>Min age</th>
-       <th><b>Comments</th>
-       <th><b>Cat</th>
-       <th><b>Phase</th>
-       <th><b>IND</th>
-       <th><b>Multi-site</th>
-       <th><b>FH coord</th>
        <th><b>HIPAA</th>
+       <th><b>Accrual status</th>
+       <th><b>IND</th>
+       <th><b>IRB expires</th>
        <th><b>Waiver of consent</th>
        <th><b>HIPAA waiver</th>
-       <th><b>UW Agreement</th>
-       <th><b>Childrens Agreement</th>
+       <th><b>Tye of review</th>
      </tr>
    </tfoot>
 
@@ -92,28 +62,13 @@
      <td>{{ entry.IR_file }}</td>
      <td>{{ entry.PI }}</td>
      <td>{{ entry.Studypop }}</td>
-     <td>{{ entry.CTE }}</td>
-     <td>{{ entry.rn_coord }}</td>
-     <td>{{ entry.IRB_coord }}</td>
-     <td>{{ entry.AE_coord }}</td>
-     <td>{{ entry.IRB_approved }}</td>
-     <td>{{ entry.IRB_expires }}</td>
-     <td>{{ entry.IRB_status }}</td>
-     <td>{{ entry.Accrual_status }}</td>
-     <td>{{ entry.Patient_goal }}</td>
-     <td>{{ entry.Patient_total }}</td>
-     <td>{{ entry.Min_age }}</td>
-     <td>{{ entry.Comments }}</td>
-     <td>{{ entry.Cat }}</td>
-     <td>{{ entry.Phase }}</td>
-     <td>{{ entry.IND }}</td>
-     <td>{{ entry.Multi_site }}</td>
-     <td>{{ entry.FH_coord }}</td>
      <td>{{ entry.HIPAA }}</td>
+     <td>{{ entry.Accrual_status }}</td>
+     <td>{{ entry.IND }}</td>
+     <td>{{ entry.IRB_expires }}</td>
      <td>{{ entry.Waiver_of_consent }}</td>
      <td>{{ entry.HIPAA_waiver }}</td>
-     <td>{{ entry.UW_agree }}</td>
-     <td>{{ entry.Childrens_agree }}</td>
+     <td>{{ entry.Reviewcomm }}</td>
     </tr>
     {% endfor %}
    </tbody>
