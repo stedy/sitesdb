@@ -200,7 +200,8 @@ def add_funding():
 def add_mods_front():
     entries = query_db("""SELECT Protocol FROM protocols WHERE
                        Protocol != "" ORDER BY Protocol ASC""")
-    return render_template('add_mods_front.html', entries=entries)
+    return render_template('add_mods_front.html', entries=entries,
+                            user = g.user['username'])
 
 @app.route('/add_mod', methods=['GET', 'POST'])
 def add_mod():
