@@ -1,12 +1,7 @@
 DROP TABLE IF EXISTS dontype;
 CREATE TABLE dontype (
     Protocol text,
-    hctallo text,
-    hctauto text,
-    heme text,
-    solidorgan text,
-    autoimmune text,
-    bv text
+    Studypop text
 );
 
 DROP TABLE IF EXISTS reviewcomm;

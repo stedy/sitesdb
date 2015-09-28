@@ -77,20 +77,20 @@ def add_form():
     """Form for adding new study"""
     if request.form['Protocol']:
         error = None
-        hctallo, hctauto, hemeonc, solidorgan, autoimmune, bv = None, None, \
-            None, None, None, None
+        studypop = {'hctallo' : 'N', 'hctauto' : 'N', 'hemeonc' : 'N',
+                'solidorgan' : 'N', 'autoimmune' :'N', 'bv' : 'N'}
         if request.form.getlist('hctallo'):
-            hctallo = 'Y'
+            studypop['hctallo'] = 'Y'
         if request.form.getlist('hctauto'):
-            hctauto = 'Y'
+            studypop['hctauto'] = 'Y'
         if request.form.getlist('hemeonc'):
-            hemeonc = 'Y'
+            studypop['hemeonc'] = 'Y'
         if request.form.getlist('solidorgan'):
-            solidorgan = 'Y'
+            studypop['solidorgan'] = 'Y'
         if request.form.getlist('autoimmune'):
-            autoimmune = 'Y'
+            studypop['autoimmune'] = 'Y'
         if request.form.getlist('bv'):
-            bv = 'Y'
+            studypop['bv'] = 'Y'
 
         cim, pim, src, ibc, ehs, iacuc, radsafety, other = None, None, None, \
             None, None, None, None, None
@@ -127,10 +127,9 @@ def add_form():
         if request.form.getlist('CRD'):
             CRD = 'Y'
 
-        g.db.execute("""INSERT INTO dontype (Protocol, hctallo, hctauto, heme,
-            solidorgan, autoimmune, bv) VALUES (?,?,?,?,?,?,?)""",
-                     [request.form['Protocol'], hctallo, hctauto, hemeonc, solidorgan,
-                      autoimmune, bv])
+        g.db.execute("""INSERT INTO dontype (Protocol, studypop) VALUES (?,?)""",
+                     [request.form['Protocol'], ' '.join([key for key in
+                         studypop.keys() if studypop[key] == 'Y'])])
 
         g.db.execute("""INSERT INTO reviewcomm (Protocol, iacuc, cim, pim, src,
             FH_IBC, UW_ehs, rad_safety, other) VALUES
@@ -249,12 +248,13 @@ def add_ae():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT Protocol, Title, PI, IR_file, CTE,
+    entries = query_db("""SELECT protocols.Protocol, Title, PI, IR_file, CTE,
         rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
         Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
         Phase, IND, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
-        HIPAA_waiver, UW_agree, Childrens_agree FROM
-        protocols WHERE Protocol != ''""")
+        HIPAA_waiver, UW_agree, Childrens_agree, Studypop
+        FROM protocols LEFT JOIN dontype ON protocols.Protocol = dontype.Protocol
+        """)
     return render_template('main.html', entries=entries)
 
 @app.route('/pre_safety', methods=['GET', 'POST'])
