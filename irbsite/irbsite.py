@@ -518,7 +518,8 @@ def new_docs():
 @app.route('/add_personnel')
 def add_personnel():
     """Add new personnel to existing study"""
-    return render_template('add_personnel.html')
+    personnel = query_db("""SELECT name FROM personnel""")
+    return render_template('add_personnel.html', personnel=personnel)
 
 @app.route('/new_personnel', methods=['GET', 'POST'])
 def new_personnel():

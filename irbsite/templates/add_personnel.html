@@ -8,7 +8,11 @@
     <h2>Add new personnel</h2>
       <table width="600">
        <td> Name:</td>
-       <td><input type=text id="name" name=name></td>
+       <td><select name=name>
+           {% for entry in personnel %}
+           <option value ="{{ entry.name }}"> {{ entry.name }}</option>
+            {% endfor %}
+          </select>
        <td>Protocol:
        <td><input type=text size=20 name=Protocol></td></tr>
        <td>Role of individual</td>
