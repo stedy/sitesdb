@@ -5,7 +5,8 @@
     </ul>
     {% endif %}
     <ul class=entries>
-      <h2>{{ entries[0].Title }}</h2>
+      {{ entries }}
+      <h1>{{ entries[0].Title }}</h1>
       <br>
   <table>
     <tr><td><b>Protocol</td><td><b>IR File</td><td><b>PI</td><td><b>Study Status</td><td><b>IND</td></tr>
@@ -40,17 +41,16 @@
   </table>
   <br></br>
   <h2>Study Population Info</h2>
-    <table>
-      <tr><td><b>Cases Goal</td><td>{{ entries[0].Pt_total_cases }}</td></tr>
-      <tr><td><b>Populations</td><td>pop</td></tr>
-      <tr><td><b>Controls Goal</td><td>{{ entries[0].Pt_total_controls }}</td></tr>
+    <table border="1">
+      <tr><td><b>Populations</td></tr>
+        <tr><td>{{ studypop[0].Studypop }}</td></tr>
     </table>
     <br></br>
     <h2>Review Committee Info</h2>
-    <table>
-      <tr><td><b>Primary IRB</td><td><b>Review Type</td><td><b>Review Committee</td></tr>
+    <table border="1">
+      <tr><td><b>Review Committee</td></tr>
     {% for comm in committee %}
-      <tr><td>{{ comm.Primary_IRB }}</td><td>{{ comm.Review_type }}</td><td>{{ comm.Committee }}</td></tr>
+      <tr><td>{{ comm.Reviewcomm }}</td></tr>
     {% endfor %}
     </table>
     <br></br>
@@ -63,71 +63,7 @@
       <td>{{ fun.start }}</td><td>{{ fun.end }}</td></tr>
     {% endfor %}
     </table>
-    <br></br>
-  <h2>Study Documents</h2>
-  <table id="basic">
-    <thead>
-      <tr>
-       <th><b>Document Name</th>
-       <th><b>Sub Study</th>
-       <th><b>Version</th>
-       <th><b>Document Date</th>
-       <th><b>Approved Date</th>
-       <th><b>Document Type</th>
-       <th><b>Edit</th>
-      </tr>
-    </thead>
-   <tbody>
-	{% for entry in entries %}
-	 <tr>
-	 <td>{{ entry.doc_name }}</td>
-	 <td>{{ entry.substudy }}</td>
-	 <td>{{ entry.Version }}</td>
-	 <td>{{ entry.doc_date }}</td>
-   <td>{{ entry.aprvd_date }}</td>
-   <td>{{ entry.Type }}</td>
-   <td><a href="{{ url_for('docs_edit', docs_id = entry.id) }}">edit</a></td></tr>
-  {% endfor %}
-   </tbody>
-  </table>
-
-<br>
-<h2>Add new study document</h2>
-<form action="{{ url_for('add_docs') }}" method=post>
-<table>
-  <tr>
-   <td><b>Protocol</td>
-   <td><b>Document Name</td>
-   <td><b>Sub Study</td>
-   <td><b>Version</td>
-   <td><b>Document Date</td>
-   <td><b>Approved Date</td>
-   <td><b>Document Type</td></tr>
-  <tr>
-   <td><input type=text size=10 name=Protocol value = {{ entries[0].Protocol }}></td>
-   <td><input type=text size=40 name=doc_name></td>
-   <td><input type=text size=20 name=substudy></td>
-   <td><input type=text size=12 name=Version></td>
-   <td><input type=text size=15 name=doc_date></td>
-   <td><input type=text size=15 name=aprvd_date></td>
-   <td><select name=Type>
-        <option value="Protocol">Protocol</option>
-        <option value="ProtocolSynposis">Protocol Synopsis</option>
-        <option value="IB">IB</option>
-        <option value="DSMB">DSMB Charter</option>
-        <option value="Consent">Consent</option>
-        <option value="Questionnaires">Questionnaires</option>
-        <option value="Scripts">Scripts</option>
-        <option value="Advertisement">Advertisement</option>
-        <option value="Letter">Follow-up Letter</option>
-        <option value="Materials">Patient Materials</option>
-        <option value="Other">Other</option>
-       </select>
-   </td>
-  </tr>
-</table>
-<input type=submit value="Add Document">
-<br><br>
+ <br></br>
 <div class="footer">
 	<a href="{{ url_for('id_results_ae', id_number= entries[0].Protocol ) }}">Adverse Events</a>
 	 | <a href="{{ url_for('id_results_mods', id_number= entries[0].Protocol ) }}">Mods</a>

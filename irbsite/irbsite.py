@@ -119,6 +119,7 @@ def add_form():
             multi_supp = 'Y'
         if request.form.getlist('mta_dua'):
             mta_dua = 'Y'
+
         CRDGeneral, Studyspecific, UWHIPAA, CRD = None, None, None, None
         if request.form.getlist('CRDGeneral'):
             CRDGeneral = 'Y'
@@ -140,7 +141,7 @@ def add_form():
 
         g.db.execute("""INSERT INTO reviewtype (Protocol, Reviewcomm) VALUES (?,?)""",
                      [request.form['Protocol'], ' '.join([c for c in
-                         reviewcomm.keys() if reviewcomm[key] == 'Y'])])
+                         othercomm.keys() if othercomm[c] == 'Y'])])
 
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
@@ -154,9 +155,7 @@ def add_form():
                       UWHIPAA, CRD, request.form['uwconf_date']])
 
         g.db.execute("""INSERT INTO protocols (Protocol, Title,
-                    IR_file, PI,
-                    IRB_approved,
-                    IRB_expires,
+                    IR_file, PI, IRB_approved, IRB_expires,
                     Min_age, IND) VALUES
                     (?,?,?,?,?,?,?,?)""",
                      [request.form['Protocol'], request.form['Title'],
@@ -164,6 +163,7 @@ def add_form():
                       request.form['IRB_approved'], request.form['IRB_expires'],
                       request.form['Min_age'],
                       ' '.join([x for x in inddict.values()])])
+
         g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                      values (?,?,?)""", [request.form['Protocol'],
                                          g.user['username'],
@@ -302,13 +302,15 @@ def id_results(id_number):
                        [id_number])
     personnel = query_db("""SELECT name, role, added_date FROM personnel WHERE
                         Protocol = ?""", [id_number])
-#    committee = query_db("""SELECT Primary_IRB, Review_Type, Committee FROM
-#                        reviewcomm WHERE Protocol = ?""", [id_number])
+    committee = query_db("""SELECT Protocol, Reviewcomm FROM
+                        reviewtype WHERE Protocol = ?""", [id_number])
+    studypop = query_db("""SELECT Protocol, Studypop FROM
+                        dontype WHERE Protocol = ?""", [id_number])
 #    funding = query_db("""SELECT Institution, Funding_Title, PI, start, end
 #                        FROM funding WHERE Protocol = ?""", [id_number])
     if entries:
         return render_template('study.html', entries=entries,
-                               personnel=personnel)
+                studypop=studypop, personnel=personnel, committee=committee)
     else:
         entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title
             FROM protocols WHERE protocols.Protocol = ?""", [id_number])
@@ -467,10 +469,7 @@ def submit_docs_edits(docs_id):
     flash('Doc for %s successfully edited' % request.form['Protocol'])
 
     entries = query_db("""SELECT protocols.Protocol, protocols.IR_file,
-        protocols.Title, docs.aprvd_date, docs.doc_name, docs.Version,
-        docs.Type, protocols.PI, docs.doc_date, docs.id FROM protocols, docs
-        WHERE docs.Protocol = protocols.Protocol
-        and protocols.Protocol = ? order by docs.doc_date ASC""",
+        protocols.Title WHERE Protocol = ?""",
                        [request.form['Protocol']])
     return render_template('study.html', entries=entries)
 
