@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
+
 {% block body %}
+{% block script %}
+ <script type="text/javascript" src="static/typeahead.jquery.js"></script>
+<script type="text/javascript" src="/static/basicpi.js"></script>
+{% endblock %}
   {% if g.user %}
 <div class=metanav>
 </div>
@@ -17,8 +22,10 @@
 	      <td><input type=text size=20 name=iacuc_number></td></tr>
         <td>IACUC Date:</td>
 	      <td><input type=text size=20 name=iacuc_date></td></tr>
-        <td>PI:</td>
-	      <td><input type=text size=20 name=PI></td></tr>
+      </td>
+      <td>PI:</td>
+      <td><div id="the-basics">
+          <input class="typeahead" type="text" size=20 placeholder="PI name" name=PI></td></tr></div>
       <td>Study Status:</td><td>Pending</td></tr>
         <td>Primary IRB</td>
         <td><select name=Primary_IRB>

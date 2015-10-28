@@ -41,3 +41,17 @@ div.dataTables_wrapper {
    width: 900px;
    margin: 0 auto;
  }
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.typeahead, .tt-query, .tt-hint {
+  border: 2px solid #ccc;
+}
+
+.tt-menu {
+  background-color: #fff;
+}
+
