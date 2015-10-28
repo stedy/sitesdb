@@ -5,13 +5,19 @@
     </ul>
     {% endif %}
     <ul class=entries>
-      {{ entries }}
       <h1>{{ entries[0].Title }}</h1>
       <br>
   <table>
-    <tr><td><b>Protocol</td><td><b>IR File</td><td><b>PI</td><td><b>Study Status</td><td><b>IND</td></tr>
-    <tr><td>{{ entries[0].Protocol }}</td><td>{{ entries[0].IR_file }}</td>
-      <td>{{ entries[0].PI }}</td><td>status</td><td>IND###</td></tr>
+    <tr><td><b>Protocol</td>
+        <td><b>IR File</td>
+        <td><b>PI</td>
+        <td><b>Study Status</td>
+        <td>
+   </tr>
+   <tr><td>{{ entries[0].Protocol }}</td>
+     <td>{{ entries[0].IR_file }}</td>
+     <td>{{ entries[0].PI }}</td>
+     <td>Open</td></tr>
   </table>
   <br>
   <h2>Study Personnel</h2>
@@ -34,10 +40,24 @@
   <br>
   <h2>Sponsor Info</h2>
   <table>
-    <tr><td><b>Name</td>
-      <tr><td><b>Title</td>
-            <tr><td><b>Email</td>
-      <tr><td><b>Phone</td>
+    <tr>
+      <td><b>IACUC</td>
+      <td><b>IACUC Date</td>
+      <td><b>Sponsor</td>
+      <td><b>IND</td>
+      <td><b>IND #</td>
+      <td><b>Drug name</td>
+        </tr>
+        <tr>
+      {% for spons in sponsor %}
+      <td>{{ spons.Iacuc }}</td>
+      <td>{{ spons.Iacuc_date }}</td>
+      <td>{{ spons.Sponsor }}</td>
+      <td>{{ spons.Ind }}</td>
+      <td>{{ spons.Ind_number }}</td>
+      <td>{{ spons.Drug_name }}</td>
+      {% endfor %}
+    </tr>
   </table>
   <br></br>
   <h2>Study Population Info</h2>

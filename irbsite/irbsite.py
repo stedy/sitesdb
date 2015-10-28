@@ -130,10 +130,6 @@ def add_form():
         if request.form.getlist('CRD'):
             CRD = 'Y'
 
-        inddict = {'IND' : '', "IND_number" : '', "IND_drug" : ''}
-        inddict['IND'] = request.form['IND']
-        inddict['IND_number'] = request.form['IND_number']
-        inddict['IND_drug'] = request.form['IND_drug']
 
         g.db.execute("""INSERT INTO dontype (Protocol, studypop) VALUES (?,?)""",
                      [request.form['Protocol'], ' '.join([key for key in
@@ -156,13 +152,21 @@ def add_form():
 
         g.db.execute("""INSERT INTO protocols (Protocol, Title,
                     IR_file, PI, IRB_approved, IRB_expires,
-                    Min_age, IND) VALUES
-                    (?,?,?,?,?,?,?,?)""",
+                    Min_age) VALUES
+                    (?,?,?,?,?,?,?)""",
                      [request.form['Protocol'], request.form['Title'],
                       request.form['IR_file'], request.form['PI'],
                       request.form['IRB_approved'], request.form['IRB_expires'],
-                      request.form['Min_age'],
-                      ' '.join([x for x in inddict.values()])])
+                      request.form['Min_age']])
+
+        g.db.execute("""INSERT INTO sponsor (Protocol, Iacuc, Iacuc_date,
+                        Sponsor, Ind, Ind_number, Drug_name) VALUES
+                        (?,?,?,?,?,?,?)""",
+                        [request.form['Protocol'], request.form['Iacuc'],
+                            request.form['Iacuc_date'],
+                            request.form['Sponsor'], request.form['Ind'],
+                            request.form['Ind_number'],
+                            request.form['Drug_name']])
 
         g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                      values (?,?,?)""", [request.form['Protocol'],
@@ -170,9 +174,17 @@ def add_form():
                                          dt.datetime.now().strftime("%m/%d/%Y")])
         g.db.commit()
 
+        entries = query_db("""SELECT protocols.Protocol, Title, PI, IR_file, CTE,
+            rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
+            Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
+            Phase, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
+            HIPAA_waiver, UW_agree, Childrens_agree, Studypop, Reviewcomm
+            FROM protocols LEFT JOIN dontype ON protocols.Protocol =
+            dontype.Protocol LEFT JOIN reviewtype on protocols.Protocol =
+            reviewtype.Protocol""")
         flash('Study %s was successfully added by %s' %
               (request.form['Protocol'], g.user['username']))
-        return render_template('main.html')
+        return render_template('main.html', entries=entries)
     else:
         error = "You must enter a Protocol Number to proceed"
         return render_template('main.html', error=error)
@@ -257,7 +269,7 @@ def main():
     entries = query_db("""SELECT protocols.Protocol, Title, PI, IR_file, CTE,
         rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
         Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
-        Phase, IND, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
+        Phase, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
         HIPAA_waiver, UW_agree, Childrens_agree, Studypop, Reviewcomm
         FROM protocols LEFT JOIN dontype ON protocols.Protocol =
         dontype.Protocol LEFT JOIN reviewtype on protocols.Protocol =
@@ -306,11 +318,13 @@ def id_results(id_number):
                         reviewtype WHERE Protocol = ?""", [id_number])
     studypop = query_db("""SELECT Protocol, Studypop FROM
                         dontype WHERE Protocol = ?""", [id_number])
-#    funding = query_db("""SELECT Institution, Funding_Title, PI, start, end
-#                        FROM funding WHERE Protocol = ?""", [id_number])
+    sponsor = query_db("""SELECT Protocol, Iacuc, Iacuc_date, Sponsor, Ind,
+                        Ind_number, Drug_name FROM sponsor WHERE Protocol = ?""",
+                        [id_number])
     if entries:
         return render_template('study.html', entries=entries,
-                studypop=studypop, personnel=personnel, committee=committee)
+                studypop=studypop, personnel=personnel, committee=committee,
+                sponsor=sponsor)
     else:
         entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title
             FROM protocols WHERE protocols.Protocol = ?""", [id_number])

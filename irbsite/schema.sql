@@ -84,6 +84,17 @@ CREATE TABLE status_list (
     statustype text
   );
 
+DROP TABLE IF EXISTS sponsor;
+CREATE TABLE sponsor (
+  Protocol text,
+  Iacuc text,
+  Iacuc_date date,
+  Sponsor text,
+  Ind text,
+  Ind_number text,
+  Drug_name text
+);
+
 INSERT INTO status_list (statustype) VALUES ("Pending");
 INSERT INTO status_list (statustype) VALUES ("Recruitment not yet begun (UW only)");
 INSERT INTO status_list (statustype) VALUES ("Approved, Open to Accrual");
@@ -95,3 +106,4 @@ INSERT INTO status_list (statustype) VALUES ("Closed to Accrual - Limited to Ana
 INSERT INTO status_list (statustype) VALUES ("Closed");
 INSERT INTO status_list (statustype) VALUES ("Research never began");
 INSERT INTO status_list (statustype) VALUES ("Other");
+
