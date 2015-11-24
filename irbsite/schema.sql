@@ -42,7 +42,7 @@ CREATE TABLE supplemental (
 	Studyspecific text,
 	UWHIPAA text,
 	CRD text,
-	uwconf_date text
+	uw_conf text
 );
 
 DROP TABLE IF EXISTS createdby;
@@ -81,18 +81,20 @@ CREATE TABLE safety (
 
 DROP TABLE IF EXISTS status_list;
 CREATE TABLE status_list (
-    statustype text
-  );
+    statustype text,
+    reviewtype text
+);
 
 DROP TABLE IF EXISTS sponsor;
 CREATE TABLE sponsor (
   Protocol text,
-  Iacuc text,
-  Iacuc_date date,
+  Sponsor_protocol text,
   Sponsor text,
   Ind text,
   Ind_number text,
-  Drug_name text
+  Drug_name text,
+  Study_total text,
+  Local_total text
 );
 
 INSERT INTO status_list (statustype) VALUES ("Pending");
@@ -106,4 +108,11 @@ INSERT INTO status_list (statustype) VALUES ("Closed to Accrual - Limited to Ana
 INSERT INTO status_list (statustype) VALUES ("Closed");
 INSERT INTO status_list (statustype) VALUES ("Research never began");
 INSERT INTO status_list (statustype) VALUES ("Other");
-
+INSERT INTO status_list (reviewtype) VALUES ("Full");
+INSERT INTO status_list (reviewtype) VALUES ("Minimal Risk (UW Expedited)");
+INSERT INTO status_list (reviewtype) VALUES ("Exempt");
+INSERT INTO status_list (reviewtype) VALUES ("Use of identifiable data/specimens");
+INSERT INTO status_list (reviewtype) VALUES ("Coop");
+INSERT INTO status_list (reviewtype) VALUES ("IRB Authorization");
+INSERT INTO status_list (reviewtype) VALUES ("IACUC Authorization");
+INSERT INTO status_list (reviewtype) VALUES ("Non-human subjects");

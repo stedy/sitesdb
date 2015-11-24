@@ -112,13 +112,15 @@ def add_form():
         if request.form.getlist('other'):
             othercomm['other'] = 'Y'
 
-        childrens_supp, multi_supp, mta_dua = None, None, None
+        childrens_supp, multi_supp, mta_dua, uw_conf = None, None, None, None
         if request.form.getlist('childrens_supp'):
             childrens_supp = 'Y'
         if request.form.getlist('multi_supp'):
             multi_supp = 'Y'
         if request.form.getlist('mta_dua'):
             mta_dua = 'Y'
+        if request.form.getlist('uw_conf'):
+            uw_conf = 'Y'
 
         CRDGeneral, Studyspecific, UWHIPAA, CRD = None, None, None, None
         if request.form.getlist('CRDGeneral'):
@@ -129,7 +131,6 @@ def add_form():
             UWHIPAA = 'Y'
         if request.form.getlist('CRD'):
             CRD = 'Y'
-
 
         g.db.execute("""INSERT INTO dontype (Protocol, studypop) VALUES (?,?)""",
                      [request.form['Protocol'], ' '.join([key for key in
@@ -142,13 +143,13 @@ def add_form():
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
                 childrens_supp, multi_supp, mta_dua, CRDGeneral,
-                Studyspecific, UWHIPAA, CRD, uwconf_date)
+                Studyspecific, UWHIPAA, CRD, uw_conf)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
                      [request.form['Protocol'],
                       request.form['consentwaiver_type'],
                       request.form['hipaawaiver_type'], childrens_supp,
                       multi_supp, mta_dua, CRDGeneral, Studyspecific,
-                      UWHIPAA, CRD, request.form['uwconf_date']])
+                      UWHIPAA, CRD, uw_conf])
 
         g.db.execute("""INSERT INTO protocols (Protocol, Title,
                     IR_file, PI, IRB_approved, IRB_expires,
@@ -159,14 +160,17 @@ def add_form():
                       request.form['IRB_approved'], request.form['IRB_expires'],
                       request.form['Min_age']])
 
-        g.db.execute("""INSERT INTO sponsor (Protocol, Iacuc, Iacuc_date,
-                        Sponsor, Ind, Ind_number, Drug_name) VALUES
-                        (?,?,?,?,?,?,?)""",
-                        [request.form['Protocol'], request.form['Iacuc'],
-                            request.form['Iacuc_date'],
+        g.db.execute("""INSERT INTO sponsor (Protocol, Sponsor_protocol,
+                        Sponsor, Ind, Ind_number, Drug_name,
+                        Study_total, Local_total) VALUES
+                        (?,?,?,?,?,?,?,?)""",
+                        [request.form['Protocol'],
+                        request.form['Sponsor_protocol'],
                             request.form['Sponsor'], request.form['Ind'],
                             request.form['Ind_number'],
-                            request.form['Drug_name']])
+                            request.form['Drug_name'],
+                            request.form['Study_total'],
+                            request.form['Local_total']])
 
         g.db.execute("""INSERT INTO createdby (Protocol, user_id, pub_date)
                      values (?,?,?)""", [request.form['Protocol'],
@@ -333,7 +337,10 @@ def id_results(id_number):
 @app.route('/add_study')
 def add_study():
     """create new entries"""
-    return render_template('add_study.html')
+    statuses = query_db("""SELECT statustype from status_list""")
+    reviews = query_db("""SELECT reviewtype from status_list""")
+    return render_template('add_study.html', statuses=statuses,
+            reviews=reviews)
 
 @app.route('/<id_number>/ae')
 def id_results_ae(id_number):
@@ -557,8 +564,10 @@ def new_personnel():
 @app.route('/add_review_committee')
 def add_review_committee():
     """Add review committee information"""
-    entries = query_db("""SELECT statustype from status_list""")
-    return render_template('add_review_committee.html', entries=entries)
+    statuses = query_db("""SELECT statustype from status_list""")
+    reviews = query_db("""SELECT reviewtype from status_list""")
+    return render_template('add_review_committee.html', statuses=statuses,
+            reviews=reviews)
 
 @app.route('/new_review_committee', methods=['GET', 'POST'])
 def new_review_committee():

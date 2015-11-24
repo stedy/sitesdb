@@ -18,20 +18,22 @@
 	      <td><input type=text size=20 name=Protocol></td></tr>
 	      <td>IRB Number:
 	      <td><input type=text size=20 name=IR_file></td></tr>
-        <td>IACUC Number:</td>
-	      <td><input type=text size=20 name=Iacuc></td></tr>
-        <td>IACUC Date:</td>
-	      <td><input type=text id="datepicker" name=Iacuc_date></td></tr>
       </td>
       <td>PI:</td>
       <td><div id="the-basics">
           <input class="typeahead" type="text" size=20 placeholder="PI name" name=PI></td></tr></div>
-      <td>Study Status:</td><td>Pending</td></tr>
+    <td>Sponsor protocol:</td><td><input type="text" size=20 name=Sponsor_protocol></tr></tr>
+    <td>Study Status:</td><td><select name=studystatus>
+    {% for entry in statuses %}
+      <option value= "{{ entry.statustype }}">{{ entry.statustype }}</option>
+    {% endfor %}
+</select></td></tr>
         <td>Primary IRB</td>
         <td><select name=Primary_IRB>
              <option value="FH">FH</option>
              <option value="UW">UW</option>
              <option value="CHRMC">CHRMC</option>
+             <option value="Other">Other</option>
             </select>
        </td></tr>
 	     <td>Sponsor:
@@ -40,6 +42,7 @@
        <td><select name=Ind>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
+            <option value="Exempt">Exempt</option>
         </select></tr>
        <td>IND #
        <td><input type=text size=30 name=Ind_number></td></tr>
@@ -50,8 +53,12 @@
     <h2>Study Population Characteristics</h2>
     <table width="600">
       <td><b>Enrollment</b></tr>
-     <td>Min age:
+     <td>Age range:
        <td><input type=text size=20 name=Min_age></td></tr>
+     <td>Study Wide Total:
+       <td><input type=text size=20 name=Study_total></td></tr>
+     <td>Local Accural Total:
+       <td><input type=text size=20 name=Local_total></td></tr>
      <td><b>Population</b></tr>
      <td>HCT-allo<input type="checkbox" name="hctallo" value="hctallo"/></td/>
      <td>HCT-auto <input type="checkbox" name="hctauto" value="hctauto"/></td>
@@ -66,7 +73,7 @@
     <table>
      <td>Initial Approval Date:
      <td><input type=text size=20 name=IRB_approved></td></tr>
-     <td>IRB expires:
+     <td>Study expiration:
      <td><input type=text size=20 name=IRB_expires></td></tr>
      <tr><td>FHCRC Renewal Date:
      <td><input type=text size=20 name=FHCRC_renewal></td></tr>
@@ -74,9 +81,11 @@
      <td><input type=text size=20 name=UW_renewal></td></tr>
      <td>Radiation Safety Review Due Date:</td>
      <td><input type=text size=20 name=radsafetyreview_date></td></tr>
-     <td>Review Type:
-     <td><input type=text size=20 name=Type></td></tr>
-    </table>
+     <td>Review Type:</td><td><select name=reviewtype>
+    {% for review in reviews %}
+      <option value= "{{ review.reviewtype }}">{{ review.reviewtype }}</option>
+    {% endfor %}
+  </table>
     <br>
     <h2>Committee Review</h2>
     <table>
@@ -97,20 +106,20 @@
           <option value="Partial">Partial</option>
           <option value="Full">Full</option>
           <option value="Other">Other</option>
+          <option value="NA">NA</option>
     </select></td></tr>
       <td>Type of HIPAA Waiver:</td>
       <td><select type=text name=hipaawaiver_type>
           <option value="Partial">Partial</option>
           <option value="Full">Full</option>
           <option value="Other">Other</option>
+          <option value="NA">NA</option>
       </select></td>
-      <tr><td>HIPAA Waiver Date:</td>
-     <td><input type=text size=20 name=hipaawaiver_date></td></tr>
       <tr><td>Children's</td><td><input type="checkbox" name="childrens_supp"/></td>
         <tr><td>Multicenter</td><td><input type="checkbox" name="multi_supp"/></td>
           <tr><td>MTA/DUA</td><td><input type="checkbox" name="mta_dua"/></td>
-      <tr><td>UW Confidentiality Date:</td>
-     <td><input type=text size=20 name=uwconf_date></td></tr>
+      <tr><td>UW Confidentiality:</td>
+     <td><input type=text size=20 name=uw_conf></td></tr>
     </table>
     <br>
     <h2>HIPAA Authorization</h2>
