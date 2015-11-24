@@ -113,6 +113,8 @@ def add_form():
             othercomm['other'] = 'Y'
 
         childrens_supp, multi_supp, mta_dua, uw_conf = None, None, None, None
+        repository, dod, device, gwas, international, prisoner, \
+        statistical_count = None, None, None, None, None, None, None
         if request.form.getlist('childrens_supp'):
             childrens_supp = 'Y'
         if request.form.getlist('multi_supp'):
@@ -121,6 +123,20 @@ def add_form():
             mta_dua = 'Y'
         if request.form.getlist('uw_conf'):
             uw_conf = 'Y'
+        if request.form.getlist('repository'):
+            repository = 'Y'
+        if request.form.getlist('dod'):
+            dod = 'Y'
+        if request.form.getlist('device'):
+            device = 'Y'
+        if request.form.getlist('gwas'):
+            gwas = 'Y'
+        if request.form.getlist('international'):
+            international = 'Y'
+        if request.form.getlist('prisoner'):
+            prisoner = 'Y'
+        if request.form.getlist('statistical_count'):
+            statistical_count = 'Y'
 
         CRDGeneral, Studyspecific, UWHIPAA, CRD = None, None, None, None
         if request.form.getlist('CRDGeneral'):
@@ -143,13 +159,15 @@ def add_form():
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
                 childrens_supp, multi_supp, mta_dua, CRDGeneral,
-                Studyspecific, UWHIPAA, CRD, uw_conf)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+                Studyspecific, UWHIPAA, CRD, uw_conf, repository,
+                dod, device, gwas, international, prisoner, statistical_count)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                      [request.form['Protocol'],
                       request.form['consentwaiver_type'],
                       request.form['hipaawaiver_type'], childrens_supp,
                       multi_supp, mta_dua, CRDGeneral, Studyspecific,
-                      UWHIPAA, CRD, uw_conf])
+                      UWHIPAA, CRD, uw_conf, repository, dod, device,
+                      gwas, international, prisoner, statistical_count])
 
         g.db.execute("""INSERT INTO protocols (Protocol, Title,
                     IR_file, PI, IRB_approved, IRB_expires,
@@ -322,7 +340,7 @@ def id_results(id_number):
                         reviewtype WHERE Protocol = ?""", [id_number])
     studypop = query_db("""SELECT Protocol, Studypop FROM
                         dontype WHERE Protocol = ?""", [id_number])
-    sponsor = query_db("""SELECT Protocol, Iacuc, Iacuc_date, Sponsor, Ind,
+    sponsor = query_db("""SELECT Protocol, Sponsor, Ind,
                         Ind_number, Drug_name FROM sponsor WHERE Protocol = ?""",
                         [id_number])
     if entries:
@@ -338,7 +356,7 @@ def id_results(id_number):
 def add_study():
     """create new entries"""
     statuses = query_db("""SELECT statustype from status_list""")
-    reviews = query_db("""SELECT reviewtype from status_list""")
+    reviews = query_db("""SELECT reviewtype from review_list""")
     return render_template('add_study.html', statuses=statuses,
             reviews=reviews)
 
@@ -565,7 +583,6 @@ def new_personnel():
 def add_review_committee():
     """Add review committee information"""
     statuses = query_db("""SELECT statustype from status_list""")
-    reviews = query_db("""SELECT reviewtype from status_list""")
     return render_template('add_review_committee.html', statuses=statuses,
             reviews=reviews)
 

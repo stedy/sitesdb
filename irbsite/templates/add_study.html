@@ -72,15 +72,13 @@
         <h2>Dates</h2>
     <table>
      <td>Initial Approval Date:
-     <td><input type=text size=20 name=IRB_approved></td></tr>
+     <td><input type=text id="datepicker" name=IRB_approved></td></tr>
      <td>Study expiration:
-     <td><input type=text size=20 name=IRB_expires></td></tr>
+     <td><input type=text id="datepicker2" name=IRB_expires></td></tr>
      <tr><td>FHCRC Renewal Date:
-     <td><input type=text size=20 name=FHCRC_renewal></td></tr>
+     <td><input type=text id="datepicker3" name=FHCRC_renewal></td></tr>
      <td>UW Renewal Date:
-     <td><input type=text size=20 name=UW_renewal></td></tr>
-     <td>Radiation Safety Review Due Date:</td>
-     <td><input type=text size=20 name=radsafetyreview_date></td></tr>
+     <td><input type=text id="datepicker4" name=UW_renewal></td></tr>
      <td>Review Type:</td><td><select name=reviewtype>
     {% for review in reviews %}
       <option value= "{{ review.reviewtype }}">{{ review.reviewtype }}</option>
@@ -118,7 +116,14 @@
       <tr><td>Children's</td><td><input type="checkbox" name="childrens_supp"/></td>
         <tr><td>Multicenter</td><td><input type="checkbox" name="multi_supp"/></td>
           <tr><td>MTA/DUA</td><td><input type="checkbox" name="mta_dua"/></td>
-            <tr><td>UW Confidentiality:</td><td><input type="checkbox" name="uw_conf"/></td></tr>
+            <tr><td>UW Confidentiality</td><td><input type="checkbox" name="uw_conf"/></td></tr>
+            <tr><td>Repository</td><td><input type="checkbox" name="repository"/></td></tr>
+            <tr><td>DOD</td><td><input type="checkbox" name="dod"/></td></tr>
+            <tr><td>Device</td><td><input type="checkbox" name="device"/></td></tr>
+            <tr><td>GWAS</td><td><input type="checkbox" name="gwas"/></td></tr>
+            <tr><td>International</td><td><input type="checkbox" name="international"/></td></tr>
+            <tr><td>Prisoner</td><td><input type="checkbox" name="prisoner"/></td></tr>
+            <tr><td>Statistical Count</td><td><input type="checkbox" name="statistical_count"/></td></tr>
     </table>
     <br>
     <h2>HIPAA Authorization</h2>
@@ -126,7 +131,7 @@
     <tr><td>Children's</td><td><input type = "checkbox" name="CRDgeneral"></td>
       <tr><td>Study Specific</td><td><input type = "checkbox" name="Studyspecific"></td>
         <tr><td>UW HIPAA</td><td><input type = "checkbox" name="UWHIPAA"></td>
-          <tr><td>CRD</td><td><input type = "checkbox" name="CRD"></td>
+          <tr><td>CRD Transplant</td><td><input type = "checkbox" name="CRD"></td>
         </td></tr>
       </table>
       <br>
