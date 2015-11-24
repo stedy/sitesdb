@@ -94,6 +94,7 @@ def add_form():
 
         othercomm = {'cim' : 'N', 'pim' : 'N', 'src' : 'N', 'ibc' : 'N',
                      'ehs' : 'N', 'iacuc' : 'N', 'radsafety' : 'N',
+                     'dsmb' : 'N', 'pdmc' : 'N',
                      'other' : 'N'}
         if request.form.getlist('cim'):
             othercomm['cim'] = 'Y'
@@ -109,6 +110,10 @@ def add_form():
             othercomm['iacuc'] = 'Y'
         if request.form.getlist('radsafety'):
             othercomm['radsafety'] = 'Y'
+        if request.form.getlist('dsmb'):
+            othercomm['dsmb'] = 'Y'
+        if request.form.getlist('pdmc'):
+            othercomm['pdmc'] = 'Y'
         if request.form.getlist('other'):
             othercomm['other'] = 'Y'
 
@@ -152,9 +157,14 @@ def add_form():
                      [request.form['Protocol'], ' '.join([key for key in
                          studypop.keys() if studypop[key] == 'Y'])])
 
-        g.db.execute("""INSERT INTO reviewtype (Protocol, Reviewcomm) VALUES (?,?)""",
+        g.db.execute("""INSERT INTO reviewtype (Protocol, Reviewcomm, pim_date,
+                src_date, pdmc_date, ibc_date, other_review_date) VALUES
+                (?,?,?,?,?,?,?)""",
                      [request.form['Protocol'], ' '.join([c for c in
-                         othercomm.keys() if othercomm[c] == 'Y'])])
+                         othercomm.keys() if othercomm[c] == 'Y']),
+                         request.form['pim_date'], request.form['src_date'],
+                         request.form['pdmc_date'], request.form['ibc_date'],
+                         request.form['other_review_date']])
 
         g.db.execute("""INSERT INTO supplemental (Protocol,
                 consentwaiver_type, hipaawaiver_type,
