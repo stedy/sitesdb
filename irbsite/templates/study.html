@@ -7,12 +7,11 @@
     <ul class=entries>
       <h1>{{ entries[0].Title }}</h1>
       <br>
-  <table>
+  <table border="1">
     <tr><td><b>Protocol</td>
         <td><b>IR File</td>
         <td><b>PI</td>
         <td><b>Study Status</td>
-        <td>
    </tr>
    <tr><td>{{ entries[0].Protocol }}</td>
      <td>{{ entries[0].IR_file }}</td>
@@ -20,65 +19,48 @@
      <td>Open</td></tr>
   </table>
   <br>
-  <h2>Study Personnel</h2>
-  <table>
     <tr>
-      <td><b>Name</td>
-      <td><b>Role</td>
-      <td><b>Assignment</td>
-      <td><b>Date added</td>
-    </tr>
-    <tr>
-      {% for person in personnel %}
-      <td>{{ person.name }}</td>
-      <td>{{ person.role }}</td>
-      <td>{{ person.assignment }}</td>
-      <td>{{ person.added_date }}</td>
-    </tr>
-    {% endfor %}
   </table>
   <br>
   <h2>Sponsor Info</h2>
-  <table>
+  <table border="1">
     <tr>
       <td><b>Sponsor</td>
       <td><b>IND</td>
-      <td><b>IND #</td>
-      <td><b>Drug name</td>
         </tr>
         <tr>
-      {% for spons in sponsor %}
-      <td>{{ spons.Sponsor }}</td>
-      <td>{{ spons.Ind }}</td>
-      <td>{{ spons.Ind_number }}</td>
-      <td>{{ spons.Drug_name }}</td>
-      {% endfor %}
+     <td>{{ entries[0].IND }}</td>
     </tr>
   </table>
   <br></br>
   <h2>Study Population Info</h2>
     <table border="1">
-      <tr><td><b>Populations</td></tr>
-        <tr><td>{{ studypop[0].Studypop }}</td></tr>
+      <td><b>Target Cases</td>
+      <td><b>Target Controls</td>
+      <td><b>Total On Site</td>
+      <td><b>Total On-Site</td>
+      <td><b>Total Off-Site</td>
+      <td><b>Total PATs</td>
+      <td><b>Lower Age Limit</td>
+      <tr>
+        <td>{{ entries[0].TargetCase }}</td>
+        <td>{{ entries[0].TargetControl }}</td>
+        <td>{{ entries[0].TotalOnSite }}</td>
+        <td>{{ entries[0].TotalOffSite }}</td>
+        <td>{{ entries[0].TotalPATS }}</td>
+        <td>{{ entries[0].AgeLimitCaseLower }}</td>
     </table>
     <br></br>
-    <h2>Review Committee Info</h2>
+    <h2>Important Dates</h2>
     <table border="1">
-      <tr><td><b>Review Committee</td></tr>
-    {% for comm in committee %}
-      <tr><td>{{ comm.Reviewcomm }}</td></tr>
-    {% endfor %}
+      <tr><td><b>ApprovalTo</td>
+        <td>{{ entries[0].ApprovalTo }}</td>
+      <tr><td><b>IRO Closure</td>
+        <td>{{ entries[0].IROClosure }}</td>
+      <tr><td><b>Accrual Closed</td>
+        <td>{{ entries[0].AccrualClosed }}</td>
     </table>
     <br></br>
-    <h2>Funding</h2>
-    <table>
-      <tr><td><b>Agency Number</td><td><b>Agency Name</td><td><b>Funding Title</td><td><b>PI</td><td><b>Start Date</td>
-                  <td><b>End Date</td></tr>
-    {% for fun in funding %}
-    <tr><td>Agency #??</td><td>{{ fun.Institution }}</td><td>{{ fun.Funding_Title }}</td><td>{{ fun.PI }}</td>
-      <td>{{ fun.start }}</td><td>{{ fun.end }}</td></tr>
-    {% endfor %}
-    </table>
  <br></br>
 <div class="footer">
 	<a href="#">Adverse Events</a>

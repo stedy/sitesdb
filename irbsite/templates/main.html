@@ -24,32 +24,28 @@
    <thead>
      <tr>
        <th><b>Protocol</th>
-       <th><b>IR</th>
        <th><b>PI</th>
-       <th><b>IRB expires</th>
-       <th><b>Accrual status</th>
-       <th><b>Type of review</th>
-       <th><b>Population</th>
-       <th><b>HIPAA</th>
        <th><b>IND</th>
-       <th><b>Waiver of consent</th>
-       <th><b>HIPAA waiver</th>
+       <th><b>IRB Status</th>
+       <th><b>Approval To</th>
+       <th><b>Target Cases</th>
+       <th><b>Target Controls</th>
+       <th><b>Total on site</th>
+       <th><b>Total off site</th>
      </tr>
    </thead>
 
    <tfoot>
      <tr>
        <th><b>Protocol</th>
-       <th><b>IR</th>
        <th><b>PI</th>
-       <th><b>IRB expires</th>
-       <th><b>Accrual status</th>
-       <th><b>Type of review</th>
-       <th><b>Population</th>
-       <th><b>HIPAA</th>
        <th><b>IND</th>
-       <th><b>Waiver of consent</th>
-       <th><b>HIPAA waiver</th>
+       <th><b>IRB Status</th>
+       <th><b>Approval To</th>
+       <th><b>Target Cases</th>
+       <th><b>Target Controls</th>
+       <th><b>Total on site</th>
+       <th><b>Total off site</th>
      </tr>
    </tfoot>
 
@@ -57,16 +53,14 @@
    {% for entry in entries %}
     <tr>
      <td><a href="{{ url_for('id_results', id_number=entry.Protocol) }}">{{ entry.Protocol }}</a></td>
-     <td>{{ entry.IR_file }}</td>
      <td>{{ entry.PI }}</td>
-     <td>{{ entry.IRB_expires }}</td>
-     <td>{{ entry.Accrual_status }}</td>
-     <td>{{ entry.Reviewcomm }}</td>
-     <td>{{ entry.Studypop }}</td>
-     <td>{{ entry.HIPAA }}</td>
      <td>{{ entry.IND }}</td>
-     <td>{{ entry.Waiver_of_consent }}</td>
-     <td>{{ entry.HIPAA_waiver }}</td>
+     <td>{{ entry.IRBStatus }}</td>
+     <td>{{ entry.ApprovalTo }}</td>
+     <td>{{ entry.TargetCase }}</td>
+     <td>{{ entry.TargetControl }}</td>
+     <td>{{ entry.TotalOnSite }}</td>
+     <td>{{ entry.TotalOffSite }}</td>
     </tr>
     {% endfor %}
    </tbody>

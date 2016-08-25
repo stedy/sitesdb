@@ -298,15 +298,19 @@ def add_ae():
 
 @app.route('/main')
 def main():
-    entries = query_db("""SELECT protocols.Protocol, Title, PI, IR_file, CTE,
-        rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
-        Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
-        Phase, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
-        HIPAA_waiver, UW_agree, Childrens_agree, Studypop, Reviewcomm
-        FROM protocols LEFT JOIN dontype ON protocols.Protocol =
-        dontype.Protocol LEFT JOIN reviewtype on protocols.Protocol =
-        reviewtype.Protocol
-        """)
+#    entries = query_db("""SELECT protocols.Protocol, Title, PI, IR_file, CTE,
+#        rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
+#        Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
+#        Phase, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
+#        HIPAA_waiver, UW_agree, Childrens_agree, Studypop, Reviewcomm
+#        FROM protocols LEFT JOIN dontype ON protocols.Protocol =
+#        dontype.Protocol LEFT JOIN reviewtype on protocols.Protocol =
+#        reviewtype.Protocol
+#        """)
+    entries = query_db("""SELECT Protocol, ApprovalTo, IRBStatus,
+            TargetCase, TargetControl, TotalOnSite, TotalOffSite,
+            PI, IND FROM protocols WHERE
+            Protocol != ''""")
     return render_template('main.html', entries=entries)
 
 @app.route('/pre_safety', methods=['GET', 'POST'])
@@ -339,24 +343,16 @@ def pre_docs():
 @app.route('/<id_number>')
 def id_results(id_number):
     """Display all results and info for a given IR number """
-    entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title,
-                        protocols.CTE, protocols.RN_coord, protocols.PI
-                        FROM protocols
-                        WHERE protocols.Protocol = ?""",
+    entries = query_db("""SELECT Protocol, Title, PI,
+                        TargetCase, TargetControl, TotalOnSite, TotalOffSite,
+                        TotalPats, AgeLimitCaseLower, Phase, Cat, IND,
+                        NCITrialID, NCTID, RRR, MultiCenter, IROClosure,
+                        ApprovalTo, IROClosure,
+                        AccrualClosed FROM protocols
+                        WHERE Protocol = ?""",
                        [id_number])
-    personnel = query_db("""SELECT name, role, added_date FROM personnel WHERE
-                        Protocol = ?""", [id_number])
-    committee = query_db("""SELECT Protocol, Reviewcomm FROM
-                        reviewtype WHERE Protocol = ?""", [id_number])
-    studypop = query_db("""SELECT Protocol, Studypop FROM
-                        dontype WHERE Protocol = ?""", [id_number])
-    sponsor = query_db("""SELECT Protocol, Sponsor, Ind,
-                        Ind_number, Drug_name FROM sponsor WHERE Protocol = ?""",
-                        [id_number])
     if entries:
-        return render_template('study.html', entries=entries,
-                studypop=studypop, personnel=personnel, committee=committee,
-                sponsor=sponsor)
+        return render_template('study.html', entries=entries)
     else:
         entries = query_db("""SELECT protocols.Protocol, protocols.IR_file, protocols.Title
             FROM protocols WHERE protocols.Protocol = ?""", [id_number])
