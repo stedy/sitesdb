@@ -308,8 +308,7 @@ def main():
 #        reviewtype.Protocol
 #        """)
     entries = query_db("""SELECT Protocol, ApprovalTo, IRBStatus,
-            TargetCase, TargetControl, TotalOnSite, TotalOffSite,
-            PI, IND FROM protocols WHERE
+            IRBCommittee, PI, IND FROM protocols WHERE
             Protocol != ''""")
     return render_template('main.html', entries=entries)
 
@@ -343,12 +342,14 @@ def pre_docs():
 @app.route('/<id_number>')
 def id_results(id_number):
     """Display all results and info for a given IR number """
-    entries = query_db("""SELECT Protocol, Title, PI,
-                        TargetCase, TargetControl, TotalOnSite, TotalOffSite,
-                        TotalPats, AgeLimitCaseLower, Phase, Cat, IND,
-                        NCITrialID, NCTID, RRR, MultiCenter, IROClosure,
-                        ApprovalTo, IROClosure,
-                        AccrualClosed FROM protocols
+    entries = query_db("""SELECT Protocol, IRBFile, PI, Title,
+                        IRBCommittee, InitialApproval, ReviewBy,
+                        ApprovalFrom, ApprovalTo, IRBStatus,
+                        IRBReviewType, TargetCase, TargetControl,
+                        TotalOnSite, TotalOffSite, TotalPATS,
+                        AgeLimitCaseLower, Phase, Cat, IND,
+                        NCITrialID, NCTID, RRR, MultiCenter,
+                        IROClosure, AccrualClosed FROM protocols
                         WHERE Protocol = ?""",
                        [id_number])
     if entries:

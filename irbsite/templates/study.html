@@ -11,25 +11,40 @@
     <tr><td><b>Protocol</td>
         <td><b>IR File</td>
         <td><b>PI</td>
-        <td><b>Study Status</td>
+        <td><b>IRB Status</td>
+        <td><b>IRB Committee</td>
+        <td><b>IRB Review Type</td>
+        <td><b>Phase</td>
+        <td><b>Cat</td>
    </tr>
    <tr><td>{{ entries[0].Protocol }}</td>
-     <td>{{ entries[0].IR_file }}</td>
+     <td>{{ entries[0].IRBFile }}</td>
      <td>{{ entries[0].PI }}</td>
-     <td>Open</td></tr>
+     <td>{{ entries[0].IRBStatus }}</td>
+     <td>{{ entries[0].IRBCommittee }}</td>
+     <td>{{ entries[0].IRBReviewType }}</td>
+     <td>{{ entries[0].Phase }}</td>
+     <td>{{ entries[0].Cat }}</td>
   </table>
   <br>
     <tr>
   </table>
   <br>
-  <h2>Sponsor Info</h2>
+  <h2>Additional Info</h2>
   <table border="1">
     <tr>
-      <td><b>Sponsor</td>
+      <td><b>NCI Trial ID</td>
+      <td><b>NCT ID</td>
       <td><b>IND</td>
+      <td><b>RRR</td>
+      <td><b>Multi-Center</td>
         </tr>
         <tr>
+     <td>{{ entries[0].NCITrialID }}</td>
+     <td>{{ entries[0].NCTID }}</td>
      <td>{{ entries[0].IND }}</td>
+     <td>{{ entries[0].RRR }}</td>
+     <td>{{ entries[0].MultiCenter }}</td>
     </tr>
   </table>
   <br></br>
@@ -37,7 +52,6 @@
     <table border="1">
       <td><b>Target Cases</td>
       <td><b>Target Controls</td>
-      <td><b>Total On Site</td>
       <td><b>Total On-Site</td>
       <td><b>Total Off-Site</td>
       <td><b>Total PATs</td>
@@ -53,6 +67,12 @@
     <br></br>
     <h2>Important Dates</h2>
     <table border="1">
+      <tr><td><b>Initial Approval</td>
+        <td>{{ entries[0].InitialApproval }}</td>
+      <tr><td><b>Review By</td>
+        <td>{{ entries[0].ReviewBy }}</td>
+      <tr><td><b>ApprovalFrom</td>
+        <td>{{ entries[0].ApprovalFrom }}</td>
       <tr><td><b>ApprovalTo</td>
         <td>{{ entries[0].ApprovalTo }}</td>
       <tr><td><b>IRO Closure</td>
