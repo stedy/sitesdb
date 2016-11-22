@@ -2,9 +2,49 @@
 {% block body %}
   {% if g.user %}
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <h2>What would you like to do today?</h2>
-  <br>
-  <h3>Add New Data</h3>
+  <h3>View current studies</h3>
+  <table id="basic" class= "display">
+   <thead>
+     <tr>
+       <th><b>Protocol</th>
+       <th><b>PI</th>
+       <th><b>Title</th>
+       <th><b>IRB Status</th>
+       <th><b>Approval From</th>
+       <th><b>Approval To</th>
+     </tr>
+   </thead>
+
+   <tfoot>
+     <tr>
+       <th><b>Protocol</th>
+       <th><b>PI</th>
+       <th><b>Title</th>
+       <th><b>IRB Status</th>
+       <th><b>Approval From</th>
+       <th><b>Approval To</th>
+     </tr>
+   </tfoot>
+
+   <tbody>
+   {% for entry in entries %}
+    <tr>
+     <td><a href="{{ url_for('id_results', id_number=entry.Protocol) }}">{{ entry.Protocol }}</a></td>
+     <td>{{ entry.PI }}</td>
+     <td>{{ entry.Title }}</td>
+     <td>{{ entry.IRBStatus }}</td>
+     <td>{{ entry.ApprovalFrom }}</td>
+     <td>{{ entry.ApprovalTo }}</td>
+    </tr>
+    {% endfor %}
+   </tbody>
+ </table>
+
+  <div class="container">
+      <h2>Add New Data</h2>
+        <p>Click on the button to add data by type</p>
+          <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Click to add new data</button>
+            <div id="demo" class="collapse">
   <a href="{{ url_for('add_study') }}">Add new study</a>
   <br>
   <a href="{{ url_for('add_review_committee') }}">Add Review Committee(s) Information</a>
@@ -19,50 +59,16 @@
   <br>
   Add new CRR (annual review)
   <br>
-  <h3>View current studies</h3>
-  <table id="basic" class= "display">
-   <thead>
-     <tr>
-       <th><b>Protocol</th>
-       <th><b>PI</th>
-       <th><b>IND</th>
-       <th><b>IRB Status</th>
-       <th><b>Approval To</th>
-       <th><b>Committee</th>
-     </tr>
-   </thead>
-
-   <tfoot>
-     <tr>
-       <th><b>Protocol</th>
-       <th><b>PI</th>
-       <th><b>IND</th>
-       <th><b>IRB Status</th>
-       <th><b>Approval To</th>
-       <th><b>Committee</th>
-     </tr>
-   </tfoot>
-
-   <tbody>
-   {% for entry in entries %}
-    <tr>
-     <td><a href="{{ url_for('id_results', id_number=entry.Protocol) }}">{{ entry.Protocol }}</a></td>
-     <td>{{ entry.PI }}</td>
-     <td>{{ entry.IND }}</td>
-     <td>{{ entry.IRBStatus }}</td>
-     <td>{{ entry.ApprovalTo }}</td>
-     <td>{{ entry.IRBCommittee }}</td>
-    </tr>
-    {% endfor %}
-   </tbody>
- </table>
  <br></br>
   <h3>Safety reports</h3>
   <a href="{{ url_for('safety_results') }}">View all safety reports</a>
   <br></br>
+  <br>
   <h3>Download database</h3>
   <a href="{{ url_for('db_to_excel') }}">Download copy of database as Excel file</a>
-  <br>
+                            </div>
+                          </div>
+
 
   {% endif %}
     {% endblock %}

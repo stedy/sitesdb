@@ -298,18 +298,10 @@ def add_ae():
 
 @app.route('/main')
 def main():
-#    entries = query_db("""SELECT protocols.Protocol, Title, PI, IR_file, CTE,
-#        rn_coord, IRB_coord, AE_coord, IRB_approved, IRB_expires, IRB_status,
-#        Accrual_status, Patient_goal, Patient_total, Min_age, Comments, Cat,
-#        Phase, Multi_site, FH_coord, HIPAA, Waiver_of_consent,
-#        HIPAA_waiver, UW_agree, Childrens_agree, Studypop, Reviewcomm
-#        FROM protocols LEFT JOIN dontype ON protocols.Protocol =
-#        dontype.Protocol LEFT JOIN reviewtype on protocols.Protocol =
-#        reviewtype.Protocol
-#        """)
-    entries = query_db("""SELECT Protocol, ApprovalTo, IRBStatus,
-            IRBCommittee, PI, IND FROM protocols WHERE
-            Protocol != ''""")
+    entries = query_db("""SELECT Protocol, IRBfile, PI, Title,
+            IND, ApprovalFrom, IRBStatus, ApprovalFrom, ApprovalTo
+            FROM protocols WHERE
+            Protocol != '' AND IRBStatus != 'Closed'""")
     return render_template('main.html', entries=entries)
 
 @app.route('/pre_safety', methods=['GET', 'POST'])
