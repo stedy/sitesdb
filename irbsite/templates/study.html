@@ -6,67 +6,50 @@
     {% endif %}
     <ul class=entries>
       <h1>{{ entries[0].Title }}</h1>
-      <br>
-  <table border="1">
-    <tr><td><b>Protocol</td>
-        <td><b>IR File</td>
-        <td><b>PI</td>
-        <td><b>IRB Status</td>
-        <td><b>IRB Committee</td>
-        <td><b>IRB Review Type</td>
-        <td><b>Phase</td>
-        <td><b>Cat</td>
-   </tr>
-   <tr><td>{{ entries[0].Protocol }}</td>
-     <td>{{ entries[0].IRBFile }}</td>
-     <td>{{ entries[0].PI }}</td>
-     <td>{{ entries[0].IRBStatus }}</td>
-     <td>{{ entries[0].IRBCommittee }}</td>
-     <td>{{ entries[0].IRBReviewType }}</td>
-     <td>{{ entries[0].Phase }}</td>
-     <td>{{ entries[0].Cat }}</td>
-  </table>
-  <br>
-    <tr>
-  </table>
-  <br>
+      <div class="container">
+        <div class = "row">
+          <div class="col-xs-6">
+  <h2>Baseline Info</h2>
+        <table class="table prettytable">
+    <tr><td><b>Protocol</td><td>{{ entries[0].Protocol }}</td></tr>
+        <td><b>IR File</td><td>{{ entries[0].IRBFile }}</td></tr>
+        <td><b>PI</td><td>{{ entries[0].PI }}</td></tr>
+        <td><b>IRB Status</td><td>{{ entries[0].IRBStatus }}</td></tr>
+        <td><b>IRB Committee</td><td>{{ entries[0].IRBCommittee }}</td></tr>
+        <td><b>IRB Review Type</td><td>{{ entries[0].IRBReviewType }}</td></tr>
+        <td><b>Phase</td><td>{{ entries[0].Phase }}</td></tr>
+        <td><b>Cat</td><td>{{ entries[0].Cat }}</td></tr>
+      </table>
+    </div>
+  <div class="col-xs-6">
   <h2>Additional Info</h2>
-  <table border="1">
-    <tr>
-      <td><b>NCI Trial ID</td>
-      <td><b>NCT ID</td>
-      <td><b>IND</td>
-      <td><b>RRR</td>
-      <td><b>Multi-Center</td>
-        </tr>
-        <tr>
-     <td>{{ entries[0].NCITrialID }}</td>
-     <td>{{ entries[0].NCTID }}</td>
-     <td>{{ entries[0].IND }}</td>
-     <td>{{ entries[0].RRR }}</td>
-     <td>{{ entries[0].MultiCenter }}</td>
-    </tr>
+  <table class="table prettytable">
+    <tr><td><b>NCI Trial ID</td><td>{{ entries[0].NCITrialID }}</td></tr>
+      <td><b>NCT ID</td><td>{{ entries[0].NCTID }}</td></tr>
+      <td><b>IND</td><td>{{ entries[0].IND }}</td></tr>
+      <td><b>RRR</td><td>{{ entries[0].RRR }}</td></tr>
+      <td><b>Multi-Center</td><td>{{ entries[0].MultiCenter }}</td></tr>
   </table>
-  <br></br>
+</div>
+</div>
+<div class = "row">
+  <div class="col-xs-6">
   <h2>Study Population Info</h2>
-    <table border="1">
-      <td><b>Target Cases</td>
-      <td><b>Target Controls</td>
-      <td><b>Total On-Site</td>
-      <td><b>Total Off-Site</td>
-      <td><b>Total PATs</td>
-      <td><b>Lower Age Limit</td>
-      <tr>
-        <td>{{ entries[0].TargetCase }}</td>
-        <td>{{ entries[0].TargetControl }}</td>
-        <td>{{ entries[0].TotalOnSite }}</td>
-        <td>{{ entries[0].TotalOffSite }}</td>
-        <td>{{ entries[0].TotalPATS }}</td>
-        <td>{{ entries[0].AgeLimitCaseLower }}</td>
-    </table>
-    <br></br>
+  <div class="table-responsive">
+    <table class="table prettytable">
+      <tr><td><b>Target Cases</td><td>{{ entries[0].TargetCase }}</td></tr>
+      <td><b>Target Controls</td><td>{{ entries[0].TargetControl }}</td></tr>
+      <td><b>Total On-Site</td><td>{{ entries[0].TotalOnSite }}</td></tr>
+      <td><b>Total Off-Site</td><td>{{ entries[0].TotalOffSite }}</td></tr>
+      <td><b>Total PATs</td><td>{{ entries[0].TotalPATS }}</td></tr>
+      <td><b>Lower Age Limit</td><td>{{ entries[0].AgeLimitCaseLower }}</td></tr>
+      </table>
+  </div>
+  </div>
+  <div class="col-xs-6">
     <h2>Important Dates</h2>
-    <table border="1">
+  <div class="table-responsive">
+    <table class="table prettytable">
       <tr><td><b>Initial Approval</td>
         <td>{{ entries[0].InitialApproval }}</td>
       <tr><td><b>Review By</td>
@@ -79,9 +62,11 @@
         <td>{{ entries[0].IROClosure }}</td>
       <tr><td><b>Accrual Closed</td>
         <td>{{ entries[0].AccrualClosed }}</td>
-    </table>
-    <br></br>
- <br></br>
+      </table>
+    </div>
+  </div>
+  </div>
+  </div>
 <div class="footer">
 	<a href="#">Adverse Events</a>
 	 | <a href="#">Mods</a>
